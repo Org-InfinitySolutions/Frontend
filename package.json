@@ -1,0 +1,13 @@
+{
+    "name": "json-server-project",
+    "version": "1.0.0",
+    "main": "src/server.js",
+    "scripts": {
+      "start": "json-server --watch src/db.json --port 3000"
+    },
+    "dependencies": {
+      "json-server": "^0.17.0"
+    },
+    "author": "",
+    "license": "ISC"
+  }
