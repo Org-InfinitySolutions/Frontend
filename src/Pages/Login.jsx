@@ -11,7 +11,7 @@ function Login(){
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
             <section>
-                <Input id='inp_email' label='EMAIL:' tipo='email' placeholder='Email' />
+                <Input id='inp_email' label='E-MAIL:' tipo='email' placeholder='E-mail' />
             </section>
             <section>
                 <Input id='inp_senha' label='SENHA:' tipo='password' placeholder='Senha' />
