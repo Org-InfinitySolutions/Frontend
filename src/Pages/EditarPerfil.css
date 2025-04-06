@@ -57,7 +57,8 @@
 
             input{
                 height: 80%;
-                width: 60%;
+                width: 61%;
+                border: 1px solid silver;
             }
             
             div{
@@ -114,10 +115,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            
 
             input{
                 height: 80%;
                 width: 78%;
+                border: 1px solid silver;
             }
             
             .box-cidade{
@@ -145,6 +148,26 @@
                 input{
                     width: 30%;
                     text-align: center;
+                }
+            }
+
+            .box-cep{
+                height: 100%;
+                width: 79%;
+                background-color: white;
+                
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+                border: 1px solid silver;
+                input{
+                    width: 90%;
+                    border: none;
+                    outline: none;
+                }
+                img{
+                    margin-left: 1%;
                 }
             }
         }

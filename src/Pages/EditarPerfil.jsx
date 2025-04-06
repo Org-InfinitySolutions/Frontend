@@ -1,6 +1,7 @@
 
 import './EditarPerfil.css';
 import iconeEditar from '../assets/iconeEditar.png'
+import iconePesquisar from '../assets/iconePesquisar.png'
 
 function EditarPerfil(){
     
@@ -64,7 +65,10 @@ function EditarPerfil(){
                 <h3>Endereço:</h3>
                 <section>
                     <label >CEP:</label>
-                    <input type="text" placeholder='12345-258'/>
+                    <div className='box-cep'>
+                        <img src={iconePesquisar} alt="" height="20em"/>
+                        <input type="text" placeholder='12345-258' className='input-cep'/>
+                    </div>
                 </section>
                 <section>
                     <label >Rua:</label>
