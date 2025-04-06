@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './BarraNavegacao.css';
 
 function BarraNavegacao(){
@@ -10,9 +11,9 @@ function BarraNavegacao(){
             </section>
             <section className="container-links">
                 <div>
-                    <a href="">Projetos</a>
-                    <a href="">Serviços</a>
-                    <a href="">Locações</a>
+                    <a href="#">Projetos</a>
+                    <a href="#">Serviços</a>
+                    <a href="#">Locações</a>
                 </div>
             </section>
             <section className="container-eventos">
