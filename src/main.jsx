@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 
 // Dependências do Router
-import { BrowserRouter as Router, Routes, Route, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importando página de Login
 import { Login } from './Pages/Login'
