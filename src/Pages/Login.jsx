@@ -10,7 +10,7 @@ function Login(){
     <section className='container-login'>
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
-            <section>
+            <section className='caixa-entrada'>
                 <Input id='inp_email' label='E-MAIL:' tipo='email' placeholder='E-mail' />
             </section>
             <section className='caixa-entrada'>
