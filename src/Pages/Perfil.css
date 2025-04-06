@@ -91,10 +91,12 @@
                 align-items: center;
                 justify-content: flex-start;
                 
-                button{
-                    height: 55%;
+                /* quando a tela excluir-conta estiver pronta remover o button */
+                button, a{
+                    height: 60%;
                     width: 40%;
                     margin-left: 2%;
+                    font-size: 0.8em;
                     font-family: "Montserrat", sans-serif;
                 }
 
@@ -116,6 +118,10 @@
                     border: none;
                     border-radius: 8px;
                     cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    justify-content: center;
                 }
                 .botao-editar:hover{
                     transition: 0.2s;
@@ -135,6 +141,32 @@
                 flex-direction: row;
                 align-items: center;
                 justify-content: flex-end;
+
+                .botao-retroceder{
+                    padding: 5%;
+                
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    justify-content: center;
+                
+                    color: black;
+                    cursor: pointer;
+                    font-weight: normal;
+                    border-radius: 8px;
+                    background-color: white;
+                    border: 1px solid black;
+                    font-family: "Montserrat", sans-serif;
+                }
+                .botao-retroceder:hover{
+                    color: white;
+                    transition: 0.3s;
+                    background-color: black;
+                }
+                .botao-retroceder:active{
+                    transition: 0.2s;
+                    transform: scale(0.95);
+                }
             }
         }
 

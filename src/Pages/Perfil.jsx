@@ -1,5 +1,4 @@
 
-import { BotaoVoltar } from '../components/BotaoVoltar'
 import './Perfil.css'
 
 function Perfil(){
@@ -45,10 +44,10 @@ function Perfil(){
             <section className="container-eventos">
                 <div className="eventos-excluir-editar">
                     <button className="botao-excluir">Excluir Conta</button>
-                    <button className="botao-editar">Editar Conta</button>
+                    <a href='/editar-perfil' className="botao-editar">Editar Conta</a>
                 </div>
                 <div className="evento-voltar">
-                    <BotaoVoltar link="#" acao="Voltar"/>
+                    <a className='botao-retroceder' href="#">Voltar</a>
                 </div>
             </section>
             <section className="dados-utilitarios">
