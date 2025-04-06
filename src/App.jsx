@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importando página
 import { Login } from './Pages/Login'
+import { Perfil } from './Pages/Perfil'
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Routes>
             {/* Caso precise faça o mesmo, copie o codigo abaixo e defina a rota desejada */}
             <Route path='/login' element={<Login />} />
+            <Route path='/perfil' element={<Perfil />} />
           </Routes>
         </Router>
       <Rodape />
