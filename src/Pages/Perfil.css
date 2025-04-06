@@ -1,0 +1,184 @@
+.container{
+    height: 120vh;
+    background-color: #171717;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .container-perfil{
+        height: 75%;
+        width: 35%;
+        background-color: #fff;
+    
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-family: "Montserrat Alternates", sans-serif;
+        
+        .titulo-form{
+            width: 80%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+
+            .barra{
+                height: 2px;
+                width: 65%;
+                background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+            }
+        }
+
+        .dados-pessoais {
+            height: 40%;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            font-family: "Montserrat", sans-serif;
+
+            h3{
+                padding: 2%;
+                width: 50%;
+                margin: 0px;
+                margin-bottom: 2%;
+                border-bottom: 1px solid black;
+                font-weight: normal;
+            }
+        }
+
+        .dados-endereco{
+            height: 30%;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            font-family: "Montserrat", sans-serif;
+            
+            h3{
+                padding: 2%;
+                width: 30%;
+                margin: 0px;
+                margin-bottom: 2%;
+                border-bottom: 1px solid black;
+                font-weight: normal;
+            }
+            div{
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .container-eventos{
+            height: 10%;
+            width: 90%;
+        
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+
+            .eventos-excluir-editar{
+                height: 100%;
+                width: 60%;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                
+                /* quando a tela excluir-conta estiver pronta remover o button */
+                button, a{
+                    height: 60%;
+                    width: 40%;
+                    margin-left: 2%;
+                    font-size: 0.8em;
+                    font-family: "Montserrat", sans-serif;
+                }
+
+                .botao-excluir{
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    background-color: #EE1C27;
+                }
+                .botao-excluir:hover{
+                    transition: 0.2s;
+                    background-color: #d81b24;
+                }
+
+                .botao-editar{
+                    background-color: black;
+                    color: white;
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    justify-content: center;
+                }
+                .botao-editar:hover{
+                    transition: 0.2s;
+                }
+
+                .botao-excluir:active, .botao-editar:active{
+                    transform: scale(0.98);
+                    transition: 0.3s;
+                }
+                
+            }
+            .evento-voltar{
+                height: 100%;
+                width: 30%;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-end;
+
+                .botao-retroceder{
+                    padding: 5%;
+                
+                    display: flex;
+                    align-items: center;
+                    text-decoration: none;
+                    justify-content: center;
+                
+                    color: black;
+                    cursor: pointer;
+                    font-weight: normal;
+                    border-radius: 8px;
+                    background-color: white;
+                    border: 1px solid black;
+                    font-family: "Montserrat", sans-serif;
+                }
+                .botao-retroceder:hover{
+                    color: white;
+                    transition: 0.3s;
+                    background-color: black;
+                }
+                .botao-retroceder:active{
+                    transition: 0.2s;
+                    transform: scale(0.95);
+                }
+            }
+        }
+
+        .dados-utilitarios{
+            height: 6%;
+            width: 95%;
+
+            display: flex;
+            font-size: 0.7em;
+            flex-direction: column;
+            justify-content: flex-end;
+            font-family: "Montserrat", sans-serif;
+        }
+    }
+}

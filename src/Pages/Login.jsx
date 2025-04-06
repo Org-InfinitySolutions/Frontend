@@ -1,7 +1,5 @@
-import { BarraNavegacao } from '../components/BarraNavegacao'
-import { Rodape } from '../components/Rodape'
-import { Input } from '../components/Input';
 
+import { Input } from '../components/Input';
 import './Login.css';
 
 function Login(){
