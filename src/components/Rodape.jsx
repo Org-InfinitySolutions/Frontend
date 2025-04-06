@@ -10,7 +10,7 @@ function Rodape() {
     <footer>
         <section className='container-informacoes-gerais'>
             <section className='container-logo'>
-                <img src='/Logo.png' alt='Logo nova locações' height='50%'/>
+                <img src='/logoNova.jpg' alt='Logo nova locações' height='80%'/>
             </section>
             <section className='container-contatos'>
                 <div>
