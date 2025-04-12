@@ -12,7 +12,7 @@ function EditarPerfil(){
                 <h2>Editar conta</h2>
                 <div className="barra"></div>
             </section>
-            {localStorage.TIPO_USUARIO == "PJ" ? (
+            {localStorage.TIPO_USUARIO == "PF" ? (
             <section className="container-dados-pessoais">
                 <h3>Dados pessoais:</h3>
                 <section>
@@ -72,15 +72,15 @@ function EditarPerfil(){
                 </section>
                 <section>
                     <label >Rua:</label>
-                    <input type="text" placeholder='Razão social'/>
+                    <input type="text" placeholder='Ex.: Rua são joaquim'/>
                 </section>
                 <section>
                     <label >Número:</label>
-                    <input type="text" placeholder='Ex: (11) 98754-8798'/>
+                    <input type="text" placeholder='Ex.: (11) 98754-8798'/>
                 </section>
                 <section>
                     <label >Bairro:</label>
-                    <input type="text" placeholder='Ex: (11) 5887-8585'/>
+                    <input type="text" placeholder='Ex.: (11) 5887-8585'/>
                 </section>
                 <section>
                     <div className='box-cidade'>

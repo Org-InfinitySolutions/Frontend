@@ -11,9 +11,9 @@ function Perfil(){
                 <h2>{localStorage.TIPO_USUARIO == "PF" ? "Meu perfil" : "Minha empresa"}</h2>
                 <div className="barra"></div>
             </section>
-            {localStorage.TIPO_USUARIO === "PF" ? (
+            {localStorage.TIPO_USUARIO === "PJ" ? (
             <section className="dados-pessoais">
-                <h3>Dados pessoais</h3>
+                <h3>Dados pessoais:</h3>
                 <span>Nome: Rafaela Gonçalves Sousa</span>
                 <span>CPF: 190.098.223-01</span>
                 <span>RG: 88.765.234-9</span>
@@ -22,7 +22,7 @@ function Perfil(){
             </section>
             ) : (
             <section className="dados-pessoais">
-                <h3>Dados da empresa</h3>
+                <h3>Dados da empresa:</h3>
                 <span>Nome fantasia: Rafaela Gonçalves Sousa</span>
                 <span>Razão social: 88.765.234-9</span>
                 <span>CNPJ: 12.345.678/0001-95</span>
@@ -32,7 +32,7 @@ function Perfil(){
             </section>
             )}
             <section className="dados-endereco">
-                <h3>Endereço</h3>
+                <h3>Endereço:</h3>
                 <span>Rua: Rua são joaquim</span>
                 <span>Número: 1900</span>
                 <div>
