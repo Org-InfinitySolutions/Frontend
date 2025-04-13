@@ -20,7 +20,7 @@
     .container-formulario{
         position: relative;
         padding-bottom: 6.2%;
-        height:70vh;
+        height: 70vh;
         width: 30%;
         border-radius: 6px;
         background-color: white;
@@ -80,12 +80,19 @@
 
         .botao-continuar-bloco {
             position: absolute;
+            margin-top: 1%;
             bottom: 1%;
             right: 20px;
             display: flex;
             flex-direction: column;
             align-items: flex-end;
-            gap: 10px;
+            
+            button:hover{
+                color: black;
+                transition: 0.2s;
+                border: 1px solid black;
+                background-color: white;
+            }
         }
         
         .botao-continuar{
@@ -246,6 +253,18 @@
         border-radius: 6px;
         cursor: pointer;
       }
+
+      .botao-voltar-etapa-2:hover{
+        transition: 0.2s;
+        background-color: black;
+        color: white;
+      }
+      .botao-continuar-etapa-2:hover{
+        transition: 0.2s;
+        background-color: white;
+        color: black;
+      }
+    }
       
 }
 
@@ -340,11 +359,24 @@
         color: black;
         border: 1px solid black;
       }
+
+      .botao-voltar-etapa-3:hover{
+        transition: 0.2s;
+        background-color: black;
+        color: white;
+      
+      }
       
       .botao-continuar-etapa-3 {
         background-color: black;
         color: white;
         border: 1px solid black;
+      }
+
+      .botao-continuar-etapa-3:hover{
+        transition: 0.2s;
+        background-color: white;
+        color: black;
       }
       
       .aviso-obrigatorio-etapa-3 {
@@ -354,7 +386,3 @@
       }
      
 }
-
-}
-
-
