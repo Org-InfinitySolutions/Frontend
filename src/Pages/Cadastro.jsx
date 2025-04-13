@@ -5,11 +5,8 @@ import './Cadastro.css';
 function Cadastro() {
     const [etapa, setEtapa] = useState(1);
 
-    const [formulario, setFormulario] = useState({
+    const dadosBase = {
         nome: '',
-        rg: '',
-        cpf: '',
-        celular: '',
         cep: '',
         numero: '',
         rua: '',
@@ -19,22 +16,39 @@ function Cadastro() {
         complemento: '',
         email: '',
         senha: '',
-        confirmarSenha: ''
+        confirmarSenha: '',
+        celular: '',
+    }
+
+    const [formularioCPF, setFormularioCPF] = useState({
+        dadosBase,
+        rg: '',
+        cpf: '',
     });
 
+    const [formularioCNPJ, setFormularioCNPJ] = useState({
+        dadosBase,
+        razaoSocial: '',
+        cnpj: '',
+        telefone: ''
+    });
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormulario((prev) => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    
+    const [tipoUsuario, setTipoUsuario] = useState('fisica');
 
-    const handleSubmit = () => {
-        console.log('Formulário enviado:', formulario);
-        alert('Cadastro finalizado!');
-    };
+
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setFormularioCPF((prev) => ({
+    //         ...prev,
+    //         [name]: value
+    //     }));
+    // };
+
+    // const handleSubmit = () => {
+    //     console.log('Formulário enviado:', formulario);
+    //     alert('Cadastro finalizado!');
+    // };
 
     return (
         <section className={`container-cadastro ${etapa === 2 ? 'etapa-dois' : ''}`}>
@@ -45,23 +59,25 @@ function Cadastro() {
                         <div className='barra-divisoria-cadastro'></div>
                         <div className='options-cadastro'>
                             <div className='option'>
-                                <p>CPF</p>
+                                <button onClick={() => {setTipoUsuario('fisica')}}>CPF</button>
                                 <div className='barra'></div>
                             </div>
                             <div className='option'>
-                                <p>CNPJ</p>
+                                <button onClick={() => {setTipoUsuario('juridica')}}>CNPJ</button>
                                 <div className='barra'></div>
                             </div>
                         </div>
-                        <section>
+                      {tipoUsuario == 'fisica' ? (
+                            <>
+                            <section>
                             <Input
                                 id='nome'
                                 name='nome'
                                 label='* Nome Completo:'
                                 tipo='text'
                                 placeholder='Nome Completo'
-                                value={formulario.nome}
-                                onChange={handleChange}
+                                value={formularioCPF.dadosBase.nome}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section>
@@ -71,8 +87,8 @@ function Cadastro() {
                                 label='* RG:'
                                 tipo='text'
                                 placeholder='RG'
-                                value={formulario.rg}
-                                onChange={handleChange}
+                                value={formularioCPF.rg}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section>
@@ -82,8 +98,8 @@ function Cadastro() {
                                 label='* CPF:'
                                 tipo='text'
                                 placeholder='CPF'
-                                value={formulario.cpf}
-                                onChange={handleChange}
+                                value={formularioCPF.cpf}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section>
@@ -93,10 +109,71 @@ function Cadastro() {
                                 label='* Celular:'
                                 tipo='text'
                                 placeholder='Celular'
-                                value={formulario.celular}
-                                onChange={handleChange}
+                                value={formularioCPF.dadosBase.celular}
+                                // onChange={handleChange}
                             />
                         </section>
+                        </>
+                        ) : ( 
+                        <>
+                        <section>
+                            <Input
+                                id='nome-fantasia'
+                                name='nome-fantasia'
+                                label='* Nome Fantasia:'
+                                tipo='text'
+                                placeholder='Nome Fantasia'
+                                value={formularioCNPJ.dadosBase.nome}
+                                // onChange={handleChange}
+                            />
+                        </section>
+                        <section>
+                            <Input
+                                id='razao-social'
+                                name='razao-social'
+                                label='* Razão Social:'
+                                tipo='text'
+                                placeholder='Razão Social'
+                                value={formularioCNPJ.razaoSocial}
+                                // onChange={handleChange}
+                            />
+                        </section>
+                        <section>
+                            <Input
+                                id='cnpj'
+                                name='cnpj'
+                                label='* CNPJ:'
+                                tipo='text'
+                                placeholder='CNPJ'
+                                value={formularioCNPJ.cnpj}
+                                // onChange={handleChange}
+                            />
+                        </section>
+                        <section>
+                            <Input
+                                id='celular'
+                                name='celular'
+                                label='* Celular:'
+                                tipo='text'
+                                placeholder='Celular'
+                                value={formularioCNPJ.dadosBase.celular}
+                                // onChange={handleChange}
+                            />
+                        </section>
+                        <section>
+                            <Input
+                                id='telefone'
+                                name='telefone'
+                                label='* Telefone:'
+                                tipo='text'
+                                placeholder='Telefone'
+                                value={formularioCNPJ.telefone}
+                                // onChange={handleChange}
+                            />
+                        </section>
+                        </>
+                        )}
+
                         <div className="botao-continuar-bloco">
                             <button
                                 type="button"
@@ -109,8 +186,9 @@ function Cadastro() {
                         </div>
                     </form>
                 </>
+                
             )}
-
+                    
             {etapa === 2 && (
                 <>
                     <form className='container-formulario-2' onSubmit={(e) => e.preventDefault()}>
@@ -129,8 +207,8 @@ function Cadastro() {
                                 label='* CEP:'
                                 tipo='text'
                                 placeholder='CEP'
-                                value={formulario.cep}
-                                onChange={handleChange}
+                                value={dadosBase.cep}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -140,8 +218,8 @@ function Cadastro() {
                                 label='* Número:'
                                 tipo='text'
                                 placeholder='Número'
-                                value={formulario.numero}
-                                onChange={handleChange}
+                                value={dadosBase.numero}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -151,8 +229,8 @@ function Cadastro() {
                                 label='* Rua:'
                                 tipo='text'
                                 placeholder='Rua'
-                                value={formulario.rua}
-                                onChange={handleChange}
+                                value={dadosBase.rua}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -162,8 +240,8 @@ function Cadastro() {
                                 label='* Bairro:'
                                 tipo='text'
                                 placeholder='Bairro'
-                                value={formulario.bairro}
-                                onChange={handleChange}
+                                value={dadosBase.bairro}
+                                // onChange={handleChange}
                             />
                         </section>
                         
@@ -175,8 +253,8 @@ function Cadastro() {
                                     label='* Cidade:'
                                     tipo='text'
                                     placeholder='Cidade'
-                                    value={formulario.cidade}
-                                    onChange={handleChange}
+                                    value={dadosBase.cidade}
+                                    // onChange={handleChange}
                                 />
                             </section>
 
@@ -187,8 +265,8 @@ function Cadastro() {
                                     label='* Estado:'
                                     tipo='text'
                                     placeholder='Estado'
-                                    value={formulario.estado}
-                                    onChange={handleChange}
+                                    value={dadosBase.estado}
+                                    // onChange={handleChange}
                                 />
                             </section>
                         </div>
@@ -199,8 +277,8 @@ function Cadastro() {
                                 label='* Complemento:'
                                 tipo='text'
                                 placeholder='Complemento'
-                                value={formulario.complemento}
-                                onChange={handleChange}
+                                value={dadosBase.complemento}
+                                // onChange={handleChange}
                             />
                         </section>
                         <div className="botoes-e-aviso-etapa-2">
@@ -243,8 +321,8 @@ function Cadastro() {
                                 label='* E-mail:'
                                 tipo='email'
                                 placeholder='Digite seu e-mail'
-                                value={formulario.email}
-                                onChange={handleChange}
+                                value={dadosBase.email}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section>
@@ -254,8 +332,8 @@ function Cadastro() {
                                 label='* Senha:'
                                 tipo='password'
                                 placeholder='Crie uma senha'
-                                value={formulario.senha}
-                                onChange={handleChange}
+                                value={dadosBase.senha}
+                                // onChange={handleChange}
                             />
                         </section>
                         <section>
@@ -265,8 +343,8 @@ function Cadastro() {
                                 label='* Confirmar Senha:'
                                 tipo='password'
                                 placeholder='Confirme sua senha'
-                                value={formulario.confirmarSenha}
-                                onChange={handleChange}
+                                value={dadosBase.confirmarSenha}
+                                // onChange={handleChange}
                             />
                         </section>
                         <div className="botoes-e-aviso-etapa-3">
