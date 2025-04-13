@@ -5,15 +5,17 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    padding: 1% 0px;
 }
 
 .container-cadastro{
-    height: 90vh; 
+    min-height: 90vh; 
     width: 100%;
     background-color: black;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 1% 0px;
 
     .container-formulario{
         position: relative;
@@ -76,7 +78,7 @@
 
         .botao-continuar-bloco {
             position: absolute;
-            bottom: 10px;
+            bottom: 1%;
             right: 20px;
             display: flex;
             flex-direction: column;

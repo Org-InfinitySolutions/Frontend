@@ -16,7 +16,7 @@ function BarraNavegacao(){
                 <div>
                     <a href="#">Home</a>
                     <a href="#">Equipamentos</a>
-                    <a href="#">Pedidos</a>
+                    <a href="/pedidos">Pedidos</a>
                 </div>
             </section>
             ) : (
@@ -35,7 +35,7 @@ function BarraNavegacao(){
             </section>
             ) : (
             <section className="container-eventos">
-                <a href='#' className='botao-cadastro'>Cadastro</a>
+                <a href='/cadastro' className='botao-cadastro'>Cadastro</a>
                 <a href='/login' className='botao-login'>Login</a>
             </section>
             )}
