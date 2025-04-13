@@ -8,7 +8,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // Importando página
 import { Login } from './Pages/Login'
 import { Perfil } from './Pages/Perfil'
-import { EditarPerfil } from './Pages/EditarPerfil';
+import { EditarPerfil } from './Pages/EditarPerfil'
+import { Pedidos } from './Pages/Pedidos';
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/perfil' element={<Perfil />} />
             <Route path='/editar-perfil' element={<EditarPerfil />} />
+            <Route path='/pedidos' element={<Pedidos />} />
           </Routes>
         </Router>
       <Rodape />
