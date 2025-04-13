@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './BarraNavegacao.css';
-import { useEffect } from 'react';
 
 function BarraNavegacao(){
 
