@@ -63,10 +63,23 @@ button {
   border: none;
 }
 
+.botoes-toggle button.ativo:hover {
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  border: 1px solid var(--color-preto);
+  transition: background-color var(--transição);
+}
+
 .botoes-toggle button.inativo {
   background-color: transparent;
   border: 1px solid var(--color-preto);
   color: var(--color-preto);
+}
+
+.botoes-toggle button:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  transition: background-color var(--transição);
 }
 
 .barra-pesquisa-container {
@@ -204,4 +217,10 @@ button {
 .pagina-ativa {
   background-color: var(--color-preto);
   color: var(--color-branco);
+}
+
+.paginacao span:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  transition: background-color var(--transição);
 }
