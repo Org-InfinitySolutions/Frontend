@@ -7,7 +7,7 @@
     flex-direction: column;
     h1{
         width: 85%;
-        font-family: "Montserrat Alternates", sans-serif;
+        font-family: var(--fonte-titulo);
     }
 
     .container-equipamentos{
@@ -65,7 +65,7 @@
                     justify-content: space-between;
 
                     span{
-                        font-family: "Montserrat", sans-serif;
+                        font-family: var(--fonte-texto);
                         font-size: 1.4em;
                     }
                     button{
@@ -96,7 +96,7 @@
 
                     span{
                         margin: 0px 1%;
-                        font-family: "Montserrat", sans-serif;
+                        font-family: var(--fonte-texto);
                     }
                     button{
                         height: 75%;

@@ -1,5 +1,4 @@
 :root {
-  --fonte-padrão: "Montserrat", sans-serif;
   --color-preto: #000;
   --color-branco: #fff;
   --color-cinza: #999;
@@ -17,12 +16,12 @@
 }
 
 body {
-  font-family: var(--fonte-padrão);
+  font-family: var(--fonte-texto);
   background-color: var(--color-branco);
 }
 
 button {
-  font-family: var(--fonte-padrão);
+  font-family: var(--fonte-texto);
   border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color var(--transição);
@@ -121,6 +120,7 @@ button {
   filter: invert(1);
   background-position: right 0.5rem center;
   background-size: 25px;
+  font-family: var(--fonte-texto);
 }
 
 .linha-pesquisa-filtros {
@@ -153,6 +153,7 @@ button {
 
 .card-pedido h3 {
   margin: 0 0 0.5rem;
+  font-family: var(--fonte-titulo);
 }
 
 .card-pedido p {

@@ -39,7 +39,7 @@
         }
         
         .options-cadastro {
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
             display: flex;
             gap: 13px;
             justify-content: flex-start;
@@ -70,7 +70,7 @@
         }
 
         h1{
-            font-family: "Montserrat alternates", sans-serif;
+            font-family: var(--fonte-titulo);
             margin: 3%;
         }
         section{
@@ -103,7 +103,7 @@
             color: white;
             border: none;
             font-size: 1rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
             border-radius: 6px;
             cursor: pointer;
             transition: 0.2s ease;
@@ -115,7 +115,7 @@
         
         .aviso-obrigatorio {
             font-size: 0.75rem;
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
             margin-top: 4px;
         }
 
@@ -150,7 +150,7 @@
     
 
     .options-cadastro {
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         display: flex;
         gap: 13px;
         justify-content: flex-start;
@@ -179,7 +179,7 @@
     }
 
     h1{
-        font-family: "Montserrat alternates", sans-serif;
+        font-family: var(--fonte-titulo);
         margin: 0;
     }
 
@@ -205,7 +205,7 @@
                 height: 28px;
                 border: 1px solid black;
                 padding-left: 10px;
-                font-family: "Montserrat", sans-serif;
+                font-family: var(--fonte-texto);
                 font-size: 1rem;
             }
     }
@@ -224,7 +224,7 @@
       
       .aviso-obrigatorio-etapa-2 {
         font-size: 0.75rem;
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         margin: 0;
       }
 
@@ -249,7 +249,7 @@
         width: 102px;
         padding: 6px 12px;
         font-size: 1rem;
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         border-radius: 6px;
         cursor: pointer;
       }
@@ -291,7 +291,7 @@
     }
     
     .options-cadastro {
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         display: flex;
         gap: 13px;
         justify-content: flex-start;
@@ -319,7 +319,7 @@
     }
 
     h1{
-        font-family: "Montserrat alternates", sans-serif;
+        font-family: var(--fonte-titulo);
         margin: 3%;
     }
 
@@ -349,7 +349,7 @@
         width: 102px;
         padding: 6px 12px;
         font-size: 1rem;
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         border-radius: 6px;
         cursor: pointer;
       }
@@ -381,7 +381,7 @@
       
       .aviso-obrigatorio-etapa-3 {
         font-size: 0.75rem;
-        font-family: "Montserrat", sans-serif;
+        font-family: var(--fonte-texto);
         margin: 0;
       }
      

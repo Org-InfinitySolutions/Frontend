@@ -19,7 +19,7 @@
         justify-content: space-evenly;
 
         h1{
-            font-family: "Montserrat alternates", sans-serif;
+            font-family: var(--fonte-titulo);
             margin: 0;
         }
 
@@ -37,7 +37,7 @@
             justify-content: space-around;
             align-items: center;
 
-            font-family: "Montserrat alternates", sans-serif;
+            font-family: var(--fonte-titulo);
             a {
                 color: black;
                 font-size: 0.9em;    
@@ -54,7 +54,7 @@
             border-radius: 6px;
             background-color: black;
             border: 1px solid black;
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
         }
         button:active{
             transition: 0.3s;
