@@ -1,5 +1,7 @@
 
 import { useNavigate } from 'react-router-dom'
+import { Navegabilidade } from '../components/Navegabilidade';
+
 import './Carrinho.css'
 
 function Carrinho(){
@@ -29,10 +31,7 @@ function Carrinho(){
                 </div>
             </section>
         </section>
-        <section className="container-eventos">
-            <a href='#'>Voltar</a>
-            <button onClick={() => { navigate("/carrinho/endereco")}}>Continuar</button>
-        </section>
+        <Navegabilidade largura={"74%"} linkVoltar={"/carrinho"} funcaoAvancar={() => { navigate("/carrinho/endereco")}} textoAvancar={"Continuar"}/>
     </div>
     )
 }

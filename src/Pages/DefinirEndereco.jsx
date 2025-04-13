@@ -1,6 +1,7 @@
 
 import { useNavigate } from 'react-router-dom'
 import { Input } from '../components/Input'
+import { Navegabilidade } from '../components/Navegabilidade';
 import './DefinirEndereco.css'
 
 import iconePesquisar from '../assets/iconePesquisar.png'
@@ -12,7 +13,7 @@ function DefinirEndereco(){
     return(
     <div className="container-endereco">
         <h1>Definir endereço de entrega e retirada dos equipamentos.</h1>
-        <div className="box-endereco">
+        <section className="box-endereco">
             <section className='box-informacoes'>
                 <div className='box-cep'>
                     <Input id="inp_cep" label="* CEP:" tipo="text" placeholder="CEP"/>
@@ -45,11 +46,8 @@ function DefinirEndereco(){
             <section className='box-preenchimento-obrigatorio'>
                 <span>* Preenchimento obrigatório</span>
             </section>
-        </div>
-        <section className='box-eventos'>
-            <a href='/carrinho'>Voltar</a>
-            <button onClick={() => { navigate("/carrinho/finalizar")}}>Continuar</button>
         </section>
+        <Navegabilidade largura={"80%"} linkVoltar={"/carrinho"} funcaoAvancar={() => { navigate("/carrinho/finalizar")}} textoAvancar={"Continuar"}/>
     </div>
     )
 }

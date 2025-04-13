@@ -149,54 +149,5 @@
                 }
             }
         }
-    }  
-    .container-eventos{
-        width: 74%;
-        height: 5vh;
-        padding: 1% 0px 5% 0px;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-end;
-
-
-        a, button{
-            height: 100%;
-
-            font-size: 1.1em;
-            border-radius: 4px;
-            text-decoration: none;
-            border: 1px solid black;
-            
-            display: flex;
-            cursor: pointer;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            font-family: "Montserrat", sans-serif;
-        }
-        a{
-            width: 10%;
-            color: black;
-            background-color: white;
-            margin: 0px 1%;
-        }
-        a:hover{
-            color: white;
-            transition: 0.3s;
-            background-color: black;
-        }
-        button{
-            width: 13%;
-            color: white;
-            background-color: black;
-            font-family: "Montserrat", sans-serif;
-        }
-        button:hover{
-            color: black;
-            transition: 0.3s;
-            background-color: white;
-        }
-    } 
+    }
 }
