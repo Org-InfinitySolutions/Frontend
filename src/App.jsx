@@ -7,6 +7,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importando página
 import { Login } from './Pages/Login'
+import { Cadastro } from './Pages/Cadastro'
+
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
           <Routes>
             {/* Caso precise faça o mesmo, copie o codigo abaixo e defina a rota desejada */}
             <Route path='/login' element={<Login />} />
+            <Route path='/cadastro' element={<Cadastro />} />
           </Routes>
         </Router>
       <Rodape />
