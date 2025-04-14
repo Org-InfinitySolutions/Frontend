@@ -5,7 +5,7 @@ nav{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    font-family: "Montserrat", sans-serif;
+    font-family: var(--fonte-texto);
 
     .container-logo{
         height: 100%;
@@ -71,7 +71,7 @@ nav{
             border-radius: 3px;
             border: 1px solid black;
             background-color: #000000;
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
         }
         .botao-cadastro:hover{
             color: black;
@@ -99,7 +99,7 @@ nav{
             border-radius: 3px;
             background-color: white;
             border: 1px solid black;
-            font-family: "Montserrat", sans-serif;
+            font-family: var(--fonte-texto);
         }
         .botao-login:hover{
             color: white;
