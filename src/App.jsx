@@ -10,6 +10,8 @@ import { Login } from './Pages/Login'
 import { Perfil } from './Pages/Perfil'
 import { EditarPerfil } from './Pages/EditarPerfil'
 import { Pedidos } from './Pages/Pedidos';
+import { Equipamentos } from './Pages/Equipamentos';
+import { Produto } from './Pages/Produto';
 
 function App() {
 
@@ -24,6 +26,8 @@ function App() {
             <Route path='/perfil' element={<Perfil />} />
             <Route path='/editar-perfil' element={<EditarPerfil />} />
             <Route path='/pedidos' element={<Pedidos />} />
+            <Route path='/equipamentos' element={<Equipamentos />} />
+            <Route path='/produto' element={<Produto />} />
           </Routes>
         </Router>
       <Rodape />

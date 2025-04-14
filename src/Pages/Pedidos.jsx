@@ -17,8 +17,8 @@ const Pedidos = () => {
             <main className="conteudo-pedidos">
                 <div className="filtros">
                     <div className="botoes-toggle">
-                        <button className="inativo">EQUIPAMENTOS</button>
-                        <button className="ativo">PEDIDOS</button>
+                        <a href='/equipamentos' className="inativo">EQUIPAMENTOS</a>
+                        <a className="ativo">PEDIDOS</a>
                     </div>
 
                     <div className="linha-pesquisa-filtros">
