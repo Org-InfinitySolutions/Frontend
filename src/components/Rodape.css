@@ -8,11 +8,11 @@ footer{
     align-items: center;
     justify-content: center;
 
-    font-family: "montserrat", sans-serif;
+    font-family: var(--fonte-texto);
     .container-informacoes-gerais{
         height: 65%;
         width: 80%;
-
+        
         display: flex;
         flex-direction: row;
         .container-logo{

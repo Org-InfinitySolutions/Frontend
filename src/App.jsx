@@ -1,17 +1,18 @@
 import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
-import './App.css'
 
 // Dependências do Router
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // Importando página
 import { Login } from './Pages/Login'
+import { Cadastro } from './Pages/Cadastro'
 import { Perfil } from './Pages/Perfil'
-import { EditarPerfil } from './Pages/EditarPerfil'
 import { Pedidos } from './Pages/Pedidos';
-import { Equipamentos } from './Pages/Equipamentos';
-import { Produto } from './Pages/Produto';
+import { EditarPerfil } from './Pages/EditarPerfil';
+import { Carrinho } from './Pages/Carrinho';
+import { DefinirEndereco } from './Pages/DefinirEndereco';
+import { FinalizarPedido } from './Pages/FinalizarPedido';
 
 function App() {
 
@@ -23,8 +24,12 @@ function App() {
           <Routes>
             {/* Caso precise faça o mesmo, copie o codigo abaixo e defina a rota desejada */}
             <Route path='/login' element={<Login />} />
+            <Route path='/cadastro' element={<Cadastro />} />
             <Route path='/perfil' element={<Perfil />} />
             <Route path='/editar-perfil' element={<EditarPerfil />} />
+            <Route path='/carrinho' element={<Carrinho />} />
+            <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
+            <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
             <Route path='/pedidos' element={<Pedidos />} />
             <Route path='/equipamentos' element={<Equipamentos />} />
             <Route path='/produto' element={<Produto />} />
