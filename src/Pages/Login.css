@@ -36,6 +36,7 @@
             flex-direction: column;
             justify-content: space-around;
             align-items: center;
+            text-align: center;
 
             font-family: var(--fonte-titulo);
             a {

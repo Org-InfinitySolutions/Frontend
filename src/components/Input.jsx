@@ -5,7 +5,7 @@ function Input(props){
     return (
     <div className="container-input">
         <label htmlFor={props.id}>{props.label}</label>
-        <input type={props.tipo} id={props.id} placeholder={props.placeholder}/>
+        <input type={props.tipo} id={props.id} placeholder={props.placeholder} onChange={props.element} />
     </div>
     )
 }
