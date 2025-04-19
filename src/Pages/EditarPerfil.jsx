@@ -55,7 +55,7 @@ function EditarPerfil(){
                     <label >Email:</label>
                     <div>
                         <input type="text" placeholder='email@email.com' disabled="true"/>
-                        <img src={iconeEditar} alt="icone editar" height="23em"/>
+                        <img src={iconeEditar} alt="icone editar" height="23em" onClick={editarEmail}/>
                     </div>
                 </section>
                 <button>Alterar Senha</button>
@@ -103,7 +103,11 @@ function EditarPerfil(){
             </section>
         </div>
     </div>
-    )
+    ) 
+}
+
+function editarEmail(){
+       
 }
 
 export { EditarPerfil }
