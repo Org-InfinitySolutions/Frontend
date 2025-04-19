@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import './Cadastro.css';
 
+import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../utils/formatacoes';
+import { emailInvalido, campoNaoAtendeTamanho, campoVazio, senhaInvalida } from '../utils/validarCampos';
+import { exibirAviso } from '../utils/exibirModalAviso'
+import axios from 'axios';
+
 function Cadastro() {
     const [etapa, setEtapa] = useState(1);
+    const [tipoUsuario, setTipoUsuario] = useState('fisica');
 
-    const dadosBase = {
+    const [dadosBase, setDadosBase] = useState({
         nome: '',
         cep: '',
         numero: '',
@@ -18,14 +24,12 @@ function Cadastro() {
         senha: '',
         confirmarSenha: '',
         celular: '',
-    }
-
+    })
     const [formularioCPF, setFormularioCPF] = useState({
         dadosBase,
         rg: '',
         cpf: '',
     });
-
     const [formularioCNPJ, setFormularioCNPJ] = useState({
         dadosBase,
         razaoSocial: '',
@@ -33,22 +37,80 @@ function Cadastro() {
         telefone: ''
     });
 
-    
-    const [tipoUsuario, setTipoUsuario] = useState('fisica');
+    const validarFormulario = () => {
 
+        if(etapa == 1){
 
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-    //     setFormularioCPF((prev) => ({
-    //         ...prev,
-    //         [name]: value
-    //     }));
-    // };
+            if(tipoUsuario == 'fisica'){
 
-    // const handleSubmit = () => {
-    //     console.log('Formulário enviado:', formulario);
-    //     alert('Cadastro finalizado!');
-    // };
+                if(campoVazio(formularioCPF.dadosBase.nome) || campoVazio(formularioCPF.dadosBase.celular) || campoVazio(formularioCPF.cpf) || campoVazio(formularioCPF.rg)){
+                    exibirAviso('Preencher todos os campos obrigatórios', 'error');
+                } else if(campoNaoAtendeTamanho(formularioCPF.rg, 12)){
+                    exibirAviso('O RG informado é inválido', 'error');
+                } else if(campoNaoAtendeTamanho(formularioCPF.cpf, 14)){
+                    exibirAviso('O CPF informado é inválido', 'error');
+                } else if(campoNaoAtendeTamanho(formularioCPF.dadosBase.celular, 15)){
+                    exibirAviso('O Celular informado é inválido', 'error');
+                } else {
+                    setEtapa(2);
+                }
+            } else{
+
+                if(campoVazio(formularioCNPJ.dadosBase.nome) || campoVazio(formularioCNPJ.razaoSocial) || campoVazio(formularioCNPJ.telefone) || campoVazio(formularioCNPJ.cnpj) || campoVazio(formularioCNPJ.dadosBase.celular)){
+                    exibirAviso('Preencher todos os campos obrigatórios', 'error');
+                }else if(campoNaoAtendeTamanho(formularioCNPJ.cnpj, 18)){
+                    exibirAviso('O CNPJ informado é inválido', 'error');
+                } else if(campoNaoAtendeTamanho(formularioCNPJ.dadosBase.celular, 15)){
+                    exibirAviso('O Celular informado é inválido', 'error');
+                } else if(campoNaoAtendeTamanho(formularioCNPJ.telefone, 14)){
+                    exibirAviso('O Telefone informado é inválido', 'error');
+                } else {
+                    setEtapa(2);
+                }
+            }
+        } else if(etapa == 2){
+
+            if(campoVazio(dadosBase.cep) || campoVazio(dadosBase.bairro) || campoVazio(dadosBase.rua) || campoVazio(dadosBase.numero) || campoVazio(dadosBase.cidade) || campoVazio(dadosBase.estado)){
+                exibirAviso('Preencher todos os campos obrigatórios', 'error');
+            } else {
+                setEtapa(3);
+            }
+        } else if(etapa == 3){
+
+            const senha = senhaInvalida(dadosBase.senha, dadosBase.confirmarSenha);
+            if(campoVazio(dadosBase.email) || campoVazio(dadosBase.senha) || campoVazio(dadosBase.confirmarSenha)){
+                exibirAviso('Preencher todos os campos obrigatórios', 'error');
+            } else if(emailInvalido(dadosBase.email)){
+                exibirAviso('O e-mail informado é inválido', 'error');
+            } else if(senha.invalida){
+                exibirAviso(senha.excecao, 'error');
+            }
+        }
+    }
+
+    /* Consultar CEP */
+    const [desabilitar, setDesabilitar] = useState(false);
+    useEffect(() => {
+
+        const cep = dadosBase.cep.replace('-', ''); 
+        if(cep.length == 8){
+
+            axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+            .then((res) => {
+                const caixote = res.data;
+                setDesabilitar(true);
+                setDadosBase((endereco) => ({
+                    ...endereco,
+                    rua: caixote.logradouro,
+                    bairro: caixote.bairro,
+                    cidade: caixote.localidade,
+                    estado: caixote.uf
+                }))
+            })
+        } else{
+            setDesabilitar(false)
+        }
+    }, [dadosBase.cep])
 
     return (
         <section className={`container-cadastro ${etapa === 2 ? 'etapa-dois' : ''}`}>
@@ -76,8 +138,16 @@ function Cadastro() {
                                 label='* Nome Completo:'
                                 tipo='text'
                                 placeholder='Nome Completo'
-                                value={formularioCPF.dadosBase.nome}
-                                // onChange={handleChange}
+                                valor={formularioCPF.dadosBase.nome}
+                                onChange={(e) => {
+                                    setFormularioCPF((pf) => ({
+                                        ...pf,
+                                        dadosBase: {
+                                            ...pf.dadosBase,
+                                            nome: e.target.value
+                                        }
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -86,9 +156,15 @@ function Cadastro() {
                                 name='rg'
                                 label='* RG:'
                                 tipo='text'
-                                placeholder='RG'
-                                value={formularioCPF.rg}
-                                // onChange={handleChange}
+                                placeholder='Ex.: 99.999.999-9'
+                                valor={formularioCPF.rg}
+                                maxLength={12}
+                                onChange={(e) => {
+                                    setFormularioCPF(pf => ({
+                                        ...pf,
+                                        rg: formatarRegistroGeral(e.target.value)
+                                    }));
+                                }}
                             />
                         </section>
                         <section>
@@ -97,9 +173,15 @@ function Cadastro() {
                                 name='cpf'
                                 label='* CPF:'
                                 tipo='text'
-                                placeholder='CPF'
-                                value={formularioCPF.cpf}
-                                // onChange={handleChange}
+                                placeholder='Ex.: 999.999.999-99'
+                                valor={formularioCPF.cpf}
+                                maxLength={14}
+                                onChange={(e) => {
+                                    setFormularioCPF(pf => ({
+                                        ...pf,
+                                        cpf: formatarCPF(e.target.value)
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -108,9 +190,18 @@ function Cadastro() {
                                 name='celular'
                                 label='* Celular:'
                                 tipo='text'
-                                placeholder='Celular'
-                                value={formularioCPF.dadosBase.celular}
-                                // onChange={handleChange}
+                                placeholder='Ex.: (99) 99999-9999'
+                                valor={formularioCPF.dadosBase.celular}
+                                maxLength={15}
+                                onChange={(e) => {
+                                    setFormularioCPF(pf => ({
+                                        ...pf,
+                                        dadosBase: {
+                                            ...pf.dadosBase,
+                                            celular: formatarTelefone(e.target.value)
+                                        }
+                                    }))
+                                }}
                             />
                         </section>
                         </>
@@ -123,8 +214,16 @@ function Cadastro() {
                                 label='* Nome Fantasia:'
                                 tipo='text'
                                 placeholder='Nome Fantasia'
-                                value={formularioCNPJ.dadosBase.nome}
-                                // onChange={handleChange}
+                                valor={formularioCNPJ.dadosBase.nome}
+                                onChange={(e) => {
+                                    setFormularioCNPJ((pj) => ({
+                                        ...pj,
+                                        dadosBase: {
+                                            ...pj.dadosBase,
+                                            nome: e.target.value
+                                        }
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -134,8 +233,13 @@ function Cadastro() {
                                 label='* Razão Social:'
                                 tipo='text'
                                 placeholder='Razão Social'
-                                value={formularioCNPJ.razaoSocial}
-                                // onChange={handleChange}
+                                valor={formularioCNPJ.razaoSocial}
+                                onChange={(e) => {
+                                    setFormularioCNPJ((pj) => ({
+                                        ...pj,
+                                        razaoSocial: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -144,9 +248,15 @@ function Cadastro() {
                                 name='cnpj'
                                 label='* CNPJ:'
                                 tipo='text'
-                                placeholder='CNPJ'
-                                value={formularioCNPJ.cnpj}
-                                // onChange={handleChange}
+                                placeholder='Ex.: 99.999.999/9999-99'
+                                valor={formularioCNPJ.cnpj}
+                                maxLength={18}
+                                onChange={(e) => {
+                                    setFormularioCNPJ((pj) => ({
+                                        ...pj,
+                                        cnpj: formatarCNPJ(e.target.value)
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -155,9 +265,18 @@ function Cadastro() {
                                 name='celular'
                                 label='* Celular:'
                                 tipo='text'
-                                placeholder='Celular'
-                                value={formularioCNPJ.dadosBase.celular}
-                                // onChange={handleChange}
+                                placeholder='Ex.: (99) 99999-9999'
+                                valor={formularioCNPJ.dadosBase.celular}
+                                maxLength={15}
+                                onChange={(e) => {
+                                    setFormularioCNPJ((pj) => ({
+                                        ...pj,
+                                        dadosBase: {
+                                            ...pj.dadosBase,
+                                            celular: formatarTelefone(e.target.value)
+                                        }
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -166,9 +285,15 @@ function Cadastro() {
                                 name='telefone'
                                 label='* Telefone:'
                                 tipo='text'
-                                placeholder='Telefone'
-                                value={formularioCNPJ.telefone}
-                                // onChange={handleChange}
+                                placeholder='Ex.: (99) 9999-9999'
+                                valor={formularioCNPJ.telefone}
+                                maxLength={14}
+                                onChange={(e) => {
+                                    setFormularioCNPJ((pj) => ({
+                                        ...pj,
+                                        telefone: formatarTelefoneFixo(e.target.value)
+                                    }))
+                                }}
                             />
                         </section>
                         </>
@@ -178,7 +303,7 @@ function Cadastro() {
                             <button
                                 type="button"
                                 className="botao-continuar"
-                                onClick={() => setEtapa(2)}
+                                onClick={validarFormulario}
                             >
                                 Continuar
                             </button>
@@ -196,7 +321,7 @@ function Cadastro() {
                         <div className='barra-divisoria-cadastro'></div>
                         <div className='options-cadastro'>
                             <div className='option'>
-                                <p>CPF</p>
+                                <p>{tipoUsuario === "fisica" ? "CPF" : "CNPJ"}</p>
                                 <div className='barra'></div>
                             </div>
                         </div>
@@ -207,8 +332,14 @@ function Cadastro() {
                                 label='* CEP:'
                                 tipo='text'
                                 placeholder='CEP'
-                                value={dadosBase.cep}
-                                // onChange={handleChange}
+                                valor={dadosBase.cep}
+                                maxLength={9}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        cep: formatarCEP(e.target.value)
+                                    }))
+                                }}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -218,8 +349,14 @@ function Cadastro() {
                                 label='* Número:'
                                 tipo='text'
                                 placeholder='Número'
-                                value={dadosBase.numero}
-                                // onChange={handleChange}
+                                valor={dadosBase.numero}
+                                maxLength={6}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        numero: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -229,8 +366,14 @@ function Cadastro() {
                                 label='* Rua:'
                                 tipo='text'
                                 placeholder='Rua'
-                                value={dadosBase.rua}
-                                // onChange={handleChange}
+                                valor={dadosBase.rua}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        rua: e.target.value
+                                    }))
+                                }}
+                                desabilitar={desabilitar}
                             />
                         </section>
                         <section className='etapa2-section'>
@@ -240,8 +383,14 @@ function Cadastro() {
                                 label='* Bairro:'
                                 tipo='text'
                                 placeholder='Bairro'
-                                value={dadosBase.bairro}
-                                // onChange={handleChange}
+                                valor={dadosBase.bairro}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        bairro: e.target.value
+                                    }))
+                                }}
+                                desabilitar={desabilitar}
                             />
                         </section>
                         
@@ -253,8 +402,14 @@ function Cadastro() {
                                     label='* Cidade:'
                                     tipo='text'
                                     placeholder='Cidade'
-                                    value={dadosBase.cidade}
-                                    // onChange={handleChange}
+                                    valor={dadosBase.cidade}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            cidade: e.target.value
+                                        }))
+                                    }}
+                                    desabilitar={desabilitar}
                                 />
                             </section>
 
@@ -265,8 +420,14 @@ function Cadastro() {
                                     label='* Estado:'
                                     tipo='text'
                                     placeholder='Estado'
-                                    value={dadosBase.estado}
-                                    // onChange={handleChange}
+                                    valor={dadosBase.estado}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            estado: e.target.value
+                                        }))
+                                    }}
+                                    desabilitar={desabilitar}
                                 />
                             </section>
                         </div>
@@ -274,11 +435,16 @@ function Cadastro() {
                             <Input
                                 id='complemento'
                                 name='complemento'
-                                label='* Complemento:'
+                                label='Complemento:'
                                 tipo='text'
                                 placeholder='Complemento'
-                                value={dadosBase.complemento}
-                                // onChange={handleChange}
+                                valor={dadosBase.complemento}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        complemento: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <div className="botoes-e-aviso-etapa-2">
@@ -293,7 +459,7 @@ function Cadastro() {
                                 <button
                                     type="button"
                                     className="botao-continuar-etapa-2"
-                                    onClick={() => setEtapa(3)}>
+                                    onClick={validarFormulario}>
                                     Continuar
                                 </button>
                             </div>
@@ -310,7 +476,7 @@ function Cadastro() {
                         <div className='barra-divisoria-cadastro'></div>
                         <div className='options-cadastro'>
                             <div className='option'>
-                                <p>CPF</p>
+                                <p>{tipoUsuario === "fisica" ? "CPF" : "CNPJ"}</p>
                                 <div className='barra'></div>
                             </div>
                         </div>
@@ -321,8 +487,13 @@ function Cadastro() {
                                 label='* E-mail:'
                                 tipo='email'
                                 placeholder='Digite seu e-mail'
-                                value={dadosBase.email}
-                                // onChange={handleChange}
+                                valor={dadosBase.email}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        email: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -332,8 +503,13 @@ function Cadastro() {
                                 label='* Senha:'
                                 tipo='password'
                                 placeholder='Crie uma senha'
-                                value={dadosBase.senha}
-                                // onChange={handleChange}
+                                valor={dadosBase.senha}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        senha: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <section>
@@ -343,8 +519,13 @@ function Cadastro() {
                                 label='* Confirmar Senha:'
                                 tipo='password'
                                 placeholder='Confirme sua senha'
-                                value={dadosBase.confirmarSenha}
-                                // onChange={handleChange}
+                                valor={dadosBase.confirmarSenha}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        confirmarSenha: e.target.value
+                                    }))
+                                }}
                             />
                         </section>
                         <div className="botoes-e-aviso-etapa-3">
@@ -359,7 +540,7 @@ function Cadastro() {
                                 <button
                                     type="button"
                                     className="botao-continuar-etapa-3"
-                                    onClick={() => setEtapa(3)}>
+                                    onClick={validarFormulario}>
                                     Criar
                                 </button>
                             </div>
