@@ -12,21 +12,24 @@ export const CarouselContainer = styled.div`
 export const Inner = styled.div`
     white-space:nowrap;
     transition:transform 0.3s;
-    margin:60px;
+    margin-left: 60px;
+    margin-right: 60px;
 `;
 
-// o iline-flex segue a mesma lógica do nowrap
-// o restante é a gosto
 export const DivCarouselItem = styled.button`
 display:inline-flex;
 align-items: center;
 justify-content:center;
-height: 300px;
-width:250px;
-background-color: #080808;
+height: 98%;
+width: 18%;
+border: none;
+background-color: #000000;
 color: #ffffff;
-margin: 25px;
+margin: 30px;
 
+    p {
+    white-space: normal;
+    }
 `;
 
 
@@ -65,6 +68,5 @@ export const Next = styled.button`
     transform: scale(1.2);
     transition: all 0.3s ease;
   };
-
 `;
 

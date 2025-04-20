@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react"
 import { CarouselContainer, Indicadores, Inner, Next, Prev } from "./style"
-import { AiOutlineDoubleLeft } from "react-icons/ai"; 
-import { AiOutlineDoubleRight } from "react-icons/ai"; // de npm install react-icons
+
 import { useSwipeable } from "react-swipeable"; // de npm install react-swipeable
 
 export const Carousel=({children})=> {
@@ -49,11 +48,11 @@ const handlers = useSwipeable({
         <Prev onClick={()=>{
             updateIndex(activeIndex -1)
         }}>
-            <img src="./src/assets/setaEsquerda.png" alt="seta esquerda" //Como alterar tamanho da imagem?   
+            <img src="./src/assets/setaEsquerda.png" alt="seta esquerda"
             style={{ width: "30px", height: "30px" }}
             />
         </Prev>
-        <Inner style={{transform: `translateX(-${activeIndex*32}%)`}}>
+        <Inner style={{transform: `translateX(-${activeIndex*15.5}%)`}}> 
         {React.Children.map(children,(child, index)=>{
             return React.cloneElement(child, {width:"25%"})
         })}
