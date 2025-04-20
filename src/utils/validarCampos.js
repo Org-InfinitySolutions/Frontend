@@ -9,7 +9,7 @@ const emailInvalido = (email) => {
 }
 
 const campoNaoAtendeTamanho = (campo, tamanho) => {
-    return !campo.trim().length == tamanho;
+    return campo.trim().length < tamanho;
 } 
 
 const senhaInvalida = (senha, confirmarSenha) => {

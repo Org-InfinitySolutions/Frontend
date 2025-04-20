@@ -6,8 +6,14 @@ import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, for
 import { emailInvalido, campoNaoAtendeTamanho, campoVazio, senhaInvalida } from '../utils/validarCampos';
 import { exibirAviso } from '../utils/exibirModalAviso'
 import axios from 'axios';
+import { api } from '../provider/apiInstance';
+import { useNavigate } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
 
 function Cadastro() {
+    const navegar = useNavigate();
+    const [barraCarregamento, setBarraCarregamento] = useState(0);
+
     const [etapa, setEtapa] = useState(1);
     const [tipoUsuario, setTipoUsuario] = useState('fisica');
 
@@ -84,6 +90,8 @@ function Cadastro() {
                 exibirAviso('O e-mail informado é inválido', 'error');
             } else if(senha.invalida){
                 exibirAviso(senha.excecao, 'error');
+            } else {
+                cadastrarUsuario();
             }
         }
     }
@@ -97,23 +105,95 @@ function Cadastro() {
 
             axios.get(`https://viacep.com.br/ws/${cep}/json/`)
             .then((res) => {
-                const caixote = res.data;
-                setDesabilitar(true);
-                setDadosBase((endereco) => ({
-                    ...endereco,
-                    rua: caixote.logradouro,
-                    bairro: caixote.bairro,
-                    cidade: caixote.localidade,
-                    estado: caixote.uf
-                }))
+                if(res.data.erro !== "true"){
+                    const caixote = res.data;
+                    setDesabilitar(true);
+                    setDadosBase((endereco) => ({
+                        ...endereco,
+                        rua: caixote.logradouro,
+                        bairro: caixote.bairro,
+                        cidade: caixote.localidade,
+                        estado: caixote.uf
+                    }))
+                }
             })
         } else{
             setDesabilitar(false)
         }
     }, [dadosBase.cep])
 
+    useEffect(() => {
+        if(tipoUsuario == 'fisica'){
+            setFormularioCPF((dados) => ({
+                ...dados,
+                dadosBase
+            }))
+        } else {
+            setFormularioCNPJ((dados) => ({
+                ...dados,
+                dadosBase
+            }))
+        }
+    }, [dadosBase]);
+
+    const cadastrarUsuario = () => {
+
+        setBarraCarregamento(30);
+        const form = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ; 
+        const fisica = {
+            cpf: form.cpf,
+            rg: form.rg
+        }
+        const juridica = {
+            cnpj: form.cnpj,
+            razao_social: form.razaoSocial,
+            telefone_residencial: form.telefone
+        }
+
+        api.post("/usuarios", {
+            nome: form.dadosBase.nome,
+            tipo: tipoUsuario == 'fisica' ? 'PF' : 'PJ',
+            email: form.dadosBase.email,
+            senha: form.dadosBase.senha,
+            endereco: {
+                cep: form.dadosBase.cep,
+                logradouro: form.dadosBase.rua,
+                bairro: form.dadosBase.bairro,
+                cidade: form.dadosBase.cidade,
+                estado: form.dadosBase.estado,
+                numero: form.dadosBase.numero,
+                complemento: form.dadosBase.complemento
+            },
+            telefone_celular: form.dadosBase.celular,
+            ...(tipoUsuario == 'fisica' ? fisica : juridica)
+        }).then((res) => {
+
+            setBarraCarregamento(70);
+            setTimeout(() => {
+                setBarraCarregamento(100);
+            }, 1000);
+            setTimeout(() => {
+                navegar('/login');
+            }, 1500);
+        }).catch((erro) => {
+            setBarraCarregamento(100);
+
+            const dataErro = erro.response.data;
+            if(dataErro.validationErrors != null){
+                exibirAviso(dataErro.validationErrors[0].message, 'error');            
+            } else {
+                exibirAviso(dataErro.error, 'error');
+            }
+        })
+    }
+
     return (
         <section className={`container-cadastro ${etapa === 2 ? 'etapa-dois' : ''}`}>
+            <LoadingBar
+                progress={barraCarregamento}
+                height={3}
+                color="#f11946"
+            />
             {etapa === 1 && (
                 <>
                     <form className='container-formulario' onSubmit={(e) => e.preventDefault()}>
@@ -140,12 +220,9 @@ function Cadastro() {
                                 placeholder='Nome Completo'
                                 valor={formularioCPF.dadosBase.nome}
                                 onChange={(e) => {
-                                    setFormularioCPF((pf) => ({
+                                    setDadosBase((pf) => ({
                                         ...pf,
-                                        dadosBase: {
-                                            ...pf.dadosBase,
-                                            nome: e.target.value
-                                        }
+                                        nome: e.target.value 
                                     }))
                                 }}
                             />
@@ -194,12 +271,9 @@ function Cadastro() {
                                 valor={formularioCPF.dadosBase.celular}
                                 maxLength={15}
                                 onChange={(e) => {
-                                    setFormularioCPF(pf => ({
+                                    setDadosBase((pf) => ({
                                         ...pf,
-                                        dadosBase: {
-                                            ...pf.dadosBase,
-                                            celular: formatarTelefone(e.target.value)
-                                        }
+                                        celular: formatarTelefone(e.target.value)
                                     }))
                                 }}
                             />
@@ -216,12 +290,9 @@ function Cadastro() {
                                 placeholder='Nome Fantasia'
                                 valor={formularioCNPJ.dadosBase.nome}
                                 onChange={(e) => {
-                                    setFormularioCNPJ((pj) => ({
+                                    setDadosBase((pj) => ({
                                         ...pj,
-                                        dadosBase: {
-                                            ...pj.dadosBase,
-                                            nome: e.target.value
-                                        }
+                                        nome: e.target.value 
                                     }))
                                 }}
                             />
@@ -269,12 +340,9 @@ function Cadastro() {
                                 valor={formularioCNPJ.dadosBase.celular}
                                 maxLength={15}
                                 onChange={(e) => {
-                                    setFormularioCNPJ((pj) => ({
+                                    setDadosBase((pj) => ({
                                         ...pj,
-                                        dadosBase: {
-                                            ...pj.dadosBase,
-                                            celular: formatarTelefone(e.target.value)
-                                        }
+                                        celular: formatarTelefone(e.target.value)
                                     }))
                                 }}
                             />
