@@ -39,6 +39,12 @@ body {
   margin-bottom: 2rem;
 }
 
+.linha-botoes-carrinho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .botoes-toggle {
   display: flex;
   list-style: none;
@@ -47,6 +53,7 @@ body {
 }
 
 .botoes-toggle a {
+  border-radius: var(--border-radius);
   text-decoration: none;
   padding: var(--padding-medio);
   font-weight: bold;
@@ -76,14 +83,6 @@ body {
   transition: background-color var(--transição);
 }
 
-.barra-pesquisa-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-  max-width: 300px;
-  width: 100%;
-}
-
 .input-pesquisa {
   width: 100%;
   padding: 0.6rem 2.5rem 0.6rem 0.8rem;
@@ -98,6 +97,17 @@ body {
   position: absolute;
   right: 10px;
   pointer-events: none;
+}
+
+.icone-carrinho img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icone-carrinho img:hover {
+  transform: scale(1.1);
 }
 
 .select-filtro {
@@ -151,6 +161,14 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: var(--gap-grande);
   margin-top: 1.5rem;
+
+  .nomeProduto {
+    text-decoration: none;
+    color: var(--color-preto);
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .card-produto {
@@ -190,6 +208,16 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+}
+
+.botao-adicionar:hover {
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  border: solid 2px var(--color-preto);
+  width: 69%;
+  height: 31px;
+  transition: background-color var(--transição);
 }
 
 .paginacao {

@@ -52,6 +52,7 @@ button {
 }
 
 .botoes-toggle a {
+  border-radius: var(--border-radius);
   padding: var(--padding-medio);
   font-weight: bold;
 }

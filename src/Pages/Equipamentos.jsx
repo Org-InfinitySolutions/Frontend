@@ -14,9 +14,14 @@ const Equipamentos = () => {
         <div className="pagina-equipamentos">
             <main className="conteudo-equipamentos">
                 <div className="filtros">
-                    <div className="botoes-toggle">
-                        <a className="ativo">EQUIPAMENTOS</a>
-                        <a href="/pedidos" className="inativo">PEDIDOS</a>
+                    <div className="linha-botoes-carrinho">
+                        <div className="botoes-toggle">
+                            <a className="ativo">EQUIPAMENTOS</a>
+                            <a href="/pedidos" className="inativo">PEDIDOS</a>
+                        </div>
+                        <div className="icone-carrinho">
+                            <img src={IconeCarrinho} alt="Carrinho de compras" />
+                        </div>
                     </div>
 
                     <div className="linha-pesquisa-filtros">
@@ -42,8 +47,8 @@ const Equipamentos = () => {
                     {produtos.map((produto, index) => (
                         <div className="card-produto" key={index}>
                             <img src={produto.imagem} alt={produto.nome} />
-                            <p>{produto.nome}</p>
-                            <a href='/produto' className="botao-adicionar">+</a>
+                            <a className='nomeProduto' href='/produto'>{produto.nome}</a>
+                            <a className="botao-adicionar">+</a>
                         </div>
                     ))}
                 </div>

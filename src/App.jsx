@@ -9,6 +9,8 @@ import { Login } from './Pages/Login'
 import { Cadastro } from './Pages/Cadastro'
 import { Perfil } from './Pages/Perfil'
 import { Pedidos } from './Pages/Pedidos';
+import { Equipamentos } from './Pages/Equipamentos';
+import { Produto } from './Pages/Produto';
 import { EditarPerfil } from './Pages/EditarPerfil';
 import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';

@@ -29,11 +29,15 @@ const Pedidos = () => {
 
                         <div className="container-filtros">
                             <select className="select-filtro">
-                                <option>Situação</option>
+                                <option>Em Análise</option>
+                                <option>Aprovado</option>
+                                <option>Em Evento</option>
+                                <option>Finalizado</option>
                             </select>
 
                             <select className="select-filtro">
                                 <option>Mais Recentes</option>
+                                <option>Mais Antigos</option>
                             </select>
                         </div>
                     </div>
