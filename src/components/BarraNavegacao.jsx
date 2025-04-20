@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
 
 function BarraNavegacao(){
 
-    const [usuarioLogado, setUsuarioLogado] = useState(localStorage.USUARIO_LOGADO == "True");
-    
+    const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO == "True");
+
     return(
     <>
         <nav className="barra-navegacao">
@@ -22,9 +22,10 @@ function BarraNavegacao(){
             ) : (
             <section className="container-links">
                 <div>
-                    <a href="#">Projetos</a>
+                    <a href="#">Sobre nós</a>
                     <a href="#">Serviços</a>
-                    <a href="#">Locações</a>
+                    <a href="#">Projetos</a>
+                    <a href="#">Equipamentos</a>
                 </div>
             </section>
             )}
