@@ -4,15 +4,12 @@ import instagram from '../assets/instagram.png';
 import telefone from '../assets/telefone.png';
 import email from '../assets/email.png';
 import empresa from '../assets/empresa.png' ;
-import { useState } from 'react';
 
 function Rodape() {
-
-  const [usuarioLogado, setUsuarioLogado] = useState(localStorage.USUARIO_LOGADO == "True");
     
   return (
     <>
-        { usuarioLogado ? <div className='barra-divisoria'></div> : <></> } 
+        <div className='barra-divisoria'></div>
         <footer>
             <section className='container-informacoes-gerais'>
                 <section className='container-logo'>
