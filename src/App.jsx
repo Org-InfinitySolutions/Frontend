@@ -2,7 +2,7 @@ import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
 
 // Dependências do Router
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 // Importando página
 import { Login } from './Pages/Login'
@@ -15,26 +15,31 @@ import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Index } from './Pages/Index';
 
-function App() {
+function App(){
 
+  return(
+    <Router>
+      <MainComponent />
+    </Router>
+  )
+}
+
+function MainComponent() {
+
+  const location = useLocation();
   return (
     <>      
-      <BarraNavegacao />
-        {/* Adicionei esse router para conseguir visualizar a pagina */}
-        <Router>
-          <Routes>
-            {/* Caso precise faça o mesmo, copie o codigo abaixo e defina a rota desejada */}
-            <Route path='/login' element={<Login />} />
-            <Route path='/cadastro' element={<Cadastro />} />
-            <Route path='/perfil' element={<Perfil />} />
-            <Route path='/editar-perfil' element={<EditarPerfil />} />
-            <Route path='/carrinho' element={<Carrinho />} />
-            <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
-            <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
-            <Route path='/pedidos' element={<Pedidos />} />
-            <Route path='/index' element={<Index />} />
-          </Routes>
-        </Router>
+      <BarraNavegacao key={location.pathname}/>
+        <Routes>
+          <Route path='/login' element={<Login />} />
+          <Route path='/cadastro' element={<Cadastro />} />
+          <Route path='/perfil' element={<Perfil />} />
+          <Route path='/editar-perfil' element={<EditarPerfil />} />
+          <Route path='/carrinho' element={<Carrinho />} />
+          <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
+          <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
+          <Route path='/pedidos' element={<Pedidos />} />
+        </Routes>
       <Rodape />
     </>
   )

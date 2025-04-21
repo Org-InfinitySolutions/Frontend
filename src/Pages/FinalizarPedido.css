@@ -1,7 +1,6 @@
 .finalizar-pedido{
     min-height: 90vh;
     width: 100%;
-
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -213,4 +212,53 @@
         font-size: 1em;
         font-family: var(--fonte-texto);
     }
-}
+
+    .container-fundo{
+        background-color: black;
+        width: 99vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+    }
+
+    .modal-content {
+        background-color: white;
+        border-radius: 10px;
+        width: 28%;
+        height: 40%;
+        margin-top: 8%;
+    }
+        .botao-confirmar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
+            background-color: black;
+            color: white;
+            border: none;
+            font-size: 1rem;
+            font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+          }
+    
+        .botao-voltar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
+            background-color: white;
+            color: black;
+            border: none;
+            font-size: 1rem;
+            font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px black solid;
+        }        
+    }
+    
+    .botoes-modal button {
+        margin: 0 10px;
+    }
+
