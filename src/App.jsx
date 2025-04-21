@@ -13,6 +13,7 @@ import { EditarPerfil } from './Pages/EditarPerfil';
 import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
+import { Index } from './Pages/Index';
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
             <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
             <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
             <Route path='/pedidos' element={<Pedidos />} />
+            <Route path='/index' element={<Index />} />
           </Routes>
         </Router>
       <Rodape />
