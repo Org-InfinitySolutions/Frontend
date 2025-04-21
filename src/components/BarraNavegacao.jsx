@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
+import { limparSession } from '../utils/limpar';
 
 function BarraNavegacao(){
 
-    const [usuarioLogado, setUsuarioLogado] = useState(localStorage.USUARIO_LOGADO == "True");
-    
+    const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO === "True");
+
+    useEffect(() => {
+        setUsuarioLogado(sessionStorage.USUARIO_LOGADO === "True");
+    }, []);
+
     return(
     <>
         <nav className="barra-navegacao">
@@ -22,16 +27,17 @@ function BarraNavegacao(){
             ) : (
             <section className="container-links">
                 <div>
-                    <a href="#">Projetos</a>
+                    <a href="#">Sobre nós</a>
                     <a href="#">Serviços</a>
-                    <a href="#">Locações</a>
+                    <a href="#">Projetos</a>
+                    <a href="#">Equipamentos</a>
                 </div>
             </section>
             )}
             {usuarioLogado ? (
             <section className="container-eventos">
                 <a href='/perfil' className='botao-cadastro'>Perfil</a>
-                <a href='/' className='botao-login'>Sair</a>
+                <a href='/' onClick={() => { limparSession()}} className='botao-login'>Sair</a>
             </section>
             ) : (
             <section className="container-eventos">

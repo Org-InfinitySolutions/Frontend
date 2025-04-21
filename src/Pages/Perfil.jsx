@@ -1,45 +1,104 @@
 
 import './Perfil.css'
+import { api, apiAutenticacao } from '../provider/apiInstance';
+import { useEffect, useState } from 'react';
+import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
+import LoadingBar from 'react-top-loading-bar';
 
 function Perfil(){
 
+    const [usuario, setUsuario] = useState({});
+    const [endereco, setEndereco] = useState({});
+    const [barraCarregamento, setBarraCarregamento] = useState(0);
+
+    useEffect(() => {
+
+        setBarraCarregamento(10);
+        api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then((res) => {
+
+            setBarraCarregamento(87);
+            const dados = res.data;
+            const dadosEndereco = dados.endereco;
+            setUsuario(dados)
+            setEndereco(dadosEndereco);
+
+            setTimeout(() => {
+                setBarraCarregamento(100);
+            }, 500)
+        }).catch((erro) => {
+            
+            setBarraCarregamento(100);
+            if(erro.status == 401){
+                exibirAvisoTokenExpirado();
+            }
+        })
+    }, []);
+
+    useEffect(() => {
+        
+        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then((res) => {
+            setUsuario((usuario) => ({
+                ...(usuario || {}),
+                email: res.data.email
+            }))
+        }).catch((erro) => {
+            console.log(erro);
+        })
+    }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
+
     return(
     <div className="container">
+        <LoadingBar
+            progress={barraCarregamento}
+            height={3}
+            color="#f11946"
+        />
         <div className="container-perfil">
             <section className="titulo-form">
                 {/* implementar validacao para mudar titulo form */}
-                <h2>{localStorage.TIPO_USUARIO == "PF" ? "Meu perfil" : "Minha empresa"}</h2>
+                <h2>{sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "Meu perfil" : "Minha empresa"}</h2>
                 <div className="barra"></div>
             </section>
-            {localStorage.TIPO_USUARIO === "PJ" ? (
+            {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
             <section className="dados-pessoais">
                 <h3>Dados pessoais:</h3>
-                <span>Nome: Rafaela Gonçalves Sousa</span>
-                <span>CPF: 190.098.223-01</span>
-                <span>RG: 88.765.234-9</span>
-                <span>E-mail: rafaela.goncalves@hotmail.com</span>
-                <span>Celular: 11 98768-0918</span>
+                <span>Nome: {usuario.nome}</span>
+                <span>CPF: {usuario.cpf}</span>
+                <span>RG: {usuario.rg}</span>
+                <span>E-mail: {usuario.email}</span>
+                <span>Celular: {usuario.telefone_celular}</span>
             </section>
             ) : (
             <section className="dados-pessoais">
                 <h3>Dados da empresa:</h3>
-                <span>Nome fantasia: Rafaela Gonçalves Sousa</span>
-                <span>Razão social: 88.765.234-9</span>
-                <span>CNPJ: 12.345.678/0001-95</span>
-                <span>E-mail: rafaela.goncalves@hotmail.com</span>
-                <span>Celular: 11 98768-0918</span>
-                <span>Telefone: 11 98768-0918</span>
+                <span>Nome fantasia: {usuario.nome}</span>
+                <span>Razão social: {usuario.razao_social}</span>
+                <span>CNPJ: {usuario.cnpj}</span>
+                <span>E-mail: {usuario.email}</span>
+                <span>Celular: {usuario.telefone_celular}</span>
+                <span>Telefone: {usuario.telefone_residencial}</span>
             </section>
             )}
             <section className="dados-endereco">
                 <h3>Endereço:</h3>
-                <span>Rua: Rua são joaquim</span>
-                <span>Número: 1900</span>
                 <div>
-                    <span>Cidade: Taboão da Serra</span>
-                    <span>Estado: SP</span>
+                    <span>Rua: {endereco.logradouro}</span>
+                    <span>Número: {endereco.numero}</span>
                 </div>
-                <span>Complemento: 11 98768-0918</span>
+                <span>Bairro: {endereco.bairro}</span>
+                <div>
+                    <span>Cidade: {endereco.cidade}</span>
+                    <span>Estado: {endereco.estado}</span>
+                </div>
+                <span>Complemento: {endereco.complemento}</span>
             </section>
             <section className="container-eventos">
                 <div className="eventos-excluir-editar">
@@ -51,8 +110,8 @@ function Perfil(){
                 </div>
             </section>
             <section className="dados-utilitarios">
-                <span>Conta criada em 13/03/2025 às 20:19</span>
-                <span>Ultima alteração em 14/03/2025 às 07:02</span>
+                <span>Conta criada em {/* 13/03/2025 às 20:19 */}</span>
+                <span>Ultima alteração em {/* 13/03/2025 às 20:19 */}</span>
             </section>
         </div>
     </div>
