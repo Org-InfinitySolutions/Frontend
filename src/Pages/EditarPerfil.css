@@ -244,3 +244,64 @@
         }
     }
 }
+
+  .modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 22%;
+    text-align: center;
+
+    h2{
+        font-family: "Montserrat", sans-serif;
+    }
+  }
+
+  .modal-content Input {
+    width: 90%;
+    margin-top: 1rem;
+    padding: 0.5rem;
+  }
+  
+  .botoes {
+    display: flex;
+    justify-content: right;
+    margin-top: 1.5rem;
+    gap: 2%;
+    min-height: 100%;
+
+    .botao-continuar{
+        height: 38px;
+        width: 102px;
+        margin-top: 10px;
+        background-color: black;
+        color: white;
+        border: none;
+        font-size: 1rem;
+        font-family: var(--fonte-texto);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+    .botao-cancelar{
+        height: 38px;
+        width: 102px;
+        margin-top: 10px;
+        background-color: white;
+        color: black;
+        border: none;
+        font-size: 1rem;
+        font-family: var(--fonte-texto);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        border: 1px black solid;
+    }
+
+    .botao-cancelar:active {
+        transform: scale(0.95);
+    }
+    
+  }
+  

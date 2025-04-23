@@ -122,6 +122,7 @@
                     align-items: center;
                     text-decoration: none;
                     justify-content: center;
+                    text-align: center;
                 }
                 .botao-editar:hover{
                     transition: 0.2s;

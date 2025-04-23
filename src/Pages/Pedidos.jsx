@@ -8,7 +8,7 @@ const pedidos = [
     { status: 'Em evento', cor: 'azul' },
     { status: 'Em evento', cor: 'azul' },
     { status: 'Finalizado', cor: 'vermelho' },
-    { status: 'Finalizado', cor: 'vermelho' },
+    { status: 'Cancelado', cor: 'vermelho' },
 ];
 
 const Pedidos = () => {
@@ -33,6 +33,7 @@ const Pedidos = () => {
                                 <option>Aprovado</option>
                                 <option>Em Evento</option>
                                 <option>Finalizado</option>
+                                <option>Cancelado</option>
                             </select>
 
                             <select className="select-filtro">

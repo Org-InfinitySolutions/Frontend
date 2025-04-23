@@ -17,7 +17,8 @@ function Login(){
     const navegar = useNavigate();
     const [barraCarregamento, setBarraCarregamento] = useState(0);
 
-    const Login = () => {
+    const Login = (event) => {
+        event.preventDefault();
 
         if(campoVazio(email) || campoVazio(senha)){
             exibirAviso("É obrigatório preencher todos os campos", 'error');
@@ -63,10 +64,10 @@ function Login(){
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
             <section className='caixa-entrada'>
-                <Input label='E-MAIL:' tipo='text' placeholder='E-mail' element={(e) => setEmail(e.target.value)}/>
+                <Input label='E-MAIL:' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
             </section>
             <section className='caixa-entrada'>
-                <Input label='SENHA:' tipo='password' placeholder='Senha' element={(e) => setSenha(e.target.value)}/>
+                <Input label='SENHA:' tipo='password' placeholder='Senha' onChange={(e) => setSenha(e.target.value)}/>
             </section>
             <button onClick={Login}>Entrar</button>
             <section className='links-navegacao'>

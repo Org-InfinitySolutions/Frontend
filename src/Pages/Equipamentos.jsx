@@ -2,6 +2,7 @@ import React from 'react';
 import './Equipamentos.css';
 import IconePesquisa from '../assets/iconePesquisar.png';
 import IconeCarrinho from '../assets/iconeCarrinho.png';
+import IconeCarrinhoFill from '../assets/iconeCarrinhoFill.png';
 import IconeNotebook from '../assets/notebook.png'
 
 const produtos = Array(20).fill({
@@ -47,8 +48,19 @@ const Equipamentos = () => {
                     {produtos.map((produto, index) => (
                         <div className="card-produto" key={index}>
                             <img src={produto.imagem} alt={produto.nome} />
-                            <a className='nomeProduto' href='/produto'>{produto.nome}</a>
-                            <a className="botao-adicionar">+</a>
+                            <div className="info-produto">
+                                <a className='nomeProduto' href='/produto'>{produto.nome}</a>
+                                <div className="botoes-card">
+                                    <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
+                                    <button className="botao-carrinho">
+                                        <img src={IconeCarrinhoFill} className="icone-carrinho-miniatura" alt="Carrinho" />
+                                    </button>
+                                </div>
+                                {/* <div className="botoes-card">
+                                    <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
+                                    <img className="icone-carrinho-miniatura" src={IconeCarrinhoFill} alt="Carrinho" />
+                                </div> */}
+                            </div>
                         </div>
                     ))}
                 </div>

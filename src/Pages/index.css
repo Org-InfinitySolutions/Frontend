@@ -1,0 +1,176 @@
+:root{
+    --fonte-titulo: "Montserrat Alternates", sans-serif;
+    --fonte-texto: "Montserrat", sans-serif;
+    --textos-branco: #FFFFFF;
+    --textos-preto: #000000;
+    --margin-textos: 3%;
+    --tamanho-fonte-texto: 20px;
+}
+
+body{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+}
+
+h1{
+    color: white;
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: "Montserrat alternates", sans-serif;
+    margin: 0;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    z-index: 1;
+   
+}
+
+.container-video {
+        position: relative;
+        width: 100%;
+        height: 630px;
+        overflow: hidden;
+
+        .container-titulo {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            padding-top: 100px; 
+        }
+        
+        .video-fundo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+}
+
+.container-sobre-nos {
+    display: flex;
+    background-color: black;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    color: white;
+    font-family: "Montserrat Alternates", sans-serif;
+    padding-bottom: var(--margin-textos);
+
+        h2 {
+            font-size: 36px;
+            text-align: left;
+            margin-left: var(--margin-textos);
+            margin-right: var(--margin-textos);
+            margin-top: 2%;
+        }
+
+        p {
+            font-size: var(--tamanho-fonte-texto);
+            text-align: justify;
+            margin-top: 0%;
+            margin-left: var(--margin-textos);
+            margin-right: var(--margin-textos);
+        }
+}
+
+.container-servicos {
+    display: flex;
+    background-color: white;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    padding: 10px; 
+    position: relative;
+    color: black;
+    font-family: "Montserrat Alternates", sans-serif;
+
+                p {
+                    text-align: justify;
+                    padding: 20px;
+                }
+
+                h2 {
+                    font-size: 36px;
+                    text-align: left;
+                    margin-left: var(--margin-textos);
+                    margin-right: var(--margin-textos);
+                    margin-top: 2%;
+                }
+}
+    
+.container-carrosel {
+    display: flex;
+    background-color: #000;
+    flex-direction: column;
+    height: 80%;
+    width: 80%;
+    padding: 10px; 
+    border-radius: 10px;
+    color: white;
+    margin: auto;
+    font-family: "Montserrat Alternates", sans-serif;
+    margin-bottom: var(--margin-textos);
+
+        p {
+            text-align: justify;
+            font-size: var(--tamanho-fonte-texto);	
+        }
+
+}
+
+.container-projeto-conteudo {
+    display: flex;;
+}
+
+.container-projeto {
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    color: white;
+    font-family: "Montserrat Alternates", sans-serif;
+    padding-bottom: var(--margin-textos);
+
+        h2 {
+            font-size: 36px;
+            text-align: left;
+            margin-left: var(--margin-textos);
+            margin-right: var(--margin-textos);
+            margin-top: 2%;
+            margin-bottom: 0%;
+        }
+
+        p {
+            font-size: var(--tamanho-fonte-texto);
+            text-align: justify;
+            /* margin-top: 0%; */
+            margin-left: var(--margin-textos);
+            margin-right: var(--margin-textos);
+        }
+
+        img {
+            margin-right: var(--margin-textos);
+            margin-left: var(--margin-textos);
+            width: 35%;
+            height: 30%;
+        }
+}
+
