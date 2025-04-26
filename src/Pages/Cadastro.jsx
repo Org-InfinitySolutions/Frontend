@@ -666,12 +666,12 @@ function Cadastro() {
                     <p>Preencha abaixo o código de confirmação que enviamos ao seu e-mail</p>
 
                     <div className='codigo-confirmacao'>
-                        <input type="text" onChange={(e) => { setCodigo1(e.target.value.toUpperCase()) }} />
-                        <input type="text" onChange={(e) => { setCodigo2(e.target.value.toUpperCase()) }} />
-                        <input type="text" onChange={(e) => { setCodigo3(e.target.value.toUpperCase()) }} />
-                        <input type="text" onChange={(e) => { setCodigo4(e.target.value.toUpperCase()) }} />
-                        <input type="text" onChange={(e) => { setCodigo5(e.target.value.toUpperCase()) }} />
-                        <input type="text" onChange={(e) => { setCodigo6(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo1(e.target.value) }} />
+                        <input type="text" onChange={(e) => { setCodigo2(e.target.value) }} />
+                        <input type="text" onChange={(e) => { setCodigo3(e.target.value) }} />
+                        <input type="text" onChange={(e) => { setCodigo4(e.target.value) }} />
+                        <input type="text" onChange={(e) => { setCodigo5(e.target.value) }} />
+                        <input type="text" onChange={(e) => { setCodigo6(e.target.value) }} />
                     </div>
 
                     <div className="botoes-etapa-4">

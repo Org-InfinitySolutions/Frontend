@@ -1,4 +1,4 @@
-/* :root{
+ :root{
     --fonte-titulo: "Montserrat Alternates", sans-serif;
     --fonte-texto: "Montserrat", sans-serif;
     --textos-branco: #FFFFFF;
@@ -24,7 +24,7 @@ body{
     margin: 0;
 }
 
-.container{
+.container-home{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -161,8 +161,8 @@ body{
         p {
             font-size: var(--tamanho-fonte-texto);
             text-align: justify;
-            /* margin-top: 0%; */
-            /* margin-left: var(--margin-textos);
+            margin-top: 0%;
+             margin-left: var(--margin-textos);
             margin-right: var(--margin-textos);
         }
 
@@ -172,5 +172,5 @@ body{
             width: 35%;
             height: 30%;
         }
-} */
- 
+} 
+  

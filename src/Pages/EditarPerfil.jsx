@@ -156,7 +156,7 @@ function EditarPerfil() {
            
             {mostrarModalConfirmacao && (
                 <div className="modal-content">
-                    <h3 className='confirmar-alteracao-email'>Deseja confirmar as alterações?</h3>
+                    <h1 className='confirmar-alteracao-email'>Deseja confirmar as alterações?</h1>
                     <p>Preencha a senha para continuar</p>
                     <Input type="text" placeholder="Senha" />
                     <div className="botoes">

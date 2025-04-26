@@ -7,7 +7,7 @@ import { DivCarouselItem } from '../components/Carrossel/style';
 
 function Home() {
     return (
-        <section className="container">
+        <section className="container-home">
 
             <section className='container-video'>
                 <video
