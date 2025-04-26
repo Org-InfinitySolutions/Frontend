@@ -1,4 +1,4 @@
-:root{
+/* :root{
     --fonte-titulo: "Montserrat Alternates", sans-serif;
     --fonte-texto: "Montserrat", sans-serif;
     --textos-branco: #FFFFFF;
@@ -14,7 +14,7 @@ body{
     overflow-x: hidden;
 }
 
-h1{
+.titulo{
     color: white;
     text-align: center;
     font-size: 50px;
@@ -162,7 +162,7 @@ h1{
             font-size: var(--tamanho-fonte-texto);
             text-align: justify;
             /* margin-top: 0%; */
-            margin-left: var(--margin-textos);
+            /* margin-left: var(--margin-textos);
             margin-right: var(--margin-textos);
         }
 
@@ -172,5 +172,5 @@ h1{
             width: 35%;
             height: 30%;
         }
-}
-
+} */
+ 

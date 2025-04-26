@@ -72,6 +72,7 @@
         h1{
             font-family: var(--fonte-titulo);
             margin: 3%;
+            color: #000;
         }
         section{
             height: 14%;
@@ -385,79 +386,81 @@
         margin: 0;
       }
 
-      .container-formulario-4 {
-        background-color: white;
-        padding: 40px 30px;
-        border-radius: 8px;
-        width: 30%;
-        margin: 0 auto;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
       
-        h1 {
-          font-family: "Montserrat Alternates", sans-serif;
-          font-size: 1.5rem;
-          margin-bottom: 10px;
-          text-align: center;
-        }
-      
-        p {
-          font-family: "Montserrat", sans-serif;
-          font-size: 1rem;
-          text-align: center;
-          margin-bottom: 25px;
-        }
-      
-        .codigo-confirmacao {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 20px;
-      
-          input {
-            width: 42px;
-            height: 52px;
-            text-align: center;
-            font-size: 1.5rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            outline: none;
-            font-family: "Montserrat", sans-serif;
-      
-            &:focus {
-              border-color: #000;
-            }
-          }
-        }
-      
-        .botoes-etapa-4 {
-          display: flex;
-          gap: 10px;
-      
-          .botao-voltar-etapa-4,
-          .botao-confirmar-etapa-4 {
-            height: 38px;
-            width: 102px;
-            padding: 6px 12px;
-            font-size: 1rem;
-            font-family: "Montserrat", sans-serif;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid black;
-          }
-      
-          .botao-voltar-etapa-4 {
-            background-color: white;
-            color: black;
-          }
-      
-          .botao-confirmar-etapa-4 {
-            background-color: black;
-            color: white;
-          }
-        }
-      }
       
      
+}
+
+.container-formulario-4 {
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 8px;
+  width: 30%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .codigo-confirmacao {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    input {
+      width: 42px;
+      height: 52px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-family: "Montserrat", sans-serif;
+
+      &:focus {
+        border-color: #000;
+      }
+    }
+  }
+
+  .botoes-etapa-4 {
+    display: flex;
+    gap: 10px;
+
+    .botao-voltar-etapa-4,
+    .botao-confirmar-etapa-4 {
+      height: 38px;
+      width: 102px;
+      padding: 6px 12px;
+      font-size: 1rem;
+      font-family: "Montserrat", sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid black;
+    }
+
+    .botao-voltar-etapa-4 {
+      background-color: white;
+      color: black;
+    }
+
+    .botao-confirmar-etapa-4 {
+      background-color: black;
+      color: white;
+    }
+  }
 }

@@ -7,7 +7,7 @@ import { emailInvalido, campoNaoAtendeTamanho, campoVazio, senhaInvalida } from 
 import { exibirAviso } from '../utils/exibirModalAviso'
 import axios from 'axios';
 import { api } from '../provider/apiInstance';
-import { useNavigate } from 'react-router-dom';
+import { resolvePath, useNavigate } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 
 function Cadastro() {
@@ -91,10 +91,49 @@ function Cadastro() {
             } else if (senha.invalida) {
                 exibirAviso(senha.excecao, 'error');
             } else {
-                cadastrarUsuario();
+                const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
+                enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);
+                setEtapa(4);
             }
         }
     }
+
+    function enviarEmail(nome, email) {
+        api.post('/emails/enviar-codigo', {
+            nome,
+            email
+        }).then((res) => {
+            console.log(res)
+        })
+    }
+
+    function validarCodigoConfirmacao() {
+        const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
+        console.log(codigo)
+        if (codigo1 == '' || codigo2 == '' || codigo3 == '' || codigo4 == '' || codigo5 == '' || codigo6 == '') {
+            exibirAviso('Preencher todos os campos', 'error');
+        } else {
+            api.post('/emails/validar-codigo', {
+                email: usuario.dadosBase.email,
+                codigo: codigo1 + codigo2 + codigo3 + codigo4 + codigo5 + codigo6
+            }).then((res) => {
+                if(res.data.sucesso){
+                cadastrarUsuario();    
+                }
+                else{
+                    exibirAviso(res.data.mensagem, 'error')
+                }
+            })
+        }
+    }
+
+    const [codigo1, setCodigo1] = useState('');
+    const [codigo2, setCodigo2] = useState('');
+    const [codigo3, setCodigo3] = useState('');
+    const [codigo4, setCodigo4] = useState('');
+    const [codigo5, setCodigo5] = useState('');
+    const [codigo6, setCodigo6] = useState('');
+    const [codigo, setCodigo] = useState('');
 
     /* Consultar CEP */
     const [desabilitar, setDesabilitar] = useState(false);
@@ -609,44 +648,47 @@ function Cadastro() {
                                     type="button"
                                     className="botao-continuar-etapa-3"
                                     onClick={() => {
-                                        // validarFormulario();
-                                        setEtapa(4);
-                                      }}> 
+                                        validarFormulario();
+                                    }}>
                                     Criar
                                 </button>
                             </div>
                             <p className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</p>
                         </div>
                     </form>
-                    
-                    {etapa === 4 && (
-                        <form className='container-formulario-4' onSubmit={(e) => e.preventDefault()}>
-                            <h1>Confirmação de e-mail</h1>
-                            <p>Preencha abaixo o código de confirmação que enviamos ao seu e-mail</p>
-
-                            <div className='codigo-confirmacao'>
-                                {[...Array(6)].map((_, index) => (
-                                    <input key={index} maxLength={1} type='text' />
-                                ))}
-                            </div>
-
-                            <div className="botoes-etapa-4">
-                                <button
-                                    type='button'
-                                    className='botao-voltar-etapa-4'
-                                    onClick={() => setEtapa(3)}>
-                                    Voltar
-                                </button>
-                                <button
-                                    type='submit'
-                                    className='botao-confirmar-etapa-4'>
-                                    Confirmar
-                                </button>
-                            </div>
-                        </form>
-                    )}
 
                 </>
+            )}
+            {etapa === 4 && (
+
+                <form className='container-formulario-4' onSubmit={(e) => e.preventDefault()}>
+                    <h1>Confirmação de e-mail</h1>
+                    <p>Preencha abaixo o código de confirmação que enviamos ao seu e-mail</p>
+
+                    <div className='codigo-confirmacao'>
+                        <input type="text" onChange={(e) => { setCodigo1(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo2(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo3(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo4(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo5(e.target.value.toUpperCase()) }} />
+                        <input type="text" onChange={(e) => { setCodigo6(e.target.value.toUpperCase()) }} />
+                    </div>
+
+                    <div className="botoes-etapa-4">
+                        <button
+                            type='button'
+                            className='botao-voltar-etapa-4'
+                            onClick={() => setEtapa(3)}>
+                            Voltar
+                        </button>
+                        <button
+                            type='submit'
+                            className='botao-confirmar-etapa-4'
+                            onClick={validarCodigoConfirmacao}>
+                            Confirmar
+                        </button>
+                    </div>
+                </form>
             )}
         </section>
     );

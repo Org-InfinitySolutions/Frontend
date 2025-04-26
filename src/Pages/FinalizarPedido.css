@@ -1,14 +1,20 @@
 .finalizar-pedido{
-    min-height: 90vh;
-    width: 100%;
+    min-height: 100%;
+    min-width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 
+ 
     h1{
         width: 85%;
         font-family: var(--fonte-titulo);
+    }
+
+    .titulo-finalizar-pedido{
+        text-align: center;
+        font-size: 200%;
     }
 
     .container-equipamentos{
@@ -218,6 +224,19 @@
         width: 99vw;
         height: 100vh;
         display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .modal-content-pedido-confirmado{
+        text-align: center;
+        background-color: white;
+        border-radius: 10px;
+        width: 38%;
+        height: 50%;
+        margin-top: 8%;
+        display: flex;
+        flex-direction: column;
         justify-content: center;
     }
 

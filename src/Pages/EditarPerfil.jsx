@@ -6,6 +6,8 @@ import { Input } from '../components/Input';
 
 function EditarPerfil() {
     const [mostrarModalEmail, setMostrarModalEmail] = useState(false);
+    const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false);
+    const [mostrarModalAlterarSenha, setMostrarModalAlterarSenha] = useState(false);
 
     const abrirModalEmail = () => {
         setMostrarModalEmail(true);
@@ -15,11 +17,31 @@ function EditarPerfil() {
         setMostrarModalEmail(false);
     }
 
+    const continuarModalEmail = () => {
+        setMostrarModalEmail(false); 
+        setMostrarModalConfirmacao(true); 
+    }
+
+    const fecharModalConfirmacao = () => {
+        setMostrarModalConfirmacao(false);
+    }
+
+    const abrirModalAlterarSenha = () => {
+        setMostrarModalAlterarSenha(true);
+    }
+    
+    const fecharModalAlterarSenha = () => {
+        setMostrarModalAlterarSenha(false);
+    }
+    
+
+    
+
     return (
         <div className="container">
-
-            {!mostrarModalEmail && (
+            {!mostrarModalEmail && !mostrarModalConfirmacao &&  !mostrarModalAlterarSenha && (
                 <div className="container-formulario">
+                    
                     <section className="container-titulo">
                         <h2>Editar conta</h2>
                         <div className="barra"></div>
@@ -28,6 +50,7 @@ function EditarPerfil() {
                     {localStorage.TIPO_USUARIO === "PF" ? (
                         <section className="container-dados-pessoais">
                             <h3>Dados pessoais:</h3>
+                            
                             <section>
                                 <label>Nome Completo:</label>
                                 <input type="text" placeholder='Nome completo' />
@@ -43,7 +66,7 @@ function EditarPerfil() {
                                     <img src={iconeEditar} alt="icone editar" height="23em" onClick={abrirModalEmail} />
                                 </div>
                             </section>
-                            <button>Alterar Senha</button>
+                            <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
                         </section>
                     ) : (
                         <section className="container-dados-pessoais">
@@ -68,10 +91,10 @@ function EditarPerfil() {
                                 <label>Email:</label>
                                 <div>
                                     <input type="text" placeholder='email@email.com' disabled />
-                                    <img src={iconeEditar} alt="icone editar" height="23em" onClick={abrirModalEmail} />
+                                    <img src={iconeEditar} className='botao-editar' alt="icone editar" height="23em" onClick={abrirModalEmail} />
                                 </div>
                             </section>
-                            <button>Alterar Senha</button>
+                            <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
                         </section>
                     )}
 
@@ -119,18 +142,47 @@ function EditarPerfil() {
                 </div>
             )}
 
-{mostrarModalEmail && (
-                
-                    <div className="modal-content">
-                        <h1>Preencha o novo e-mail</h1>
-                        <Input type="text" placeholder="E-mail" />
-                        <div className="botoes">
-                            <button className="botao-cancelar"onClick={fecharModalEmail}>Cancelar</button>
-                            <button className='botao-continuar'>Continuar</button>
-                        </div>
+        
+            {mostrarModalEmail && (
+                <div className="modal-content">
+                    <h1>Preencha o novo e-mail</h1>
+                    <Input type="text" placeholder="E-mail" />
+                    <div className="botoes">
+                        <button className="botao-cancelar" onClick={fecharModalEmail}>Cancelar</button>
+                        <button className="botao-continuar" onClick={continuarModalEmail}>Continuar</button>
                     </div>
-                
+                </div>
             )}
+           
+            {mostrarModalConfirmacao && (
+                <div className="modal-content">
+                    <h3 className='confirmar-alteracao-email'>Deseja confirmar as alterações?</h3>
+                    <p>Preencha a senha para continuar</p>
+                    <Input type="text" placeholder="Senha" />
+                    <div className="botoes">
+                        <button className="botao-confirmar" onClick={fecharModalConfirmacao}>Confirmar</button>
+                    </div>
+                </div>
+            )}
+
+    {mostrarModalAlterarSenha && (
+    <div className="modal-content">
+        <h1>Alterar senha</h1>
+        <p className= "input-alteracao-senha">* Senha atual:</p> 
+        <Input type="text" placeholder="Senha atual" />
+        <p className= "input-alteracao-senha">* Nova senha:</p>
+        <Input type="text" placeholder="Nova senha" />
+        <p className= "input-alteracao-senha">* Confirmar nova senha:</p>
+        <Input type="text" placeholder="Confirmar nova senha" />
+        <div className="botoes-e-aviso-etapa-3">
+        <div className="botoes">
+                <button className="botao-cancelar" >Cancelar</button>
+                <button className="botao-confirmar" >Confirmar</button>
+            </div>
+                            <p className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</p>
+                        </div>
+    </div>
+)}
         </div>
     );
 }
