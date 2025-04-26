@@ -10,6 +10,10 @@ const produtos = Array(20).fill({
     imagem: IconeNotebook,
 });
 
+function abrirModal(produto) {
+
+}
+
 const Equipamentos = () => {
     return (
         <div className="pagina-equipamentos">
@@ -56,10 +60,6 @@ const Equipamentos = () => {
                                         <img src={IconeCarrinhoFill} className="icone-carrinho-miniatura" alt="Carrinho" />
                                     </button>
                                 </div>
-                                {/* <div className="botoes-card">
-                                    <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
-                                    <img className="icone-carrinho-miniatura" src={IconeCarrinhoFill} alt="Carrinho" />
-                                </div> */}
                             </div>
                         </div>
                     ))}

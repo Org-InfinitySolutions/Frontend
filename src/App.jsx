@@ -33,6 +33,7 @@ function MainComponent() {
     <>      
       <BarraNavegacao key={location.pathname}/>
         <Routes>
+          <Route path='/index' element={<Index />} />
           <Route path='/login' element={<Login />} />
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/perfil' element={<Perfil />} />
@@ -41,6 +42,8 @@ function MainComponent() {
           <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
           <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
           <Route path='/pedidos' element={<Pedidos />} />
+          <Route path='/equipamentos' element={<Equipamentos />} />
+          <Route path='/produto' element={<Produto />} />
         </Routes>
       <Rodape />
     </>
