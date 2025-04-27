@@ -30,15 +30,22 @@ function formatarCNPJ(cnpj) {
 }
 
 function formatarTelefone(telefone) {
-    let telefoneFormatado = telefone.replace(/\D/g, '');
-    if (telefoneFormatado.length <= 2) {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{2})/, '($1');
-    } else if (telefoneFormatado.length <= 7) {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{2})(\d{1,4})/, '($1) $2');
+    // Remove todos os caracteres não numéricos
+    const numeroLimpo = telefone.replace(/\D/g, '');
+    
+    if (numeroLimpo.length === 0) return '';
+    
+    // Formata celular (com o 9 na frente após o DDD)
+    if (numeroLimpo.length <= 2) {
+        // Apenas DDD
+        return `(${numeroLimpo}`;
+    } else if (numeroLimpo.length <= 7) {
+        // DDD + primeiros dígitos
+        return `(${numeroLimpo.slice(0, 2)}) ${numeroLimpo.slice(2)}`;
     } else {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{2})(\d{1,5})(\d{1,4})/, '($1) $2-$3');
+        // Formato completo para celular: (99) 99999-9999
+        return `(${numeroLimpo.slice(0, 2)}) ${numeroLimpo.slice(2, 7)}-${numeroLimpo.slice(7, 11)}`;
     }
-    return telefoneFormatado;
 }
 
 function formatarRegistroGeral(rg) {
@@ -56,15 +63,17 @@ function formatarRegistroGeral(rg) {
 }
 
 function formatarTelefoneFixo(telefone) {
-    let telefoneFormatado = telefone.replace(/\D/g, '');
-    if (telefoneFormatado.length <= 2) {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{1,2})/, '($1');
-    } else if (telefoneFormatado.length <= 6) {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{2})(\d{1,4})/, '($1) $2');
+    const numeroLimpo = telefone.replace(/\D/g, '');
+    
+    if (numeroLimpo.length === 0) return '';
+    
+    if (numeroLimpo.length <= 2) {
+        return `(${numeroLimpo}`;
+    } else if (numeroLimpo.length <= 6) {
+        return `(${numeroLimpo.slice(0, 2)}) ${numeroLimpo.slice(2)}`;
     } else {
-        telefoneFormatado = telefoneFormatado.replace(/(\d{2})(\d{4})(\d{0,4})/, '($1) $2-$3');
+        return `(${numeroLimpo.slice(0, 2)}) ${numeroLimpo.slice(2, 6)}-${numeroLimpo.slice(6, 10)}`;
     }
-    return telefoneFormatado.trim();
 }
 
 function formatarCEP(cep) {
