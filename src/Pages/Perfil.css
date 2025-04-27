@@ -182,4 +182,9 @@
             font-family: var(--fonte-texto);
         }
     }
+
+    .aviso-excluir-conta{
+        color: #FF0000;
+        font-family:"Montserrat Alternates", sans-serif;
+    }
 }
