@@ -1,23 +1,43 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Navegabilidade } from '../components/Navegabilidade';
 import './FinalizarPedido.css';
 
 function FinalizarPedido() {
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
 
     return (
         <div className="finalizar-pedido">
             {mostrarModal ? (
                 <div className='container-fundo'>
                     <div className="modal-content">
-                        <h1>Você deseja finalizar o pedido?</h1>
-                        <p>Ao confirmar, o seu pedido será enviado a nossa equipe para análise, você não poderá fazer nenhuma alteração nos equipamentos escolhidos, deseja continuar?</p>
+                        <h2 className='titulo-finalizar-pedido'>Você deseja finalizar o pedido?</h2>
+                        <p>Ao confirmar, o seu pedido será enviado à nossa equipe para análise. Você não poderá fazer nenhuma alteração nos equipamentos escolhidos. Deseja continuar?</p>
                         <div className="botoes-modal">
-                            <button className='botao-voltar'onClick={() => setMostrarModal(false)}>Voltar</button>
-                            <button className='botao-confirmar' onClick={() => setMostrarModal(false)}>Confirmar</button>
+                            <button className='botao-voltar' onClick={() => setMostrarModal(false)}>Voltar</button>
+                            <button className='botao-confirmar' onClick={() => {
+                                setMostrarModal(false);
+                                setMostrarModalConfirmacao(true);
+                            }}>Confirmar</button>
                         </div>
                     </div>
+                </div>
+            ) : mostrarModalConfirmacao ? (
+                <div className='container-fundo'>
+                    <div className="modal-content-pedido-confirmado">
+                        <h2 className='titulo-finalizar-pedido'>Seu pedido foi Finalizado!</h2>
+                        <h3 className='numero-serie-pedido'>Número do pedido #00001</h3>
+                        <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato em breve para mais detalhes.
+                        Para visualizar o seu pedido clique no botão abaixo para ser redirecionado aos seus orçamentos.</p>
+                        <div className="botoes-modal">
+                            <button className='botao-confirmar' onClick={() => {
+                                setMostrarModalConfirmacao(false);
+                            }}>
+                                Orçamentos
+                            </button>
+                        </div>
                     </div>
+                </div>
             ) : (
                 <>
                     <h1>Finalizar Pedido</h1>

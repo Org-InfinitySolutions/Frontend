@@ -4,12 +4,14 @@ import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useEffect, useState } from 'react';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
+import { Input } from '../components/Input';
 
 function Perfil(){
 
     const [usuario, setUsuario] = useState({});
     const [endereco, setEndereco] = useState({});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
+    const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
 
     useEffect(() => {
 
@@ -38,6 +40,21 @@ function Perfil(){
         })
     }, []);
 
+    const confirmarExclusaoConta = () => {
+        // Aqui você pode colocar a lógica para excluir a conta de verdade
+        alert('Conta excluída com sucesso!');
+        setMostrarModalExcluirConta(false);
+        // Você pode redirecionar o usuário também, se quiser.
+    }
+
+    const abrirModalExcluirConta = () => {
+        setMostrarModalExcluirConta(true);
+    }
+
+    const fecharModalExcluirConta = () => {
+        setMostrarModalExcluirConta(false);
+    }
+
     useEffect(() => {
         
         apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
@@ -61,6 +78,8 @@ function Perfil(){
             height={3}
             color="#f11946"
         />
+
+{!mostrarModalExcluirConta &&( 
         <div className="container-perfil">
             <section className="titulo-form">
                 {/* implementar validacao para mudar titulo form */}
@@ -102,7 +121,7 @@ function Perfil(){
             </section>
             <section className="container-eventos">
                 <div className="eventos-excluir-editar">
-                    <button className="botao-excluir">Excluir Conta</button>
+                    <button className="botao-excluir" onClick={abrirModalExcluirConta}>Excluir Conta</button>
                     <a href='/editar-perfil' className="botao-editar">Editar Conta</a>
                 </div>
                 <div className="evento-voltar">
@@ -114,8 +133,22 @@ function Perfil(){
                 <span>Ultima alteração em {/* 13/03/2025 às 20:19 */}</span>
             </section>
         </div>
+)}
+          {mostrarModalExcluirConta && (
+        <div className="modal-content">
+            <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
+            <p>Preencha a senha para excluir sua conta</p>
+            <Input type="text" placeholder="Senha" />
+            <div className="botoes">
+                <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
+                <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
+            </div>
+        </div>
+    )}
     </div>
     )
+
+  
 }
 
 export { Perfil }

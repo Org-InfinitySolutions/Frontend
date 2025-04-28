@@ -1,13 +1,13 @@
-import './Index.css';
+import './Home.css';
 import videoFundo from '../assets/video-institucional.mp4';
 
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
 
-function Index() {
+function Home() {
     return (
-        <section className="container">
+        <section className="container-home">
 
             <section className='container-video'>
                 <video
@@ -21,7 +21,7 @@ function Index() {
                 </video>
 
                 <section className="container-titulo">
-                    <h1>NOVA LOCAÇÕES</h1>
+                    <h1 className='titulo'>NOVA LOCAÇÕES</h1>
                     <div className="barra"></div>
                 </section>
             </section>
@@ -122,4 +122,4 @@ function Index() {
 }
 
 
-export { Index };
+export { Home };

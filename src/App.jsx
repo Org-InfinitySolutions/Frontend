@@ -15,7 +15,7 @@ import { EditarPerfil } from './Pages/EditarPerfil';
 import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
-import { Index } from './Pages/Index';
+import { Home } from './Pages/Home';
 
 function App(){
 
@@ -33,6 +33,7 @@ function MainComponent() {
     <>      
       <BarraNavegacao key={location.pathname}/>
         <Routes>
+          <Route path='/' element={<Home/>} />
           <Route path='/index' element={<Index />} />
           <Route path='/login' element={<Login />} />
           <Route path='/cadastro' element={<Cadastro />} />

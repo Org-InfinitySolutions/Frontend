@@ -89,6 +89,11 @@
             transition: 0.2s;
             transform: scale(0.98);
         }
+
+        
+        .botao-editar{
+            cursor: pointer;
+        }
     }
     .container-dados-endereco{
         height: 40%;
@@ -242,6 +247,7 @@
             transition: 0.2s;
             transform: scale(0.95);
         }
+
     }
 }
 
@@ -249,18 +255,49 @@
     background-color: white;
     padding: 2rem;
     border-radius: 10px;
-    width: 22%;
+    width: 25%;
     text-align: center;
-
+    display: flex;
+    flex-direction: column;
     h2{
         font-family: "Montserrat", sans-serif;
     }
+
+    .input-alteracao-senha{
+        text-align: start;
+    }
   }
+
+
+
+  .botoes-e-aviso-etapa-3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+    gap: 6px;
+    margin-top: 25px;
+  }
+  
+  
+  .aviso-obrigatorio-etapa-3 {
+    font-size: 0.75rem;
+    font-family: var(--fonte-texto);
+    margin: 0;
+    font-size: 100%;
+  }
+
 
   .modal-content Input {
     width: 90%;
     margin-top: 1rem;
     padding: 0.5rem;
+  }
+
+  .confirmar-alteracao-email{
+    color: #FF0000;
+    font-family: "Montserrat Alternates", sans-serif;
   }
   
   .botoes {
@@ -301,6 +338,21 @@
 
     .botao-cancelar:active {
         transform: scale(0.95);
+    }
+
+    .botao-confirmar{
+        height: 38px;
+        width: 102px;
+        margin-top: 10px;
+        background-color: black;
+        color: white;
+        border: none;
+        font-size: 1rem;
+        font-family: var(--fonte-texto);
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.2s ease;
+        border: 1px black solid;
     }
     
   }
