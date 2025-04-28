@@ -1,0 +1,205 @@
+/* Produto.css */
+
+:root {
+  --fonte-padrao: 'Montserrat', sans-serif;
+  --color-preto: #000;
+  --color-branco: #fff;
+  --color-cinza: #666;
+  --color-borda: #000000;
+  --radius: 5px;
+  --padding: 1.5rem;
+  --gap: 2rem;
+  --transition: 0.3s ease;
+}
+
+body {
+  font-family: var(--fonte-padrao);
+  margin: 0;
+  padding: 0;
+}
+
+.pagina-detalhes {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 var(--padding);
+}
+
+.topo-produto {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--padding) 0;
+  border-bottom: 1px solid var(--color-borda);
+  margin-bottom: 2rem;
+}
+
+.barra-pesquisa {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  border: solid 1px var(--color-borda);
+  border-radius: var(--radius);
+  gap: 0.5rem;
+  width: 100%;
+  max-width: 400px;
+}
+
+.barra-pesquisa input {
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  width: 100%;
+  outline: none;
+}
+
+.icone-lupa {
+  width: 18px;
+  height: 18px;
+  opacity: 0.6;
+}
+
+.icone-carrinho img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.icone-carrinho img:hover {
+  transform: scale(1.1);
+}
+
+.conteudo-detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-principal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.imagem-produto {
+  width: 100%;
+  max-width: 500px;
+  padding: 1rem;
+  background-color: var(--color-branco);
+  object-fit: contain;
+}
+
+.info-textual {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+  height: 100%;
+  padding: 1rem 0;
+}
+
+.info-textual h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: var(--color-preto);
+}
+
+.info-textual h4 {
+  font-size: 1rem;
+  color: var(--color-cinza);
+  margin-bottom: 1rem;
+}
+
+.botao-adicionar-carrinho {
+  width: fit-content;
+  padding: 0.7rem 1.4rem;
+  font-weight: bold;
+  margin-top: 43%;
+  align-self: flex-end;
+  border: 2px solid var(--color-preto);
+  border-radius: var(--radius);
+  background-color: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.botao-adicionar-carrinho:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+}
+
+.descricao,
+.ficha-tecnica {
+  background-color: var(--color-branco);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--color-borda);
+}
+
+.descricao h3,
+.ficha-tecnica h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.descricao p {
+  color: var(--color-cinza);
+  line-height: 1.6;
+}
+
+.tabela-detalhes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tabela-detalhes div {
+  background-color: var(--color-branco);
+  border: 1px solid var(--color-borda);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.tabela-detalhes strong {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--color-preto);
+}
+
+.info-fabricante {
+  font-size: 0.9rem;
+  color: var(--color-cinza);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.info-fabricante a {
+  color: var(--color-preto);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.info-fabricante a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .info-principal {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .info-textual {
+    align-items: center;
+  }
+
+  .imagem-produto {
+    max-width: 100%;
+  }
+}

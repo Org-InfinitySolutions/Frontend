@@ -305,6 +305,10 @@
             flex-direction: column;
             align-items: center;
         }
+        .selected {
+            background-color: #f0f0f0;
+            border-radius: 4px;
+        }
         
        p {
             margin: 0;
@@ -463,4 +467,41 @@
       color: white;
     }
   }
+
+  .botao-continuar:disabled,
+  .botao-continuar-etapa-2:disabled,
+  .botao-continuar-etapa-3:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    border: 1px solid #999999;
+  }
+
+  .botao-continuar:disabled:hover,
+  .botao-continuar-etapa-2:disabled:hover,
+  .botao-continuar-etapa-3:disabled:hover {
+    background-color: #cccccc;
+    color: #666666;
+    border: 1px solid #999999;
+    transform: none;
+  }
+}
+
+.botao-continuar:disabled,
+.botao-continuar-etapa-2:disabled,
+.botao-continuar-etapa-3:disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  border: 1px solid #999999 !important;
+  opacity: 0.7;
+}
+
+.botao-continuar:disabled:hover,
+.botao-continuar-etapa-2:disabled:hover,
+.botao-continuar-etapa-3:disabled:hover {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  border: 1px solid #999999 !important;
+  transform: none !important;
 }

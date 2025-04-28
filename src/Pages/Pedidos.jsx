@@ -8,7 +8,7 @@ const pedidos = [
     { status: 'Em evento', cor: 'azul' },
     { status: 'Em evento', cor: 'azul' },
     { status: 'Finalizado', cor: 'vermelho' },
-    { status: 'Finalizado', cor: 'vermelho' },
+    { status: 'Cancelado', cor: 'vermelho' },
 ];
 
 const Pedidos = () => {
@@ -17,8 +17,8 @@ const Pedidos = () => {
             <main className="conteudo-pedidos">
                 <div className="filtros">
                     <div className="botoes-toggle">
-                        <button className="inativo">EQUIPAMENTOS</button>
-                        <button className="ativo">PEDIDOS</button>
+                        <a href='/equipamentos' className="inativo">EQUIPAMENTOS</a>
+                        <a className="ativo">PEDIDOS</a>
                     </div>
 
                     <div className="linha-pesquisa-filtros">
@@ -29,11 +29,16 @@ const Pedidos = () => {
 
                         <div className="container-filtros">
                             <select className="select-filtro">
-                                <option>Situação</option>
+                                <option>Em Análise</option>
+                                <option>Aprovado</option>
+                                <option>Em Evento</option>
+                                <option>Finalizado</option>
+                                <option>Cancelado</option>
                             </select>
 
                             <select className="select-filtro">
                                 <option>Mais Recentes</option>
+                                <option>Mais Antigos</option>
                             </select>
                         </div>
                     </div>
