@@ -9,6 +9,8 @@ import { Login } from './Pages/Login'
 import { Cadastro } from './Pages/Cadastro'
 import { Perfil } from './Pages/Perfil'
 import { Pedidos } from './Pages/Pedidos';
+import { Equipamentos } from './Pages/Equipamentos';
+import { Produto } from './Pages/Produto';
 import { EditarPerfil } from './Pages/EditarPerfil';
 import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
@@ -40,6 +42,8 @@ function MainComponent() {
           <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
           <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
           <Route path='/pedidos' element={<Pedidos />} />
+          <Route path='/equipamentos' element={<Equipamentos />} />
+          <Route path='/produto' element={<Produto />} />
         </Routes>
       <Rodape />
     </>
