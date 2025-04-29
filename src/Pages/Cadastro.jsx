@@ -123,14 +123,12 @@ function Cadastro() {
         api.post('/emails/enviar-codigo', {
             nome,
             email
-        }).then((res) => {
-            console.log(res)
-        })
+        });
     }
 
     function validarCodigoConfirmacao() {
         const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-        console.log(codigo)
+        
         if (codigo1 == '' || codigo2 == '' || codigo3 == '' || codigo4 == '' || codigo5 == '' || codigo6 == '') {
             exibirAviso('Preencher todos os campos', 'error');
         } else {

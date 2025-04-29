@@ -125,7 +125,7 @@ function Perfil(){
                     <a href='/editar-perfil' className="botao-editar">Editar Conta</a>
                 </div>
                 <div className="evento-voltar">
-                    <a className='botao-retroceder' href="#">Voltar</a>
+                    <a className='botao-retroceder' href="/equipamentos">Voltar</a>
                 </div>
             </section>
             <section className="dados-utilitarios">

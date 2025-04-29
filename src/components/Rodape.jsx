@@ -4,6 +4,7 @@ import instagram from '../assets/instagram.png';
 import telefone from '../assets/telefone.png';
 import email from '../assets/email.png';
 import empresa from '../assets/empresa.png' ;
+import { Link } from 'react-router-dom';
 
 function Rodape() {
     
@@ -38,10 +39,10 @@ function Rodape() {
                 </section>
                 <section className='container-links'>
                     <div><strong>Sobre</strong></div>
-                    <div><a href="#">Home</a></div>
-                    <div><a href="#">Sobre nós</a></div>
-                    <div><a href="#">Produtos</a></div>
-                    <div><a href="#">Contate-nos</a></div>
+                    <div><a href="/#inicio">Home</a></div>
+                    <div><a href="/#sobre-nos">Sobre nós</a></div>
+                    <div><a href="/#servicos">Serviços</a></div>
+                    <div><a href="/#projetos">Projetos</a></div>
                 </section>
             </section>
             <section className='container-endereco'>

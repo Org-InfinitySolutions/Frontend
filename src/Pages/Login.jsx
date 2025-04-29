@@ -44,7 +44,7 @@ function Login(){
                     setBarraCarregamento(100)
                 }, 1000);
                 setTimeout(() => {
-                    navegar('/pedidos')
+                    navegar('/equipamentos')
                 }, 1500);
             }).catch((err) => {
                 

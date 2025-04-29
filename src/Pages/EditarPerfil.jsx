@@ -3,11 +3,14 @@ import './EditarPerfil.css';
 import iconeEditar from '../assets/iconeEditar.png';
 import iconePesquisar from '../assets/iconePesquisar.png';
 import { Input } from '../components/Input';
+import { useNavigate } from 'react-router-dom';
 
 function EditarPerfil() {
     const [mostrarModalEmail, setMostrarModalEmail] = useState(false);
     const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false);
     const [mostrarModalAlterarSenha, setMostrarModalAlterarSenha] = useState(false);
+
+    const navegar = useNavigate();
 
     const abrirModalEmail = () => {
         setMostrarModalEmail(true);
@@ -33,9 +36,6 @@ function EditarPerfil() {
     const fecharModalAlterarSenha = () => {
         setMostrarModalAlterarSenha(false);
     }
-    
-
-    
 
     return (
         <div className="container">
@@ -137,7 +137,7 @@ function EditarPerfil() {
 
                     <section className="container-eventos">
                         <a href='/perfil'>Cancelar</a>
-                        <button>Confirmar</button>
+                        <button onClick={() => { navegar("/perfil")}}>Confirmar</button>
                     </section>
                 </div>
             )}
@@ -176,11 +176,11 @@ function EditarPerfil() {
         <Input type="text" placeholder="Confirmar nova senha" />
         <div className="botoes-e-aviso-etapa-3">
         <div className="botoes">
-                <button className="botao-cancelar" >Cancelar</button>
-                <button className="botao-confirmar" >Confirmar</button>
-            </div>
-                            <p className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</p>
-                        </div>
+            <button className="botao-cancelar" onClick={() => { navegar("/perfil") }}>Cancelar</button>
+            <button className="botao-confirmar" onClick={() => { navegar("/perfil") }}>Confirmar</button>
+        </div>
+        <p className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</p>
+        </div>
     </div>
 )}
         </div>
