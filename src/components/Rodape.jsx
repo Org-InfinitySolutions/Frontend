@@ -47,7 +47,7 @@ function Rodape() {
             </section>
             <section className='container-endereco'>
                 <img src={empresa} alt="icone empresa" height='25em'/>
-                <span>Rua joão pires de camargo, 28, São paulo</span>
+                <span>Rua joão pires de camargo, 28, Taboão da Serra</span>
             </section>
         </footer>
     </>
