@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
+import { formatarData } from '../Utils/formatacoes';
 
 function Perfil(){
 
@@ -129,8 +130,8 @@ function Perfil(){
                 </div>
             </section>
             <section className="dados-utilitarios">
-                <span>Conta criada em {/* 13/03/2025 às 20:19 */}</span>
-                <span>Ultima alteração em {/* 13/03/2025 às 20:19 */}</span>
+                <span>Conta criada em { formatarData(usuario.data_criacao) }</span>
+                <span>Ultima alteração em { formatarData(usuario.data_atualizacao) }</span>
             </section>
         </div>
 )}
