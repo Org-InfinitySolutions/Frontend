@@ -39,6 +39,7 @@ function MainComponent() {
           <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
           <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
           <Route path='/pedidos' element={<Pedidos />} />
+          <Route path='/index' element={<Index />} />
         </Routes>
       <Rodape />
     </>

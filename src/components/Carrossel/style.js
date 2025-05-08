@@ -14,6 +14,11 @@ export const Inner = styled.div`
     transition:transform 0.3s;
     margin-left: 60px;
     margin-right: 60px;
+
+      @media (max-width: 768px) {
+    margin-left: 30px;
+    margin-right: 30px;
+    }
 `;
 
 export const DivCarouselItem = styled.button`
@@ -29,6 +34,24 @@ margin: 30px;
 
     p {
     white-space: normal;
+    }
+
+  @media (max-width: 768px) {
+    width: 10%;
+    margin: 50px;
+    height: 95%;
+    }
+
+  @media (min-width: 768px and max-width: 1024px) {
+    width: 15%;
+    margin: 10px;
+    height: 95%;
+    }
+
+  @media (min-width: 1024px) {
+    width: 15%;
+    margin: 10px;
+    height: 95%;
     }
 `;
 
@@ -51,7 +74,7 @@ export const Prev = styled.button`
     transform: scale(1.2);
     transition: all 0.3s ease;
   };
-
+  
 `;
 
 export const Next = styled.button`

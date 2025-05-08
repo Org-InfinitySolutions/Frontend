@@ -10,6 +10,24 @@ export const Carousel=({children})=> {
 const [activeIndex, setActiveIndex] = useState(0);
 const [paused, setPaused] =useState(false);
 
+
+// Responsividade padrão: https://getbootstrap.com/docs/5.0/layout/breakpoints/
+const deviced = {
+    mobile: window.innerWidth <= 768,
+    tablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    desktop: window.innerWidth > 1024,
+}
+
+const getTransform = () => {
+    if (deviced.mobile) {
+        return `translateX(-${activeIndex * 23}%)`;
+    } else if (deviced.tablet) {
+        return `translateX(-${activeIndex * 20.5}%)`;
+    } else {
+        return `translateX(-${activeIndex * 15.5}%)`;
+    }
+}
+
 const updateIndex = (newIndex) =>{
     if(newIndex <0){
     newIndex = 0;
@@ -52,7 +70,7 @@ const handlers = useSwipeable({
             style={{ width: "30px", height: "30px" }}
             />
         </Prev>
-        <Inner style={{transform: `translateX(-${activeIndex*15.5}%)`}}> 
+        <Inner style={{transform:getTransform()}}> 
         {React.Children.map(children,(child, index)=>{
             return React.cloneElement(child, {width:"25%"})
         })}
