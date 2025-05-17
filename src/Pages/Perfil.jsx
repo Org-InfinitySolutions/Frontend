@@ -2,43 +2,48 @@
 import './Perfil.css'
 import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useEffect, useState } from 'react';
-import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
+import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
+import { useNavigate } from 'react-router-dom';
 
 function Perfil(){
 
-    const [usuario, setUsuario] = useState({});
-    const [endereco, setEndereco] = useState({});
+    const sessionStorageUsuario = sessionStorage.DADOS_USUARIO;
+    const [usuario, setUsuario] = useState(sessionStorageUsuario != null ? JSON.parse(sessionStorageUsuario) : {});
+    const [endereco, setEndereco] = useState(sessionStorageUsuario != null ? usuario.endereco : {});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
 
+    const navegar = useNavigate();
+
     useEffect(() => {
-
-        setBarraCarregamento(10);
-        api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.TOKEN}`
-            }
-        }).then((res) => {
-
-            setBarraCarregamento(87);
-            const dados = res.data;
-            const dadosEndereco = dados.endereco;
-            setUsuario(dados)
-            setEndereco(dadosEndereco);
-
-            setTimeout(() => {
+        if(sessionStorageUsuario == null){ 
+            setBarraCarregamento(10);
+            api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.TOKEN}`
+                }
+            }).then((res) => {
+    
+                setBarraCarregamento(87);
+                const dados = res.data;
+                const dadosEndereco = dados.endereco;
+                setUsuario(dados)
+                setEndereco(dadosEndereco);
+    
+                setTimeout(() => {
+                    setBarraCarregamento(100);
+                }, 500)
+            }).catch((erro) => {
+                
                 setBarraCarregamento(100);
-            }, 500)
-        }).catch((erro) => {
-            
-            setBarraCarregamento(100);
-            if(erro.status == 401){
-                exibirAvisoTokenExpirado();
-            }
-        })
+                if(erro.status == 401){
+                    exibirAvisoTokenExpirado();
+                }
+            })
+        }
     }, []);
 
     const confirmarExclusaoConta = () => {
@@ -58,18 +63,24 @@ function Perfil(){
 
     useEffect(() => {
         
-        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.TOKEN}`
-            }
-        }).then((res) => {
-            setUsuario((usuario) => ({
-                ...(usuario || {}),
-                email: res.data.email
-            }))
-        }).catch((erro) => {
-            console.log(erro);
-        })
+        if(sessionStorageUsuario == null){
+            apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.TOKEN}`
+                }
+            }).then((res) => {
+                setUsuario((usuario) => ({
+                    ...(usuario || {}),
+                    email: res.data.email
+                }))
+            }).catch((erro) => {
+    
+                setBarraCarregamento(100);
+                if(erro.status == 401){
+                    exibirAvisoTokenExpirado();
+                }
+            })
+        }
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
     return(
@@ -80,10 +91,9 @@ function Perfil(){
             color="#f11946"
         />
 
-{!mostrarModalExcluirConta &&( 
+        {!mostrarModalExcluirConta &&( 
         <div className="container-perfil">
             <section className="titulo-form">
-                {/* implementar validacao para mudar titulo form */}
                 <h2>{sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "Meu perfil" : "Minha empresa"}</h2>
                 <div className="barra"></div>
             </section>
@@ -123,10 +133,13 @@ function Perfil(){
             <section className="container-eventos">
                 <div className="eventos-excluir-editar">
                     <button className="botao-excluir" onClick={abrirModalExcluirConta}>Excluir Conta</button>
-                    <a href='/editar-perfil' className="botao-editar">Editar Conta</a>
+                    <button className="botao-editar" onClick={() => {
+                        sessionStorage.DADOS_USUARIO = JSON.stringify(usuario);
+                        navegar('/editar-perfil');
+                    }}>Editar Conta</button>
                 </div>
                 <div className="evento-voltar">
-                    <a className='botao-retroceder' href="/equipamentos">Voltar</a>
+                    <button className='botao-retroceder' onClick={() => { navegar('/equipamentos')}}>Voltar</button>
                 </div>
             </section>
             <section className="dados-utilitarios">
@@ -134,22 +147,20 @@ function Perfil(){
                 <span>Ultima alteração em { formatarData(usuario.data_atualizacao) }</span>
             </section>
         </div>
-)}
-          {mostrarModalExcluirConta && (
-        <div className="modal-content">
-            <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
-            <p>Preencha a senha para excluir sua conta</p>
-            <Input type="text" placeholder="Senha" />
-            <div className="botoes">
-                <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
-                <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
+        )}
+        {mostrarModalExcluirConta && (
+            <div className="modal-content">
+                <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
+                <p>Preencha a senha para excluir sua conta</p>
+                <Input type="text" placeholder="Senha" />
+                <div className="botoes">
+                    <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
+                    <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
+                </div>
             </div>
-        </div>
-    )}
+        )}
     </div>
     )
-
-  
 }
 
 export { Perfil }

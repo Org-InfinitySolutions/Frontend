@@ -21,4 +21,13 @@ const exibirAvisoTokenExpirado = () => {
     }, 3000);
 }
 
-export { exibirAviso, exibirAvisoTokenExpirado }
+const exibirAvisoTimer = (mensagem, tipo) => {
+    Swal.fire({ 
+        text: mensagem,
+        icon: tipo, /* 'success', 'error', 'warning', 'info' */
+        showConfirmButton: false,
+        timer: 2000
+    })
+}
+
+export { exibirAviso, exibirAvisoTokenExpirado, exibirAvisoTimer }
