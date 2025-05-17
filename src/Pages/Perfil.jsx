@@ -7,6 +7,8 @@ import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
+import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
+import { limparSession } from '../Utils/limpar';
 
 function Perfil(){
 
@@ -47,10 +49,34 @@ function Perfil(){
     }, []);
 
     const confirmarExclusaoConta = () => {
-        // Aqui você pode colocar a lógica para excluir a conta de verdade
-        alert('Conta excluída com sucesso!');
-        setMostrarModalExcluirConta(false);
-        // Você pode redirecionar o usuário também, se quiser.
+        
+        setBarraCarregamento(30)
+        api.delete(`/usuarios/${sessionStorage.ID_USUARIO}`, 
+        {    
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        })
+        .then(() => {
+          
+            setBarraCarregamento(70);
+            setTimeout(() => {
+                setBarraCarregamento(100);
+                exibirAvisoTimer("Operação realizada com sucesso", 'success');
+            }, 1000);
+
+            setTimeout(() => {
+                limparSession();
+                navegar('/');
+            }, 3500);
+        })
+        .catch((err) => {
+            setBarraCarregamento(100);
+            if(err.status == 401){
+                exibirAvisoTokenExpirado();
+            }
+            console.log(err);
+        })
     }
 
     const abrirModalExcluirConta = () => {
@@ -152,7 +178,7 @@ function Perfil(){
             <div className="modal-content">
                 <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
                 <p>Preencha a senha para excluir sua conta</p>
-                <Input type="text" placeholder="Senha" />
+                <Input tipo="password" placeholder="Senha" />
                 <div className="botoes">
                     <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
                     <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>

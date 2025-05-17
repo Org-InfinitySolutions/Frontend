@@ -3,6 +3,7 @@ import { Input } from '../components/Input';
 import './Cadastro.css';
 
 import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../Utils/formatacoes';
+import { exibirAviso } from '../Utils/exibirModalAviso';
 import { 
     emailInvalido, 
     campoNaoAtendeTamanho, 
