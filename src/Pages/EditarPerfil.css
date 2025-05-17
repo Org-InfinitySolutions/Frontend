@@ -54,7 +54,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
+            
             input{
                 height: 80%;
                 width: 61%;
@@ -71,7 +71,7 @@
                 flex-direction: row;
 
                 input{
-                    width: 85%;
+                    width: 90%;
                 }
             }
         }
