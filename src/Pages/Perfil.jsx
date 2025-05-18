@@ -11,39 +11,39 @@ import { useNavigate } from 'react-router-dom';
 function Perfil(){
 
     const sessionStorageUsuario = sessionStorage.DADOS_USUARIO;
-    const [usuario, setUsuario] = useState(sessionStorageUsuario != null ? JSON.parse(sessionStorageUsuario) : {});
-    const [endereco, setEndereco] = useState(sessionStorageUsuario != null ? usuario.endereco : {});
+    const [usuario, setUsuario] = useState({});
+    const [endereco, setEndereco] = useState({});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
 
     const navegar = useNavigate();
 
     useEffect(() => {
-        if(sessionStorageUsuario == null){ 
-            setBarraCarregamento(10);
-            api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.TOKEN}`
-                }
-            }).then((res) => {
-    
-                setBarraCarregamento(87);
-                const dados = res.data;
-                const dadosEndereco = dados.endereco;
-                setUsuario(dados)
-                setEndereco(dadosEndereco);
-    
-                setTimeout(() => {
-                    setBarraCarregamento(100);
-                }, 500)
-            }).catch((erro) => {
-                
+
+        setBarraCarregamento(10);
+        api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then((res) => {
+
+            setBarraCarregamento(87);
+            const dados = res.data;
+            const dadosEndereco = dados.endereco;
+            setUsuario(dados)
+            setEndereco(dadosEndereco);
+
+            setTimeout(() => {
                 setBarraCarregamento(100);
-                if(erro.status == 401){
-                    exibirAvisoTokenExpirado();
-                }
-            })
-        }
+            }, 500)
+        }).catch((erro) => {
+            
+            setBarraCarregamento(100);
+            if(erro.status == 401){
+                exibirAvisoTokenExpirado();
+            }
+        })
+        
     }, []);
 
     const confirmarExclusaoConta = () => {
@@ -62,25 +62,22 @@ function Perfil(){
     }
 
     useEffect(() => {
-        
-        if(sessionStorageUsuario == null){
-            apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.TOKEN}`
-                }
-            }).then((res) => {
-                setUsuario((usuario) => ({
-                    ...(usuario || {}),
-                    email: res.data.email
-                }))
-            }).catch((erro) => {
-    
-                setBarraCarregamento(100);
-                if(erro.status == 401){
-                    exibirAvisoTokenExpirado();
-                }
-            })
-        }
+        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then((res) => {
+            setUsuario((usuario) => ({
+                ...(usuario || {}),
+                email: res.data.email
+            }))
+        }).catch((erro) => {
+
+            setBarraCarregamento(100);
+            if(erro.status == 401){
+                exibirAvisoTokenExpirado();
+            }
+        })
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
     return(
