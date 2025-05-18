@@ -28,8 +28,6 @@ function EditarPerfil() {
     const [usuario, setUsuario] = useState(JSON.parse(sessionStorage.DADOS_USUARIO));
     const [endereco, setEndereco] = useState(usuario.endereco);
     const [barraCarregamento, setBarraCarregamento] = useState(0);
-    const [altura, setAltura] = useState(160);
-    const [senha, setSenha] = useState({ senhaAtual: '', novaSenha: '', confirmarSenha: '' });
 
     const [dadosBase, setDadosBase] = useState({
         endereco,   
@@ -78,6 +76,7 @@ function EditarPerfil() {
         }
     }, [dadosBase.endereco.cep])
 
+
     const validarFormulario = () => {
 
         const corpoRequisicaoCNPJ = {
@@ -85,7 +84,6 @@ function EditarPerfil() {
             ...formularioCNPJ
         }
         const formulario = dadosBase.tipo == "PF" ? dadosBase : corpoRequisicaoCNPJ;
-
         if(
             campoVazio(formulario.nome) || campoVazio(formulario.telefone_celular) || 
             campoVazio(formulario.endereco.logradouro) || campoVazio(formulario.endereco.bairro) || 
@@ -93,19 +91,16 @@ function EditarPerfil() {
             campoVazio(formulario.endereco.cep)
         ) {
             exibirAviso("Preencher todos os campos obrigatórios", 'error');
-        }
-        if (dadosBase.tipo == "PJ"){
+        } else if (dadosBase.tipo == "PJ"){
             
             if(campoVazio(formulario.razao_social) || campoVazio(formulario.telefone_residencial)){
                 exibirAviso("Preencher todos os campos obrigatórios", 'error')
             } else if(campoNaoAtendeTamanho(formulario.telefone_residencial, 14)){
                 exibirAviso("O campo Telefone é inválido", 'error')
             }
-        } 
-        if(campoNaoAtendeTamanho(formulario.endereco.cep, 9)){
+        } else if(campoNaoAtendeTamanho(formulario.endereco.cep, 9)){
             exibirAviso("O campo CEP é inválido", 'error')
-        } 
-        if(campoNaoAtendeTamanho(formulario.telefone_celular, 15)){
+        } else if(campoNaoAtendeTamanho(formulario.telefone_celular, 15)){
             exibirAviso("O campo Celular é inválido", 'error')
         } else{
             editarPerfil(formulario);
@@ -122,21 +117,6 @@ function EditarPerfil() {
             }
         }
         ).then(() => {
-
-            /* atualiza os dados retornados, evitando uma nova consulta na API quando o usuario voltar para tela perfil*/
-            const dadosEspeciais = dadosBase.tipo == "PF" ? {
-                cpf: usuario.cpf,
-                rg: usuario.rg
-            } : {
-                cnpj: usuario.cnpj,
-            }
-            sessionStorage.DADOS_USUARIO = JSON.stringify({
-                ...formulario,
-                ...dadosEspeciais,
-                data_criacao: usuario.data_criacao,
-                data_atualizacao: usuario.data_atualizacao,
-                email: usuario.email
-            });
 
             setBarraCarregamento(70);
             setTimeout(() => {
@@ -158,12 +138,10 @@ function EditarPerfil() {
     }
 
     const abrirModalEmail = () => {
-        setAltura(80);
         setMostrarModalEmail(true);
     }
 
     const fecharModalEmail = () => {
-        setAltura(160);
         setMostrarModalEmail(false);
     }
 
@@ -173,21 +151,18 @@ function EditarPerfil() {
     }
 
     const fecharModalConfirmacao = () => {
-        setAltura(160);
         setMostrarModalConfirmacao(false);
     }
 
     const abrirModalAlterarSenha = () => {
-        setAltura(90)
         setMostrarModalAlterarSenha(true);
     }
     
     const fecharModalAlterarSenha = () => {
-        setAltura(160)
         setMostrarModalAlterarSenha(false);
     }
     return (
-        <div className="editar-conta" style={{minHeight: `${altura}vh`}}>
+        <div className="editar-conta">
             <LoadingBar
                 progress={barraCarregamento}
                 height={3}
@@ -443,7 +418,7 @@ function EditarPerfil() {
 
                     <section className="container-eventos">
                         <a onClick={() => { navegar("/perfil")}}>Cancelar</a>
-                        <button onClick={validarFormulario} disabled={true}>Confirmar</button>
+                        <button onClick={validarFormulario}>Confirmar</button>
                     </section>
                 </div>
             )}

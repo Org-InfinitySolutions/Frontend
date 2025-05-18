@@ -1,4 +1,6 @@
 .editar-conta{
+    min-height: 70vh;
+    padding: 10vh 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -208,7 +210,7 @@
         background-color: white;
         padding: 2rem;
         border-radius: 10px;
-        width: 25%;
+        width: 30%;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -350,6 +352,55 @@
         .botao-confirmar:active{
             transition: 0.3s;
             transform: scale(0.95);
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .editar-conta{
+
+        .container-formulario{
+            width: 80%;
+        
+            .container-dados-pessoais{
+                min-height: 60vh;
+
+                section{
+                    img{
+                        height: 1.5em;
+                    }
+                }
+                button{
+                    margin: 2vh 0px;
+                    padding: 0.6em;
+                }
+            }
+
+            .container-dados-endereco{
+                height: 75vh;
+            }
+
+            .container-eventos{
+                height: 15vh;
+            }
+        }
+
+        .modal-content{
+            width: 60%;
+
+            h1{
+                font-size: 1.5em;
+            }
+
+            .botoes{
+                height: 8vh;
+                align-items: center;
+            
+                .botao-cancelar, .botao-continuar, .botao-confirmar{
+                    height: 70%;
+                    margin: 0px;
+                }
+            }
         }
     }
 }
