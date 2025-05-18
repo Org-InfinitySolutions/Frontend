@@ -15,6 +15,7 @@ function Perfil(){
     const [endereco, setEndereco] = useState(sessionStorageUsuario != null ? usuario.endereco : {});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
+    const [altura, setAltura] = useState(120);
 
     const navegar = useNavigate();
 
@@ -49,15 +50,18 @@ function Perfil(){
     const confirmarExclusaoConta = () => {
         // Aqui você pode colocar a lógica para excluir a conta de verdade
         alert('Conta excluída com sucesso!');
+        setAltura(120)
         setMostrarModalExcluirConta(false);
         // Você pode redirecionar o usuário também, se quiser.
     }
 
     const abrirModalExcluirConta = () => {
+        setAltura(90);
         setMostrarModalExcluirConta(true);
     }
 
     const fecharModalExcluirConta = () => {
+        setAltura(120)
         setMostrarModalExcluirConta(false);
     }
 
@@ -84,7 +88,7 @@ function Perfil(){
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
     return(
-    <div className="container">
+    <div className="perfil" style={{minHeight: `${altura}vh`}}>
         <LoadingBar
             progress={barraCarregamento}
             height={3}
@@ -152,7 +156,7 @@ function Perfil(){
             <div className="modal-content">
                 <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
                 <p>Preencha a senha para excluir sua conta</p>
-                <Input type="text" placeholder="Senha" />
+                <Input tipo={"text"} placeholder={"Senha"} />
                 <div className="botoes">
                     <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
                     <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>

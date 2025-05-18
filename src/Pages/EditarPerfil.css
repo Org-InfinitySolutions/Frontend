@@ -1,359 +1,355 @@
-.container-formulario{
-    height: 85%;
-    width: 35%;
-    background-color: white;
-
-    border-radius: 10px;
+.editar-conta{
     display: flex;
-    flex-direction: column;
     align-items: center;
-    font-family: var(--fonte-texto);
+    justify-content: center;
+    background-color: #171717;
 
-    .container-titulo{
-        height: 10%;
-        width: 50%;
+    .container-formulario{
+        min-height: 90vh;
+        width: 35%;
+        background-color: white;
 
+        border-radius: 10px;
         display: flex;
+        flex-direction: column;
         align-items: center;
-        flex-direction: column;
-        justify-content: space-evenly;
+        font-family: var(--fonte-texto);
 
-        h2{
-            margin: 0px;
-            font-family: var(--fonte-titulo);
-        }
-        .barra{
-            height: 2px;
-            width: 85%;
-            background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
-        }
-    }
-
-    .container-dados-pessoais{
-        height: 40%;
-        width: 80%;
-
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-evenly;
-
-        h3{
-            padding: 2%;
+        .container-titulo{
+            height: 10%;
             width: 50%;
-            margin: 0px;
-            margin-bottom: 2%;
-            border-bottom: 1px solid black;
-            font-weight: normal;
-        }
-
-        section{
-            width: 100%;
-            height: 10%;
 
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            
-            input{
-                height: 80%;
-                width: 61%;
-                border: 1px solid silver;
+            flex-direction: column;
+            justify-content: space-evenly;
+
+            h2{
+                margin: 0.5em 0px;
+                font-family: var(--fonte-titulo);
             }
-            
-            div{
-                height: 100%;
-                width: 62%;
+            .barra{
+                height: 2px;
+                width: 85%;
+                background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+            }
+        }
+
+        .container-dados-pessoais{
+            min-height: 40vh;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-evenly;
+
+            h3{
+                padding: 2%;
+                width: 50%;
+                margin: 1em 0px;
+                margin-bottom: 2%;
+                border-bottom: 1px solid black;
+                font-weight: normal;
+            }
+
+            section{
+                height: 10vh;
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: end;
+
+                img{
+                    margin-left: 0.5em;
+                    margin-bottom: 0.3em;
+                    cursor: pointer;
+                }
+            }
+
+            button{
+                padding: 0.8em;
+                margin-top: 1em;
+                border: none;
+                color: white;
+                cursor: pointer;
+                border-radius: 8px;
+                background-color: black;
+                font-family: var(--fonte-texto);
+            }
+            button:hover{
+                transition: 0.2s;
+                transform: scale(0.98);
+            }
+        }
+        .container-dados-endereco{
+            height: 65vh;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-evenly;
+
+            h3{
+                padding: 2%;
+                width: 30%;
+                margin: 0.5em 0px;
+                margin-bottom: 2%;
+                border-bottom: 1px solid black;
+                font-weight: normal;
+            }
+
+            section{
+                width: 100%;
+                height: 15%;
 
                 display: flex;
                 align-items: center;
-                justify-content: space-between;
-                flex-direction: row;
+                justify-content: center;
+            }
 
-                input{
-                    width: 90%;
+            .box-cidade{
+                display: flex;
+                justify-content: flex-start;
+                .box{
+                    width: 68.5%;
+                    height: 100%;
+
+                    div{
+                        width: 90%;
+                        height: 100%;
+                    }
                 }
+                div{
+                    width: 30%;
+                    .error{
+                        width: 100%;
+                    }
+                }
+            }
+
+            button{
+                padding: 2%;
+                border: none;
+                color: white;
+                cursor: pointer;
+                border-radius: 8px;
+                background-color: black;
+            }
+            button:hover{
+                transition: 0.2s;
+                transform: scale(0.98);
             }
         }
 
-        button{
-            padding: 2%;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 8px;
-            background-color: black;
-            font-family: var(--fonte-texto);
-        }
-        button:hover{
-            transition: 0.2s;
-            transform: scale(0.98);
-        }
+        .container-eventos{
+            height: 10vh;
+            width: 80%;
 
-        
-        .botao-editar{
-            cursor: pointer;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            
+
+            button{
+                padding: 2%;
+                border-radius: 8px;
+                background-color: black;
+                border: 1px solid black;
+                color: white;
+                font-size: 0.8em;
+                cursor: pointer;
+                font-family: var(--fonte-texto);
+            }
+            button:hover{
+                background-color: white;
+                color: black;
+                transition: 0.2s;
+            }
+            button:active{
+                transform: scale(0.98);
+                transition: 0.3s;
+            }
+
+            a{
+                padding: 2%;
+                font-size: 0.8em;
+                margin-right: 2%;
+
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                justify-content: center;
+            
+                color: black;
+                cursor: pointer;
+                border-radius: 8px;
+                background-color: white;
+                border: 1px solid black;
+                font-family: var(--fonte-texto);
+            }
+            a:hover{
+                color: white;
+                transition: 0.3s;
+                background-color: black;
+            }
+            a:active{
+                transition: 0.2s;
+                transform: scale(0.95);
+            }
+
         }
     }
-    .container-dados-endereco{
-        height: 40%;
-        width: 80%;
 
+    .modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 25%;
+        text-align: center;
         display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: space-evenly;
-
-        h3{
-            padding: 2%;
-            width: 30%;
-            margin: 0px;
-            margin-bottom: 2%;
-            border-bottom: 1px solid black;
-            font-weight: normal;
+        h2{
+            font-family: "Montserrat", sans-serif;
         }
 
-        section{
-            width: 100%;
-            height: 10%;
+        h1{
+            margin: 0.2em 0px;
+        }
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+        .input-alteracao-senha{
+            text-align: start;
+        }
+
+        .container-input{
+            padding: 0px;
+            margin-top: 1em;
             
+            label {
+                justify-content: flex-start;
+                display: flex;
+            }
 
             input{
-                height: 80%;
-                width: 78%;
-                border: 1px solid silver;
+                width: 94%;
+                margin-top: 0.3em;
             }
-            
-            .box-cidade{
-                height: 100%;
-                width: 65%;
-
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                flex-direction: row;
-
-                input{
-                    width: 66%;
-                }
-            }
-
-            .box-estado{
-                height: 100%;
-                width: 30%;
-                
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                justify-content: space-between;
-                input{
-                    width: 30%;
-                    text-align: center;
-                }
-            }
-
-            .box-cep{
-                height: 100%;
-                width: 79%;
-                background-color: white;
-                
-                display: flex;
-                align-items: center;
-                flex-direction: row;
-                justify-content: space-between;
-                border: 1px solid silver;
-                input{
-                    width: 90%;
-                    border: none;
-                    outline: none;
-                }
-                img{
-                    margin-left: 1%;
-                }
-            }
-        }
-
-        button{
-            padding: 2%;
-            border: none;
-            color: white;
-            cursor: pointer;
-            border-radius: 8px;
-            background-color: black;
-        }
-        button:hover{
-            transition: 0.2s;
-            transform: scale(0.98);
         }
     }
 
-    .container-eventos{
-        height: 8%;
-        width: 80%;
-
+    .botoes-e-aviso-etapa-3 {
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
-        align-items: center;
-        
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    
+    
+    .aviso-obrigatorio-etapa-3 {
+        font-size: 0.75rem;
+        font-family: var(--fonte-texto);
+        margin: 0;
+        font-size: 100%;
+    }
 
-        button{
-            padding: 2%;
-            border-radius: 8px;
+
+    .modal-content Input {
+        width: 90%;
+        margin-top: 1rem;
+        padding: 0.5rem;
+    }
+
+    .confirmar-alteracao-email{
+        color: #FF0000;
+        font-family: "Montserrat Alternates", sans-serif;
+    }
+    
+    .botoes {
+        display: flex;
+        justify-content: right;
+        margin-top: 1.5rem;
+        gap: 2%;
+        min-height: 100%;
+
+        .botao-continuar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
             background-color: black;
-            border: 1px solid black;
             color: white;
-            font-size: 0.8em;
-            cursor: pointer;
+            border: 1px solid black;
+            font-size: 1rem;
             font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
         }
-        button:hover{
-            background-color: white;
-            color: black;
+
+        .botao-continuar:hover{
             transition: 0.2s;
+            color: black;
+            background-color: white;
+            border: 1px solid black;
         }
-        button:active{
-            transform: scale(0.98);
+
+        .botao-continuar:active{
+            transform: scale(0.95);
             transition: 0.3s;
         }
 
-        a{
-            padding: 2%;
-            font-size: 0.8em;
-            margin-right: 2%;
-
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            justify-content: center;
-        
-            color: black;
-            cursor: pointer;
-            border-radius: 8px;
+        .botao-cancelar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
             background-color: white;
-            border: 1px solid black;
+            color: black;
+            border: none;
+            font-size: 1rem;
             font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px black solid;
         }
-        a:hover{
-            color: white;
+
+        .botao-cancelar:hover{
             transition: 0.3s;
             background-color: black;
+            color: white;
         }
-        a:active{
-            transition: 0.2s;
+
+        .botao-cancelar:active {
             transform: scale(0.95);
         }
 
+        .botao-confirmar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
+            background-color: black;
+            color: white;
+            border: 1px solid black;
+            font-size: 1rem;
+            font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px black solid;
+        }
+
+        .botao-confirmar:hover{
+            background-color: white;
+            color: black;
+            transition: 0.3s;
+        }
+
+        .botao-confirmar:active{
+            transition: 0.3s;
+            transform: scale(0.95);
+        }
     }
 }
-
-  .modal-content {
-    background-color: white;
-    padding: 2rem;
-    border-radius: 10px;
-    width: 25%;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    h2{
-        font-family: "Montserrat", sans-serif;
-    }
-
-    .input-alteracao-senha{
-        text-align: start;
-    }
-  }
-
-
-
-  .botoes-e-aviso-etapa-3 {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    padding-right: 20px;
-    gap: 6px;
-    margin-top: 25px;
-  }
-  
-  
-  .aviso-obrigatorio-etapa-3 {
-    font-size: 0.75rem;
-    font-family: var(--fonte-texto);
-    margin: 0;
-    font-size: 100%;
-  }
-
-
-  .modal-content Input {
-    width: 90%;
-    margin-top: 1rem;
-    padding: 0.5rem;
-  }
-
-  .confirmar-alteracao-email{
-    color: #FF0000;
-    font-family: "Montserrat Alternates", sans-serif;
-  }
-  
-  .botoes {
-    display: flex;
-    justify-content: right;
-    margin-top: 1.5rem;
-    gap: 2%;
-    min-height: 100%;
-
-    .botao-continuar{
-        height: 38px;
-        width: 102px;
-        margin-top: 10px;
-        background-color: black;
-        color: white;
-        border: none;
-        font-size: 1rem;
-        font-family: var(--fonte-texto);
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.2s ease;
-      }
-
-    .botao-cancelar{
-        height: 38px;
-        width: 102px;
-        margin-top: 10px;
-        background-color: white;
-        color: black;
-        border: none;
-        font-size: 1rem;
-        font-family: var(--fonte-texto);
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.2s ease;
-        border: 1px black solid;
-    }
-
-    .botao-cancelar:active {
-        transform: scale(0.95);
-    }
-
-    .botao-confirmar{
-        height: 38px;
-        width: 102px;
-        margin-top: 10px;
-        background-color: black;
-        color: white;
-        border: none;
-        font-size: 1rem;
-        font-family: var(--fonte-texto);
-        border-radius: 6px;
-        cursor: pointer;
-        transition: 0.2s ease;
-        border: 1px black solid;
-    }
-    
-  }
-  

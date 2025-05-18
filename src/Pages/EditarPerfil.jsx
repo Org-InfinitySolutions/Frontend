@@ -7,15 +7,29 @@ import { useNavigate } from 'react-router-dom';
 import { formatarCEP, formatarTelefone, formatarTelefoneFixo } from '../Utils/formatacoes';
 import axios from 'axios';
 import { api } from '../provider/apiInstance';
-import { campoNaoAtendeTamanho, campoVazio } from '../utils/validarCampos';
 import { exibirAviso, exibirAvisoTokenExpirado, exibirAvisoTimer } from '../Utils/exibirModalAviso' 
 import LoadingBar from 'react-top-loading-bar';
+import {  
+    campoNaoAtendeTamanho, 
+    campoVazio, 
+    validarNome,
+    validarTelefone, 
+    validarTelefoneFixo,
+    validarCEP,
+    validarNumero,
+    validarRazaoSocial,
+    validarSenha,
+    validarConfirmacaoSenha,
+    validarEmail
+} from '../utils/validarCampos';
 
 function EditarPerfil() {
 
     const [usuario, setUsuario] = useState(JSON.parse(sessionStorage.DADOS_USUARIO));
     const [endereco, setEndereco] = useState(usuario.endereco);
     const [barraCarregamento, setBarraCarregamento] = useState(0);
+    const [altura, setAltura] = useState(160);
+    const [senha, setSenha] = useState({ senhaAtual: '', novaSenha: '', confirmarSenha: '' });
 
     const [dadosBase, setDadosBase] = useState({
         endereco,   
@@ -64,7 +78,7 @@ function EditarPerfil() {
         }
     }, [dadosBase.endereco.cep])
 
-const validarFormulario = () => {
+    const validarFormulario = () => {
 
         const corpoRequisicaoCNPJ = {
             ...dadosBase,
@@ -144,10 +158,12 @@ const validarFormulario = () => {
     }
 
     const abrirModalEmail = () => {
+        setAltura(80);
         setMostrarModalEmail(true);
     }
 
     const fecharModalEmail = () => {
+        setAltura(160);
         setMostrarModalEmail(false);
     }
 
@@ -157,18 +173,21 @@ const validarFormulario = () => {
     }
 
     const fecharModalConfirmacao = () => {
+        setAltura(160);
         setMostrarModalConfirmacao(false);
     }
 
     const abrirModalAlterarSenha = () => {
+        setAltura(90)
         setMostrarModalAlterarSenha(true);
     }
     
     const fecharModalAlterarSenha = () => {
+        setAltura(160)
         setMostrarModalAlterarSenha(false);
     }
     return (
-        <div className="container">
+        <div className="editar-conta" style={{minHeight: `${altura}vh`}}>
             <LoadingBar
                 progress={barraCarregamento}
                 height={3}
@@ -182,173 +201,216 @@ const validarFormulario = () => {
                         <div className="barra"></div>
                     </section>
 
+                    <section className="container-dados-pessoais">
                     {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
-                        <section className="container-dados-pessoais">
+                        <>
                             <h3>Dados pessoais:</h3>
-                            
                             <section>
-                                <label>Nome Completo:</label>
-                                <input type="text" placeholder='Nome completo' defaultValue={usuario.nome} 
-                                onChange={(e) => {
-                                    setDadosBase((dados) => ({
-                                        ...dados,
-                                        nome: e.target.value
-                                    }))
-                                }}/>
+                                <Input
+                                    label={"* Nome Completo:"}
+                                    placeholder={"Nome completo"}
+                                    valor={dadosBase.nome}
+                                    maxLength={60}
+                                    validacao={validarNome}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            nome: e.target.value
+                                        }))
+                                    }}
+                                />
                             </section>
                             <section>
-                                <label>Celular:</label>
-                                <input type="text" placeholder='Ex: (11) 98754-8798' value={dadosBase.telefone_celular} 
-                                onChange={(e) => (
-                                    setDadosBase((dados) => ({
-                                        ...dados,
-                                        telefone_celular: formatarTelefone(e.target.value)
-                                    }))
-                                )}/>
+                                <Input
+                                    label={"* Celular:"}
+                                    placeholder={"Ex: (11) 98754-8798"}
+                                    valor={dadosBase.telefone_celular}
+                                    maxLength={15}
+                                    validacao={validarTelefone}
+                                    onChange={(e) => (
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            telefone_celular: formatarTelefone(e.target.value)
+                                        }))
+                                    )}
+                                />
                             </section>
-                            <section>
-                                <label>Email:</label>
-                                <div>
-                                    <input type="text" placeholder='email@email.com' defaultValue={usuario.email} disabled/>
-                                    <img src={iconeEditar} alt="icone editar" height="23em" onClick={abrirModalEmail} />
-                                </div>
-                            </section>
-                            <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
-                        </section>
+                        </>
                     ) : (
-                        <section className="container-dados-pessoais">
+                        <>
                             <h3>Dados da empresa:</h3>
                             <section>
-                                <label>Nome Fantasia:</label>
-                                <input type="text" placeholder='Nome fantasia' defaultValue={usuario.nome} 
-                                onChange={(e) => (
-                                    setDadosBase((dados) => ({
-                                        ...dados,
-                                        nome: e.target.value
-                                    }))
-                                )}/>
+                                <Input
+                                    label={"* Nome Fantasia:"}
+                                    placeholder={"Nome fantasia"}
+                                    valor={dadosBase.nome}
+                                    maxLength={60}
+                                    validacao={validarNome}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            nome: e.target.value
+                                        }))
+                                    }}
+                                />
                             </section>
                             <section>
-                                <label>Razão Social:</label>
-                                <input type="text" placeholder='Razão social' defaultValue={formularioCNPJ.razao_social} 
-                                onChange={(e) => (
-                                    setFormularioCNPJ((dados) => ({
-                                        ...dados,
-                                        razao_social: e.target.value
-                                    }))
-                                )}/>
+                                <Input
+                                    label={"* Razão Social:"}
+                                    placeholder={"Razão social"} 
+                                    valor={formularioCNPJ.razao_social} 
+                                    maxLength={60}
+                                    validacao={validarRazaoSocial}
+                                    onChange={(e) => {
+                                        setFormularioCNPJ((dados) => ({
+                                            ...dados,
+                                            razao_social: e.target.value
+                                        }))
+                                    }}
+                                />
                             </section>
                             <section>
-                                <label>Celular:</label>
-                                <input type="text" maxLength={15} placeholder='Ex: (99) 99999-9999' value={dadosBase.telefone_celular} 
-                                onChange={(e) => (
-                                    setDadosBase((dados) => ({
-                                        ...dados,
-                                        telefone_celular: formatarTelefone(e.target.value)
-                                    }))
-                                )}/>
+                                <Input
+                                    label={"* Celular:"}
+                                    placeholder={"Ex: (99) 99999-9999"} 
+                                    valor={dadosBase.telefone_celular} 
+                                    maxLength={15}
+                                    validacao={validarTelefone}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            telefone_celular: formatarTelefone(e.target.value)
+                                        }))
+                                    }}
+                                />
                             </section>
                             <section>
-                                <label>Telefone:</label>
-                                <input type="text" maxLength={14} placeholder='Ex: (99) 9999-9999' value={formularioCNPJ.telefone_residencial}
-                                onChange={(e) => (
-                                    setFormularioCNPJ((dados) => ({
-                                        ...dados,
-                                        telefone_residencial: formatarTelefoneFixo(e.target.value)
-                                    }))
-                                )}/>
+                                <Input
+                                    label={"* Telefone:"}
+                                    placeholder={"Ex: (99) 99999-9999"} 
+                                    valor={formularioCNPJ.telefone_residencial} 
+                                    maxLength={14}
+                                    validacao={validarTelefoneFixo}
+                                    onChange={(e) => {
+                                        setFormularioCNPJ((dados) => ({
+                                            ...dados,
+                                            telefone_residencial: formatarTelefoneFixo(e.target.value)
+                                        }))
+                                    }}
+                                />
                             </section>
-                            <section>
-                                <label>Email:</label>
-                                <div>
-                                    <input type="text" placeholder='email@email.com' disabled defaultValue={usuario.email}/>
-                                    <img src={iconeEditar} className='botao-editar' alt="icone editar" height="23em" onClick={abrirModalEmail} />
-                                </div>
-                            </section>
-                            <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
-                        </section>
+                        </>
                     )}
+                        <section>
+                            <Input
+                                label={"Email:"}
+                                placeholder={"email@email.com"}
+                                valor={usuario.email}
+                                desabilitar={true}
+                            />
+                            <img src={iconeEditar} alt="icone editar" height="30em" onClick={abrirModalEmail} />
+                        </section>
+                        <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
+                    </section>
 
                     {/* Region Endereço */}
                     <section className="container-dados-endereco">
                         <h3>Endereço:</h3>
                         <section>
-                            <label>CEP:</label>
-                            <div className='box-cep'>
-                                <img src={iconePesquisar} alt="" height="20em" />
-                                <input 
-                                    type="text" 
-                                    placeholder='12345-258' 
-                                    className='input-cep' 
-                                    maxLength={9}
-                                    value={formatarCEP(dadosBase.endereco.cep)} 
-                                    onChange={(e) => {
-                                        setDadosBase((dados) => ({
-                                            ...dados,
-                                            endereco: {
-                                                ...dados.endereco,
-                                                cep: formatarCEP(e.target.value)
-                                            }
-                                        }))
-                                    }}/>
-                            </div>
-                        </section>
-                        <section>
-                            <label>Rua:</label>
-                            <input type="text" placeholder='Ex.: Rua são joaquim' value={dadosBase.endereco.logradouro} disabled={desabilitar}
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
-                                    ...dados,
-                                    endereco: {
-                                        ...dados.endereco,
-                                        logradouro: e.target.value
-                                    }
-                                }))
-                            }}/>
-                        </section>
-                        <section>
-                            <label>Número:</label>
-                            <input type="text" placeholder='Ex.: 123' defaultValue={endereco.numero} 
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
-                                    ...dados,
-                                    endereco: {
-                                        ...dados.endereco,
-                                        numero: e.target.value
-                                    }
-                                }))
-                            }}/>
-                        </section>
-                        <section>
-                            <label>Bairro:</label>
-                            <input type="text" placeholder='Ex.: Centro' value={dadosBase.endereco.bairro} disabled={desabilitar}
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
-                                    ...dados,
-                                    endereco: {
-                                        ...dados.endereco,
-                                        bairro: e.target.value
-                                    }
-                                }))
-                            }}/>
-                        </section>
-                        <section>
-                            <div className='box-cidade'>
-                                <label>Cidade:</label>
-                                <input type="text" placeholder='São Paulo' value={dadosBase.endereco.cidade} disabled={desabilitar}
+                            <Input 
+                                label={"* CEP:"} 
+                                valor={formatarCEP(dadosBase.endereco.cep)} 
+                                maxLength={9}
+                                placeholder={"Ex: 01234-789"}
+                                validacao={validarCEP}
                                 onChange={(e) => {
                                     setDadosBase((dados) => ({
                                         ...dados,
                                         endereco: {
                                             ...dados.endereco,
-                                            cidade: e.target.value
+                                            cep: formatarCEP(e.target.value)
                                         }
                                     }))
                                 }}/>
+                        </section>
+                        <section>
+                            <Input
+                                label={"* Rua:"}
+                                valor={dadosBase.endereco.logradouro}
+                                placeholder={"Ex.: Rua são joaquim"}
+                                desabilitar={desabilitar}
+                                tipo={"text"}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                    ...dados,
+                                    endereco: {
+                                        ...dados.endereco,
+                                        logradouro: e.target.value
+                                    }
+                                    }))
+                                }}
+                            />
+                        </section>
+                        <section>
+                            <Input 
+                                label={"* Número:"} 
+                                valor={dadosBase.endereco.numero}
+                                validacao={validarNumero}
+                                placeholder={"Ex.: 1234"}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        endereco: {
+                                            ...dados.endereco,
+                                            numero: e.target.value
+                                        }
+                                    }))
+                                }}
+                            />
+                        </section>
+                        <section>
+                            <Input 
+                                label={"* Bairro:"} 
+                                valor={dadosBase.endereco.bairro} 
+                                placeholder={"Ex.: Centro"}
+                                tipo={"text"}
+                                desabilitar={desabilitar}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        endereco: {
+                                            ...dados.endereco,
+                                            bairro: e.target.value
+                                        }
+                                    }))
+                                }}
+                            />
+                        </section>
+                        <section className='box-cidade'>
+                            <div className='box'>
+                                <Input
+                                    label={"* Cidade:"}
+                                    valor={dadosBase.endereco.cidade}
+                                    placeholder={"Ex.: São Paulo"}
+                                    desabilitar={desabilitar}
+                                    tipo={"text"}
+                                    onChange={(e) => {
+                                        setDadosBase((dados) => ({
+                                            ...dados,
+                                            endereco: {
+                                                ...dados.endereco,
+                                                cidade: e.target.value
+                                            }
+                                        }))
+                                    }}
+                                />
                             </div>
-                            <div className='box-estado'>
-                                <label>Estado:</label>
-                                <input type="text" maxLength={2} placeholder='SP' value={dadosBase.endereco.estado} disabled={desabilitar}
+                            <Input 
+                                label={"* Estado:"} 
+                                valor={dadosBase.endereco.estado} 
+                                placeholder={"Ex.: SP"}
+                                desabilitar={desabilitar}
+                                tipo={"text"}
                                 onChange={(e) => {
                                     setDadosBase((dados) => ({
                                         ...dados,
@@ -357,27 +419,31 @@ const validarFormulario = () => {
                                             estado: e.target.value
                                         }
                                     }))
-                                }}/>
-                            </div>
+                                }}
+                            />
                         </section>
                         <section>
-                            <label>Complemento:</label>
-                            <input type="text" placeholder='Complemento' defaultValue={endereco.complemento}
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
-                                    ...dados,
-                                    endereco: {
-                                        ...dados.endereco,
-                                        complemento: e.target.value
-                                    }
-                                }))
-                            }}/>
+                            <Input 
+                                label={"Complemento:"} 
+                                valor={dadosBase.endereco.complemento} 
+                                placeholder={"Ex.: Próximo do mêtro"}
+                                tipo={"text"}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        endereco: {
+                                            ...dados.endereco,
+                                            complemento: e.target.value
+                                        }
+                                    }))
+                                }}
+                            />
                         </section>
                     </section>
 
                     <section className="container-eventos">
                         <a onClick={() => { navegar("/perfil")}}>Cancelar</a>
-                        <button onClick={validarFormulario}>Confirmar</button>
+                        <button onClick={validarFormulario} disabled={true}>Confirmar</button>
                     </section>
                 </div>
             )}
@@ -386,7 +452,7 @@ const validarFormulario = () => {
             {mostrarModalEmail && (
                 <div className="modal-content">
                     <h1>Preencha o novo e-mail</h1>
-                    <Input type="text" placeholder="E-mail" />
+                    <Input tipo={"text"} label={"* E-mail:"} placeholder={"Ex.: email@email.com"} validacao={validarEmail}/>
                     <div className="botoes">
                         <button className="botao-cancelar" onClick={fecharModalEmail}>Cancelar</button>
                         <button className="botao-continuar" onClick={continuarModalEmail}>Continuar</button>
@@ -398,7 +464,7 @@ const validarFormulario = () => {
                 <div className="modal-content">
                     <h1 className='confirmar-alteracao-email'>Deseja confirmar as alterações?</h1>
                     <p>Preencha a senha para continuar</p>
-                    <Input type="text" placeholder="Senha" />
+                    <Input tipo={"text"} placeholder={"Senha"}/>
                     <div className="botoes">
                         <button className="botao-confirmar" onClick={fecharModalConfirmacao}>Confirmar</button>
                     </div>
@@ -408,18 +474,15 @@ const validarFormulario = () => {
     {mostrarModalAlterarSenha && (
     <div className="modal-content">
         <h1>Alterar senha</h1>
-        <p className= "input-alteracao-senha">* Senha atual:</p> 
-        <Input type="text" placeholder="Senha atual" />
-        <p className= "input-alteracao-senha">* Nova senha:</p>
-        <Input type="text" placeholder="Nova senha" />
-        <p className= "input-alteracao-senha">* Confirmar nova senha:</p>
-        <Input type="text" placeholder="Confirmar nova senha" />
+        <Input tipo={"text"} label={"* Senha atual:"} placeholder="Senha atual"/>
+        <Input tipo={"text"} label={"* Nova senha:"} placeholder={"Nova senha"} />
+        <Input tipo={"text"} label={"* Confirmar nova senha:"} placeholder={"Confirmar nova senha"} validacao={validarConfirmacaoSenha}/>
         <div className="botoes-e-aviso-etapa-3">
-        <div className="botoes">
-            <button className="botao-cancelar" onClick={() => { navegar("/perfil") }}>Cancelar</button>
-            <button className="botao-confirmar" onClick={() => { navegar("/perfil") }}>Confirmar</button>
-        </div>
-        <p className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</p>
+            <div className="botoes">
+                <button className="botao-cancelar" onClick={fecharModalAlterarSenha}>Cancelar</button>
+                <button className="botao-confirmar" onClick={() => { navegar("/perfil") }}>Confirmar</button>
+            </div>
+            <span className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</span>
         </div>
     </div>
 )}
