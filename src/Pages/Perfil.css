@@ -1,6 +1,7 @@
 .perfil{
     background-color: #171717;
-
+    min-height: 70vh;
+    padding: 10vh 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -228,7 +229,7 @@
         justify-content: right;
         margin-top: 1rem;
         gap: 2%;
-        min-height: 100%;
+        height: 100%;
 
         .botao-cancelar{
             height: 38px;
@@ -279,6 +280,60 @@
         .botao-confirmar:active{
             transition: 0.3s;
             transform: scale(0.95);
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .perfil{
+        min-height: 70vh;
+        padding: 10vh 0px;
+
+        .container-perfil{
+            width: 80%;
+            height: 110vh;
+
+            .container-eventos{
+                height: 8%;
+                
+                .eventos-excluir-editar{
+
+                    .botao-excluir, .botao-editar{
+                        height: 70%;
+                    }
+                }
+                .evento-voltar{
+
+                    .botao-retroceder{
+                        height: 70%;
+                        width: 50%;
+                    }
+                }
+            }
+            .dados-utilitarios{
+                height: 8%;
+            }
+        }
+
+        .modal-content{
+            height: 40vh;
+            width: 70%;
+            h1{
+                font-size: 1.5em;
+            }
+
+            .container-input{
+                input{
+                    height: 5vh;
+                }
+            }
+        }
+        .botoes{
+            align-items: center;
+            .botao-cancelar, .botao-confirmar{
+                margin: 0px;
+                height: 6vh;
+            }
         }
     }
 }
