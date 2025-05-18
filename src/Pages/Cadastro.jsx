@@ -22,7 +22,7 @@ import {
     validarSenha,
     validarConfirmacaoSenha,
     validarRazaoSocial
-} from '../utils/validarCampos';
+} from '../Utils/validarCampos';
 import axios from 'axios';
 import { api } from '../provider/apiInstance';
 import { resolvePath, useNavigate } from 'react-router-dom';

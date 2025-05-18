@@ -2,13 +2,14 @@
 import './Perfil.css'
 import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useEffect, useState } from 'react';
-import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
+import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
 import { limparSession } from '../Utils/limpar';
+import { validarCampo } from '../Utils/validarCampos'
 
 function Perfil(){
 
@@ -17,6 +18,7 @@ function Perfil(){
     const [endereco, setEndereco] = useState(sessionStorageUsuario != null ? usuario.endereco : {});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
+    const [senha, setSenha] = useState("");
 
     const navegar = useNavigate();
 
@@ -42,7 +44,7 @@ function Perfil(){
                 
                 setBarraCarregamento(100);
                 if(erro.status == 401){
-                    exibirAvisoTokenExpirado();
+                    exibirAvisoTokenExpirado(navegar);
                 }
             })
         }
@@ -51,12 +53,14 @@ function Perfil(){
     const confirmarExclusaoConta = () => {
         
         setBarraCarregamento(30)
-        api.delete(`/usuarios/${sessionStorage.ID_USUARIO}`, 
-        {    
+        apiAutenticacao.delete(`/credenciais/${sessionStorage.ID_USUARIO?.trim()}`, 
+        {
+            data: { senha },   
             headers: {
                 Authorization: `Bearer ${sessionStorage.TOKEN}`
             }
-        })
+        }
+        )
         .then(() => {
           
             setBarraCarregamento(70);
@@ -72,10 +76,19 @@ function Perfil(){
         })
         .catch((err) => {
             setBarraCarregamento(100);
+
             if(err.status == 401){
-                exibirAvisoTokenExpirado();
+                exibirAvisoTokenExpirado(navegar);
             }
-            console.log(err);
+            if(err.status == 400){
+                
+                const dataErro = err.response.data;
+                if (dataErro.validationErrors != null) {
+                    exibirAviso(dataErro.validationErrors[0].message, 'error');
+                } else {
+                    exibirAviso(dataErro.error, 'error');
+                }
+            }
         })
     }
 
@@ -99,13 +112,7 @@ function Perfil(){
                     ...(usuario || {}),
                     email: res.data.email
                 }))
-            }).catch((erro) => {
-    
-                setBarraCarregamento(100);
-                if(erro.status == 401){
-                    exibirAvisoTokenExpirado();
-                }
-            })
+            });
         }
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
@@ -178,7 +185,15 @@ function Perfil(){
             <div className="modal-content">
                 <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
                 <p>Preencha a senha para excluir sua conta</p>
-                <Input tipo="password" placeholder="Senha" />
+                <Input 
+                    tipo="password" 
+                    placeholder="Senha"
+                    valor={senha}
+                    validacao={validarCampo}
+                    onChange={(e) => {
+                        setSenha(e.target.value);
+                    }}
+                />
                 <div className="botoes">
                     <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
                     <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
