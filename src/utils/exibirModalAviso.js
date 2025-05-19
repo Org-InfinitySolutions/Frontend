@@ -1,6 +1,6 @@
 
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { limparSession } from './limpar';
 
 const exibirAviso = (mensagem, tipo) => {
     Swal.fire({
@@ -11,10 +11,9 @@ const exibirAviso = (mensagem, tipo) => {
     })
 }
 
-const exibirAvisoTokenExpirado = () => {
-    const navegar = useNavigate();
-    exibirAviso('O token expirou, por favor refaça o login', 'error');
-    
+const exibirAvisoTokenExpirado = (navegar) => {
+    exibirAvisoTimer('A sessão expirou, por favor refaça o login', 'error');
+
     setTimeout(() => {
         limparSession();
         navegar('/login')
@@ -26,7 +25,7 @@ const exibirAvisoTimer = (mensagem, tipo) => {
         text: mensagem,
         icon: tipo, /* 'success', 'error', 'warning', 'info' */
         showConfirmButton: false,
-        timer: 2000
+        timer: 3000
     })
 }
 

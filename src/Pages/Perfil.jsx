@@ -2,11 +2,14 @@
 import './Perfil.css'
 import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useEffect, useState } from 'react';
-import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
+import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
+import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
+import { limparSession } from '../Utils/limpar';
+import { validarCampo } from '../Utils/validarCampos'
 
 function Perfil(){
 
@@ -15,6 +18,7 @@ function Perfil(){
     const [endereco, setEndereco] = useState({});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
+    const [senha, setSenha] = useState("");
 
     const navegar = useNavigate();
 
@@ -35,22 +39,53 @@ function Perfil(){
 
             setTimeout(() => {
                 setBarraCarregamento(100);
-            }, 500)
-        }).catch((erro) => {
-            
-            setBarraCarregamento(100);
-            if(erro.status == 401){
-                exibirAvisoTokenExpirado();
-            }
-        })
-        
+                if(erro.status == 401){
+                    exibirAvisoTokenExpirado(navegar);
+                }
+            })
+        }
     }, []);
 
     const confirmarExclusaoConta = () => {
-        // Aqui você pode colocar a lógica para excluir a conta de verdade
-        alert('Conta excluída com sucesso!');
-        setMostrarModalExcluirConta(false);
-        // Você pode redirecionar o usuário também, se quiser.
+        
+        setBarraCarregamento(30)
+        apiAutenticacao.delete(`/credenciais/${sessionStorage.ID_USUARIO?.trim()}`, 
+        {
+            data: { senha },   
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }
+        )
+        .then(() => {
+          
+            setBarraCarregamento(70);
+            setTimeout(() => {
+                setBarraCarregamento(100);
+                exibirAvisoTimer("Operação realizada com sucesso", 'success');
+            }, 1000);
+
+            setTimeout(() => {
+                limparSession();
+                navegar('/');
+            }, 3500);
+        })
+        .catch((err) => {
+            setBarraCarregamento(100);
+
+            if(err.status == 401){
+                exibirAvisoTokenExpirado(navegar);
+            }
+            if(err.status == 400){
+                
+                const dataErro = err.response.data;
+                if (dataErro.validationErrors != null) {
+                    exibirAviso(dataErro.validationErrors[0].message, 'error');
+                } else {
+                    exibirAviso(dataErro.error, 'error');
+                }
+            }
+        })
     }
 
     const abrirModalExcluirConta = () => {
@@ -62,22 +97,18 @@ function Perfil(){
     }
 
     useEffect(() => {
-        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.TOKEN}`
-            }
-        }).then((res) => {
-            setUsuario((usuario) => ({
-                ...(usuario || {}),
-                email: res.data.email
-            }))
-        }).catch((erro) => {
-
-            setBarraCarregamento(100);
-            if(erro.status == 401){
-                exibirAvisoTokenExpirado();
-            }
-        })
+        if(sessionStorageUsuario == null){
+            apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.TOKEN}`
+                }
+            }).then((res) => {
+                setUsuario((usuario) => ({
+                    ...(usuario || {}),
+                    email: res.data.email
+                }))
+            });
+        }
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
     return(
@@ -149,7 +180,15 @@ function Perfil(){
             <div className="modal-content">
                 <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
                 <p>Preencha a senha para excluir sua conta</p>
-                <Input tipo={"text"} placeholder={"Senha"} />
+                <Input 
+                    tipo="password" 
+                    placeholder="Senha"
+                    valor={senha}
+                    validacao={validarCampo}
+                    onChange={(e) => {
+                        setSenha(e.target.value);
+                    }}
+                />
                 <div className="botoes">
                     <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
                     <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>

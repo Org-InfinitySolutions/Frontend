@@ -3,6 +3,7 @@ import { Input } from '../components/Input';
 import './Cadastro.css';
 
 import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../Utils/formatacoes';
+import { exibirAviso } from '../Utils/exibirModalAviso';
 import { 
     emailInvalido, 
     campoNaoAtendeTamanho, 
@@ -21,7 +22,7 @@ import {
     validarSenha,
     validarConfirmacaoSenha,
     validarRazaoSocial
-} from '../utils/validarCampos';
+} from '../Utils/validarCampos';
 import axios from 'axios';
 import { api } from '../provider/apiInstance';
 import { resolvePath, useNavigate } from 'react-router-dom';

@@ -76,7 +76,6 @@ function EditarPerfil() {
         }
     }, [dadosBase.endereco.cep])
 
-
     const validarFormulario = () => {
 
         const corpoRequisicaoCNPJ = {
@@ -308,7 +307,75 @@ function EditarPerfil() {
                                     }))
                                 }}/>
                         </section>
+                        <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
+                    </section>
+                ) : (
+                    <section className="container-dados-pessoais">
+                        <h3>Dados da empresa:</h3>
                         <section>
+                            <label>Nome Fantasia:</label>
+                            <input type="text" placeholder='Nome fantasia' defaultValue={usuario.nome} 
+                            onChange={(e) => (
+                                setDadosBase((dados) => ({
+                                    ...dados,
+                                    nome: e.target.value
+                                }))
+                            )}/>
+                        </section>
+                        <section>
+                            <label>Razão Social:</label>
+                            <input type="text" placeholder='Razão social' defaultValue={formularioCNPJ.razao_social} 
+                            onChange={(e) => (
+                                setFormularioCNPJ((dados) => ({
+                                    ...dados,
+                                    razao_social: e.target.value
+                                }))
+                            )}/>
+                        </section>
+                        <section>
+                            <label>Celular:</label>
+                            <input type="text" maxLength={15} placeholder='Ex: (99) 99999-9999' value={dadosBase.telefone_celular} 
+                            onChange={(e) => (
+                                setDadosBase((dados) => ({
+                                    ...dados,
+                                    telefone_celular: formatarTelefone(e.target.value)
+                                }))
+                            )}/>
+                        </section>
+                        <section>
+                            <label>Telefone:</label>
+                            <input type="text" maxLength={14} placeholder='Ex: (99) 9999-9999' value={formularioCNPJ.telefone_residencial}
+                            onChange={(e) => (
+                                setFormularioCNPJ((dados) => ({
+                                    ...dados,
+                                    telefone_residencial: formatarTelefoneFixo(e.target.value)
+                                }))
+                            )}/>
+                        </section>
+                        <section>
+                            <label>Email:</label>
+                            <div>
+                                <input type="text" placeholder='email@email.com' disabled defaultValue={usuario.email}/>
+                                <img src={iconeEditar} className='botao-editar' alt="icone editar" height="23em" onClick={abrirModalEmail} />
+                            </div>
+                        </section>
+                        <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
+                    </section>
+                )}
+
+                {/* Region Endereço */}
+                <section className="container-dados-endereco">
+                    <h3>Endereço:</h3>
+                    <section>
+                        <label>CEP:</label>
+                        <div className='box-cep'>
+                            <img src={iconePesquisar} alt="" height="20em" />
+                            <input 
+                                type="text" 
+                                placeholder='12345-258' 
+                                className='input-cep' 
+                                maxLength={9}
+                                value={formatarCEP(dadosBase.endereco.cep)} 
                             <Input
                                 label={"* Rua:"}
                                 valor={dadosBase.endereco.logradouro}
@@ -391,7 +458,7 @@ function EditarPerfil() {
                                         ...dados,
                                         endereco: {
                                             ...dados.endereco,
-                                            estado: e.target.value
+                                            cep: formatarCEP(e.target.value)
                                         }
                                     }))
                                 }}
@@ -415,15 +482,21 @@ function EditarPerfil() {
                             />
                         </section>
                     </section>
-
-                    <section className="container-eventos">
-                        <a onClick={() => { navegar("/perfil")}}>Cancelar</a>
-                        <button onClick={validarFormulario}>Confirmar</button>
+                    <section>
+                        <label>Complemento:</label>
+                        <input type="text" placeholder='Complemento' defaultValue={endereco.complemento}
+                        onChange={(e) => {
+                            setDadosBase((dados) => ({
+                                ...dados,
+                                endereco: {
+                                    ...dados.endereco,
+                                    complemento: e.target.value
+                                }
+                            }))
+                        }}/>
                     </section>
-                </div>
-            )}
-
-        
+                </section>
+        )}
             {mostrarModalEmail && (
                 <div className="modal-content">
                     <h1>Preencha o novo e-mail</h1>
@@ -444,7 +517,8 @@ function EditarPerfil() {
                         <button className="botao-confirmar" onClick={fecharModalConfirmacao}>Confirmar</button>
                     </div>
                 </div>
-            )}
+            </div>
+        )}
 
     {mostrarModalAlterarSenha && (
     <div className="modal-content">
@@ -459,9 +533,8 @@ function EditarPerfil() {
             </div>
             <span className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</span>
         </div>
+        )}
     </div>
-)}
-        </div>
     );
 }
 
