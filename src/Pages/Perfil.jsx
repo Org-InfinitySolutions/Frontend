@@ -13,7 +13,6 @@ import { validarCampo } from '../Utils/validarCampos'
 
 function Perfil(){
 
-    const sessionStorageUsuario = sessionStorage.DADOS_USUARIO;
     const [usuario, setUsuario] = useState({});
     const [endereco, setEndereco] = useState({});
     const [barraCarregamento, setBarraCarregamento] = useState(0);
@@ -39,11 +38,13 @@ function Perfil(){
 
             setTimeout(() => {
                 setBarraCarregamento(100);
-                if(erro.status == 401){
-                    exibirAvisoTokenExpirado(navegar);
-                }
-            })
-        }
+            }, 500)
+        }).catch((erro) => {
+            setBarraCarregamento(100);
+            if(erro.status == 401){
+                exibirAvisoTokenExpirado(navegar);
+            }
+        })
     }, []);
 
     const confirmarExclusaoConta = () => {
@@ -68,7 +69,7 @@ function Perfil(){
             setTimeout(() => {
                 limparSession();
                 navegar('/');
-            }, 3500);
+            }, 4000);
         })
         .catch((err) => {
             setBarraCarregamento(100);
@@ -97,18 +98,16 @@ function Perfil(){
     }
 
     useEffect(() => {
-        if(sessionStorageUsuario == null){
-            apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
-                headers: {
-                    Authorization: `Bearer ${sessionStorage.TOKEN}`
-                }
-            }).then((res) => {
-                setUsuario((usuario) => ({
-                    ...(usuario || {}),
-                    email: res.data.email
-                }))
-            });
-        }
+        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then((res) => {
+            setUsuario((usuario) => ({
+                ...(usuario || {}),
+                email: res.data.email
+            }))
+        });
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
     return(
