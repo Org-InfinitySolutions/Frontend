@@ -281,6 +281,13 @@
             transition: 0.3s;
             transform: scale(0.95);
         }
+
+        .botao-confirmar:disabled{
+            background-color: #cccccc !important;
+            color: #666666 !important;
+            border: 1px solid #999999 !important;
+            transform: none !important;
+        }
     }
 }
 

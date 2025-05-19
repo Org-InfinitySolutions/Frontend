@@ -22,6 +22,7 @@ import {
     validarConfirmacaoSenha,
     validarEmail
 } from '../Utils/validarCampos';
+import { tokenExpirou } from '../Utils/token';
 
 function EditarPerfil() {
 
@@ -84,7 +85,11 @@ function EditarPerfil() {
         }
         const formulario = dadosBase.tipo == "PF" ? dadosBase : corpoRequisicaoCNPJ;
         let houveErro = false;
-        if(
+        
+        if(tokenExpirou()){
+            exibirAvisoTokenExpirado(navegar);
+            houveErro = true;
+        } else if(
             campoVazio(formulario.nome) || campoVazio(formulario.telefone_celular) || 
             campoVazio(formulario.endereco.logradouro) || campoVazio(formulario.endereco.bairro) || 
             campoVazio(formulario.endereco.cidade) || campoVazio(formulario.endereco.estado)|| 

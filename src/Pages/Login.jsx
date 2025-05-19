@@ -34,12 +34,13 @@ function Login(){
                 
                 const caixote = res.data;
                 const tokenDecodificado = jwtDecode(caixote.token);
-    
+                
                 sessionStorage.TOKEN = caixote.token;
                 sessionStorage.ID_USUARIO = tokenDecodificado.sub;
                 sessionStorage.CARGO = tokenDecodificado.scope;
                 sessionStorage.USUARIO_LOGADO = "True";
-                
+                sessionStorage.EXP = new Date(tokenDecodificado.exp * 1000);
+
                 setTimeout(() => {
                     setBarraCarregamento(100)
                 }, 1000);
