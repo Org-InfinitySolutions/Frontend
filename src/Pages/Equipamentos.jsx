@@ -46,9 +46,10 @@ const Equipamentos = () => {
             </div>
 
             <div className="container-filtros">
-              <select className="select-filtro">
-                <option>Notebooks</option>
-                <option>Projetores</option>
+              <select className="select-filtro" defaultValue="">
+                <option value="" disabled hidden>Categorias</option>
+                <option>Projeção</option>
+                <option>Informática</option>
               </select>
 
               <button className="botao-secundario">Exibir mais procurados</button>
@@ -85,7 +86,10 @@ const Equipamentos = () => {
           <span>{'>'}</span>
         </div>
 
-        {/* Modal de Equipamento */}
+        <div className="contato">
+          Não encontrou o que buscava? <a href="#">Contate-nos</a>
+        </div>
+
         {produtoSelecionado && (
           <Modal produto={produtoSelecionado} onClose={fecharModal} />
         )}

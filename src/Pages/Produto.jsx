@@ -33,7 +33,7 @@ const Produto = () => {
           <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt rem quam pariatur alias! Fuga aliquid, ipsa officia sint ducimus totam facilis rem? Accusantium ducimus molestiae quisquam minus quasi eius consequatur. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad rerum mollitia excepturi voluptatibus commodi molestiae laborum doloremque voluptate ea maxime, placeat animi deleniti velit ipsum eum pariatur sunt natus numquam! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis nesciunt qui modi porro aspernatur, saepe, temporibus obcaecati quidem nulla consequatur excepturi exercitationem? Consectetur consequatur inventore amet distinctio eligendi, provident neque?</p>
         </section>
 
-        <section className="ficha-tecnica">
+        {/* <section className="ficha-tecnica">
           <h3>FICHA TÉCNICA</h3>
           <div className="tabela-detalhes">
             <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
@@ -43,10 +43,10 @@ const Produto = () => {
             <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
             <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
           </div>
-        </section>
+        </section> */}
 
         <p className="info-fabricante">
-          Para mais informações do equipamento. <a href="#">Consulte o fabricante</a>.
+          Para mais informações do equipamento. Consulte o <a href="https://www.asus.com/br/" target="_blank" rel="noreferrer">fabricante</a>.
         </p>
       </main>
     </div>

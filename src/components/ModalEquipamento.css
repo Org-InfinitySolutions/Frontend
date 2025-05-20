@@ -13,10 +13,10 @@
 
 .modal-container {
   background: white;
-  border-radius: 8px;
+  border-radius: 6px;
   width: 80%;
   max-width: 900px;
-  padding: 1.5rem;
+  padding: 2%;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -35,7 +35,7 @@
 .modal-conteudo {
   display: flex;
   align-items: flex-start;
-  gap: 2rem;
+  gap: 3%;
 }
 
 .modal-imagem {
@@ -54,34 +54,39 @@
 }
 
 .modal-info a {
-  color: #1a73e8;
-  text-decoration: underline;
+  color: #0D6EFD;
+  text-decoration: none;
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
   .modal-container {
     width: 98vw;
     max-width: 98vw;
     padding: 0.7rem;
   }
+
   .modal-conteudo {
     flex-direction: column;
     gap: 1rem;
     align-items: center;
   }
+
   .modal-imagem {
     width: 120px;
     max-width: 90vw;
     margin-bottom: 1rem;
   }
+
   .fechar-modal {
     top: 6px;
     right: 10px;
     font-size: 1.2rem;
   }
+
   .modal-info h2 {
     font-size: 1.1rem;
   }
+
   .modal-info p {
     font-size: 0.95rem;
     margin: 0.5rem 0;
