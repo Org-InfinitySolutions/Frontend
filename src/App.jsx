@@ -34,7 +34,6 @@ function MainComponent() {
       <BarraNavegacao key={location.pathname}/>
         <Routes>
           <Route path='/' element={<Home/>} />
-          {/* <Route path='/index' element={<Index />} /> */}
           <Route path='/login' element={<Login />} />
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/perfil' element={<Perfil />} />
