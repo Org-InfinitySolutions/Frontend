@@ -16,8 +16,12 @@ import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
+
 import { PedidosAdm } from './Pages/PedidosAdm' 
 import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
+
+import './App.css'
+
 
 function App(){
 

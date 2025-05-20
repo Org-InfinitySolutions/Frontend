@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import './Cadastro.css';
 
-import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../utils/formatacoes';
+import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../Utils/formatacoes';
+import { exibirAviso } from '../Utils/exibirModalAviso';
 import { 
     emailInvalido, 
     campoNaoAtendeTamanho, 
@@ -21,8 +22,7 @@ import {
     validarSenha,
     validarConfirmacaoSenha,
     validarRazaoSocial
-} from '../utils/validarCampos';
-import { exibirAviso } from '../utils/exibirModalAviso'
+} from '../Utils/validarCampos';
 import axios from 'axios';
 import { api } from '../provider/apiInstance';
 import { resolvePath, useNavigate } from 'react-router-dom';
@@ -123,14 +123,12 @@ function Cadastro() {
         api.post('/emails/enviar-codigo', {
             nome,
             email
-        }).then((res) => {
-            console.log(res)
-        })
+        });
     }
 
     function validarCodigoConfirmacao() {
         const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-        console.log(codigo)
+        
         if (codigo1 == '' || codigo2 == '' || codigo3 == '' || codigo4 == '' || codigo5 == '' || codigo6 == '') {
             exibirAviso('Preencher todos os campos', 'error');
         } else {
@@ -194,7 +192,9 @@ function Cadastro() {
                 dadosBase
             }))
         }
-    }, [dadosBase]);    useEffect(() => {
+    }, [dadosBase]);    
+    
+    useEffect(() => {
         if (tipoUsuario === 'fisica') {
             const nomeValido = validarNome(formularioCPF.dadosBase.nome).valido;
             const rgValido = validarRG(formularioCPF.rg).valido;
@@ -211,7 +211,9 @@ function Cadastro() {
             
             setEtapa1Valido(nomeValido && razaoSocialValida && cnpjValido && celularValido && telefoneValido);
         }
-    }, [tipoUsuario, formularioCPF, formularioCNPJ]);    useEffect(() => {
+    }, [tipoUsuario, formularioCPF, formularioCNPJ]);    
+    
+    useEffect(() => {
         const cepValido = validarCEP(dadosBase.cep).valido;
         const numeroValido = validarNumero(dadosBase.numero).valido;
         const ruaPreenchida = !campoVazio(dadosBase.rua);
@@ -220,7 +222,9 @@ function Cadastro() {
         const estadoPreenchido = !campoVazio(dadosBase.estado);
         
         setEtapa2Valido(cepValido && numeroValido && ruaPreenchida && bairroPreenchido && cidadePreenchida && estadoPreenchido);
-    }, [dadosBase]);    useEffect(() => {
+    }, [dadosBase]);    
+    
+    useEffect(() => {
         const emailValido = validarEmail(dadosBase.email).valido;
         const senhaValida = validarSenha(dadosBase.senha).valido;
         const confirmacaoSenhaValida = validarConfirmacaoSenha(dadosBase.confirmarSenha, dadosBase.senha).valido;

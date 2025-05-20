@@ -1,11 +1,13 @@
 import { use, useState } from 'react';
 import { Navegabilidade } from '../components/Navegabilidade';
 import './FinalizarPedido.css';
+import { useNavigate } from 'react-router-dom';
 
 function FinalizarPedido() {
     const [mostrarModal, setMostrarModal] = useState(false);
     const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
 
+    const navegar = useNavigate();
     return (
         <div className="finalizar-pedido">
             {mostrarModal ? (
@@ -32,6 +34,7 @@ function FinalizarPedido() {
                         <div className="botoes-modal">
                             <button className='botao-confirmar' onClick={() => {
                                 setMostrarModalConfirmacao(false);
+                                navegar("/pedidos")
                             }}>
                                 Orçamentos
                             </button>

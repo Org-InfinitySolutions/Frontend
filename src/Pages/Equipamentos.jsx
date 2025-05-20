@@ -25,7 +25,9 @@ const Equipamentos = () => {
                             <a href="/pedidos" className="inativo">PEDIDOS</a>
                         </div>
                         <div className="icone-carrinho">
-                            <img src={IconeCarrinho} alt="Carrinho de compras" />
+                            <a href="/carrinho">
+                                <img src={IconeCarrinho} alt="Carrinho de compras" />
+                            </a>
                         </div>
                     </div>
 
