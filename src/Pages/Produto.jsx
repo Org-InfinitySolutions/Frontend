@@ -13,7 +13,9 @@ const Produto = () => {
           <input type="text" placeholder="Pesquisar equipamento" />
         </div>
         <div className="icone-carrinho">
-          <img src={IconeCarrinho} alt="Carrinho de compras" />
+          <a href="/carrinho">
+            <img src={IconeCarrinho} alt="Carrinho de compras" />
+          </a>
         </div>
       </header>
 

@@ -19,18 +19,18 @@ function BarraNavegacao(){
             {usuarioLogado ? (
             <section className="container-links">
                 <div>
-                    <a href="#">Home</a>
-                    <a href="#">Equipamentos</a>
+                    <a href="/">Home</a>
+                    <a href="/equipamentos">Equipamentos</a>
                     <a href="/pedidos">Pedidos</a>
                 </div>
             </section>
             ) : (
             <section className="container-links">
                 <div>
-                    <a href="#">Sobre nós</a>
-                    <a href="#">Serviços</a>
-                    <a href="#">Projetos</a>
-                    <a href="#">Equipamentos</a>
+                    <a href="/#sobre-nos">Sobre nós</a>
+                    <a href="/#servicos">Serviços</a>
+                    <a href="/#projetos">Projetos</a>
+                    <a href="/equipamentos">Equipamentos</a>
                 </div>
             </section>
             )}
