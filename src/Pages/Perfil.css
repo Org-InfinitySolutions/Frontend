@@ -284,34 +284,87 @@
     }
 }
 
-@media screen and (max-width: 576px) {
+@media (max-width: 768px) {
     .perfil{
-        min-height: 70vh;
-        padding: 10vh 0px;
 
         .container-perfil{
             width: 80%;
-            height: 110vh;
+            height: 75%;
+            position: absolute;
 
+            .titulo-form{
+            width: 80%;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            font-size: 100%;
+
+            .barra{
+                height: 2px;
+                width: 90%;
+                margin-bottom: 4%;
+                background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+            }
+        }
+
+            .dados-pessoais {
+                height: 40%;
+                width: 80%;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                font-family: var(--fonte-texto);
+
+                h3{
+                    width: 95%;
+                }
+            }
+
+            .dados-endereco{
+            height: 30%;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            font-family: var(--fonte-texto);
+            
+                h3{
+                    width: 95%;
+                }
+              }
+            
             .container-eventos{
-                height: 8%;
-                
+                width: 100%;     
+                align-items: center;     
+
                 .eventos-excluir-editar{
+                    width: 100%;
+                    justify-content: flex-start;
+                    margin: 1%;
 
                     .botao-excluir, .botao-editar{
+                        padding: 0;
                         height: 70%;
+                        width: 60%;
                     }
                 }
                 .evento-voltar{
+                    width: 50%;
+                    margin: 1%;
+                    padding: 1%;
+
 
                     .botao-retroceder{
                         height: 70%;
-                        width: 50%;
+                        width: 80%;
                     }
                 }
             }
             .dados-utilitarios{
-                height: 8%;
+                padding: 2%;
+                margin: 1%;
             }
         }
 
