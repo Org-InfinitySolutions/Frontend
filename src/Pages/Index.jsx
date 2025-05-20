@@ -4,8 +4,42 @@ import videoFundo from '../assets/video-institucional.mp4';
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
+import { useEffect, useState } from 'react';
+
+const getDevice = () => ({
+    mobile: window.innerWidth <= 768,
+    tablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    desktop: window.innerWidth > 1024,
+});
 
 function Index() {
+
+    const [deviced, setDeviced] = useState(getDevice());
+
+    useEffect(() => {
+        const onResize = () => setDeviced(getDevice());
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
+    }, []);
+
+    const fotoCarrossel = () => {
+        if (deviced.mobile) {
+            return { width: "280px", height: "auto" };
+        } else if (deviced.tablet) {
+            return { width: "280px", height: "auto" };
+        } else if (deviced.desktop) {
+            return { width: "350px", height: "auto" };
+        }
+    }
+
+        const fotoProjeto = () => {
+        if (deviced.mobile) {
+            // return { width: "100%", height: "50%", flexDirection: "column" };
+        } else if (deviced.tablet) {
+            // return { width: "5px", height: "500px", flexDirection: "column" };
+        } 
+    }
+
     return (
         <section className="container">
 
@@ -43,49 +77,49 @@ function Index() {
                     <Carousel>
                         <DivCarouselItem>
                             <section>
-                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
+                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
                         </DivCarouselItem>
                         <DivCarouselItem>
                             <section>
-                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
+                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
                         </DivCarouselItem>
                         <DivCarouselItem>
                             <section>
-                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
-                                    sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p> 
-                            </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
-                            <section>
-                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
+                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
                         </DivCarouselItem>
                         <DivCarouselItem>
                             <section>
-                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
+                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
                         </DivCarouselItem>
                         <DivCarouselItem>
                             <section>
-                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={{ width: "330px", height: "250px" }} />
-                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis 
+                                <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
+                                    sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
+                            </section>
+                        </DivCarouselItem>
+                        <DivCarouselItem>
+                            <section>
+                                <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
+                                <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                    Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
                         </DivCarouselItem>
@@ -93,29 +127,29 @@ function Index() {
                 </section>
             </section>
 
-            <section className="container-projeto"> 
-            <h2>Projetos</h2>
-            <div className="container-projeto-conteudo">
-                <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
-                    quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
-                    vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
-                    nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
-                    <img src="./src/assets/FotoPalco.png" alt="Foto de um palco"/>
-            </div>
+            <section className="container-projeto">
+                <h2>Projetos</h2>
+                <div className="container-projeto-conteudo">
+                    <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
+                        quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
+                        vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
+                        nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
+                    <img className='container-projeto-primeira-foto' style={fotoProjeto()} src="./src/assets/FotoPalco.png" alt="Foto de um palco" />
+                </div>
             </section>
 
-            <section className="container-projeto"> 
-            <div className="container-projeto-conteudo">
-            <img src="./src/assets/FotoPalco.png" alt="Foto de um palco"/>
-            <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
-                    quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
-                    vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
-                    nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
-            </div>
+            <section className="container-projeto">
+                <div className="container-projeto-conteudo">
+                    <img className='container-projeto-segunda-foto' style={fotoProjeto()} src="./src/assets/FotoPalco.png" alt="Foto de um palco" />
+                    <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
+                        quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
+                        vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
+                        nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
+                </div>
             </section>
         </section>
     );

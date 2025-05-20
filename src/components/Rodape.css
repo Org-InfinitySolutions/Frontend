@@ -82,3 +82,90 @@ footer{
         }
     }
 }
+
+@media (max-width: 768px) {
+    footer{
+        height: 45vh;
+        width: 100%;
+        background-color: #FFF;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        font-family: var(--fonte-texto);
+        .container-informacoes-gerais{
+            height: 65%;
+            width: 80%;
+            
+            display: flex;
+            flex-direction: row;
+            .container-logo{
+                height: 100%;
+                width: 20%;
+            }
+
+            .container-contatos{
+                height: 100%;
+                width: 35%;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            
+                div{
+                    height: 15%;
+                    width: 75%;
+                    display: flex;
+                    align-items: center;
+                    
+                    strong{
+                        margin-left: 13.3%;
+                    }
+                    span{
+                        margin-left: 5%;
+                    }
+                }
+            }
+
+            .container-links{
+                height: 100%;
+                width: 35%;
+                
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            
+                div{
+                    height: 15%;
+                    width: 75%;
+                    display: flex;
+                    align-items: center;
+
+                    a{
+                        color: black;
+                        text-decoration: none;
+                    }
+                    a:hover{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .container-endereco{
+            height: 15%;
+            width: 32%;
+
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            flex-direction: row;
+
+            span{
+                margin-left: 1%;
+            }
+        }
+    }
+}

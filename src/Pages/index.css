@@ -135,8 +135,23 @@ h1{
 }
 
 .container-projeto-conteudo {
-    display: flex;;
+    display: flex;
 }
+
+/* .container-projeto-primeira-foto,
+.container-projeto-segunda-foto {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    .container-projeto-primeira-foto {
+        flex-direction: column-reverse;
+    }
+
+    .container-projeto-segunda-foto {
+        flex-direction: column;
+    }
+} */
 
 .container-projeto {
     display: flex;

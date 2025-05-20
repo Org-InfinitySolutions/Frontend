@@ -71,6 +71,7 @@
 
         h1{
             font-family: var(--fonte-titulo);
+            font-size: 200%;
             margin: 3%;
         }
         section{
@@ -180,6 +181,7 @@
 
     h1{
         font-family: var(--fonte-titulo);
+        font-size: 200%;
         margin: 0;
     }
 
@@ -320,6 +322,7 @@
 
     h1{
         font-family: var(--fonte-titulo);
+        font-size: 200%;
         margin: 3%;
     }
 
@@ -398,7 +401,7 @@
       
         h1 {
           font-family: "Montserrat Alternates", sans-serif;
-          font-size: 1.5rem;
+          font-size: 200%;
           margin-bottom: 10px;
           text-align: center;
         }
@@ -460,4 +463,29 @@
       }
       
      
+}
+
+
+@media (max-width: 768px) {
+
+.container-cadastro{
+
+    .container-formulario{
+        position: absolute;
+        height: 70%;
+        width: 70%;
+
+        h1{
+            font-size: 115%;
+            color: black;
+        }
+
+        .botao-continuar-bloco {
+            width: 100%;
+            position: static;
+            margin-left: -15%;
+            margin-top: 2%;
+        }
+    }
+}
 }

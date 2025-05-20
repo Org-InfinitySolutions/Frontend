@@ -12,12 +12,17 @@ export const CarouselContainer = styled.div`
 export const Inner = styled.div`
     white-space:nowrap;
     transition:transform 0.3s;
-    margin-left: 60px;
-    margin-right: 60px;
+    margin-left: 40px;
+    margin-right: 40px;
 
-      @media (max-width: 768px) {
+  @media (max-width: 768px) {
     margin-left: 30px;
     margin-right: 30px;
+    }
+
+  @media (min-width: 768px) and (max-width: 1024px) {
+    margin-left: 20px;
+    margin-right: 20px%;
     }
 `;
 
@@ -42,15 +47,15 @@ margin: 30px;
     height: 95%;
     }
 
-  @media (min-width: 768px and max-width: 1024px) {
+  @media (min-width: 768px) and (max-width: 1024px) {
     width: 15%;
-    margin: 10px;
+    margin: 2.25%;
     height: 95%;
     }
 
   @media (min-width: 1024px) {
     width: 15%;
-    margin: 10px;
+    margin: 1%;
     height: 95%;
     }
 `;

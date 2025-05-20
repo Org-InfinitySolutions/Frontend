@@ -2,7 +2,38 @@ import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
 import { limparSession } from '../utils/limpar';
 
+const getDevice = () => ({
+    mobile: window.innerWidth <= 768,
+    tablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    desktop: window.innerWidth > 1024,
+});
+
 function BarraNavegacao(){
+    
+        const [deviced, setDeviced] = useState(getDevice());
+    
+        useEffect(() => {
+            const onResize = () => setDeviced(getDevice());
+            window.addEventListener('resize', onResize);
+            return () => window.removeEventListener('resize', onResize);
+        }, []);
+    
+        const logo = () => {
+            if (deviced.mobile) {
+                return { width: "120%", height: "auto" };
+            } else if (deviced.tablet) {
+                return { width: "60%", height: "auto" };
+            } else if (deviced.desktop) {
+                return { width: "30%", height: "auto" };
+            }
+        }
+
+        const linkEquipamento = () => {
+            if (deviced.mobile) {
+                return { display: "none" };
+            } else 
+                return { display: "flex" };
+        }
 
     const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO === "True");
 
@@ -14,7 +45,7 @@ function BarraNavegacao(){
     <>
         <nav className="barra-navegacao">
             <section className="container-logo">
-                <img src="/Logo.png" height="80%" alt="logo nova locações" />
+                <img src="/Logo.png" style={logo()} alt="logo nova locações" />
             </section>
             {usuarioLogado ? (
             <section className="container-links">
@@ -27,9 +58,9 @@ function BarraNavegacao(){
             ) : (
             <section className="container-links">
                 <div>
-                    <a href="#">Sobre nós</a>
-                    <a href="#">Serviços</a>
-                    <a href="#">Projetos</a>
+                    <a style={linkEquipamento()} href="#">Sobre nós</a>
+                    <a style={linkEquipamento()} href="#">Serviços</a>
+                    <a style={linkEquipamento()} href="#">Projetos</a>
                     <a href="#">Equipamentos</a>
                 </div>
             </section>
