@@ -79,6 +79,7 @@
     .container-login{
         .container-formulario{
             height: 60%;
+            width: 80%;
 
                 h1{
                     font-family: var(--fonte-titulo);
