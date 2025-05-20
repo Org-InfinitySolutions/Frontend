@@ -31,7 +31,7 @@ function Carrinho(){
                 </div>
             </section>
         </section>
-        <Navegabilidade largura={"74%"} linkVoltar={"/carrinho"} funcaoAvancar={() => { navigate("/carrinho/endereco")}} textoAvancar={"Continuar"}/>
+        <Navegabilidade largura={"74%"} linkVoltar={"/equipamentos"} funcaoAvancar={() => { navigate("/carrinho/endereco")}} textoAvancar={"Continuar"}/>
     </div>
     )
 }

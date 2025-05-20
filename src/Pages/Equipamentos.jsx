@@ -21,6 +21,7 @@ const Equipamentos = () => {
     setProdutoSelecionado(produto);
   };
 
+tela_equipamentos
   const fecharModal = () => {
     setProdutoSelecionado(null);
   };

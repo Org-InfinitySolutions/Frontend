@@ -16,6 +16,7 @@ import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
+import './App.css'
 
 function App(){
 

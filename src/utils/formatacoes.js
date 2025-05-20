@@ -86,5 +86,14 @@ function formatarCEP(cep) {
     return cepFormatado;
 }
 
+// formatarData() = '01/01/2025'
+const formatarData = (data) => {
+        
+    let dt = new Date(data);
+    let mes = dt.getMonth() + 1;
+    mes = mes < 10 ? '0' + mes : mes;
+    const dataFormatadaTexto = `${dt.getDate()}/${mes}/${dt.getFullYear()}`
+    return dataFormatadaTexto;
+}
 
-export { formatarCNPJ, formatarCPF, formatarTelefone, formatarRegistroGeral, formatarTelefoneFixo, formatarCEP }
+export { formatarCNPJ, formatarCPF, formatarTelefone, formatarRegistroGeral, formatarTelefoneFixo, formatarCEP, formatarData }

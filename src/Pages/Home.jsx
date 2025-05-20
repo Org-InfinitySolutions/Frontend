@@ -9,7 +9,7 @@ function Home() {
     return (
         <section className="container-home">
 
-            <section className='container-video'>
+            <section className='container-video' id='inicio'>
                 <video
                     autoPlay
                     muted
@@ -27,7 +27,7 @@ function Home() {
             </section>
 
 
-            <section className="container-sobre-nos">
+            <section className="container-sobre-nos" id='sobre-nos'>
                 <h2>Sobre nós</h2>
                 <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
                     quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
@@ -37,7 +37,7 @@ function Home() {
                     nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
             </section>
 
-            <section className="container-servicos">
+            <section className="container-servicos" id='servicos'>
                 <h2>Serviços</h2>
                 <section className="container-carrosel" >
                     <Carousel>
@@ -93,7 +93,7 @@ function Home() {
                 </section>
             </section>
 
-            <section className="container-projeto"> 
+            <section className="container-projeto" id='projetos'> 
             <h2>Projetos</h2>
             <div className="container-projeto-conteudo">
                 <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
