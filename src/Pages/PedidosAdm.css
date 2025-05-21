@@ -1,0 +1,228 @@
+:root {
+  --color-preto: #000;
+  --color-branco: #fff;
+  --color-cinza: #999;
+  --color-verde: #4caf50;
+  --color-azul: #007bff;
+  --color-vermelho: #e53935;
+  --border-radius: 5px;
+  --transição: 0.3s ease;
+  --padding-pequeno: 0.4rem 0.8rem;
+  --padding-medio: 0.6rem 1.2rem;
+  --border-color: #ccc;
+  --gap-pequeno: 0.5rem;
+  --gap-medio: 1rem;
+  --gap-grande: 1.5rem;
+}
+
+body {
+  font-family: var(--fonte-texto);
+  background-color: var(--color-branco);
+}
+
+button {
+  font-family: var(--fonte-texto);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transição);
+}
+
+.pagina-pedidos {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.conteudo-pedidos {
+  flex: 1;
+  padding: 2rem 5rem;
+}
+
+.filtros {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-medio);
+  margin-bottom: 2rem;
+}
+
+.botoes-toggle {
+  display: flex;
+  flex-direction: row;
+  gap: var(--gap-medio);
+}
+
+.botoes-toggle a {
+  border-radius: var(--border-radius);
+  padding: var(--padding-medio);
+  font-weight: bold;
+}
+
+.botoes-toggle a.ativo {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  border: none;
+}
+
+.botoes-toggle a.ativo:hover {
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  border: 1px solid var(--color-preto);
+  transition: background-color var(--transição);
+}
+
+.botoes-toggle a.inativo {
+  background-color: transparent;
+  border: 1px solid var(--color-preto);
+  color: var(--color-preto);
+}
+
+.botoes-toggle a:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  transition: background-color var(--transição);
+}
+
+.barra-pesquisa-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 300px;
+  width: 100%;
+}
+
+.input-pesquisa {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  min-width: 200px;
+}
+
+.icone-pesquisa {
+  width: 18px;
+  height: 18px;
+  position: absolute;
+  right: 10px;
+  pointer-events: none;
+}
+
+.select-filtro {
+  appearance: none;
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  padding: var(--padding-medio);
+  border-radius: var(--border-radius);
+  font-weight: bold;
+  border: none;
+  min-width: 150px;
+  cursor: pointer;
+  background-image: url('../assets/down-arrow.png');
+  background-repeat: no-repeat;
+  filter: invert(1);
+  background-position: right 0.5rem center;
+  background-size: 25px;
+  font-family: var(--fonte-texto);
+}
+
+.linha-pesquisa-filtros {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: var(--gap-medio);
+}
+
+.container-filtros {
+  display: flex;
+  gap: var(--gap-medio);
+}
+
+.grid-pedidos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--gap-grande);
+}
+
+.card-pedido {
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-pedido h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--fonte-titulo);
+}
+
+.card-pedido p {
+  margin: 0.2rem 0;
+}
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.status {
+  padding: var(--padding-pequeno);
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  color: var(--color-branco);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status.cinza {
+  background-color: var(--color-cinza);
+}
+
+.status.verde {
+  background-color: var(--color-verde);
+}
+
+.status.azul {
+  background-color: var(--color-azul);
+}
+
+.status.vermelho {
+  background-color: var(--color-vermelho);
+}
+
+.btn-detalhes {
+  padding: var(--padding-pequeno);
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+}
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: var(--gap-pequeno);
+  font-weight: bold;
+}
+
+.paginacao span {
+  cursor: pointer;
+  padding: var(--padding-pequeno);
+  border-radius: var(--border-radius);
+}
+
+.pagina-ativa {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+}
+
+.paginacao span:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  transition: background-color var(--transição);
+}
