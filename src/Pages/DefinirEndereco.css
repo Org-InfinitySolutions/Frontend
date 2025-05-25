@@ -2,13 +2,13 @@
 .container-endereco{
     height: 90vh;
     width: 100%;
-    
+
     display: flex;
     align-items: center;
     flex-direction: column;
 
     h1{
-        width: 80%;   
+        width: 85%;   
         font-family: var(--fonte-titulo);
     }
 
@@ -16,6 +16,8 @@
         height: 60%;
         width: 80%;
         border: 1px solid black;
+        border-radius: 4px;
+        padding: 1em 0px;
 
         display: flex;
         align-items: center;
@@ -31,25 +33,14 @@
             align-items: center;
             justify-content: space-evenly;
         
-            div{
+            .secao-entrada{
                 height: 100%;
                 width: 30%;
             }
 
-            .box-cep{
-                display: flex;
-                flex-direction: row;
-                align-items: flex-end;
-
-                button{
-                    margin-left: 3%;
-                    cursor: pointer;
-                    background-color: transparent;
-                    border: none;
-                }
-            }
-
             .tipo-evento{
+                height: 100%;
+                width: 30%;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-around;
@@ -75,7 +66,7 @@
             
             display: flex;
             justify-content: center;
-            div{
+            .secao-entrada{
                 height: 100%;
                 width: 95%;
 
@@ -93,6 +84,66 @@
             justify-content: flex-end;
             padding-right: 5%;
             font-family: var(--fonte-texto);
+        }
+    }
+}
+
+@media screen and (max-width: 768px){
+    
+    .container-endereco{
+        height: auto;
+        align-items: center;
+        justify-content: center;
+        padding: 1em 0px;
+        h1{
+            width: 80%;
+            font-size: 1.2em;
+        }
+        .box-endereco{
+            height: auto;
+            padding: 1vh 0px;
+            justify-content: space-evenly;
+            
+            .box-informacoes{
+                min-height: 30vh;
+                flex-direction: column;
+                justify-content: space-evenly;
+
+                .secao-entrada{
+                    width: 90%;
+                    height: 10vh;
+                }
+
+                .tipo-evento{
+                    width: 90%;
+                    height: 11vh;
+
+                    button{
+                        margin-bottom: 2%;
+                    }
+                }
+            }
+            .box-complemento{
+                width: 90%;
+                height: 10vh;
+
+                .secao-entrada{
+                    width: 100%;
+                    height: 100%;
+                    
+                    .container-input{
+                        width: 98.5%;
+                        height: 100%;
+                    }
+                }
+            }
+
+            .box-preenchimento-obrigatorio{
+                height: 3%;
+                width: 90%;
+                justify-content: flex-end;
+                padding: 1em 0px;
+            }
         }
     }
 }

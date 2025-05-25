@@ -22,7 +22,6 @@ import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
 
 import './App.css'
 
-
 function App(){
 
   return(
