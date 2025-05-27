@@ -131,7 +131,7 @@ body {
   color: var(--color-branco);
 }
 
-.descricao,
+/* .descricao,
 .ficha-tecnica {
   background-color: var(--color-branco);
   padding: 1.5rem;
@@ -144,7 +144,7 @@ body {
   font-size: 1.2rem;
   font-weight: bold;
   margin-bottom: 1rem;
-}
+} */
 
 .descricao p {
   color: var(--color-cinza);
@@ -179,9 +179,9 @@ body {
 }
 
 .info-fabricante a {
-  color: var(--color-preto);
-  font-weight: bold;
+  color: #0D6EFD;
   text-decoration: none;
+  font-weight: bold;
 }
 
 .info-fabricante a:hover {
