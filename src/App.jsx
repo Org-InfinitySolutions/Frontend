@@ -16,6 +16,10 @@ import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
+
+import { PedidosAdm } from './Pages/PedidosAdm' 
+import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
+
 import './App.css'
 
 function App(){
@@ -45,6 +49,8 @@ function MainComponent() {
           <Route path='/pedidos' element={<Pedidos />} />
           <Route path='/equipamentos' element={<Equipamentos />} />
           <Route path='/produto' element={<Produto />} />
+          <Route path='/pedidos-adm' element={<PedidosAdm />}/>
+          <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
         </Routes>
       <Rodape />
     </>
