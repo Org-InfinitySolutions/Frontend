@@ -40,7 +40,7 @@ button {
 
 .filtros {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--gap-medio);
   margin-bottom: 2rem;
 }
@@ -86,7 +86,6 @@ button {
   display: flex;
   align-items: center;
   position: relative;
-  max-width: 300px;
   width: 100%;
 }
 
@@ -114,7 +113,7 @@ button {
   border-radius: var(--border-radius);
   font-weight: bold;
   border: none;
-  min-width: 150px;
+  min-width: 160px;
   cursor: pointer;
   background-image: url('../assets/down-arrow.png');
   background-repeat: no-repeat;
@@ -126,6 +125,7 @@ button {
 
 .linha-pesquisa-filtros {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 2rem;
@@ -133,7 +133,6 @@ button {
 }
 
 .container-filtros {
-  display: flex;
   gap: var(--gap-medio);
 }
 
@@ -150,6 +149,7 @@ button {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-wrap: anywhere;
 }
 
 .card-pedido h3 {
@@ -169,37 +169,43 @@ button {
 }
 
 .status {
-  padding: var(--padding-pequeno);
-  border-radius: var(--border-radius);
-  font-size: 0.85rem;
-  color: var(--color-branco);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
   font-weight: bold;
+  color: white;
   text-transform: uppercase;
-}
-
-.status.cinza {
-  background-color: var(--color-cinza);
-}
-
-.status.verde {
-  background-color: var(--color-verde);
-}
-
-.status.azul {
-  background-color: var(--color-azul);
+  font-size: 0.8rem;
 }
 
 .status.vermelho {
-  background-color: var(--color-vermelho);
+  background-color: #e74c3c;
+}
+
+.status.azul {
+  background-color: #3498db;
+}
+
+.status.verde {
+  background-color: #2ecc71;
+}
+
+.status.cinza {
+  background-color: #7f8c8d;
 }
 
 .btn-detalhes {
-  padding: var(--padding-pequeno);
-  background-color: var(--color-preto);
-  color: var(--color-branco);
+  background-color: black;
+  color: white;
   border: none;
-  border-radius: var(--border-radius);
+  border-radius: 8px;
+  padding: 0.4rem 0.8rem;
   cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-detalhes:hover {
+  background-color: #333;
 }
 
 .paginacao {
@@ -225,4 +231,71 @@ button {
   background-color: var(--color-preto);
   color: var(--color-branco);
   transition: background-color var(--transição);
+}
+
+.nenhum-pedido {
+  text-align: center;
+  font-weight: bold;
+  color: var(--color-cinza);
+  grid-column: 1 / -1;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .conteudo-pedidos {
+    padding: 1rem 0.5rem;
+  }
+
+  .container-filtros {
+    flex-direction: row;
+    width: 100%;
+    gap: var(--gap-pequeno);
+    align-items: stretch;
+  }
+
+  .botoes-toggle {
+    flex-direction: row;
+    gap: var(--gap-pequeno);
+  }
+
+  .botoes-toggle a {
+    flex: 1;
+    text-align: center;
+  }
+
+  .barra-pesquisa-container {
+    width: 100%;  
+  }
+
+  .input-pesquisa {
+    min-width: 0;
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .select-filtro a {
+    /* width: 100%; */
+    font-size: 1rem;
+  }
+
+  .grid-pedidos {
+    grid-template-columns: 1fr;
+    gap: var(--gap-medio);
+  }
+
+  .card-pedido {
+    padding: 0.7rem;
+  }
+
+  .acoes {
+    flex-direction: row;
+    gap: var(--gap-pequeno);
+    align-items: stretch;
+  }
+
+  .paginacao {
+    flex-wrap: nowrap;
+    gap: 0.2rem;
+    font-size: 0.95rem;
+  }
 }
