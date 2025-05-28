@@ -10,33 +10,35 @@ const listaPedidos = [
 	{ id: '123459', itens: 5, data: '04/12/2009', status: 'Em evento' },
 	{ id: '123460', itens: 15, data: '05/12/2009', status: 'Finalizado' },
 	{ id: '123461', itens: 3, data: '06/12/2009', status: 'Cancelado' },
-];
+],
 
-const statusCores = {
-	'Em análise': 'cinza',
-	'Aprovado': 'verde',
-	'Em evento': 'azul',
-	'Finalizado': 'vermelho',
-	'Cancelado': 'vermelho',
-};
+	statusCores = {
+		'Em análise': 'cinza',
+		'Aprovado': 'verde',
+		'Em evento': 'azul',
+		'Finalizado': 'vermelho',
+		'Cancelado': 'vermelho',
+	};
 
 const Pedidos = () => {
-	const [filtroStatus, setFiltroStatus] = useState('');
-	const [ordem, setOrdem] = useState('Mais Recentes');
-	const [busca, setBusca] = useState('');
+	const [filtroStatus, setFiltroStatus] = useState(''),
+		[ordem, setOrdem] = useState('Mais Recentes'),
+		[busca, setBusca] = useState(''),
+		[filtroStatusAberto, setFiltroStatusAberto] = useState(false),
+		[ordemAberto, setOrdemAberto] = useState(false),
 
-	const pedidosFiltrados = listaPedidos
-		.filter((pedido) => {
-			const atendeStatus = filtroStatus ? pedido.status === filtroStatus : true;
-			const atendeBusca = busca ? pedido.id.includes(busca) : true;
-			return atendeStatus && atendeBusca;
-		})
-		.sort((a, b) => {
-			if (ordem === 'Mais Recentes') {
-				return b.id.localeCompare(a.id);
-			}
-			return a.id.localeCompare(b.id);
-		});
+		pedidosFiltrados = listaPedidos
+			.filter((pedido) => {
+				const atendeStatus = filtroStatus ? pedido.status === filtroStatus : true,
+					atendeBusca = busca ? pedido.id.includes(busca) : true;
+				return atendeStatus && atendeBusca;
+			})
+			.sort((a, b) => {
+				if (ordem === 'Mais Recentes') {
+					return b.id.localeCompare(a.id);
+				}
+				return a.id.localeCompare(b.id);
+			});
 
 	return (
 		<div className="pagina-pedidos">
@@ -59,30 +61,36 @@ const Pedidos = () => {
 						</div>
 
 						<div className="container-filtros">
-							<select
-								className="select-filtro"
-								value={filtroStatus}
-								onChange={(e) => setFiltroStatus(e.target.value)}
-							>
-								<option value="">Todos</option>
-								<option value="Em análise">Em Análise</option>
-								<option value="Aprovado">Aprovado</option>
-								<option value="Em evento">Em Evento</option>
-								<option value="Finalizado">Finalizado</option>
-								<option value="Cancelado">Cancelado</option>
-								<option value="Erro">Erro</option> {/* OPÇÃO TEMPORÁRIA PARA VER A MENSAGEM DE ERRO!!! */}
-								{/* <IoIosArrowDown /> */}
-							</select>
-
-							<select
-								className="select-filtro"
-								value={ordem}
-								onChange={(e) => setOrdem(e.target.value)}
-							>
-								<option value="Mais Recentes">Recentes</option>
-								<option value="Mais Antigos">Antigos</option>
-								{/* <IoIosArrowDown /> */}
-							</select>
+							<div className="select-filtro-container">
+								<select
+									className="select-filtro"
+									value={filtroStatus}
+									onChange={(e) => setFiltroStatus(e.target.value)}
+									onFocus={() => setFiltroStatusAberto(true)}
+									onBlur={() => setFiltroStatusAberto(false)}
+								>
+									<option value="">Todos</option>
+									<option value="Em análise">Em Análise</option>
+									<option value="Aprovado">Aprovado</option>
+									<option value="Em evento">Em Evento</option>
+									<option value="Finalizado">Finalizado</option>
+									<option value="Cancelado">Cancelado</option>
+								</select>
+								<IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`} />
+							</div>
+							<div className="select-filtro-container">
+								<select
+									className="select-filtro"
+									value={ordem}
+									onChange={(e) => setOrdem(e.target.value)}
+									onFocus={() => setOrdemAberto(true)}
+									onBlur={() => setOrdemAberto(false)}
+								>
+									<option value="Mais Recentes">Recentes</option>
+									<option value="Mais Antigos">Antigos</option>
+								</select>
+								<IoIosArrowDown className={`icone-arrow-select${ordemAberto ? ' aberto' : ''}`} />
+							</div>
 						</div>
 					</div>
 				</div>

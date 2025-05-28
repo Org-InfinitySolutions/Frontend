@@ -115,12 +115,27 @@ button {
   border: none;
   min-width: 160px;
   cursor: pointer;
-  background-image: url('../assets/down-arrow.png');
-  background-repeat: no-repeat;
-  filter: invert(1);
-  background-position: right 0.5rem center;
-  background-size: 25px;
   font-family: var(--fonte-texto);
+}
+
+.select-filtro-container {
+  position: relative;
+  display: inline-block;
+}
+
+.icone-arrow-select {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  pointer-events: none;
+  font-size: 1.3em;
+  color: var(--color-branco);
+  transition: transform 0.3s;
+}
+
+.icone-arrow-select.aberto {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .linha-pesquisa-filtros {
@@ -250,7 +265,8 @@ button {
     flex-direction: row;
     width: 100%;
     gap: var(--gap-pequeno);
-    align-items: stretch;
+    align-items: center;
+    width: fit-content;
   }
 
   .botoes-toggle {
