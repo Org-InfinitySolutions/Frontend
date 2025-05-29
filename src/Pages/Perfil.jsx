@@ -8,7 +8,7 @@ import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
-import { limparSession } from '../Utils/limpar';
+import { limparSession } from '../utils/limpar';
 import { validarSenha } from '../Utils/validarCampos'
 import { tokenExpirou } from '../Utils/token';
 
@@ -33,7 +33,6 @@ function Perfil(){
             carregarDadoEmail();
         }
     }, []);
-
 
     const confirmarExclusaoConta = () => {
         

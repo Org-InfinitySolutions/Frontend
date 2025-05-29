@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { Input } from '../components/Input'
 import { Navegabilidade } from '../components/Navegabilidade';
 import './DefinirEndereco.css'
+import { validarCEP, validarNumero } from '../Utils/validarCampos'
 
 import iconePesquisar from '../assets/iconePesquisar.png'
+import { useState } from 'react';
 
 function DefinirEndereco(){
 
@@ -15,30 +17,25 @@ function DefinirEndereco(){
         <h1>Definir endereço de entrega e retirada dos equipamentos.</h1>
         <section className="box-endereco">
             <section className='box-informacoes'>
-                <div className='box-cep'>
-                    <Input id="inp_cep" label="* CEP:" tipo="text" placeholder="CEP"/>
-                    <button>
-                        <img src={iconePesquisar} alt="icone de pesquisar" height="23em"/>
-                    </button>
-                </div>
-                <Input id="inp_rua" label="* RUA:" tipo="text" placeholder="Ex.: Rua são Joaquim"/>
-                <Input id="inp_numero" label="* NÚMERO:" tipo="number" placeholder="Número"/>
+                <div className='secao-entrada'><Input id="inp_cep" label="* CEP:" tipo="text" placeholder="CEP" maxLength={9} validacao={validarCEP}/></div>
+                <div className='secao-entrada'><Input id="inp_rua" label="* RUA:" tipo="text" placeholder="Ex.: Rua são Joaquim"/></div>
+                <div className='secao-entrada'><Input id="inp_numero" label="* NÚMERO:" tipo="number" placeholder="Número" validacao={validarNumero}/></div>
             </section>
             <section className='box-informacoes'>
-                <Input id="inp_bairro" label="* BAIRRO:" tipo="text" placeholder="Ex.: Taboão da Serra"/>
-                <Input id="inp_cidade" label="* CIDADE:" tipo="text" placeholder="Ex.: São Paulo"/>
-                <Input id="inp_estado" label="* ESTADO:" tipo="text" placeholder="Ex.: SP"/>
+                <div className='secao-entrada'><Input id="inp_bairro" label="* BAIRRO:" tipo="text" placeholder="Ex.: Taboão da Serra"/></div>
+                <div className='secao-entrada'><Input id="inp_cidade" label="* CIDADE:" tipo="text" placeholder="Ex.: São Paulo"/></div>
+                <div className='secao-entrada'><Input id="inp_estado" label="* ESTADO:" tipo="text" placeholder="Ex.: SP"/></div>
             </section>
             <section className='box-complemento'>
-                <Input id="inp_complemento" label="* COMPLEMENTO:" tipo="text" placeholder="Ex.: Próximo do mêtro"/>
+                <div className='secao-entrada'><Input id="inp_complemento" label="* COMPLEMENTO:" tipo="text" placeholder="Ex.: Próximo do mêtro"/></div>
             </section>
             <section className='box-informacoes'>
-                <Input id="inp_dtEntrega" label="* DATA E HORA ENTREGA:" tipo="datetime-local"/>
-                <Input id="inp_dtRetirada" label="* DATA E HORA RETIRADA:" tipo="datetime-local"/>
+                <div className='secao-entrada'><Input id="inp_dtEntrega" label="* DATA E HORA ENTREGA:" tipo="datetime-local"/></div>
+                <div className='secao-entrada'><Input id="inp_dtRetirada" label="* DATA E HORA RETIRADA:" tipo="datetime-local"/></div>
                 <div className='tipo-evento'>
                     <label htmlFor="slc_tipoEvento">* TIPO DE EVENTO:</label>
                     <select id="slc_tipoEvento">
-                        <option value="INDOOR" selected>Indoor</option>
+                        <option value="INDOOR" >Indoor</option>
                         <option value="OUTDOOR">Outdoor</option>
                     </select>
                 </div>
