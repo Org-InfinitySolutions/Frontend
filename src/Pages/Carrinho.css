@@ -1,6 +1,6 @@
 .carrinho{
     min-height: 90vh;
-    width: 100%;
+    width: 100vw;
 
     display: flex;
     align-items: center;
@@ -12,7 +12,7 @@
 
     .container-equipamentos{
         height: 80%;
-        width: 70%;
+        width: 75%;
         padding: 2%;
         border-radius: 4px;
         border: 1px solid black;
@@ -21,133 +21,21 @@
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-around;
+    }
+}
 
-        .box-produto{
-            height: 27vh;
-            width: 100%;
-            border: 1px solid black;
-            border-radius: 6px;
-            margin: 1% 0px;
+@media screen and (max-width: 768px) {
+    
+    .carrinho{
+        padding: 1em 0px;
+        h1{
+            width: 80%;
+            font-size: 1.2em;
+        }
 
-            display: flex;
+        .container-equipamentos{
+            width: 75%;
             align-items: center;
-            flex-direction: row;
-            justify-content: space-around;
-            img{
-                height: 80%;
-                width: 18%;
-                padding: 1%;
-                border-radius: 6px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border: 1px solid black;
-            }
-
-            .box-informacoes{
-                height: 95%;
-                width: 75%;
-            
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                .box-nome-equipamento, .box-alterar-quantidade{
-                    height: 30%;
-                    width: 100%;
-                }
-
-                .box-nome-equipamento{
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
-                    justify-content: space-between;
-
-                    span{
-                        font-family: var(--fonte-texto);
-                        font-size: 1.4em;
-                    }
-                    button{
-                        height: 66%;
-                        width: 5%;
-                        font-size: 1.1em;
-                        
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-
-                        color: red;
-                        border: none;
-                        cursor: pointer;
-                        border-radius: 50%;
-                        background-color: transparent;
-                    }
-                    button:hover{
-                        transition: 0.3s;
-                        background-color: #EDEDED;
-                    }
-                }
-                .box-alterar-quantidade{
-                    display: flex;
-                    align-items: center;
-                    flex-direction: row;
-                    justify-content: flex-end;
-
-                    span{
-                        margin: 0px 1%;
-                        font-family: var(--fonte-texto);
-                    }
-                    button{
-                        height: 75%;
-                        width: 4%;
-
-                        cursor: pointer;
-                        font-size: 1.5em;
-                        border: 1px solid black;
-                        background-color: white;
-                    }
-                    button:hover{
-                        transition: 0.3s;
-                        background-color: black;
-                        color: white;
-                    }
-                    .btn-diminuir{
-                        border-bottom-left-radius: 6px;
-                        border-top-left-radius: 6px;
-                    }
-                    .btn-incrementar{
-                        border-bottom-right-radius: 6px;
-                        border-top-right-radius: 6px;
-                    }
-
-                    div{
-                        height: 75%;
-                        width: 7%;
-
-                        font-size: 1.4em;
-                        border-radius: 6px;
-                        border: 1px solid black;
-                        background-color: #EDEDED;
-                        
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin: 0px 0.5%;
-
-                        input{
-                            width: 90%;
-                            height: 90%;
-                            border-radius: 6px;
-                            border: none;
-                            text-align: center;
-                            text-decoration: none;
-                            background-color: transparent;
-                            font-size: 0.7em;
-                        }
-                    }
-                }
-            }
         }
     }
 }

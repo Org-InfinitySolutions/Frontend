@@ -1,4 +1,4 @@
-import './Index.css';
+import './Home.css';
 import videoFundo from '../assets/video-institucional.mp4';
 
 import { Carousel } from "../components/Carrossel/Carousel"
@@ -12,8 +12,8 @@ const getDevice = () => ({
     desktop: window.innerWidth > 1024,
 });
 
-function Index() {
-
+function Home() {
+   
     const [deviced, setDeviced] = useState(getDevice());
 
     useEffect(() => {
@@ -39,11 +39,11 @@ function Index() {
             // return { width: "5px", height: "500px", flexDirection: "column" };
         } 
     }
+    
+return (
+        <section className="container-home">
 
-    return (
-        <section className="container">
-
-            <section className='container-video'>
+            <section className='container-video' id='inicio'>
                 <video
                     autoPlay
                     muted
@@ -55,13 +55,13 @@ function Index() {
                 </video>
 
                 <section className="container-titulo">
-                    <h1>NOVA LOCAÇÕES</h1>
+                    <h1 className='titulo'>NOVA LOCAÇÕES</h1>
                     <div className="barra"></div>
                 </section>
             </section>
 
 
-            <section className="container-sobre-nos">
+            <section className="container-sobre-nos" id='sobre-nos'>
                 <h2>Sobre nós</h2>
                 <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
                     quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
@@ -71,7 +71,7 @@ function Index() {
                     nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
             </section>
 
-            <section className="container-servicos">
+            <section className="container-servicos" id='servicos'>
                 <h2>Serviços</h2>
                 <section className="container-carrosel" >
                     <Carousel>
@@ -127,7 +127,7 @@ function Index() {
                 </section>
             </section>
 
-            <section className="container-projeto">
+            <section className="container-projeto" id = 'projetos'> 
                 <h2>Projetos</h2>
                 <div className="container-projeto-conteudo">
                     <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
@@ -156,4 +156,4 @@ function Index() {
 }
 
 
-export { Index };
+export { Home };

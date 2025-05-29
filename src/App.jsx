@@ -10,11 +10,18 @@ import { Login } from './Pages/Login'
 import { Cadastro } from './Pages/Cadastro'
 import { Perfil } from './Pages/Perfil'
 import { Pedidos } from './Pages/Pedidos';
+import { Equipamentos } from './Pages/Equipamentos';
+import { Produto } from './Pages/Produto';
 import { EditarPerfil } from './Pages/EditarPerfil';
 import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
-import { Index } from './Pages/Index';
+import { Home } from './Pages/Home';
+
+import { PedidosAdm } from './Pages/PedidosAdm' 
+import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
+
+import './App.css'
 
 function App(){
 
@@ -32,6 +39,7 @@ function MainComponent() {
     <>      
       <BarraNavegacao key={location.pathname}/>
         <Routes>
+          <Route path='/' element={<Home/>} />
           <Route path='/login' element={<Login />} />
           <Route path='/cadastro' element={<Cadastro />} />
           <Route path='/perfil' element={<Perfil />} />
@@ -40,7 +48,10 @@ function MainComponent() {
           <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
           <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
           <Route path='/pedidos' element={<Pedidos />} />
-          <Route path='/index' element={<Index />} />
+          <Route path='/equipamentos' element={<Equipamentos />} />
+          <Route path='/produto' element={<Produto />} />
+          <Route path='/pedidos-adm' element={<PedidosAdm />}/>
+          <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
         </Routes>
       <Rodape />
     </>

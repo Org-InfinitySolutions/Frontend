@@ -1,5 +1,6 @@
 .navegabilidade{
     height: 5vh;
+    width: 75%;
     margin: 2% 0px 5% 0px;
 
     display: flex;
@@ -43,5 +44,19 @@
         color: black;
         transition: 0.3s;
         background-color: white;
+    }
+}
+
+@media screen and (max-width: 768px) {
+
+    .navegabilidade{
+        width: 75%;
+
+        a{
+            width: 25%;
+        }
+        button{
+            width: 40%;
+        }
     }
 }

@@ -1,68 +1,77 @@
-import { useState } from 'react';
+import { use, useState } from 'react';
 import { Navegabilidade } from '../components/Navegabilidade';
 import './FinalizarPedido.css';
+import { useNavigate } from 'react-router-dom';
+import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
 
 function FinalizarPedido() {
     const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
 
+    const navegar = useNavigate();
     return (
         <div className="finalizar-pedido">
             {mostrarModal ? (
-                <div className='container-fundo'>
-                    <div className="modal-content">
-                        <h1>Você deseja finalizar o pedido?</h1>
-                        <p>Ao confirmar, o seu pedido será enviado a nossa equipe para análise, você não poderá fazer nenhuma alteração nos equipamentos escolhidos, deseja continuar?</p>
-                        <div className="botoes-modal">
-                            <button className='botao-voltar'onClick={() => setMostrarModal(false)}>Voltar</button>
-                            <button className='botao-confirmar' onClick={() => setMostrarModal(false)}>Confirmar</button>
-                        </div>
+                <div className="modal-content">
+                    <h2 className='titulo-finalizar-pedido'>Você deseja finalizar o pedido?</h2>
+                    <p>Ao confirmar, o seu pedido será enviado à nossa equipe para análise. Você não poderá fazer nenhuma alteração nos equipamentos escolhidos. Deseja continuar?</p>
+                    <div className="botoes-modal">
+                        <button className='botao-voltar' onClick={() => setMostrarModal(false)}>Voltar</button>
+                        <button className='botao-confirmar' onClick={() => {
+                            setMostrarModal(false);
+                            setMostrarModalConfirmacao(true);
+                        }}>Confirmar</button>
                     </div>
+                </div>
+            ) : mostrarModalConfirmacao ? (
+                <div className="modal-content-pedido-confirmado">
+                    <h2 className='titulo-finalizar-pedido'>Seu pedido foi finalizado!</h2>
+                    <h3 className='numero-serie-pedido'>Número do pedido #00001</h3>
+                    <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato em breve para mais detalhes.
+                    Para visualizar o seu pedido clique no botão abaixo para ser redirecionado aos seus orçamentos.</p>
+                    <div className="botoes-modal">
+                        <button className='botao-confirmar' onClick={() => {
+                            setMostrarModalConfirmacao(false);
+                            navegar("/pedidos")
+                        }}>
+                            Orçamentos
+                        </button>
                     </div>
+                </div>
             ) : (
                 <>
                     <h1>Finalizar Pedido</h1>
                     <section className='container-equipamentos'>
                         {/* Exemplo de produto */}
-                        <section className="box-produto">
-                            <img src="/logoNova.jpg" height="100%" alt="" />
-                            <div className="box-informacoes">
-                                <div className="box-nome-equipamento">
-                                    <span>Nova Locações</span>
-                                </div>
-                                <div className="box-alterar-quantidade">
-                                    <span>Quantidade de equipamentos:</span>
-                                    <div>999</div>
-                                </div>
-                            </div>
-                        </section>
+                        <CardProdutoCarrinho apenasLeitura={true}/>
                     </section>
 
                     <section className='container-endereco'>
                         <h2>ENDEREÇO</h2>
                         <section className='box-informacoes'>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>CEP:</label>
                                 <input type="text" value="01235-789" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>RUA:</label>
                                 <input type="text" value="Rua Boa vista" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>NÚMERO:</label>
                                 <input type="text" value="1234" readOnly />
                             </div>
                         </section>
                         <section className='box-informacoes'>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>BAIRRO:</label>
                                 <input type="text" value="Taboão da Serra" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>CIDADE:</label>
                                 <input type="text" value="São Paulo" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>ESTADO:</label>
                                 <input type="text" value="SP" readOnly />
                             </div>
@@ -72,15 +81,15 @@ function FinalizarPedido() {
                             <input type="text" value="Perto do metrô" readOnly />
                         </section>
                         <section className='box-informacoes'>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>DATA E HORA ENTREGA:</label>
                                 <input type="datetime-local" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>DATA E HORA RETIRADA:</label>
                                 <input type="datetime-local" readOnly />
                             </div>
-                            <div>
+                            <div className='secao-informacoes'>
                                 <label>TIPO DE EVENTO:</label>
                                 <input type="text" value="Indoor" readOnly />
                             </div>
@@ -101,15 +110,15 @@ function FinalizarPedido() {
                             </label>
                             <input id="inp_documentoProjeto" type="file" style={{ display: "none" }} />
                         </div>
-                        {localStorage.DOCUMENTOS_FORNECIDOS !== "True" && (
+                        {sessionStorage.DOCUMENTOS_FORNECIDOS !== "True" && (
                             <>
                                 <span>Forneça os documentos abaixo para agilizar a geração de contrato. Não será necessário um segundo envio após o primeiro pedido.</span>
                                 <div className='box-documento'>
-                                    <span>* COMPROVANTE ENDEREÇO</span>
+                                    <span>* COMPROVANTE DE ENDEREÇO</span>
                                     <label htmlFor="inp_documentoEndereco" className="custom-file-upload">SUBIR ARQUIVO</label>
                                     <input id="inp_documentoEndereco" type="file" style={{ display: "none" }} />
                                 </div>
-                                {localStorage.TIPO_USUARIO === "PJ" ? (
+                                {sessionStorage.TIPO_USUARIO === "PF" ? (
                                     <div className='box-documento'>
                                         <span>* CÓPIA DO RG</span>
                                         <label htmlFor="inp_documentoRg" className="custom-file-upload">SUBIR ARQUIVO</label>
@@ -140,7 +149,6 @@ function FinalizarPedido() {
                     )}
 
                     <Navegabilidade
-                        largura={"74%"}
                         linkVoltar={"/carrinho/endereco"}
                         textoAvancar={"Finalizar"}
                         funcaoAvancar={() => setMostrarModal(true)}

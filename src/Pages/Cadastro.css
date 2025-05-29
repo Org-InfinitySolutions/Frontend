@@ -1,133 +1,136 @@
 .container-cadastro.etapa-dois {
-    min-height: 110vh;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 1% 0px;
+  min-height: 110vh;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1% 0px;
 }
 
-.container-cadastro{
-    min-height: 90vh; 
-    width: 100%;
-    background-color: black;
+.container-cadastro {
+  min-height: 90vh;
+  width: 100%;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1% 0px;
+
+  .container-formulario {
+    position: relative;
+    padding-bottom: 6.2%;
+    height: 70vh;
+    width: 30%;
+    border-radius: 6px;
+    background-color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding: 1% 0px;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-weight: semibold;
 
-    .container-formulario{
-        position: relative;
-        padding-bottom: 6.2%;
-        height: 70vh;
-        width: 30%;
-        border-radius: 6px;
-        background-color: white;
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        justify-content: space-evenly;
-        font-weight: semibold;
-
-        .barra-divisoria-cadastro{
-            border-radius: 3px;
-            height: 3.5px;
-            width: 60%;
-            background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
-            margin: 1%
-        }
-        
-        .options-cadastro {
-            font-family: var(--fonte-texto);
-            display: flex;
-            gap: 13px;
-            justify-content: flex-start;
-            width: 100%;
-            padding-left: 19.5%;
-            margin-top: 8%;
-            margin-bottom: 8%;
-
-            .option {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            
-           button {
-                margin: 0;
-                font-size: 1rem;
-                background-color: white;
-                border: none;
-                cursor: pointer;
-            }
-            .barra {
-                width: 100%;
-                height: 1.5px;
-                background-color: black;
-                margin-top: 4px;
-            }
-        }
-
-        h1{
-            font-family: var(--fonte-titulo);
-            font-size: 200%;
-            margin: 3%;
-        }
-        section{
-            height: 14%;
-            width: 75%;
-        }
-
-        .botao-continuar-bloco {
-            position: absolute;
-            margin-top: 1%;
-            bottom: 1%;
-            right: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            
-            button:hover{
-                color: black;
-                transition: 0.2s;
-                border: 1px solid black;
-                background-color: white;
-            }
-        }
-        
-        .botao-continuar{
-            height: 38px;
-            width: 102px;
-            margin-top: 10px;
-            background-color: black;
-            color: white;
-            border: none;
-            font-size: 1rem;
-            font-family: var(--fonte-texto);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.2s ease;
-          }
-          
-        .botao-voltar:active {
-            transform: scale(0.95);
-        }
-        
-        .aviso-obrigatorio {
-            font-size: 0.75rem;
-            font-family: var(--fonte-texto);
-            margin-top: 4px;
-        }
-
-       
-        button:active{
-            transition: 0.3s;
-            transform: scale(0.95);
-        }
+    .barra-divisoria-cadastro {
+      border-radius: 3px;
+      height: 3.5px;
+      width: 60%;
+      background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+      margin: 1%
     }
 
-.container-formulario-2{
+    .options-cadastro {
+      font-family: var(--fonte-texto);
+      display: flex;
+      gap: 13px;
+      justify-content: flex-start;
+      width: 100%;
+      padding-left: 19.5%;
+      margin-top: 8%;
+      margin-bottom: 8%;
+
+      .option {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      button {
+        margin: 0;
+        font-size: 1rem;
+        background-color: white;
+        border: none;
+        cursor: pointer;
+      }
+
+      .barra {
+        width: 100%;
+        height: 1.5px;
+        background-color: black;
+        margin-top: 4px;
+      }
+    }
+
+    h1 {
+      font-family: var(--fonte-titulo);
+      font-size: 200%;
+      margin: 3%;
+      color: #000;
+    }
+
+    section {
+      height: 14%;
+      width: 75%;
+    }
+
+    .botao-continuar-bloco {
+      position: absolute;
+      margin-top: 1%;
+      bottom: 1%;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+
+      button:hover {
+        color: black;
+        transition: 0.2s;
+        border: 1px solid black;
+        background-color: white;
+      }
+    }
+
+    .botao-continuar {
+      height: 38px;
+      width: 102px;
+      margin-top: 10px;
+      background-color: black;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      font-family: var(--fonte-texto);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .botao-voltar:active {
+      transform: scale(0.95);
+    }
+
+    .aviso-obrigatorio {
+      font-size: 0.75rem;
+      font-family: var(--fonte-texto);
+      margin-top: 4px;
+    }
+
+
+    button:active {
+      transition: 0.3s;
+      transform: scale(0.95);
+    }
+  }
+
+  .container-formulario-2 {
     margin-top: 1.4%;
     position: relative;
     padding: 30px 0;
@@ -141,351 +144,398 @@
     justify-content: space-evenly;
     font-weight: semibold;
 
-    .barra-divisoria-cadastro{
-        border-radius: 3px;
-        height: 3.8px;
-        width: 60%;
-        background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
-        margin: 5%
+    .barra-divisoria-cadastro {
+      border-radius: 3px;
+      height: 3.8px;
+      width: 60%;
+      background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+      margin: 5%
     }
-    
+
 
     .options-cadastro {
-        font-family: var(--fonte-texto);
-        display: flex;
-        gap: 13px;
-        justify-content: flex-start;
-        width: 100%;
-        padding-left: 19.5%;
-        margin-top: 8%;
-        margin-bottom: 8%;
-        
-        .option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-       p {
-            margin: 0;
-            font-size: 1rem;
-        }
+      font-family: var(--fonte-texto);
+      display: flex;
+      gap: 13px;
+      justify-content: flex-start;
+      width: 100%;
+      padding-left: 19.5%;
+      margin-top: 8%;
+      margin-bottom: 8%;
 
-        .barra {
-            width: 100%;
-            height: 1.5px;
-            background-color: black;
-            margin-top: 4px;
-        }
-    }
-
-    h1{
-        font-family: var(--fonte-titulo);
-        font-size: 200%;
-        margin: 0;
-    }
-
-    .linha-cidade-estado {
-        display: flex;
-        gap: 16px;
-        width: 77.2%; 
-        margin-right: 1%;
-
-    .etapa2-section.cidade {
-    width: 70%;
-    }
-  
-    .etapa2-section.estado {
-    width: 30%;
-  }
-      }
-          
-    section{
-        width: 75%;
-        margin: 2%;
-            Input{
-                height: 28px;
-                border: 1px solid black;
-                padding-left: 10px;
-                font-family: var(--fonte-texto);
-                font-size: 1rem;
-            }
-    }
-
-    .botao-voltar-etapa-2 {
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-      }
-      
-      .botao-continuar-etapa-2 {
-        background-color: black;
-        color: white;
-        border: 1px solid black;
-      }
-      
-      .aviso-obrigatorio-etapa-2 {
-        font-size: 0.75rem;
-        font-family: var(--fonte-texto);
-        margin: 0;
-      }
-
-      .botoes-e-aviso-etapa-2 {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding-right: 20px;
-        gap: 6px;
-        margin-top: 25px;
-      }
-      
-      .botoes-alinhados-etapa-2 {
-        display: flex;
-        gap: 10px;
-      }
-      
-      .botao-voltar-etapa-2,
-      .botao-continuar-etapa-2 {
-        height: 38px;
-        width: 102px;
-        padding: 6px 12px;
-        font-size: 1rem;
-        font-family: var(--fonte-texto);
-        border-radius: 6px;
-        cursor: pointer;
-      }
-
-      .botao-voltar-etapa-2:hover{
-        transition: 0.2s;
-        background-color: black;
-        color: white;
-      }
-      .botao-continuar-etapa-2:hover{
-        transition: 0.2s;
-        background-color: white;
-        color: black;
-      }
-    }
-      
-}
-
-.container-formulario-3{
-    position: relative;
-    padding-bottom: 2.2%;
-    position: relative;
-    height:70vh;
-    width: 30%;
-    border-radius: 6px;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    justify-content: space-evenly;
-    font-weight: semibold;
-
-    .barra-divisoria-cadastro{
-        border-radius: 3px;
-        height: 3.8px;
-        width: 60%;
-        background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
-        margin: 1%
-    }
-    
-    .options-cadastro {
-        font-family: var(--fonte-texto);
-        display: flex;
-        gap: 13px;
-        justify-content: flex-start;
-        width: 100%;
-        padding-left: 19.5%;
-        margin-top: 8%;
-        margin-bottom: 8%;
-        .option {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        
-       p {
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .barra {
-            width: 100%;
-            height: 1.5px;
-            background-color: black;
-            margin-top: 4px;
-        }
-    }
-
-    h1{
-        font-family: var(--fonte-titulo);
-        font-size: 200%;
-        margin: 3%;
-    }
-
-    section{
-        height: 18%;
-        width: 75%;
-    }
-
-    .botoes-e-aviso-etapa-3 {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: flex-end;
-        padding-right: 20px;
-        gap: 6px;
-        margin-top: 25px;
-      }
-      
-      .botoes-alinhados-etapa-3 {
-        display: flex;
-        gap: 10px;
-      }
-      
-      .botao-voltar-etapa-3,
-      .botao-continuar-etapa-3 {
-        height: 38px;
-        width: 102px;
-        padding: 6px 12px;
-        font-size: 1rem;
-        font-family: var(--fonte-texto);
-        border-radius: 6px;
-        cursor: pointer;
-      }
-      
-      .botao-voltar-etapa-3 {
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-      }
-
-      .botao-voltar-etapa-3:hover{
-        transition: 0.2s;
-        background-color: black;
-        color: white;
-      
-      }
-      
-      .botao-continuar-etapa-3 {
-        background-color: black;
-        color: white;
-        border: 1px solid black;
-      }
-
-      .botao-continuar-etapa-3:hover{
-        transition: 0.2s;
-        background-color: white;
-        color: black;
-      }
-      
-      .aviso-obrigatorio-etapa-3 {
-        font-size: 0.75rem;
-        font-family: var(--fonte-texto);
-        margin: 0;
-      }
-
-      .container-formulario-4 {
-        background-color: white;
-        padding: 40px 30px;
-        border-radius: 8px;
-        width: 30%;
-        margin: 0 auto;
+      .option {
         display: flex;
         flex-direction: column;
         align-items: center;
-        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
-      
-        h1 {
-          font-family: "Montserrat Alternates", sans-serif;
-          font-size: 200%;
-          margin-bottom: 10px;
-          text-align: center;
-        }
-      
-        p {
-          font-family: "Montserrat", sans-serif;
-          font-size: 1rem;
-          text-align: center;
-          margin-bottom: 25px;
-        }
-      
-        .codigo-confirmacao {
-          display: flex;
-          gap: 12px;
-          margin-bottom: 20px;
-      
-          input {
-            width: 42px;
-            height: 52px;
-            text-align: center;
-            font-size: 1.5rem;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            outline: none;
-            font-family: "Montserrat", sans-serif;
-      
-            &:focus {
-              border-color: #000;
-            }
-          }
-        }
-      
-        .botoes-etapa-4 {
-          display: flex;
-          gap: 10px;
-      
-          .botao-voltar-etapa-4,
-          .botao-confirmar-etapa-4 {
-            height: 38px;
-            width: 102px;
-            padding: 6px 12px;
-            font-size: 1rem;
-            font-family: "Montserrat", sans-serif;
-            border-radius: 6px;
-            cursor: pointer;
-            border: 1px solid black;
-          }
-      
-          .botao-voltar-etapa-4 {
-            background-color: white;
-            color: black;
-          }
-      
-          .botao-confirmar-etapa-4 {
-            background-color: black;
-            color: white;
-          }
-        }
       }
-      
-     
+
+      p {
+        margin: 0;
+        font-size: 1rem;
+      }
+
+      .barra {
+        width: 100%;
+        height: 1.5px;
+        background-color: black;
+        margin-top: 4px;
+      }
+    }
+
+    h1 {
+      font-family: var(--fonte-titulo);
+      font-size: 200%;
+      margin: 0;
+    }
+
+    .linha-cidade-estado {
+      display: flex;
+      gap: 16px;
+      width: 77.2%;
+      margin-right: 1%;
+
+      .etapa2-section.cidade {
+        width: 70%;
+      }
+
+      .etapa2-section.estado {
+        width: 30%;
+      }
+    }
+
+    section {
+      width: 75%;
+      margin: 2%;
+
+      Input {
+        height: 28px;
+        border: 1px solid black;
+        padding-left: 10px;
+        font-family: var(--fonte-texto);
+        font-size: 1rem;
+      }
+    }
+
+    .botao-voltar-etapa-2 {
+      background-color: white;
+      color: black;
+      border: 1px solid black;
+    }
+
+    .botao-continuar-etapa-2 {
+      background-color: black;
+      color: white;
+      border: 1px solid black;
+    }
+
+    .aviso-obrigatorio-etapa-2 {
+      font-size: 0.75rem;
+      font-family: var(--fonte-texto);
+      margin: 0;
+    }
+
+    .botoes-e-aviso-etapa-2 {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      padding-right: 20px;
+      gap: 6px;
+      margin-top: 25px;
+    }
+
+    .botoes-alinhados-etapa-2 {
+      display: flex;
+      gap: 10px;
+    }
+
+    .botao-voltar-etapa-2,
+    .botao-continuar-etapa-2 {
+      height: 38px;
+      width: 102px;
+      padding: 6px 12px;
+      font-size: 1rem;
+      font-family: var(--fonte-texto);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .botao-voltar-etapa-2:hover {
+      transition: 0.2s;
+      background-color: black;
+      color: white;
+    }
+
+    .botao-continuar-etapa-2:hover {
+      transition: 0.2s;
+      background-color: white;
+      color: black;
+    }
+  }
+
+}
+
+.container-formulario-3 {
+  position: relative;
+  padding-bottom: 2.2%;
+  position: relative;
+  height: 70vh;
+  width: 30%;
+  border-radius: 6px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  font-weight: semibold;
+
+  .barra-divisoria-cadastro {
+    border-radius: 3px;
+    height: 3.8px;
+    width: 60%;
+    background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+    margin: 1%
+  }
+
+  .options-cadastro {
+    font-family: var(--fonte-texto);
+    display: flex;
+    gap: 13px;
+    justify-content: flex-start;
+    width: 100%;
+    padding-left: 19.5%;
+    margin-top: 8%;
+    margin-bottom: 8%;
+
+    .option {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .selected {
+      background-color: #f0f0f0;
+      border-radius: 4px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .barra {
+      width: 100%;
+      height: 1.5px;
+      background-color: black;
+      margin-top: 4px;
+    }
+  }
+
+  h1 {
+    font-family: var(--fonte-titulo);
+    font-size: 200%;
+    margin: 3%;
+  }
+
+  section {
+    height: 18%;
+    width: 75%;
+  }
+
+  .botoes-e-aviso-etapa-3 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding-right: 20px;
+    gap: 6px;
+    margin-top: 25px;
+  }
+
+  .botoes-alinhados-etapa-3 {
+    display: flex;
+    gap: 10px;
+  }
+
+  .botao-voltar-etapa-3,
+  .botao-continuar-etapa-3 {
+    height: 38px;
+    width: 102px;
+    padding: 6px 12px;
+    font-size: 1rem;
+    font-family: var(--fonte-texto);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  .botao-voltar-etapa-3 {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+
+  .botao-voltar-etapa-3:hover {
+    transition: 0.2s;
+    background-color: black;
+    color: white;
+
+  }
+
+  .botao-continuar-etapa-3 {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+  }
+
+  .botao-continuar-etapa-3:hover {
+    transition: 0.2s;
+    background-color: white;
+    color: black;
+  }
+
+  .aviso-obrigatorio-etapa-3 {
+    font-size: 0.75rem;
+    font-family: var(--fonte-texto);
+    margin: 0;
+  }
+
+
+
+
+}
+
+.container-formulario-4 {
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 8px;
+  width: 30%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+
+  h1 {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  p {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+
+  .codigo-confirmacao {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+
+    input {
+      width: 42px;
+      height: 52px;
+      text-align: center;
+      font-size: 1.5rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+      font-family: "Montserrat", sans-serif;
+
+      &:focus {
+        border-color: #000;
+      }
+    }
+  }
+
+  .botoes-etapa-4 {
+    display: flex;
+    gap: 10px;
+
+    .botao-voltar-etapa-4,
+    .botao-confirmar-etapa-4 {
+      height: 38px;
+      width: 102px;
+      padding: 6px 12px;
+      font-size: 1rem;
+      font-family: "Montserrat", sans-serif;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 1px solid black;
+    }
+
+    .botao-voltar-etapa-4 {
+      background-color: white;
+      color: black;
+    }
+
+    .botao-confirmar-etapa-4 {
+      background-color: black;
+      color: white;
+    }
+  }
+
+  .botao-continuar:disabled,
+  .botao-continuar-etapa-2:disabled,
+  .botao-continuar-etapa-3:disabled {
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    border: 1px solid #999999;
+  }
+
+  .botao-continuar:disabled:hover,
+  .botao-continuar-etapa-2:disabled:hover,
+  .botao-continuar-etapa-3:disabled:hover {
+    background-color: #cccccc;
+    color: #666666;
+    border: 1px solid #999999;
+    transform: none;
+  }
+}
+
+.botao-continuar:disabled,
+.botao-continuar-etapa-2:disabled,
+.botao-continuar-etapa-3:disabled {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  cursor: not-allowed !important;
+  border: 1px solid #999999 !important;
+  opacity: 0.7;
+}
+
+.botao-continuar:disabled:hover,
+.botao-continuar-etapa-2:disabled:hover,
+.botao-continuar-etapa-3:disabled:hover {
+  background-color: #cccccc !important;
+  color: #666666 !important;
+  border: 1px solid #999999 !important;
+  transform: none !important;
 }
 
 
 @media (max-width: 768px) {
 
-.container-cadastro{
+  .container-cadastro {
 
-    .container-formulario{
-        position: absolute;
-        height: 70%;
-        width: 70%;
+    .container-formulario {
+      position: absolute;
+      height: 70%;
+      width: 70%;
 
-        h1{
-            font-size: 115%;
-            color: black;
-        }
+      h1 {
+        font-size: 115%;
+        color: black;
+      }
 
-        .botao-continuar-bloco {
-            width: 100%;
-            position: static;
-            margin-left: -15%;
-            margin-top: 2%;
-        }
+      .botao-continuar-bloco {
+        width: 100%;
+        position: static;
+        margin-left: -15%;
+        margin-top: 2%;
+      }
     }
-}
+  }
 }

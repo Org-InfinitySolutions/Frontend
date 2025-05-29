@@ -1,13 +1,13 @@
-.container{
-    height: 120vh;
+.perfil{
     background-color: #171717;
-
+    min-height: 70vh;
+    padding: 10vh 0px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .container-perfil{
-        height: 75%;
+        height: 90vh;
         width: 35%;
         background-color: #fff;
     
@@ -180,6 +180,167 @@
             flex-direction: column;
             justify-content: flex-end;
             font-family: var(--fonte-texto);
+        }
+    }
+
+    .aviso-excluir-conta{
+        color: #FF0000;
+        font-family:"Montserrat Alternates", sans-serif;
+    }
+
+    .modal-content {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        width: 30%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        h2{
+            font-family: "Montserrat", sans-serif;
+        }
+
+        h1{
+            margin: 0.2em 0px;
+        }
+
+        .input-alteracao-senha{
+            text-align: start;
+        }
+
+        .container-input{
+            padding: 0px;
+            margin-top: 1em;
+            
+            label {
+                justify-content: flex-start;
+                display: flex;
+            }
+
+            input{
+                width: 97%;
+                height: 4vh;
+                margin-top: 0.3em;
+            }
+        }
+    }
+    .botoes {
+        display: flex;
+        justify-content: right;
+        margin-top: 1rem;
+        gap: 2%;
+        height: 100%;
+
+        .botao-cancelar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
+            background-color: white;
+            color: black;
+            border: none;
+            font-size: 1rem;
+            font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px black solid;
+        }
+
+        .botao-cancelar:hover{
+            transition: 0.3s;
+            background-color: black;
+            color: white;
+        }
+
+        .botao-cancelar:active {
+            transform: scale(0.95);
+        }
+
+        .botao-confirmar{
+            height: 38px;
+            width: 102px;
+            margin-top: 10px;
+            background-color: black;
+            color: white;
+            border: 1px solid black;
+            font-size: 1rem;
+            font-family: var(--fonte-texto);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.2s ease;
+            border: 1px black solid;
+        }
+
+        .botao-confirmar:hover{
+            background-color: white;
+            color: black;
+            transition: 0.3s;
+        }
+
+        .botao-confirmar:active{
+            transition: 0.3s;
+            transform: scale(0.95);
+        }
+
+        .botao-confirmar:disabled{
+            background-color: #cccccc !important;
+            color: #666666 !important;
+            border: 1px solid #999999 !important;
+            transform: none !important;
+        }
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .perfil{
+        min-height: 70vh;
+        padding: 10vh 0px;
+
+        .container-perfil{
+            width: 80%;
+            height: 110vh;
+
+            .container-eventos{
+                height: 8%;
+                
+                .eventos-excluir-editar{
+
+                    .botao-excluir, .botao-editar{
+                        height: 70%;
+                    }
+                }
+                .evento-voltar{
+
+                    .botao-retroceder{
+                        height: 70%;
+                        width: 50%;
+                    }
+                }
+            }
+            .dados-utilitarios{
+                height: 8%;
+            }
+        }
+
+        .modal-content{
+            height: 40vh;
+            width: 70%;
+            h1{
+                font-size: 1.5em;
+            }
+
+            .container-input{
+                input{
+                    height: 5vh;
+                }
+            }
+        }
+        .botoes{
+            align-items: center;
+            .botao-cancelar, .botao-confirmar{
+                margin: 0px;
+                height: 6vh;
+            }
         }
     }
 }

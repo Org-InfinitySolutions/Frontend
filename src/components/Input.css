@@ -15,4 +15,8 @@
         box-shadow: 1px 2px 2px grey;
         font-family: var(--fonte-texto);
     }
+
+    input.erro {
+        border: 1px solid red;
+    }
 }
