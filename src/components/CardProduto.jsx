@@ -9,7 +9,7 @@ export function CardProduto(props) {
           src={props.image || "/placeholder.svg"}
           alt={props.name}
           width={300}
-          height={200}
+          height={190}
           className="product-image"
         />
       </div>
@@ -18,7 +18,7 @@ export function CardProduto(props) {
         <h2 className="product-name">{props.name}</h2>
         <h2 className="product-name">Quantidade: {props.quantidade}</h2>
         </div>
-        <p className="product-description">* Você não possui a quantidade suficiente em seu estoque</p>
+        <p className="item-erro">* Você não possui a quantidade suficiente em seu estoque</p>
         <div className="product-footer">
           
         </div>
