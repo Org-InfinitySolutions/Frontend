@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import './Equipamentos.css';
 import Modal from '../components/ModalEquipamento';
-import IconePesquisa from '../assets/iconePesquisar.png';
-import IconeCarrinho from '../assets/iconeCarrinho.png';
-import IconeCarrinhoFill from '../assets/iconeCarrinhoFill.png';
+import { IoIosSearch } from "react-icons/io";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoCartOutline } from "react-icons/io5";
+import { IoCartSharp } from "react-icons/io5";
 import IconeNotebook from '../assets/notebook.png';
+import LoadingBar from 'react-top-loading-bar';
+import { useNavigate } from 'react-router-dom';
 
 const produtos = Array(20).fill({
   nome: 'Notebook Asus',
@@ -15,7 +18,15 @@ const produtos = Array(20).fill({
 });
 
 const Equipamentos = () => {
-  const [produtoSelecionado, setProdutoSelecionado] = useState(null);
+  const navegar = useNavigate();
+
+  const [produtoSelecionado, setProdutoSelecionado] = useState(null),
+    [filtroStatus, setFiltroStatus] = useState(''),
+    [filtroStatusAberto, setFiltroStatusAberto] = useState(false),
+    [pesquisa, setPesquisa] = useState(''),
+    [produtosExibidos, setProdutosExibidos] = useState(produtos),
+    [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false),
+    [barraCarregamento, setBarraCarregamento] = useState(0);
 
   const abrirModal = (produto) => {
     setProdutoSelecionado(produto);
@@ -25,8 +36,31 @@ const Equipamentos = () => {
     setProdutoSelecionado(null);
   };
 
+  React.useEffect(() => {
+    let filtrados = produtos;
+    if (filtroStatus) {
+      filtrados = filtrados.filter(p => {
+        if (filtroStatus === 'Projeção') return p.nome.toLowerCase().includes('projetor');
+        if (filtroStatus === 'Informática') return p.nome.toLowerCase().includes('notebook');
+        return true;
+      });
+    }
+    if (pesquisa) {
+      filtrados = filtrados.filter(p => p.nome.toLowerCase().includes(pesquisa.toLowerCase()));
+    }
+    if (mostrarMaisProcurados) {
+      filtrados = [...filtrados].reverse();
+    }
+    setProdutosExibidos(filtrados);
+  }, [filtroStatus, pesquisa, mostrarMaisProcurados]);
+
   return (
     <div className="pagina-equipamentos">
+      <LoadingBar
+            progress={barraCarregamento}
+            height={3}
+            color="#f11946"
+        />
       <main className="conteudo-equipamentos">
         <div className="filtros">
           <div className="linha-botoes-carrinho">
@@ -35,24 +69,35 @@ const Equipamentos = () => {
               <a href="/pedidos" className="inativo">PEDIDOS</a>
             </div>
             <div className="icone-carrinho">
-              <img src={IconeCarrinho} alt="Carrinho de compras" />
+              <IoCartOutline size={40} onClick={() => { navegar('/carrinho')}}/>
             </div>
           </div>
 
           <div className="linha-pesquisa-filtros">
-            <div className="barra-pesquisa-container">
-              <input className="input-pesquisa" placeholder="Pesquisar equipamento" />
-              <img className="icone-pesquisa" src={IconePesquisa} alt="Pesquisar" />
+            <div className="barra-pesquisa-container" style={{ position: 'relative' }}>
+              <input className="input-pesquisa" placeholder="Pesquisar equipamento" value={pesquisa} onChange={e => setPesquisa(e.target.value)} />
+              <span className="icone-pesquisa">
+                <IoIosSearch size={18} />
+              </span>
             </div>
 
             <div className="container-filtros">
-              <select className="select-filtro" defaultValue="">
-                <option value="" disabled hidden>Categorias</option>
-                <option>Projeção</option>
-                <option>Informática</option>
-              </select>
-
-              <button className="botao-secundario">Exibir mais procurados</button>
+              <div className="select-filtro-container">
+                <select className="select-filtro"
+                  value={filtroStatus}
+                  onChange={(e) => setFiltroStatus(e.target.value)}
+                  onFocus={() => setFiltroStatusAberto(true)}
+                  onBlur={() => setFiltroStatusAberto(false)}
+                >
+                  <option value="" disabled hidden>Categorias</option>
+                  <option value="Projeção">Projeção</option>
+                  <option value="Informática">Informática</option>
+                </select>
+                <IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`}/>
+              </div>
+              <button className="botao-secundario" onClick={() => setMostrarMaisProcurados(m => !m)}>
+                {mostrarMaisProcurados ? 'Exibir todos' : 'Exibir mais procurados'}
+              </button>
             </div>
           </div>
         </div>
@@ -60,20 +105,24 @@ const Equipamentos = () => {
         <h2>Equipamentos disponíveis</h2>
 
         <div className="grid-produtos">
-          {produtos.map((produto, index) => (
-            <div className="card-produto" key={index}>
-              <img src={produto.imagem} alt={produto.nome} />
-              <div className="info-produto">
-                <a className='nomeProduto' href='/produto'>{produto.nome}</a>
-                <div className="botoes-card">
-                  <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
-                  <button className="botao-carrinho">
-                    <img src={IconeCarrinhoFill} className="icone-carrinho-miniatura" alt="Carrinho" />
-                  </button>
+          {produtosExibidos.length === 0 ? (
+            <div className='nenhum-pedido'>Nenhum produto encontrado.</div>
+          ) : (
+            produtosExibidos.map((produto, index) => (
+              <div className="card-produto" key={index}>
+                <img src={produto.imagem} alt={produto.nome} />
+                <div className="info-produto">
+                  <a className='nomeProduto' href='/produto'>{produto.nome}</a>
+                  <div className="botoes-card">
+                    <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
+                    <button className="botao-carrinho">
+                      <IoCartSharp className="icone-carrinho-miniatura" size={24} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))
+          )}
         </div>
 
         <div className="paginacao">
