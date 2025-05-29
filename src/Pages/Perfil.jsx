@@ -8,7 +8,7 @@ import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 
-function Perfil(){
+function Perfil() {
 
     const sessionStorageUsuario = sessionStorage.DADOS_USUARIO;
     const [usuario, setUsuario] = useState(sessionStorageUsuario != null ? JSON.parse(sessionStorageUsuario) : {});
@@ -19,27 +19,27 @@ function Perfil(){
     const navegar = useNavigate();
 
     useEffect(() => {
-        if(sessionStorageUsuario == null){ 
+        if (sessionStorageUsuario == null) {
             setBarraCarregamento(10);
             api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.TOKEN}`
                 }
             }).then((res) => {
-    
+
                 setBarraCarregamento(87);
                 const dados = res.data;
                 const dadosEndereco = dados.endereco;
                 setUsuario(dados)
                 setEndereco(dadosEndereco);
-    
+
                 setTimeout(() => {
                     setBarraCarregamento(100);
                 }, 500)
             }).catch((erro) => {
-                
+
                 setBarraCarregamento(100);
-                if(erro.status == 401){
+                if (erro.status == 401) {
                     exibirAvisoTokenExpirado();
                 }
             })
@@ -62,8 +62,8 @@ function Perfil(){
     }
 
     useEffect(() => {
-        
-        if(sessionStorageUsuario == null){
+
+        if (sessionStorageUsuario == null) {
             apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.TOKEN}`
@@ -74,92 +74,88 @@ function Perfil(){
                     email: res.data.email
                 }))
             }).catch((erro) => {
-    
+
                 setBarraCarregamento(100);
-                if(erro.status == 401){
+                if (erro.status == 401) {
                     exibirAvisoTokenExpirado();
                 }
             })
         }
     }, [barraCarregamento] /* isso garante que o valor do email não virá vazio */)
 
-    return(
-    <div className="perfil">
-        <LoadingBar
-            progress={barraCarregamento}
-            height={3}
-            color="#f11946"
-        />
+    return (
+        <div className="perfil">
+            <LoadingBar
+                progress={barraCarregamento}
+                height={3}
+                color="#f11946"
+            />
 
-        {!mostrarModalExcluirConta &&( 
-        <div className="container-perfil">
-            <section className="titulo-form">
-                <h2>{sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "Meu perfil" : "Minha empresa"}</h2>
-                <div className="barra"></div>
-            </section>
-            {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
-            <section className="dados-pessoais">
-                <h3>Dados pessoais:</h3>
-                <span>Nome: {usuario.nome}</span>
-                <span>CPF: {usuario.cpf}</span>
-                <span>RG: {usuario.rg}</span>
-                <span>E-mail: {usuario.email}</span>
-                <span>Celular: {usuario.telefone_celular}</span>
-            </section>
-            ) : (
-            <section className="dados-pessoais">
-                <h3>Dados da empresa:</h3>
-                <span>Nome fantasia: {usuario.nome}</span>
-                <span>Razão social: {usuario.razao_social}</span>
-                <span>CNPJ: {usuario.cnpj}</span>
-                <span>E-mail: {usuario.email}</span>
-                <span>Celular: {usuario.telefone_celular}</span>
-                <span>Telefone: {usuario.telefone_residencial}</span>
-            </section>
+            {!mostrarModalExcluirConta && (
+                <div className="container-perfil">
+                    <section className="titulo-form">
+                        <h2>{sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "Meu perfil" : "Minha empresa"}</h2>
+                        <div className="barra"></div>
+                    </section>
+                    {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
+                        <section className="dados-pessoais">
+                            <h3>Dados pessoais:</h3>
+                            <span>Nome: {usuario.nome}</span>
+                            <span>CPF: {usuario.cpf}</span>
+                            <span>RG: {usuario.rg}</span>
+                            <span>E-mail: {usuario.email}</span>
+                            <span>Celular: {usuario.telefone_celular}</span>
+                        </section>
+                    ) : (
+                        <section className="dados-pessoais">
+                            <h3>Dados da empresa:</h3>
+                            <span>Nome fantasia: {usuario.nome}</span>
+                            <span>Razão social: {usuario.razao_social}</span>
+                            <span>CNPJ: {usuario.cnpj}</span>
+                            <span>E-mail: {usuario.email}</span>
+                            <span>Celular: {usuario.telefone_celular}</span>
+                            <span>Telefone: {usuario.telefone_residencial}</span>
+                        </section>
+                    )}
+                    <section className="dados-endereco">
+                        <h3>Endereço:</h3>
+                                <span>Rua: {endereco.logradouro}</span>
+                                <span>Número: {endereco.numero}</span>
+                                <span>Bairro: {endereco.bairro}</span>
+                                <span>Cidade: {endereco.cidade}</span>
+                                <span>Estado: {endereco.estado}</span>
+                                <span>Complemento: {endereco.complemento}</span>
+                    </section>
+                    <section className="container-eventos">
+                        <div className="eventos-excluir-editar">
+                            <button className="botao-excluir" onClick={abrirModalExcluirConta}>Excluir Conta</button>
+                            <button className="botao-editar" onClick={() => {
+                                sessionStorage.DADOS_USUARIO = JSON.stringify(usuario);
+                                navegar('/editar-perfil');
+                            }}>Editar Conta</button>
+                        </div>
+                        <div className="evento-voltar">
+                            <button className='botao-retroceder' onClick={() => { navegar('/equipamentos') }}>Voltar</button>
+                        </div>
+                    </section>
+                    <section className="dados-utilitarios">
+                        <span>Conta criada em {formatarData(usuario.data_criacao)}</span>
+                        <span>Ultima alteração em {formatarData(usuario.data_atualizacao)}</span>
+                    </section>
+                </div>
             )}
-            <section className="dados-endereco">
-                <h3>Endereço:</h3>
-                <div>
-                    <span>Rua: {endereco.logradouro}</span>
-                    <span>Número: {endereco.numero}</span>
+            {mostrarModalExcluirConta && (
+                <div className="modal-content">
+                    <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
+                    <p>Preencha a senha para excluir sua conta</p>
+                    <Input tipo={"text"} placeholder={"Senha"} />
+                    <div className="botoes">
+                        <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
+                        <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
+                    </div>
                 </div>
-                <span>Bairro: {endereco.bairro}</span>
-                <div>
-                    <span>Cidade: {endereco.cidade}</span>
-                    <span>Estado: {endereco.estado}</span>
-                </div>
-                <span>Complemento: {endereco.complemento}</span>
-            </section>
-            <section className="container-eventos">
-                <div className="eventos-excluir-editar">
-                    <button className="botao-excluir" onClick={abrirModalExcluirConta}>Excluir Conta</button>
-                    <button className="botao-editar" onClick={() => {
-                        sessionStorage.DADOS_USUARIO = JSON.stringify(usuario);
-                        navegar('/editar-perfil');
-                    }}>Editar Conta</button>
-                </div>
-                <div className="evento-voltar">
-                    <button className='botao-retroceder' onClick={() => { navegar('/equipamentos')}}>Voltar</button>
-                </div>
-            </section>
-            <section className="dados-utilitarios">
-                <span>Conta criada em { formatarData(usuario.data_criacao) }</span>
-                <span>Ultima alteração em { formatarData(usuario.data_atualizacao) }</span>
-            </section>
+            )}
         </div>
-        )}
-        {mostrarModalExcluirConta && (
-            <div className="modal-content">
-                <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
-                <p>Preencha a senha para excluir sua conta</p>
-                <Input tipo={"text"} placeholder={"Senha"} />
-                <div className="botoes">
-                    <button className="botao-cancelar" onClick={fecharModalExcluirConta}>Cancelar</button>
-                    <button className="botao-confirmar" onClick={confirmarExclusaoConta}>Confirmar</button>
-                </div>
-            </div>
-        )}
-    </div>
     )
 }
 

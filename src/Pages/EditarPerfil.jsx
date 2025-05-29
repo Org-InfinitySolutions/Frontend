@@ -204,7 +204,7 @@ function EditarPerfil() {
                     <section className="container-dados-pessoais">
                     {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
                         <>
-                            <h3>Dados pessoais:</h3>
+                            <h3>Dados pessoais</h3>
                             <section>
                                 <Input
                                     label={"* Nome Completo:"}
@@ -238,7 +238,7 @@ function EditarPerfil() {
                         </>
                     ) : (
                         <>
-                            <h3>Dados da empresa:</h3>
+                            <h3>Dados da empresa</h3>
                             <section>
                                 <Input
                                     label={"* Nome Fantasia:"}
@@ -310,12 +310,12 @@ function EditarPerfil() {
                             />
                             <img src={iconeEditar} alt="icone editar" height="30em" onClick={abrirModalEmail} />
                         </section>
-                        <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
+                        <button className="botao-alterar-senha" onClick={abrirModalAlterarSenha}>Alterar Senha</button>
                     </section>
 
                     {/* Region Endereço */}
                     <section className="container-dados-endereco">
-                        <h3>Endereço:</h3>
+                        <h3>Endereço</h3>
                         <section>
                             <Input 
                                 label={"* CEP:"} 
@@ -442,8 +442,8 @@ function EditarPerfil() {
                     </section>
 
                     <section className="container-eventos">
-                        <a onClick={() => { navegar("/perfil")}}>Cancelar</a>
-                        <button onClick={validarFormulario} disabled={true}>Confirmar</button>
+                        <button className="botao-cancelar-edicao" onClick={() => { navegar("/perfil")}}>Cancelar</button>
+                        <button className="botao-confirmar-edicao" onClick={validarFormulario} disabled={true}>Confirmar</button>
                     </section>
                 </div>
             )}

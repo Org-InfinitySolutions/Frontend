@@ -1,29 +1,29 @@
-.perfil{
+.perfil {
     background-color: #171717;
-    min-height: 70vh;
+    min-height: 35rem;
     padding: 10vh 0px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .container-perfil{
+    .container-perfil {
         height: 90vh;
         width: 35%;
         background-color: #fff;
-    
+
         border-radius: 10px;
         display: flex;
         flex-direction: column;
         align-items: center;
         font-family: var(--fonte-titulo);
-        
-        .titulo-form{
+
+        .titulo-form {
             width: 80%;
             display: flex;
             align-items: center;
             flex-direction: column;
 
-            .barra{
+            .barra {
                 height: 2px;
                 width: 65%;
                 background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
@@ -39,7 +39,7 @@
             justify-content: space-evenly;
             font-family: var(--fonte-texto);
 
-            h3{
+            h3 {
                 padding: 2%;
                 width: 50%;
                 margin: 0px;
@@ -49,16 +49,16 @@
             }
         }
 
-        .dados-endereco{
-            height: 30%;
+        .dados-endereco {
+            height: 40%;
             width: 80%;
 
             display: flex;
             flex-direction: column;
             justify-content: space-evenly;
             font-family: var(--fonte-texto);
-            
-            h3{
+
+            h3 {
                 padding: 2%;
                 width: 30%;
                 margin: 0px;
@@ -66,53 +66,50 @@
                 border-bottom: 1px solid black;
                 font-weight: normal;
             }
-            div{
-                width: 100%;
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-            }
         }
 
-        .container-eventos{
+        .container-eventos {
             height: 10%;
             width: 90%;
-        
+            margin-top: 3%;
+
             display: flex;
             flex-direction: row;
             justify-content: space-between;
 
-            .eventos-excluir-editar{
+            .eventos-excluir-editar {
                 height: 100%;
-                width: 60%;
+                width: 100%;
 
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 justify-content: flex-start;
-                
+
                 /* quando a tela excluir-conta estiver pronta remover o button */
-                button, a{
-                    height: 60%;
-                    width: 40%;
+                .botao-excluir,
+                .botao-editar {
+                    height: 2.375rem;
+                    width: 6.375rem;
                     margin-left: 2%;
                     font-size: 0.8em;
                     font-family: var(--fonte-texto);
                 }
 
-                .botao-excluir{
+                .botao-excluir {
                     color: white;
                     border: none;
                     border-radius: 8px;
                     cursor: pointer;
                     background-color: #EE1C27;
                 }
-                .botao-excluir:hover{
+
+                .botao-excluir:hover {
                     transition: 0.2s;
                     background-color: #d81b24;
                 }
 
-                .botao-editar{
+                .botao-editar {
                     background-color: black;
                     color: white;
                     border: none;
@@ -124,33 +121,36 @@
                     justify-content: center;
                     text-align: center;
                 }
-                .botao-editar:hover{
+
+                .botao-editar:hover {
                     transition: 0.2s;
                 }
 
-                .botao-excluir:active, .botao-editar:active{
+                .botao-excluir:active,
+                .botao-editar:active {
                     transform: scale(0.98);
                     transition: 0.3s;
                 }
-                
+
             }
-            .evento-voltar{
-                height: 100%;
-                width: 30%;
+
+            .evento-voltar {
 
                 display: flex;
                 flex-direction: row;
                 align-items: center;
                 justify-content: flex-end;
 
-                .botao-retroceder{
+                .botao-retroceder {
+                    height: 2.375rem;
+                    width: 6.375rem;
                     padding: 5%;
-                
+
                     display: flex;
                     align-items: center;
                     text-decoration: none;
                     justify-content: center;
-                
+
                     color: black;
                     cursor: pointer;
                     font-weight: normal;
@@ -159,21 +159,24 @@
                     border: 1px solid black;
                     font-family: var(--fonte-texto);
                 }
-                .botao-retroceder:hover{
+
+                .botao-retroceder:hover {
                     color: white;
                     transition: 0.3s;
                     background-color: black;
                 }
-                .botao-retroceder:active{
+
+                .botao-retroceder:active {
                     transition: 0.2s;
                     transform: scale(0.95);
                 }
             }
         }
 
-        .dados-utilitarios{
+        .dados-utilitarios {
             height: 6%;
             width: 95%;
+            margin: 3%;
 
             display: flex;
             font-size: 0.7em;
@@ -183,47 +186,52 @@
         }
     }
 
-    .aviso-excluir-conta{
+    .aviso-excluir-conta {
         color: #FF0000;
-        font-family:"Montserrat Alternates", sans-serif;
+        font-family: "Montserrat Alternates", sans-serif;
     }
 
     .modal-content {
         background-color: white;
         padding: 2rem;
         border-radius: 10px;
-        width: 30%;
+        width: 25rem;
         text-align: center;
         display: flex;
         flex-direction: column;
-        h2{
+
+        h2 {
             font-family: "Montserrat", sans-serif;
         }
 
-        h1{
+        h1 {
+            font-size: 150%;
             margin: 0.2em 0px;
         }
 
-        .input-alteracao-senha{
+        .input-alteracao-senha {
             text-align: start;
         }
 
-        .container-input{
+        .container-input {
             padding: 0px;
-            margin-top: 1em;
-            
+            margin-top: 0.5rem;
+            align-items: center;
+
+
             label {
                 justify-content: flex-start;
                 display: flex;
             }
 
-            input{
-                width: 97%;
+            input {
+                width: 20rem;
                 height: 4vh;
                 margin-top: 0.3em;
             }
         }
     }
+
     .botoes {
         display: flex;
         justify-content: right;
@@ -231,7 +239,7 @@
         gap: 2%;
         height: 100%;
 
-        .botao-cancelar{
+        .botao-cancelar {
             height: 38px;
             width: 102px;
             margin-top: 10px;
@@ -246,7 +254,7 @@
             border: 1px black solid;
         }
 
-        .botao-cancelar:hover{
+        .botao-cancelar:hover {
             transition: 0.3s;
             background-color: black;
             color: white;
@@ -256,7 +264,7 @@
             transform: scale(0.95);
         }
 
-        .botao-confirmar{
+        .botao-confirmar {
             height: 38px;
             width: 102px;
             margin-top: 10px;
@@ -271,13 +279,13 @@
             border: 1px black solid;
         }
 
-        .botao-confirmar:hover{
+        .botao-confirmar:hover {
             background-color: white;
             color: black;
             transition: 0.3s;
         }
 
-        .botao-confirmar:active{
+        .botao-confirmar:active {
             transition: 0.3s;
             transform: scale(0.95);
         }
@@ -285,107 +293,119 @@
 }
 
 @media (max-width: 768px) {
-    .perfil{
+    .perfil {
 
-        .container-perfil{
-            width: 80%;
-            height: 75%;
+        .container-perfil {
+            width: 20rem;
+            height: 38rem;
             position: absolute;
 
-            .titulo-form{
-            width: 80%;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            font-size: 100%;
+            .titulo-form {
+                width: 80%;
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                font-size: 100%;
 
-            .barra{
-                height: 2px;
-                width: 90%;
-                margin-bottom: 4%;
-                background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+                .barra {
+                    height: 2px;
+                    width: 90%;
+                    margin-bottom: 4%;
+                    background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+                }
             }
-        }
 
             .dados-pessoais {
                 height: 40%;
+                width: 80%;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                font-family: var(--fonte-texto);
+                overflow-wrap: break-word;
+
+                h3 {
+                    width: 95%;
+                }
+            }
+
+            .dados-endereco {
+                height: 30%;
                 width: 80%;
 
                 display: flex;
                 flex-direction: column;
                 justify-content: space-evenly;
                 font-family: var(--fonte-texto);
+                overflow-wrap: break-word;
 
-                h3{
+                h3 {
                     width: 95%;
                 }
             }
 
-            .dados-endereco{
-            height: 30%;
-            width: 80%;
+            .container-eventos {
+                width: 100%;
+                height: 7%;
+                align-items: center;
 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            font-family: var(--fonte-texto);
-            
-                h3{
-                    width: 95%;
-                }
-              }
-            
-            .container-eventos{
-                width: 100%;     
-                align-items: center;     
-
-                .eventos-excluir-editar{
+                .eventos-excluir-editar {
                     width: 100%;
                     justify-content: flex-start;
                     margin: 1%;
 
-                    .botao-excluir, .botao-editar{
+                    .botao-excluir,
+                    .botao-editar {
                         padding: 0;
-                        height: 70%;
-                        width: 60%;
+                        height: 2.375rem;
+                        width: 5.5rem;
                     }
                 }
-                .evento-voltar{
-                    width: 50%;
+
+                .evento-voltar {
+                    width: 20%;
                     margin: 1%;
                     padding: 1%;
 
 
-                    .botao-retroceder{
-                        height: 70%;
-                        width: 80%;
+                    .botao-retroceder {
+                        height: 2.375rem;
+                        width: 6.375rem;
                     }
                 }
             }
-            .dados-utilitarios{
-                padding: 2%;
+
+            .dados-utilitarios {
+                padding: 1%;
                 margin: 1%;
             }
         }
 
-        .modal-content{
-            height: 40vh;
+        .modal-content {
+            height: 40%;
             width: 70%;
-            h1{
-                font-size: 1.5em;
+            padding: 1rem;
+            margin-top: 0.5rem;
+
+            h1 {
+                font-size: 1.2rem;
             }
 
-            .container-input{
-                input{
-                    height: 5vh;
+            .container-input {
+                input {
+                    height: 4vh;
+                    width: 15rem;
                 }
             }
         }
-        .botoes{
+
+        .botoes {
             align-items: center;
-            .botao-cancelar, .botao-confirmar{
-                margin: 0px;
-                height: 6vh;
+
+            .botao-cancelar,
+            .botao-confirmar {
+                height: 2.375rem;
+                width: 6.375rem;
             }
         }
     }
