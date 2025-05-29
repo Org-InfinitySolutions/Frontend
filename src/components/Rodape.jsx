@@ -5,9 +5,34 @@ import telefone from '../assets/telefone.png';
 import email from '../assets/email.png';
 import empresa from '../assets/empresa.png' ;
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
+const getDevice = () => ({
+    mobile: window.innerWidth <= 768,
+    tablet: window.innerWidth > 768 && window.innerWidth <= 1024,
+    desktop: window.innerWidth > 1024,
+});
 
 function Rodape() {
     
+    const [deviced, setDeviced] = useState(getDevice());
+
+    useEffect(() => {
+                const onResize = () => setDeviced(getDevice());
+                window.addEventListener('resize', onResize);
+                return () => window.removeEventListener('resize', onResize);
+            }, []);
+        
+            const logo = () => {
+                if (deviced.mobile) {
+                    return { width: "120%", height: "auto" };
+                } else if (deviced.tablet) {
+                    return { width: "60%", height: "auto" };
+                } else if (deviced.desktop) {
+                    return { width: "30%", height: "auto" };
+                }
+            }
+
   return (
     <>
         <div className='barra-divisoria'></div>
