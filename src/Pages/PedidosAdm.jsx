@@ -13,7 +13,7 @@ const pedidos = [
 
 const PedidosAdm = () => {
     return (
-        <div className="pagina-pedidos">
+        <div className="pagina-pedidos">    
             <main className="conteudo-pedidos">
                 <div className="filtros">
                     <div className="botoes-toggle">
