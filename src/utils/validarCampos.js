@@ -181,8 +181,6 @@ const validarRazaoSocial = (razaoSocial) => {
     return { valido: true, mensagem: "" };
 };
 
-
-
 export { 
     campoVazio, 
     emailInvalido, 

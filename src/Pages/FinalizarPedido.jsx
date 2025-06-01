@@ -1,16 +1,150 @@
-import { use, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { Navegabilidade } from '../components/Navegabilidade';
 import './FinalizarPedido.css';
 import { useNavigate } from 'react-router-dom';
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
+import { formatarCEP, formatarIdPedido } from '../Utils/formatacoes'
+import { api } from '../provider/apiInstance'
+import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
+import { tokenExpirou } from '../Utils/token'
+import LoadingBar from 'react-top-loading-bar';
 
 function FinalizarPedido() {
-    const [mostrarModal, setMostrarModal] = useState(false);
-    const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
 
     const navegar = useNavigate();
+    const [barraCarregamento, setBarraCarregamento] = useState(0);
+
+    const [mostrarModal, setMostrarModal] = useState(false);
+    const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
+    const [carrinho, setCarrinho] = useState(JSON.parse(sessionStorage.CARRINHO));
+    const [cadastroCompleto, setCadastroCompleto] = useState(sessionStorage.CADASTRO_COMPLETO == "true");
+    const [cargo, setCargo] = useState(sessionStorage.CARGO);
+
+    const [numeroPedido, setNumeroPedido] = useState(0);
+    const [descricao, setDescricao] = useState('');
+    const [documentoAuxiliar, setDocumentoAuxiliar] = useState('');
+    const [documentoEndereco, setDocumentoEndereco] = useState('');
+    const [documentoRG, setDocumentoRG] = useState('');
+    const [documentoCNPJ, setDocumentoCNPJ] = useState('');
+    const [documentoContratoSocial, setDocumentoContratoSocial] = useState('');
+
+    const realizarPedido = async () => {
+
+        if(tokenExpirou()){
+            exibirAvisoTokenExpirado(navegar);
+        } else if(sessionStorage.USUARIO_LOGADO != "True"){
+            alert('Usuario nao logado')
+        }else {
+
+            setBarraCarregamento(10);
+            const form = carrinho;
+            form.produtos = form.produtos.map((i) => { return { produtoId: i.produtoId, quantidade: i.quantidade } });
+            form.descricao = descricao;
+    
+            const formData = new FormData();
+            formData.append('pedido', new Blob([JSON.stringify(form)], { type: 'application/json' }));
+            formData.append('documento_auxiliar', documentoAuxiliar)
+
+            setBarraCarregamento(30);
+            if(!cadastroCompleto){
+                if(cargo === "ROLE_USUARIO_PF"){
+                    await subirDocumentos(0, documentoEndereco); // 0 -> enum do endereço 
+                    await subirDocumentos(3, documentoRG); // 3 -> enum do rg
+                } else if (cargo === "ROLE_USUARIO_PJ"){
+                    await subirDocumentos(0, documentoEndereco); // 0 -> enum do endereço 
+                    await subirDocumentos(1, documentoCNPJ); // 1 -> enum do cnpj
+                    await subirDocumentos(2, documentoContratoSocial); // 2 -> enum do contrato social
+                }
+            }
+
+            setBarraCarregamento(67);
+            api.post('/pedidos', formData, {
+                headers: {
+                    'Authorization': `bearer ${sessionStorage.TOKEN}`,
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((res) => {
+                setBarraCarregamento(100);
+                setNumeroPedido(formatarIdPedido(res.data.id));
+        
+                const carrinho = { produtos: [] };
+                sessionStorage.CARRINHO = JSON.stringify(carrinho);
+            }).catch((err) => {
+                setBarraCarregamento(100);
+                if(err.status == 400){
+                    exibirAviso(err.response.data.message, 'error')
+                } else if(err.status == 404){
+                    exibirAviso(err.response.data.error, 'error')
+                }
+            })
+        }
+    }
+
+    const validarForm = () => {
+
+        let houveErro = false;
+
+        if(!documentoEndereco && !cadastroCompleto){
+            exibirAviso("É obrigatório informar o comprovante de endereço", 'error');
+            houveErro = true;
+        }
+        if(cargo === "ROLE_USUARIO_PF"){
+            if(!documentoRG && !cadastroCompleto){
+                exibirAviso("É obrigatório informar o documento de RG", 'error')
+                houveErro = true;
+            }
+        } 
+        if(cargo === "ROLE_USUARIO_PJ"){
+            if((!documentoCNPJ || !documentoContratoSocial) && !cadastroCompleto){
+                exibirAviso("Informe todos os documentos obrigatórios", 'error')
+                houveErro = true;
+            }
+        }
+        if(!houveErro){
+            setMostrarModal(true);
+        }
+    }
+
+    const [desativarBotao, setDesativarBotao] = useState(true);
+    useEffect(() => {
+        if(!cadastroCompleto){
+            if(cargo === "ROLE_USUARIO_PF"){
+                if(documentoRG && documentoEndereco){
+                    setDesativarBotao(false);
+                }
+            } 
+            if(cargo === "ROLE_USUARIO_PJ"){
+                if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
+                    setDesativarBotao(false);
+                }
+            }
+        } else{ setDesativarBotao(false) }
+    }, [documentoCNPJ, documentoContratoSocial, documentoEndereco, documentoRG])
+
+    const [documentosPessoais, setDocumentosPessoais] = useState(['COMPROVANTE_ENDERECO', 'COPIA_CNPJ', 'COPIA_CONTRATO_SOCIAL', 'COPIA_RG'])
+    const subirDocumentos = (indiceDocumento, arquivo) => {
+
+        const form = { tipoAnexo: documentosPessoais[indiceDocumento]};
+
+        const formData = new FormData();
+        formData.append('dados', new Blob([JSON.stringify(form)], { type: 'application/json' }));
+        formData.append('documento', arquivo)
+
+        api.post(`/usuarios/documentos/${sessionStorage.ID_USUARIO}`, formData, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.TOKEN}`,
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+    }
+
     return (
         <div className="finalizar-pedido">
+            <LoadingBar
+                progress={barraCarregamento}
+                height={3}
+                color="#f11946"
+            />
             {mostrarModal ? (
                 <div className="modal-content">
                     <h2 className='titulo-finalizar-pedido'>Você deseja finalizar o pedido?</h2>
@@ -19,6 +153,7 @@ function FinalizarPedido() {
                         <button className='botao-voltar' onClick={() => setMostrarModal(false)}>Voltar</button>
                         <button className='botao-confirmar' onClick={() => {
                             setMostrarModal(false);
+                            realizarPedido();
                             setMostrarModalConfirmacao(true);
                         }}>Confirmar</button>
                     </div>
@@ -26,7 +161,7 @@ function FinalizarPedido() {
             ) : mostrarModalConfirmacao ? (
                 <div className="modal-content-pedido-confirmado">
                     <h2 className='titulo-finalizar-pedido'>Seu pedido foi finalizado!</h2>
-                    <h3 className='numero-serie-pedido'>Número do pedido #00001</h3>
+                    <h3 className='numero-serie-pedido'>Número do pedido #{numeroPedido}</h3>
                     <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato em breve para mais detalhes.
                     Para visualizar o seu pedido clique no botão abaixo para ser redirecionado aos seus orçamentos.</p>
                     <div className="botoes-modal">
@@ -42,8 +177,9 @@ function FinalizarPedido() {
                 <>
                     <h1>Finalizar Pedido</h1>
                     <section className='container-equipamentos'>
-                        {/* Exemplo de produto */}
-                        <CardProdutoCarrinho apenasLeitura={true}/>
+                        {carrinho.produtos.map((item) => (
+                            <CardProdutoCarrinho key={item.produtoId} id={item.id} nome={item.nome} imagem={""} quantidade={item.quantidade} apenasLeitura={true}/>
+                        ))}
                     </section>
 
                     <section className='container-endereco'>
@@ -51,54 +187,54 @@ function FinalizarPedido() {
                         <section className='box-informacoes'>
                             <div className='secao-informacoes'>
                                 <label>CEP:</label>
-                                <input type="text" value="01235-789" readOnly />
+                                <input type="text" value={formatarCEP(carrinho.endereco.cep)} readOnly />
                             </div>
                             <div className='secao-informacoes'>
                                 <label>RUA:</label>
-                                <input type="text" value="Rua Boa vista" readOnly />
+                                <input type="text" value={carrinho.endereco.logradouro} readOnly />
                             </div>
                             <div className='secao-informacoes'>
                                 <label>NÚMERO:</label>
-                                <input type="text" value="1234" readOnly />
+                                <input type="text" value={carrinho.endereco.numero} readOnly />
                             </div>
                         </section>
                         <section className='box-informacoes'>
                             <div className='secao-informacoes'>
                                 <label>BAIRRO:</label>
-                                <input type="text" value="Taboão da Serra" readOnly />
+                                <input type="text" value={carrinho.endereco.bairro} readOnly />
                             </div>
                             <div className='secao-informacoes'>
                                 <label>CIDADE:</label>
-                                <input type="text" value="São Paulo" readOnly />
+                                <input type="text" value={carrinho.endereco.cidade} readOnly />
                             </div>
                             <div className='secao-informacoes'>
                                 <label>ESTADO:</label>
-                                <input type="text" value="SP" readOnly />
+                                <input type="text" value={carrinho.endereco.estado} readOnly />
                             </div>
                         </section>
                         <section className='box-complemento'>
                             <label>COMPLEMENTO:</label>
-                            <input type="text" value="Perto do metrô" readOnly />
+                            <input type="text" value={carrinho.endereco.complemento} readOnly />
                         </section>
                         <section className='box-informacoes'>
                             <div className='secao-informacoes'>
                                 <label>DATA E HORA ENTREGA:</label>
-                                <input type="datetime-local" readOnly />
+                                <input type="datetime-local" value={carrinho.dataEntrega} readOnly />
                             </div>
                             <div className='secao-informacoes'>
-                                <label>DATA E HORA RETIRADA:</label>
-                                <input type="datetime-local" readOnly />
+                                <label>DATA E HORA DEVOLUÇÃO:</label>
+                                <input type="datetime-local" value={carrinho.dataRetirada} readOnly />
                             </div>
                             <div className='secao-informacoes'>
                                 <label>TIPO DE EVENTO:</label>
-                                <input type="text" value="Indoor" readOnly />
+                                <input type="text" value={carrinho.tipo} readOnly />
                             </div>
                         </section>
                     </section>
 
                     <section className='container-observacao'>
                         <label htmlFor="txt_observacao">Observação (opcional):</label>
-                        <textarea id="txt_observacao" placeholder='Breve descrição do projeto...'></textarea>
+                        <textarea id="txt_observacao" value={descricao} onChange={(e) => { setDescricao(e.target.value)}} placeholder='Breve descrição do projeto...'></textarea>
                     </section>
 
                     <section className='container-documentos'>
@@ -108,33 +244,33 @@ function FinalizarPedido() {
                             <label htmlFor="inp_documentoProjeto" className="custom-file-upload">
                                 SUBIR ARQUIVO
                             </label>
-                            <input id="inp_documentoProjeto" type="file" style={{ display: "none" }} />
+                            <input id="inp_documentoProjeto" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => { setDocumentoAuxiliar(e.target.files[0])}} style={{ display: "none" }} />
                         </div>
-                        {sessionStorage.DOCUMENTOS_FORNECIDOS !== "True" && (
+                        {!cadastroCompleto && (
                             <>
                                 <span>Forneça os documentos abaixo para agilizar a geração de contrato. Não será necessário um segundo envio após o primeiro pedido.</span>
                                 <div className='box-documento'>
                                     <span>* COMPROVANTE DE ENDEREÇO</span>
                                     <label htmlFor="inp_documentoEndereco" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                    <input id="inp_documentoEndereco" type="file" style={{ display: "none" }} />
+                                    <input id="inp_documentoEndereco" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoEndereco(e.target.files[0])}} style={{ display: "none" }} />
                                 </div>
-                                {sessionStorage.TIPO_USUARIO === "PF" ? (
+                                {cargo === "ROLE_USUARIO_PF" ? (
                                     <div className='box-documento'>
                                         <span>* CÓPIA DO RG</span>
                                         <label htmlFor="inp_documentoRg" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                        <input id="inp_documentoRg" type="file" style={{ display: "none" }} />
+                                        <input id="inp_documentoRg" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoRG(e.target.files[0])}} style={{ display: "none" }} />
                                     </div>
                                 ) : (
                                     <>
                                         <div className='box-documento'>
                                             <span>* CÓPIA DO CARTÃO CNPJ</span>
                                             <label htmlFor="inp_documentoCartaoCnpj" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                            <input id="inp_documentoCartaoCnpj" type="file" style={{ display: "none" }} />
+                                            <input id="inp_documentoCartaoCnpj" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoCNPJ(e.target.files[0])}} style={{ display: "none" }} />
                                         </div>
                                         <div className='box-documento'>
                                             <span>* CÓPIA DO CONTRATO SOCIAL</span>
                                             <label htmlFor="inp_documentoContratoSocial" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                            <input id="inp_documentoContratoSocial" type="file" style={{ display: "none" }} />
+                                            <input id="inp_documentoContratoSocial" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoContratoSocial(e.target.files[0])}} style={{ display: "none" }} />
                                         </div>
                                     </>
                                 )}
@@ -142,7 +278,7 @@ function FinalizarPedido() {
                         )}
                     </section>
 
-                    {localStorage.DOCUMENTOS_FORNECIDOS !== "True" && (
+                    {!cadastroCompleto && (
                         <div className='box-preenchimento-obrigatorio'>
                             <span>* Preenchimento obrigatório</span>
                         </div>
@@ -151,7 +287,8 @@ function FinalizarPedido() {
                     <Navegabilidade
                         linkVoltar={"/carrinho/endereco"}
                         textoAvancar={"Finalizar"}
-                        funcaoAvancar={() => setMostrarModal(true)}
+                        desabilitar={desativarBotao}
+                        funcaoAvancar={validarForm}
                     />
                 </>
             )}

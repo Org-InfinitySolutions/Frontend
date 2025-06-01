@@ -45,6 +45,19 @@
         transition: 0.3s;
         background-color: white;
     }
+    button:disabled{
+        background-color: #cccccc !important;
+        color: #666666 !important;
+        cursor: not-allowed !important;
+        border: 1px solid #999999 !important;
+        opacity: 0.7;
+    }
+    button:disabled:hover{
+        background-color: #cccccc !important;
+        color: #666666 !important;
+        border: 1px solid #999999 !important;
+        transform: none !important;
+    }
 }
 
 @media screen and (max-width: 768px) {
