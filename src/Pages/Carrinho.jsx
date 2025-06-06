@@ -4,47 +4,98 @@ import { Navegabilidade } from '../components/Navegabilidade';
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
 
 import './Carrinho.css'
-import { useEffect, useRef, useState } from 'react';
-
-function Carrinho(){
+import { useState } from 'react';
+function Carrinho() {
 
     const navigate = useNavigate();
-    const [carrinho, setCarrinho] = useState(() => { return JSON.parse(sessionStorage.CARRINHO).produtos });
+    const [carrinho, setCarrinho] = useState(JSON.parse(sessionStorage.CARRINHO).produtos);
 
-    // ajustar, pois nao funciona
-    const [atualizar, setAtualizar] = useState(false);
-    const removerProduto = (carrinhoAtualizado) => {
-        console.log("componente:", carrinhoAtualizado);
+    const atualizarQuantidade = (produtoId, novaQuantidade) => {
+        const novoCarrinho = [...carrinho];
+        const index = novoCarrinho.findIndex(x => x.produtoId == produtoId);
+        if (index >= 0) {
+            novoCarrinho[index].quantidade = Number(novaQuantidade) || 1;
+            atualizarCarrinho(novoCarrinho);
+        } else {
+            console.error(`Produto com ID ${produtoId} não encontrado no carrinho.`);
+        }
+    }
 
+    const incrementarQuantidade = (produtoId) => {
+        const novoCarrinho = [...carrinho];
+        const index = novoCarrinho.findIndex(x => x.produtoId == produtoId);
+        if (index >= 0) {
+            if(novoCarrinho[index].quantidade < 999) {
+                novoCarrinho[index].quantidade += 1;
+            }
+            atualizarCarrinho(novoCarrinho);
+        } else {
+            console.error(`Produto com ID ${produtoId} não encontrado no carrinho.`);
+        }
+    }
+
+    const decrementarQuantidade = (produtoId) => {
+        const novoCarrinho = [...carrinho];
+        const index = novoCarrinho.findIndex(x => x.produtoId == produtoId);
+        if (index >= 0) {
+            if(novoCarrinho[index].quantidade > 1){
+                novoCarrinho[index].quantidade -= 1;
+            }
+            atualizarCarrinho(novoCarrinho);
+        } else {
+            console.error(`Produto com ID ${produtoId} não encontrado no carrinho.`);
+        }
+    }
+
+    const removerProduto = (produtoId) => {
+        const novoCarrinho = [...carrinho];
+
+        const index = novoCarrinho.findIndex(x => x.produtoId == produtoId);
+
+        if (index >= 0) {
+            novoCarrinho.splice(index, 1);
+            atualizarCarrinho(novoCarrinho);
+        } else {
+            console.error(`Produto com ID ${produtoId} não encontrado no carrinho.`);
+        }
+    }
+
+    const atualizarCarrinho = (novoCarrinho) => {
+        setCarrinho(novoCarrinho);
         const json = JSON.parse(sessionStorage.CARRINHO);
-        json.produtos = carrinhoAtualizado;
-
-        // Atualiza o sessionStorage
+        json.produtos = novoCarrinho
         sessionStorage.CARRINHO = JSON.stringify(json);
-        setAtualizar(!atualizar);
-        // Atualiza o estado imediatamente
-        // setCarrinho(carrinhoAtualizado);
-        setCarrinho(carrinhoAtualizado);
+    }
 
-        console.log("novo carrinho:", carrinho);
-    };
-
-    // ajustar
-    useEffect(() => {
-        setCarrinho(JSON.parse(sessionStorage.CARRINHO).produtos);
-        console.log(carrinho);
-    }, [atualizar])
-
-    return(
-    <div className="carrinho">
-        <h1>Conferir Carrinho</h1>
-        <section className="container-equipamentos">
-            {carrinho.map((item) => (
-                <CardProdutoCarrinho key={item.produtoId} id={item.produtoId} nome={item.nome} imagem={item.imagem} quantidade={item.quantidade} carrinho={carrinho} onSubmit={removerProduto}/>
-            ))}
-        </section>
-        <Navegabilidade linkVoltar={"/equipamentos"} funcaoAvancar={() => { navigate("/carrinho/endereco")}} textoAvancar={"Continuar"}/>
-    </div>
+    return (
+        <div className="carrinho">
+            <h1>Conferir Carrinho</h1>
+            {carrinho.length == 0 ? (
+                <div className='box-sem-produtos'>
+                    <h2>Você não tem produtos adicionados.</h2>
+                </div>
+            ) : (
+                <>
+                    <section className="container-equipamentos">
+                        {carrinho.map((item, i) => (
+                            <CardProdutoCarrinho
+                                id={item.produtoId}
+                                key={`${i}_${item.produtoId}`}
+                                nome={item.nome}
+                                imagem={item.imagem}
+                                quantidade={item.quantidade}
+                                apenasLeitura={false}
+                                atualizarQuantidade={atualizarQuantidade}
+                                removerProduto={() => removerProduto(item.produtoId)}
+                                incrementarQuantidade={() => incrementarQuantidade(item.produtoId)}
+                                decrementarQuantidade={() => decrementarQuantidade(item.produtoId)}
+                            />
+                        ))}
+                    </section>
+                    <Navegabilidade linkVoltar={"/equipamentos"} funcaoAvancar={() => { navigate("/carrinho/endereco") }} textoAvancar={"Continuar"} />
+                </>
+            )}
+        </div>
     )
 }
 

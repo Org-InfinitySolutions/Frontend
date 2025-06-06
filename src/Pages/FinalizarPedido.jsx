@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
 import { formatarCEP, formatarIdPedido } from '../Utils/formatacoes'
 import { api } from '../provider/apiInstance'
-import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
+import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
 import { tokenExpirou } from '../Utils/token'
 import LoadingBar from 'react-top-loading-bar';
 
@@ -19,6 +19,7 @@ function FinalizarPedido() {
     const [carrinho, setCarrinho] = useState(JSON.parse(sessionStorage.CARRINHO));
     const [cadastroCompleto, setCadastroCompleto] = useState(sessionStorage.CADASTRO_COMPLETO == "true");
     const [cargo, setCargo] = useState(sessionStorage.CARGO);
+    const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO == "True");
 
     const [numeroPedido, setNumeroPedido] = useState(0);
     const [descricao, setDescricao] = useState('');
@@ -32,9 +33,7 @@ function FinalizarPedido() {
 
         if(tokenExpirou()){
             exibirAvisoTokenExpirado(navegar);
-        } else if(sessionStorage.USUARIO_LOGADO != "True"){
-            alert('Usuario nao logado')
-        }else {
+        } else {
 
             setBarraCarregamento(10);
             const form = carrinho;
@@ -46,37 +45,34 @@ function FinalizarPedido() {
             formData.append('documento_auxiliar', documentoAuxiliar)
 
             setBarraCarregamento(30);
-            if(!cadastroCompleto){
-                if(cargo === "ROLE_USUARIO_PF"){
-                    await subirDocumentos(0, documentoEndereco); // 0 -> enum do endereço 
-                    await subirDocumentos(3, documentoRG); // 3 -> enum do rg
-                } else if (cargo === "ROLE_USUARIO_PJ"){
-                    await subirDocumentos(0, documentoEndereco); // 0 -> enum do endereço 
-                    await subirDocumentos(1, documentoCNPJ); // 1 -> enum do cnpj
-                    await subirDocumentos(2, documentoContratoSocial); // 2 -> enum do contrato social
-                }
-            }
+            
+            setTimeout(() => {
+                api.post('/pedidos', formData, {
+                    headers: {
+                        'Authorization': `bearer ${sessionStorage.TOKEN}`,
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(async (res) => {
 
-            setBarraCarregamento(67);
-            api.post('/pedidos', formData, {
-                headers: {
-                    'Authorization': `bearer ${sessionStorage.TOKEN}`,
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then((res) => {
-                setBarraCarregamento(100);
-                setNumeroPedido(formatarIdPedido(res.data.id));
-        
-                const carrinho = { produtos: [] };
-                sessionStorage.CARRINHO = JSON.stringify(carrinho);
-            }).catch((err) => {
-                setBarraCarregamento(100);
-                if(err.status == 400){
-                    exibirAviso(err.response.data.message, 'error')
-                } else if(err.status == 404){
-                    exibirAviso(err.response.data.error, 'error')
-                }
-            })
+                    setBarraCarregamento(67);
+                    await gerenciarUploads();
+
+                    setBarraCarregamento(100);
+                    const carrinho = { produtos: [] };
+                    sessionStorage.CARRINHO = JSON.stringify(carrinho);
+
+                    setNumeroPedido(formatarIdPedido(res.data.id));
+                    setMostrarModal(false);
+                    setMostrarModalConfirmacao(true);
+                }).catch((err) => {
+                    setBarraCarregamento(100);
+                    if(err.status == 400){
+                        exibirAviso(err.response.data.message, 'error')
+                    } else if(err.status == 404){
+                        exibirAviso(err.response.data.error, 'error')
+                    }
+                })
+            }, 1000);
         }
     }
 
@@ -100,6 +96,13 @@ function FinalizarPedido() {
                 houveErro = true;
             }
         }
+
+        if(!usuarioLogado){
+            exibirAvisoTimer('Faça login para finalizar o pedido.', 'info');
+            setTimeout(() => { navegar('/login'); }, 3200);
+            houveErro = true;
+        }
+
         if(!houveErro){
             setMostrarModal(true);
         }
@@ -107,22 +110,26 @@ function FinalizarPedido() {
 
     const [desativarBotao, setDesativarBotao] = useState(true);
     useEffect(() => {
-        if(!cadastroCompleto){
-            if(cargo === "ROLE_USUARIO_PF"){
-                if(documentoRG && documentoEndereco){
-                    setDesativarBotao(false);
-                }
-            } 
-            if(cargo === "ROLE_USUARIO_PJ"){
-                if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
-                    setDesativarBotao(false);
+        if(usuarioLogado) {
+            if(cadastroCompleto){
+                if(cargo == "ROLE_USUARIO_PF"){
+                    if(documentoRG && documentoEndereco){
+                        setDesativarBotao(false);
+                    }
+                } 
+                if(cargo == "ROLE_USUARIO_PJ"){
+                    if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
+                        setDesativarBotao(false);
+                    }
                 }
             }
-        } else{ setDesativarBotao(false) }
+        } else if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
+            setDesativarBotao(false);
+        }
     }, [documentoCNPJ, documentoContratoSocial, documentoEndereco, documentoRG])
 
     const [documentosPessoais, setDocumentosPessoais] = useState(['COMPROVANTE_ENDERECO', 'COPIA_CNPJ', 'COPIA_CONTRATO_SOCIAL', 'COPIA_RG'])
-    const subirDocumentos = (indiceDocumento, arquivo) => {
+    const subirDocumento = (indiceDocumento, arquivo) => {
 
         const form = { tipoAnexo: documentosPessoais[indiceDocumento]};
 
@@ -136,6 +143,16 @@ function FinalizarPedido() {
                 'Content-Type': 'multipart/form-data',
             }
         });
+    }
+
+    const gerenciarUploads = async () => {
+        await subirDocumento(0, documentoEndereco); // 0 -> enum do endereço 
+        if(cargo == "ROLE_USUARIO_PF"){
+            await subirDocumento(3, documentoRG); // 3 -> enum do rg
+        } else if (cargo == "ROLE_USUARIO_PJ"){
+            await subirDocumento(1, documentoCNPJ); // 1 -> enum do cnpj
+            await subirDocumento(2, documentoContratoSocial); // 2 -> enum do contrato social
+        }
     }
 
     return (
@@ -152,9 +169,7 @@ function FinalizarPedido() {
                     <div className="botoes-modal">
                         <button className='botao-voltar' onClick={() => setMostrarModal(false)}>Voltar</button>
                         <button className='botao-confirmar' onClick={() => {
-                            setMostrarModal(false);
                             realizarPedido();
-                            setMostrarModalConfirmacao(true);
                         }}>Confirmar</button>
                     </div>
                 </div>
@@ -162,7 +177,7 @@ function FinalizarPedido() {
                 <div className="modal-content-pedido-confirmado">
                     <h2 className='titulo-finalizar-pedido'>Seu pedido foi finalizado!</h2>
                     <h3 className='numero-serie-pedido'>Número do pedido #{numeroPedido}</h3>
-                    <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato em breve para mais detalhes.
+                    <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato para mais detalhes.
                     Para visualizar o seu pedido clique no botão abaixo para ser redirecionado aos seus orçamentos.</p>
                     <div className="botoes-modal">
                         <button className='botao-confirmar' onClick={() => {
@@ -244,7 +259,7 @@ function FinalizarPedido() {
                             <label htmlFor="inp_documentoProjeto" className="custom-file-upload">
                                 SUBIR ARQUIVO
                             </label>
-                            <input id="inp_documentoProjeto" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => { setDocumentoAuxiliar(e.target.files[0])}} style={{ display: "none" }} />
+                                <input id="inp_documentoProjeto" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => { setDocumentoAuxiliar(e.target.files[0])}} style={{ display: "none" }} />
                         </div>
                         {!cadastroCompleto && (
                             <>

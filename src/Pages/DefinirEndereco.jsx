@@ -14,7 +14,8 @@ import { buscarEndereco } from '../provider/buscarCEP';
 function DefinirEndereco(){
 
     const navigate = useNavigate();
-    const session = sessionStorage.CARRINHO;
+    const [session, setSession] = useState(sessionStorage.CARRINHO);
+    const [usuarioLogado, setUsarioLogado] = useState(sessionStorage.USUARIO_LOGADO == "True");
     const sessionEnd = JSON.parse(session).endereco;
     const sessiondtEntrega = JSON.parse(session).dataEntrega;
     const sessiondtRetirada = JSON.parse(session).dataRetirada;
@@ -40,10 +41,10 @@ function DefinirEndereco(){
     // funcoes callback
     useEffect(() => {
 
-        if(tokenExpirou()){
-            exibirAvisoTokenExpirado(navigate);
-        } else {
-            if(endereco.cep == ''){
+        if(usuarioLogado){
+            if(tokenExpirou()){
+                exibirAvisoTokenExpirado(navigate);
+            } else {
                 api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.TOKEN}`
