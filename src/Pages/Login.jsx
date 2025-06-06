@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import { apiAutenticacao } from '../provider/apiInstance'
 import { exibirAviso } from '../Utils/exibirModalAviso';
@@ -54,6 +54,14 @@ function Login(){
             });
         }
     };
+
+    // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
+    useEffect(() => {
+        const carrinhoAnterior = JSON.parse(sessionStorage.CARRINHO);
+        if(carrinhoAnterior.produtos.lenght == 0){
+            sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
+        } 
+    }, []);
 
     return(
     <section className='container-login'>
