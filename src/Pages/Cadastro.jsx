@@ -24,7 +24,7 @@ import {
     validarRazaoSocial
 } from '../Utils/validarCampos';
 import axios from 'axios';
-import { api } from '../provider/apiInstance';
+import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useNavigate } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import { ConfirmacaoEmail } from '../components/ConfirmacaoEmail'
@@ -80,7 +80,7 @@ function Cadastro() {
                 } else if (campoNaoAtendeTamanho(formularioCPF.dadosBase.celular, 15)) {
                     exibirAviso('O Celular informado é inválido', 'error');
                 } else {
-                    setEtapa(2);
+                    buscarCpfNoBanco();
                 }
             } else {
 
@@ -93,7 +93,7 @@ function Cadastro() {
                 } else if (campoNaoAtendeTamanho(formularioCNPJ.telefone, 14)) {
                     exibirAviso('O Telefone informado é inválido', 'error');
                 } else {
-                    setEtapa(2);
+                    buscarCnpjNoBanco();
                 }
             }
         } else if (etapa == 2) {
@@ -113,9 +113,7 @@ function Cadastro() {
             } else if (senha.invalida) {
                 exibirAviso(senha.excecao, 'error');
             } else {
-                const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-                enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);
-                setEtapa(4);
+                buscarEmailNoBanco();
             }
         }
     }
@@ -272,12 +270,55 @@ function Cadastro() {
         })
     }
 
-    function verificarFormCodigoEmail(codigo){
+    const verificarFormCodigoEmail = (codigo) => {
         if (codigo.trim().length < 6) {
             exibirAviso('É obrigatório preencher todos os campos', 'error');
         } else{
             validarCodigoConfirmacao(codigo);
         }
+    }
+
+    const buscarCpfNoBanco = () => {
+        api.get(`/usuarios/cpf?cpf_like=${formularioCPF.cpf}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                setEtapa(2);
+            }
+        })
+        .catch((err) => {
+            exibirAviso('O CPF informado já está em uso', 'error');
+        })
+    }
+
+    const buscarCnpjNoBanco = () => {
+        api.get(`/usuarios/cnpj?cnpj_like=${formularioCNPJ.cnpj}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                setEtapa(2);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            exibirAviso('O CNPJ informado já está em uso', 'error');
+        })
+    }
+
+    const buscarEmailNoBanco = () => {
+        apiAutenticacao.get(`/email/verificar?email=${dadosBase.email}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
+                enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);
+                setEtapa(4);
+            }
+        })
+        .catch((err) => {
+            if(err.status == 409){
+                exibirAviso('O email informado já está em uso', 'error');
+            } else if(err.status == 400){
+                exibirAviso('Formato de email inválido', 'error');
+            }
+        })
     }
 
     return (
