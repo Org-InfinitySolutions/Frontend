@@ -64,6 +64,11 @@ function FinalizarPedido() {
                     setNumeroPedido(formatarIdPedido(res.data.id));
                     setMostrarModal(false);
                     setMostrarModalConfirmacao(true);
+
+                    setTimeout(() => {
+                        setMostrarModalConfirmacao(false);
+                        navegar("/pedidos")
+                    }, 4000);
                 }).catch((err) => {
                     setBarraCarregamento(100);
                     if(err.status == 400){
@@ -111,7 +116,7 @@ function FinalizarPedido() {
     const [desativarBotao, setDesativarBotao] = useState(true);
     useEffect(() => {
         if(usuarioLogado) {
-            if(cadastroCompleto){
+            if(!cadastroCompleto){
                 if(cargo == "ROLE_USUARIO_PF"){
                     if(documentoRG && documentoEndereco){
                         setDesativarBotao(false);
@@ -122,6 +127,8 @@ function FinalizarPedido() {
                         setDesativarBotao(false);
                     }
                 }
+            } else{
+                setDesativarBotao(false);
             }
         } else if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
             setDesativarBotao(false);
@@ -177,16 +184,7 @@ function FinalizarPedido() {
                 <div className="modal-content-pedido-confirmado">
                     <h2 className='titulo-finalizar-pedido'>Seu pedido foi finalizado!</h2>
                     <h3 className='numero-serie-pedido'>Número do pedido #{numeroPedido}</h3>
-                    <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato para mais detalhes.
-                    Para visualizar o seu pedido clique no botão abaixo para ser redirecionado aos seus orçamentos.</p>
-                    <div className="botoes-modal">
-                        <button className='botao-confirmar' onClick={() => {
-                            setMostrarModalConfirmacao(false);
-                            navegar("/pedidos")
-                        }}>
-                            Orçamentos
-                        </button>
-                    </div>
+                    <p className='aviso-pedido-confirmado'>Fique atento ao seu email e celular cadastrado, entraremos em contato para mais detalhes.</p>
                 </div>
             ) : (
                 <>

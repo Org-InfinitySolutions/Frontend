@@ -10,8 +10,10 @@ function Home() {
 
     // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
     useEffect(() => {
-        const carrinho = { produtos: [] };
-        sessionStorage.CARRINHO = JSON.stringify(carrinho);
+        const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
+        if(carrinho.produtos.length == 0){
+            sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
+        }
     }, []);
 
     return (
