@@ -57,10 +57,10 @@ function Login(){
 
     // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
     useEffect(() => {
-        const carrinhoAnterior = JSON.parse(sessionStorage.CARRINHO);
-        if(carrinhoAnterior.produtos.lenght == 0){
+        const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
+        if(carrinho.produtos.length == 0){
             sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
-        } 
+        }
     }, []);
 
     return(
