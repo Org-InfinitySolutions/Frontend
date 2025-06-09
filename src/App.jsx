@@ -51,6 +51,7 @@ function MainComponent() {
           <Route path='/pedidos' element={<Pedidos />} />
           <Route path='/equipamentos' element={<Equipamentos />} />
           <Route path='/produto' element={<Produto />} />
+          <Route path='/produto/:id' element={<Produto />} />
           <Route path='/pedidos-adm' element={<PedidosAdm />}/>
           <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
