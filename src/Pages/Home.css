@@ -138,12 +138,18 @@ body{
     display: flex;
 }
 
-/* .container-projeto-primeira-foto,
+.container-projeto-primeira-foto,
 .container-projeto-segunda-foto {
     display: flex;
 }
 
 @media (max-width: 768px) {
+
+    .container-projeto-conteudo {
+    display: flex;
+        flex-direction: column;
+    }
+
     .container-projeto-primeira-foto {
         flex-direction: column-reverse;
     }
@@ -151,7 +157,9 @@ body{
     .container-projeto-segunda-foto {
         flex-direction: column;
     }
-} */
+
+    
+}
 
 .container-projeto {
     display: flex;
@@ -182,8 +190,6 @@ body{
         }
 
         img {
-            margin-right: var(--margin-textos);
-            margin-left: var(--margin-textos);
             width: 35%;
             height: 30%;
         }

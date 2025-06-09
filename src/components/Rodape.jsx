@@ -25,7 +25,7 @@ function Rodape() {
         
             const logo = () => {
                 if (deviced.mobile) {
-                    return { width: "120%", height: "auto" };
+                    return { width: "15vh", height: "auto" };
                 } else if (deviced.tablet) {
                     return { width: "60%", height: "auto" };
                 } else if (deviced.desktop) {
@@ -39,8 +39,9 @@ function Rodape() {
         <footer>
             <section className='container-informacoes-gerais'>
                 <section className='container-logo'>
-                    <img src='/logoNova.jpg' alt='Logo nova locações' height='80%'/>
+                    <img src='/logoNovaSemTexto.jpg' alt='Logo nova locações' style={logo()}/>
                 </section>
+
                 <section className='container-contatos'>
                     <div>
                         <strong>Fale conosco</strong>
@@ -62,6 +63,7 @@ function Rodape() {
                         <span>comercial@novalocacoes.com</span>
                     </div>
                 </section>
+
                 <section className='container-links'>
                     <div><strong>Sobre</strong></div>
                     <div><a href="/#inicio">Home</a></div>
@@ -70,6 +72,7 @@ function Rodape() {
                     <div><a href="/#projetos">Projetos</a></div>
                 </section>
             </section>
+            
             <section className='container-endereco'>
                 <img src={empresa} alt="icone empresa" height='25em'/>
                 <span>Rua joão pires de camargo, 28, Taboão da Serra</span>
