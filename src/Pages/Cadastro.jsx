@@ -24,9 +24,10 @@ import {
     validarRazaoSocial
 } from '../Utils/validarCampos';
 import axios from 'axios';
-import { api } from '../provider/apiInstance';
-import { resolvePath, useNavigate } from 'react-router-dom';
+import { api, apiAutenticacao } from '../provider/apiInstance';
+import { useNavigate } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
+import { ConfirmacaoEmail } from '../components/ConfirmacaoEmail'
 
 function Cadastro() {
     const navegar = useNavigate();
@@ -79,7 +80,7 @@ function Cadastro() {
                 } else if (campoNaoAtendeTamanho(formularioCPF.dadosBase.celular, 15)) {
                     exibirAviso('O Celular informado é inválido', 'error');
                 } else {
-                    setEtapa(2);
+                    buscarCpfNoBanco();
                 }
             } else {
 
@@ -92,7 +93,7 @@ function Cadastro() {
                 } else if (campoNaoAtendeTamanho(formularioCNPJ.telefone, 14)) {
                     exibirAviso('O Telefone informado é inválido', 'error');
                 } else {
-                    setEtapa(2);
+                    buscarCnpjNoBanco();
                 }
             }
         } else if (etapa == 2) {
@@ -112,9 +113,7 @@ function Cadastro() {
             } else if (senha.invalida) {
                 exibirAviso(senha.excecao, 'error');
             } else {
-                const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-                enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);
-                setEtapa(4);
+                buscarEmailNoBanco();
             }
         }
     }
@@ -126,33 +125,21 @@ function Cadastro() {
         });
     }
 
-    function validarCodigoConfirmacao() {
-        const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-        
-        if (codigo1 == '' || codigo2 == '' || codigo3 == '' || codigo4 == '' || codigo5 == '' || codigo6 == '') {
-            exibirAviso('Preencher todos os campos', 'error');
-        } else {
-            api.post('/emails/validar-codigo', {
-                email: usuario.dadosBase.email,
-                codigo: codigo1 + codigo2 + codigo3 + codigo4 + codigo5 + codigo6
-            }).then((res) => {
-                if(res.data.sucesso){
-                cadastrarUsuario();    
-                }
-                else{
-                    exibirAviso(res.data.mensagem, 'error')
-                }
-            })
-        }
-    }
+    function validarCodigoConfirmacao(codigo) {
 
-    const [codigo1, setCodigo1] = useState('');
-    const [codigo2, setCodigo2] = useState('');
-    const [codigo3, setCodigo3] = useState('');
-    const [codigo4, setCodigo4] = useState('');
-    const [codigo5, setCodigo5] = useState('');
-    const [codigo6, setCodigo6] = useState('');
-    const [codigo, setCodigo] = useState('');
+        const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
+        api.post('/emails/validar-codigo', {
+            email: usuario.dadosBase.email,
+            codigo
+        }).then((res) => {
+            if(res.data.sucesso){
+                cadastrarUsuario();    
+            }
+            else{
+                exibirAviso(res.data.mensagem, 'error')
+            }
+        })
+    }
 
     /* Consultar CEP */
     const [desabilitar, setDesabilitar] = useState(false);
@@ -279,6 +266,57 @@ function Cadastro() {
                 exibirAviso(dataErro.validationErrors[0].message, 'error');
             } else {
                 exibirAviso(dataErro.error, 'error');
+            }
+        })
+    }
+
+    const verificarFormCodigoEmail = (codigo) => {
+        if (codigo.trim().length < 6) {
+            exibirAviso('É obrigatório preencher todos os campos', 'error');
+        } else{
+            validarCodigoConfirmacao(codigo);
+        }
+    }
+
+    const buscarCpfNoBanco = () => {
+        api.get(`/usuarios/cpf?cpf_like=${formularioCPF.cpf}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                setEtapa(2);
+            }
+        })
+        .catch((err) => {
+            exibirAviso('O CPF informado já está em uso', 'error');
+        })
+    }
+
+    const buscarCnpjNoBanco = () => {
+        api.get(`/usuarios/cnpj?cnpj_like=${formularioCNPJ.cnpj}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                setEtapa(2);
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+            exibirAviso('O CNPJ informado já está em uso', 'error');
+        })
+    }
+
+    const buscarEmailNoBanco = () => {
+        apiAutenticacao.get(`/email/verificar?email=${dadosBase.email}`)
+        .then((res) => {
+            if(res.data.disponivel){
+                const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
+                enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);
+                setEtapa(4);
+            }
+        })
+        .catch((err) => {
+            if(err.status == 409){
+                exibirAviso('O email informado já está em uso', 'error');
+            } else if(err.status == 400){
+                exibirAviso('Formato de email inválido', 'error');
             }
         })
     }
@@ -711,35 +749,7 @@ function Cadastro() {
                 </>
             )}
             {etapa === 4 && (
-
-                <form className='container-formulario-4' onSubmit={(e) => e.preventDefault()}>
-                    <h1>Confirmação de e-mail</h1>
-                    <p>Preencha abaixo o código de confirmação que enviamos ao seu e-mail</p>
-
-                    <div className='codigo-confirmacao'>
-                        <input type="text" onChange={(e) => { setCodigo1(e.target.value) }} />
-                        <input type="text" onChange={(e) => { setCodigo2(e.target.value) }} />
-                        <input type="text" onChange={(e) => { setCodigo3(e.target.value) }} />
-                        <input type="text" onChange={(e) => { setCodigo4(e.target.value) }} />
-                        <input type="text" onChange={(e) => { setCodigo5(e.target.value) }} />
-                        <input type="text" onChange={(e) => { setCodigo6(e.target.value) }} />
-                    </div>
-
-                    <div className="botoes-etapa-4">
-                        <button
-                            type='button'
-                            className='botao-voltar-etapa-4'
-                            onClick={() => setEtapa(3)}>
-                            Voltar
-                        </button>
-                        <button
-                            type='submit'
-                            className='botao-confirmar-etapa-4'
-                            onClick={validarCodigoConfirmacao}>
-                            Confirmar
-                        </button>
-                    </div>
-                </form>
+                <ConfirmacaoEmail onSubmit={verificarFormCodigoEmail} setEtapa={setEtapa} etapa={3}/>
             )}
         </section>
     );

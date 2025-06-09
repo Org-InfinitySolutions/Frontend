@@ -4,8 +4,18 @@ import videoFundo from '../assets/video-institucional.mp4';
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
+import { useEffect } from 'react';
 
 function Home() {
+
+    // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
+    useEffect(() => {
+        const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
+        if(carrinho.produtos.length == 0){
+            sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
+        }
+    }, []);
+
     return (
         <section className="container-home">
 

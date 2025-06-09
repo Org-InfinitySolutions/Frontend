@@ -22,6 +22,22 @@
         align-items: flex-start;
         justify-content: space-around;
     }
+
+    .box-sem-produtos{
+        height: 40vh;
+        width: 70%;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        h2{
+            font-family: var(--fonte-texto);
+            color: #999;
+            font-weight: bold;
+            text-align: center;
+        }
+    }
 }
 
 @media screen and (max-width: 768px) {
