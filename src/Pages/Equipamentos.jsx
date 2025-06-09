@@ -58,42 +58,6 @@ const Equipamentos = () => {
         setCategorias(categoriasUnicas);
         setBarraCarregamento(60);
       })
-      .catch(() => {
-        // MOCK DE PRODUTOS
-        const produtosMock = [
-          {
-            id: 1,
-            nome: 'Notebook Dell Inspiron',
-            modelo: 'Inspiron 15',
-            imagem: IconeNotebook,
-            categoria: { id: 1, nome: 'Notebook' },
-            url_fabricante: 'https://www.dell.com',
-          },
-          {
-            id: 2,
-            nome: 'Monitor LG UltraWide',
-            modelo: 'UltraWide 29"',
-            imagem: IconeNotebook,
-            categoria: { id: 2, nome: 'Monitor' },
-            url_fabricante: 'https://www.lg.com',
-          },
-          {
-            id: 3,
-            nome: 'Teclado Mecânico Logitech',
-            modelo: 'G Pro X',
-            imagem: IconeNotebook,
-            categoria: { id: 3, nome: 'Teclado' },
-            url_fabricante: 'https://www.logitech.com',
-          },
-        ];
-        setProdutos(produtosMock);
-        setCategorias([
-          { id: 1, nome: 'Notebook' },
-          { id: 2, nome: 'Monitor' },
-          { id: 3, nome: 'Teclado' },
-        ]);
-        setBarraCarregamento(100);
-      });
     setBarraCarregamento(100);
   }, []);
 
@@ -193,7 +157,7 @@ const Equipamentos = () => {
               <div className="card-produto" key={index}>
                 <img src={produto.imagem} alt={produto.nome} />
                 <div className="info-produto">
-                  <a className='nomeProduto' href='/produto'>{produto.nome}</a>
+                  <a className='nomeProduto' onClick={() => navegar(`/produto/${produto.id}`)} style={{ cursor: 'pointer' }}>{produto.nome}</a>
                   <div className="botoes-card">
                     <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
                     <button className="botao-carrinho" onClick={() => adicionarAoCarrinho(produto)}>
