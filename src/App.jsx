@@ -1,6 +1,7 @@
 import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
 
+
 // Dependências do Router
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
@@ -21,6 +22,7 @@ import { PedidosAdm } from './Pages/PedidosAdm'
 import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario';
+import { EditarEquipamento } from './Pages/editarEquipamento';
 
 import './App.css'
 
@@ -51,14 +53,15 @@ function MainComponent() {
           <Route path='/pedidos' element={<Pedidos />} />
           <Route path='/equipamentos' element={<Equipamentos />} />
           <Route path='/produto' element={<Produto />} />
+          <Route path='/produto/:id' element={<Produto />} />
           <Route path='/pedidos-adm' element={<PedidosAdm />}/>
           <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
+          <Route path='/editar-equipamento' element={<EditarEquipamento/>}></Route>
         </Routes>
       <Rodape />
     </>
   )
 }
-
 export default App

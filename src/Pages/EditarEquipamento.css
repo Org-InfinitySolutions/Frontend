@@ -1,0 +1,169 @@
+.container-equipamento {
+  width: 65%;
+  margin: 2rem auto;
+  font-family: Arial, sans-serif;
+}
+
+.container-equipamento h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formulario-equipamento {
+  border: 1px solid #000;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  background-color: #fff;
+}
+
+.linha-principal {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.upload-foto {
+  flex: 1 1 40%;
+  min-width: 200px;
+  height: 18rem;
+  background-color: #dcdcdc;
+  border: 2px dashed #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1rem;
+  color: #555;
+  border-radius: 0.3rem;
+}
+
+.coluna-inputs {
+  flex: 1 1 55%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.coluna-inputs label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.coluna-inputs input {
+  padding: 0.30rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3rem;
+}
+
+.estoque-contador {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+}
+
+.estoque-contador button {
+  width: 2rem;
+  height: 2rem;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  box-shadow: 1px 2px 2px grey;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.estoque-contador span {
+  font-size: 1rem;
+  width: 2.5rem;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid black;
+  box-shadow: 1px 2px 2px grey;
+  border-radius: 8px;
+}
+
+.descricao-section,
+.url-section {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.descricao-section textarea,
+.url-section input {
+  padding: 0.75rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.3rem;
+  resize: vertical;
+}
+
+.info-obrigatorio {
+  font-size: 0.85rem;
+  color: #555;
+  text-align: right;
+  margin-top: 1rem;
+}
+
+.botao-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 3rem;
+  width: 100%;
+}
+
+.botao-editar {
+  background-color: black;
+  color: white;
+  padding: 0 1em;
+  height: 2.5rem;
+  border: 1px solid white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  width: auto;
+  max-width: max-content;
+}
+
+
+.botao-adicionar:hover {
+  color: black;
+  background-color: white;
+}
+
+.botao-adicionar:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .linha-principal {
+    flex-direction: column;
+  }
+
+  .upload-foto,
+  .coluna-inputs {
+    flex: 1 1 100%;
+  }
+
+  .upload-foto {
+    min-height: 200px;
+  }
+
+  .container-equipamento {
+    width: 90%;
+  }
+
+  .botao-container {
+    justify-content: center;
+  }
+}
