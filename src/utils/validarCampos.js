@@ -28,6 +28,14 @@ const senhaInvalida = (senha, confirmarSenha) => {
     return { invalida: mensagem.length > 0, excecao: mensagem};
 }
 
+const validarCampo = (nome) => {
+    if (campoVazio(nome)) {
+        return { valido: false, mensagem: "Este campo é obrigatório" };
+    }    
+    return { valido: true, mensagem: "" };
+};
+
+
 const validarNome = (nome) => {
     if (campoVazio(nome)) {
         return { valido: false, mensagem: "Este campo é obrigatório" };
@@ -173,8 +181,6 @@ const validarRazaoSocial = (razaoSocial) => {
     return { valido: true, mensagem: "" };
 };
 
-
-
 export { 
     campoVazio, 
     emailInvalido, 
@@ -192,5 +198,6 @@ export {
     validarEmail,
     validarSenha,
     validarConfirmacaoSenha,
-    validarRazaoSocial
+    validarRazaoSocial,
+    validarCampo
 }

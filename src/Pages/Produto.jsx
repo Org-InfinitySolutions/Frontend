@@ -1,10 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import './Produto.css';
 import IconeNotebook from '../assets/notebook.png';
 import IconePesquisa from '../assets/iconePesquisar.png';
 import IconeCarrinho from '../assets/iconeCarrinho.png';
 
 const Produto = () => {
+  const { id } = useParams();
+  const navegar = useNavigate();
+  const [produto, setProduto] = useState(null);
+  const [carregando, setCarregando] = useState(true);
+
+  useEffect(() => {
+    setCarregando(true);
+    fetch(`http://4.201.162.5:8080/api/produtos/${id}`)
+      .then(res => res.json())
+      .then(data => {
+        setProduto({
+          ...data,
+          nome: data.modelo,
+          imagem: (typeof data.imagem === 'string' && data.imagem.trim() !== '') ? data.imagem : IconeNotebook,
+        });
+        setCarregando(false);
+      })
+      .catch(() => setCarregando(false));
+  }, [id]);
+
+  if (carregando) {
+    return <div className="pagina-detalhes"><p>Carregando...</p></div>;
+  }
+
+  if (!produto) {
+    return <div className="pagina-detalhes"><p>Produto não encontrado.</p></div>;
+  }
+
   return (
     <div className="pagina-detalhes">
       <header className="topo-produto">
@@ -21,34 +50,26 @@ const Produto = () => {
 
       <main className="conteudo-detalhes">
         <div className="info-principal">
-          <img className="imagem-produto" src={IconeNotebook} alt="Notebook Asus" />
+          <img className="imagem-produto" src={produto.imagem} alt={produto.nome} />
 
           <div className="info-textual">
-            <h2>Notebook Asus</h2>
-            <h4>ASUS</h4>
+            <h2>{produto.nome}</h2>
+            <h4>{produto.categoria?.nome || 'Sem categoria'}</h4>
             <button className="botao-adicionar-carrinho">ADICIONAR CARRINHO</button>
           </div>
         </div>
 
         <section className="descricao">
           <h3>DESCRIÇÃO</h3>
-          <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Incidunt rem quam pariatur alias! Fuga aliquid, ipsa officia sint ducimus totam facilis rem? Accusantium ducimus molestiae quisquam minus quasi eius consequatur. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ad rerum mollitia excepturi voluptatibus commodi molestiae laborum doloremque voluptate ea maxime, placeat animi deleniti velit ipsum eum pariatur sunt natus numquam! Lorem ipsum dolor sit amet, consectetur adipisicing elit. Blanditiis nesciunt qui modi porro aspernatur, saepe, temporibus obcaecati quidem nulla consequatur excepturi exercitationem? Consectetur consequatur inventore amet distinctio eligendi, provident neque?</p>
+          <p>{produto.descricao || 'Sem descrição disponível.'}</p>
         </section>
-
-        <section className="ficha-tecnica">
-          <h3>FICHA TÉCNICA</h3>
-          <div className="tabela-detalhes">
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-            <div><strong>DETALHE</strong><p>Lorem ipsum dolor, sit amet</p></div>
-          </div>
-        </section>
-
+        
         <p className="info-fabricante">
-          Para mais informações do equipamento. <a href="#">Consulte o fabricante</a>.
+          Para mais informações do equipamento. Consulte o {produto.url_fabricante ? (
+            <a href={produto.url_fabricante} target="_blank" rel="noreferrer">fabricante</a>
+          ) : (
+            'fabricante'
+          )}.
         </p>
       </main>
     </div>

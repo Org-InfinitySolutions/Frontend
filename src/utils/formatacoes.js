@@ -96,4 +96,9 @@ const formatarData = (data) => {
     return dataFormatadaTexto;
 }
 
-export { formatarCNPJ, formatarCPF, formatarTelefone, formatarRegistroGeral, formatarTelefoneFixo, formatarCEP, formatarData }
+// '10' -> '00010'
+const formatarIdPedido = (numero) => {
+    return String(numero).padStart(5, '0');
+}
+
+export { formatarCNPJ, formatarCPF, formatarTelefone, formatarRegistroGeral, formatarTelefoneFixo, formatarCEP, formatarData, formatarIdPedido }

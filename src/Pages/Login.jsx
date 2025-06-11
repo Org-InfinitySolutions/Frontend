@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import { apiAutenticacao } from '../provider/apiInstance'
-import { exibirAviso } from '../utils/exibirModalAviso';
-import { campoVazio, emailInvalido } from '../utils/validarCampos';
+import { exibirAviso } from '../Utils/exibirModalAviso';
+import { campoVazio, emailInvalido } from '../Utils/validarCampos';
 
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
@@ -34,12 +34,13 @@ function Login(){
                 
                 const caixote = res.data;
                 const tokenDecodificado = jwtDecode(caixote.token);
-    
+                
                 sessionStorage.TOKEN = caixote.token;
                 sessionStorage.ID_USUARIO = tokenDecodificado.sub;
                 sessionStorage.CARGO = tokenDecodificado.scope;
                 sessionStorage.USUARIO_LOGADO = "True";
-                
+                sessionStorage.EXP = new Date(tokenDecodificado.exp * 1000);
+
                 setTimeout(() => {
                     setBarraCarregamento(100)
                 }, 1000);
@@ -54,6 +55,14 @@ function Login(){
         }
     };
 
+    // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
+    useEffect(() => {
+        const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
+        if(carrinho.produtos.length == 0){
+            sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
+        }
+    }, []);
+
     return(
     <section className='container-login'>
         <LoadingBar
@@ -63,6 +72,7 @@ function Login(){
         />
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
+            <div className='barra-divisoria-login'></div>
             <section className='caixa-entrada'>
                 <Input label='E-MAIL:' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
             </section>

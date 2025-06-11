@@ -23,7 +23,7 @@ nav{
         display: flex;
         align-items: center;
         justify-content: center;
-    
+        
         div{
             height: 100%;
             width: 65%;
@@ -117,4 +117,31 @@ nav{
     height: 5px;
     width: 100%;
     background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+}
+
+@media (max-width: 768px) {
+    nav{
+    
+    .container-eventos{
+        height: 100%;
+        width: 60%;
+        border: none;
+        padding: none;
+        margin: none;
+
+        .botao-cadastro{
+            height: 30%;
+            width: 40%;
+            margin: 1%;
+            font-size: 80%;
+        }
+        
+        .botao-login{
+            height: 30%;
+            width: 30%;
+            margin: 1%;
+            font-size: 80%;
+        }
+    }
+}
 }
