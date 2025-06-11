@@ -17,6 +17,13 @@ function Home() {
 
     const [deviced, setDeviced] = useState(getDevice());
 
+        useEffect(() => {
+        const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
+        if(carrinho.produtos.length == 0){
+            sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
+        }
+    }, []);
+  
     useEffect(() => {
         const onResize = () => setDeviced(getDevice());
         window.addEventListener('resize', onResize);

@@ -1,0 +1,32 @@
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: var(--gap-pequeno);
+  font-weight: bold;
+}
+
+.paginacao span {
+  cursor: pointer;
+  padding: var(--padding-pequeno);
+  border-radius: var(--border-radius);
+}
+
+.pagina-ativa {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+}
+
+.paginacao span:hover {
+  background-color: var(--color-preto);
+  color: var(--color-branco);
+  transition: background-color var(--transição);
+}
+
+@media (max-width: 576px) {
+  .paginacao {
+    margin-top: 1rem;
+    gap: 0.2rem;
+    font-size: 0.9rem;
+  }
+}

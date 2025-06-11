@@ -3,8 +3,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    padding: 10px 20px;
-}
+    padding: 1% 2%;
+  }
 
 .informacoes-pedido {
     margin-left: 10%;
@@ -13,31 +13,31 @@
 }
 
 .numero-pedido {
-    font-size: 29px;
+    font-size: 1.8rem;
     font-family: inter, sans-serif;
     margin: 0;
 }
 
 .data-pedido {
-    font-size: 13px;
+    font-size: 0.8rem;
     color: #7a7a7a;
-    margin: 2px 0 0 0;
+    margin: 0.2rem 0 0 0;
 }
 
 .condicoes-pedido {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 0.8rem;
     margin-right: 10%;
 }
 
 .situacao-pedido {
     background-color: #DBDBDB;
     color: black;
-    padding: 9px 12px;
+    padding: 0.6em 1em;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 500;
 }
 
@@ -55,8 +55,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
-    margin-top: 20px;
+    gap: 1.4rem;
+    margin-top: 1%;
     width: 100%;
     position: relative;
 }
@@ -71,14 +71,14 @@
 .dados p {
     flex: 1;
     margin: 0;
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: 400;
 }
 
 .documentos-baixar {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 3%;
     align-self: flex-start;
     margin-left: 11%;
 }
@@ -86,11 +86,11 @@
 .btn-baixar-dados {
     background-color: white;
     color: black;
-    padding: 7px 12px;
+    padding: 0.4em 1em;
     border: 1px solid black;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 1rem;
 }
 
 .btn-baixar-dados:hover {
@@ -106,57 +106,190 @@
 
 .grid-itens {
   border: 1px solid black;
-  width: 70%; /* Aumentei um pouco a largura para melhor visualização */
+  width: 70%; 
   margin: 0 auto;             
   border-radius: 8px;
+  margin-bottom: 2%;
+  background-color: #f9f9f9;;
 }
 
 .lista-itens-vertical {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* Define 3 colunas de tamanho igual */
-  gap: 16px;
-  padding: 20px;
-  width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    padding: 2%;
+    width: 100%;
 }
 
+
 .item-vertical {
-  width: 100%; /* Ajusta a largura para ocupar todo o espaço da coluna */
+  width: 100%;
   box-sizing: border-box;
   border: 1px solid black;
   border-radius: 8px;
   background-color: white;
 }
 
-.item-conteudo {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
+.item-erro {
+  color: red;
+}
+ 
+.endereco-pedido {
+    border: 1px solid black;
+    width: 70%;
+    margin: 2% auto;
+    border-radius: 8px;
+    padding: 1%;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
 }
 
-.quantidade {
-  position: absolute;
-  right: 120px;
-  font-weight: 500;
-  font-size: 14px;
-}
-
-.item-imagem {
-  width: 90px;
-  height: 90px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin-left: 9%;
-}
-
-.item-nome {
-  font-size: 16px;
+.endereco-pedido h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5%;
   font-weight: 600;
 }
 
-.item-erro {
-  color: red;
-  font-size: 13px;
-  margin-top: 8px;
-  padding-left: 64px; 
+.grid-linha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+    column-gap: 17%;
+    row-gap: 4%;
+    margin-bottom: 4%;
 }
+
+
+.grid-linha p {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.grid-1 {
+  grid-template-columns: 1fr;
+}
+
+
+.descricao-projeto {
+    width: 70%;
+    margin: 0 auto 2%;
+}
+
+.titulo-descricao {
+    font-weight: bold;
+    text-align: left;
+    margin-bottom: 1%;
+}
+
+.texto-descricao {
+    text-align: justify;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.documento-auxiliar {
+    width: 70%;
+    margin: 0 auto 2%;
+    display: flex;
+    align-items: center;
+    gap: 1%;
+}
+
+
+@media (max-width: 768px) {
+  .numero-serie-pedido {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4% 6%;
+  }
+
+  .informacoes-pedido {
+    margin-left: 0;
+    width: 100%;
+    margin-bottom: 12px;
+  }
+
+  .numero-pedido {
+    font-size: 22px;
+  }
+
+  .data-pedido {
+    font-size: 12px;
+  }
+
+  .condicoes-pedido {
+    margin-right: 0;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .dados {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .dados p {
+    text-align: left;
+  }
+
+.documentos-baixar {
+  flex-direction: row;
+  margin-left: 2%;
+  gap: 8px;
+}
+
+
+  .grid-itens {
+    width: 90%;
+  }
+
+  .lista-itens-vertical {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 4%;
+  }
+
+  .item-imagem {
+    width: 60px;
+    height: 60px;
+    margin-left: 4%;
+  }
+
+ 
+  .endereco-pedido,
+  .descricao-projeto,
+  .documento-auxiliar {
+    width: 90%;
+    padding: 4%;
+  }
+
+  .grid-linha {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    margin-bottom: 20px;
+  }
+
+  .grid-linha p {
+    font-size: 13px;
+  }
+
+  .titulo-descricao {
+    font-size: 16px;
+  }
+
+  .texto-descricao {
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .btn-baixar-dados,
+  .btn-mudar-situacao,
+  .situacao-pedido {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+
+

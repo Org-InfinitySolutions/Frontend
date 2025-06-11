@@ -99,15 +99,14 @@ body {
   pointer-events: none;
 }
 
-.icone-carrinho img {
+.icone-carrinho  {
   border: none;
-  width: 32px;
-  height: 32px;
+  font-size: 3rem;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
-.icone-carrinho img:hover {
+.icone-carrinho :hover {
   transform: scale(1.1);
 }
 
@@ -119,13 +118,29 @@ body {
   border-radius: var(--border-radius);
   font-weight: bold;
   border: none;
-  min-width: 150px;
+  min-width: 160px;
   cursor: pointer;
-  background-image: url('../assets/down-arrow.png');
-  background-repeat: no-repeat;
-  filter: invert(1);
-  background-position: right 0.5rem center;
-  background-size: 25px;
+  font-family: var(--fonte-texto);
+}
+
+.select-filtro-container {
+  position: relative;
+  display: inline-block;
+}
+
+.icone-arrow-select {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%) rotate(0deg);
+  pointer-events: none;
+  font-size: 1.3em;
+  color: var(--color-branco);
+  transition: transform 0.3s;
+}
+
+.icone-arrow-select.aberto {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .linha-pesquisa-filtros {
@@ -190,29 +205,21 @@ body {
   width: 100%;
   height: 50px;
   background-color: var(--color-preto);
+  color: var(--color-branco);
   border: none;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.botao-carrinho img {
-  max-width: 100%;
-  max-height: 100%;
-  width: auto;
-  height: 24px;
-  object-fit: contain;
-}
-
 .botao-carrinho:hover {
   background-color: var(--color-preto);
   border: 2px solid var(--color-branco);
-  filter: invert();
 }
 
-.icone-carrinho-miniatura {
-  width: 24px;
-  height: 24px;
-}
+  .icone-carrinho-miniatura {
+    width: 24px;
+    height: 24px;
+  }
 
 .grid-produtos {
   display: grid;
@@ -253,29 +260,12 @@ body {
   font-weight: bold;
 }
 
-.paginacao {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  gap: var(--gap-pequeno);
+.nenhum-pedido {
+  text-align: center;
   font-weight: bold;
-}
-
-.paginacao span {
-  cursor: pointer;
-  padding: var(--padding-pequeno);
-  border-radius: var(--border-radius);
-}
-
-.pagina-ativa {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-}
-
-.paginacao span:hover {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-  transition: background-color var(--transição);
+  color: var(--color-cinza);
+  grid-column: 1 / -1;
+  padding: 2rem;
 }
 
 .contato {
@@ -333,7 +323,8 @@ body {
   }
 
   .select-filtro {
-    min-width: 100px;
+    width: 100%;
+    /* min-width: 100px; */
     font-size: 0.9rem;
     background-size: 18px;
   }
