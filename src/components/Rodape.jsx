@@ -27,9 +27,9 @@ function Rodape() {
                 if (deviced.mobile) {
                     return { width: "15vh", height: "auto" };
                 } else if (deviced.tablet) {
-                    return { width: "60%", height: "auto" };
+                    return { width: "100%", height: "auto" };
                 } else if (deviced.desktop) {
-                    return { width: "30%", height: "auto" };
+                    return { width: "80%", height: "auto" };
                 }
             }
 

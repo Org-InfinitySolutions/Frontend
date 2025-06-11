@@ -36,10 +36,6 @@ footer {
                 display: flex;
                 align-items: center;
 
-                strong {
-                    margin-left: 13.3%;
-                }
-
                 span {
                     margin-left: 5%;
                 }
@@ -78,7 +74,7 @@ footer {
 
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: center;
         flex-direction: row;
 
         span {
@@ -89,7 +85,7 @@ footer {
 
 @media (max-width: 768px) {
     footer {
-        height: 65vh;
+        height: fit-content;
         width: 100%;
         background-color: #FFF;
 
@@ -101,7 +97,7 @@ footer {
         font-family: var(--fonte-texto);
 
         .container-informacoes-gerais {
-            height: 55vh;
+            height: fit-content;
             width: 80%;
             padding: 5%;
 

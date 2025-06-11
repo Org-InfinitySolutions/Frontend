@@ -1,5 +1,6 @@
 import './Home.css';
 import videoFundo from '../assets/video-institucional.mp4';
+import videoFundo2 from '../assets/Arq-home-pt1-v1.mp4';
 
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
@@ -13,7 +14,7 @@ const getDevice = () => ({
 });
 
 function Home() {
-   
+
     const [deviced, setDeviced] = useState(getDevice());
 
     useEffect(() => {
@@ -32,15 +33,15 @@ function Home() {
         }
     }
 
-        const fotoProjeto = () => {
+    const fotoProjeto = () => {
         if (deviced.mobile) {
             return { width: "100%", height: "50%", flexDirection: "column" };
         } else if (deviced.tablet) {
-            return { width: "5px", height: "500px", flexDirection: "column" };
-        } 
+            return { width: "40vw", flexDirection: "column" };
+        }
     }
-    
-return (
+
+    return (
         <section className="container-home">
 
             <section className='container-video' id='inicio'>
@@ -51,7 +52,7 @@ return (
                     playsInline
                     className="video-fundo"
                 >
-                    <source src={videoFundo} type="video/mp4" />
+                    <source src={videoFundo2} type="video/mp4" />
                 </video>
 
                 <section className="container-titulo">
@@ -127,16 +128,16 @@ return (
                 </section>
             </section>
 
-            <section className="container-projeto" id = 'projetos'> 
+            <section className="container-projeto" id='projetos'>
                 <h2>Projetos</h2>
                 <div className="container-projeto-conteudo">
                     {deviced.mobile && (
-                    <img
-                        className='container-projeto-primeira-foto'
-                        style={fotoProjeto()}
-                        src="./src/assets/FotoPalco.png"
-                        alt="Foto de um palco"
-                    />
+                        <img
+                            className='container-projeto-primeira-foto'
+                            style={fotoProjeto()}
+                            src="./src/assets/FotoPalco.png"
+                            alt="Foto de um palco"
+                        />
                     )}
                     <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
                         quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
@@ -144,22 +145,23 @@ return (
                         vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
                         nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
+
                     {deviced.desktop && (
-                    <img
-                        className='container-projeto-primeira-foto'
-                        style={fotoProjeto()}
-                        src="./src/assets/FotoPalco.png"
-                        alt="Foto de um palco"
-                    />
-                    )}  
+                        <img
+                            className='container-projeto-primeira-foto'
+                            style={fotoProjeto()}
+                            src="./src/assets/FotoPalco.png"
+                            alt="Foto de um palco"
+                        />
+                    )}
                     {deviced.tablet && (
-                    <img
-                        className='container-projeto-primeira-foto'
-                        style={fotoProjeto()}
-                        src="./src/assets/FotoPalco.png"
-                        alt="Foto de um palco"
-                    />
-                    )}               
+                        <img
+                            className='container-projeto-primeira-foto'
+                            style={fotoProjeto()}
+                            src="./src/assets/FotoPalco.png"
+                            alt="Foto de um palco"
+                        />
+                    )}
                 </div>
             </section>
 
