@@ -1,4 +1,4 @@
-footer{
+footer {
     height: 45vh;
     width: 100%;
     background-color: #FFF;
@@ -9,76 +9,175 @@ footer{
     justify-content: center;
 
     font-family: var(--fonte-texto);
-    .container-informacoes-gerais{
+
+    .container-informacoes-gerais {
         height: 65%;
         width: 80%;
-        
+
         display: flex;
         flex-direction: row;
-        .container-logo{
+
+        .container-logo {
             height: 100%;
             width: 20%;
         }
 
-        .container-contatos{
+        .container-contatos {
             height: 100%;
             width: 35%;
-            
+
             display: flex;
             flex-direction: column;
             align-items: center;
-        
-            div{
+
+            div {
                 height: 15%;
                 width: 75%;
                 display: flex;
                 align-items: center;
-                
-                strong{
-                    margin-left: 13.3%;
-                }
-                span{
+
+                span {
                     margin-left: 5%;
                 }
             }
         }
 
-        .container-links{
+        .container-links {
             height: 100%;
             width: 35%;
-            
+
             display: flex;
             flex-direction: column;
             align-items: center;
-        
-            div{
+
+            div {
                 height: 15%;
                 width: 75%;
                 display: flex;
                 align-items: center;
 
-                a{
+                a {
                     color: black;
                     text-decoration: none;
                 }
-                a:hover{
+
+                a:hover {
                     text-decoration: underline;
                 }
             }
         }
     }
 
-    .container-endereco{
+    .container-endereco {
         height: 15%;
         width: 32%;
 
         display: flex;
         align-items: center;
-        justify-content: end;
+        justify-content: center;
         flex-direction: row;
 
-        span{
+        span {
             margin-left: 1%;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        height: fit-content;
+        width: 100%;
+        background-color: #FFF;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        font-family: var(--fonte-texto);
+
+        .container-informacoes-gerais {
+            height: fit-content;
+            width: 80%;
+            padding: 5%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            .container-logo {
+                height: 100%;
+                width: 100%;
+
+                justify-content: center;
+                align-items: center;
+                display: flex;
+            }
+
+            .container-contatos {
+                height: 100%;
+                width: 100%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                div {
+                    height: 15%;
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 5%;
+
+                    span {
+                        margin-left: 5%;
+                    }
+                }
+            }
+
+            .container-links {
+                height: 100%;
+                width: 100%;
+                margin-top: 5%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                div {
+                    height: 15%;
+                    width: 85%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 5%;
+
+                    a {
+                        color: black;
+                        text-decoration: none;
+                    }
+
+                    a:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+
+        .container-endereco {
+            height: 5vh;
+            width: 95%;
+
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            flex-direction: row;
+
+            span {
+                margin-left: 1%;
+            }
         }
     }
 }

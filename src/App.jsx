@@ -1,3 +1,4 @@
+
 import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
 
