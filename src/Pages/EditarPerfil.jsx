@@ -187,7 +187,7 @@ function EditarPerfil() {
                 <section className="container-dados-pessoais">
                     {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
                         <>
-                            <h3>Dados pessoais:</h3>
+                            <h3>Dados pessoais</h3>
                             <section>
                                 <Input
                                     label={"* Nome Completo:"}
@@ -221,7 +221,7 @@ function EditarPerfil() {
                         </>
                     ) : (
                         <>
-                            <h3>Dados da empresa:</h3>
+                            <h3>Dados da empresa</h3>
                             <section>
                                 <Input
                                     label={"* Nome Fantasia:"}
@@ -284,48 +284,46 @@ function EditarPerfil() {
                             </section>
                         </>
                     )}
-                    <section>
-                        <Input
-                            label={"Email:"}
-                            placeholder={"email@email.com"}
-                            valor={usuario.email}
-                            desabilitar={true}
-                        />
-                        <img src={iconeEditar} alt="icone editar" height="30em" onClick={abrirModalEmail} />
-                    </section>
-                    <button onClick={abrirModalAlterarSenha}>Alterar Senha</button>
-                </section>
+                        <section>
+                            <Input
+                                label={"Email:"}
+                                placeholder={"email@email.com"}
+                                valor={usuario.email}
+                                desabilitar={true}
+                            />
+                            <img src={iconeEditar} alt="icone editar" height="30em" onClick={abrirModalEmail} />
+                        </section>
+                        <button className="botao-alterar-senha" onClick={abrirModalAlterarSenha}>Alterar Senha</button>
 
-                {/* Region Endereço */}
-                <section className="container-dados-endereco">
-                    <h3>Endereço:</h3>
-                    <section>
-                        <Input
-                            label={"* CEP:"}
-                            valor={formatarCEP(dadosBase.endereco.cep)}
-                            maxLength={9}
-                            placeholder={"Ex: 01234-789"}
-                            validacao={validarCEP}
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
-                                    ...dados,
-                                    endereco: {
-                                        ...dados.endereco,
-                                        cep: formatarCEP(e.target.value)
-                                    }
-                                }))
-                            }}
-                        />
-                    </section>
-                    <section>
-                        <Input
-                            label={"* Rua:"}
-                            valor={dadosBase.endereco.logradouro}
-                            placeholder={"Ex.: Rua são joaquim"}
-                            desabilitar={desabilitar}
-                            tipo={"text"}
-                            onChange={(e) => {
-                                setDadosBase((dados) => ({
+                    {/* Region Endereço */}
+                    <section className="container-dados-endereco">
+                        <h3>Endereço</h3>
+                        <section>
+                            <Input 
+                                label={"* CEP:"} 
+                                valor={formatarCEP(dadosBase.endereco.cep)} 
+                                maxLength={9}
+                                placeholder={"Ex: 01234-789"}
+                                validacao={validarCEP}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
+                                        ...dados,
+                                        endereco: {
+                                            ...dados.endereco,
+                                            cep: formatarCEP(e.target.value)
+                                        }
+                                    }))
+                                }}/>
+                        </section>
+                        <section>
+                            <Input
+                                label={"* Rua:"}
+                                valor={dadosBase.endereco.logradouro}
+                                placeholder={"Ex.: Rua são joaquim"}
+                                desabilitar={desabilitar}
+                                tipo={"text"}
+                                onChange={(e) => {
+                                    setDadosBase((dados) => ({
                                     ...dados,
                                     endereco: {
                                         ...dados.endereco,
@@ -406,6 +404,9 @@ function EditarPerfil() {
                             }}
                         />
                     </section>
+                    <section className="container-eventos">
+                        <button className="botao-cancelar-edicao" onClick={() => { navegar("/perfil")}}>Cancelar</button>
+                        <button className="botao-confirmar-edicao" onClick={validarFormulario} disabled={true}>Confirmar</button>
                     <section>
                         <Input
                             label={"Complemento:"}
