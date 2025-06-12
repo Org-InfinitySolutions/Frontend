@@ -37,7 +37,7 @@ const Equipamentos = () => {
 
   useEffect(() => {
     setBarraCarregamento(30);
-    fetch('http://4.201.162.5:8080/api/produtos')
+    fetch(import.meta.env.VITE_ENDERECO_API + '/produtos')
       .then(res => res.json())
       .then(data => {
         const produtosApi = data.map(p => ({

@@ -22,7 +22,7 @@ const Pedidos = () => {
 		[pedidos, setPedidos] = useState([]);
 
 	useEffect(() => {
-		fetch('http://4.201.162.5:8080/api/pedidos')
+		fetch(import.meta.env.VITE_ENDERECO_API + '/pedidos')
 			.then(res => res.json())
 			.then(data => {
 				if (Array.isArray(data) && data.length > 0) {
