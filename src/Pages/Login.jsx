@@ -72,6 +72,7 @@ function Login(){
         />
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
+            <div className='barra-divisoria-login'></div>
             <section className='caixa-entrada'>
                 <Input label='E-MAIL:' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
             </section>
