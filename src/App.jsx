@@ -23,7 +23,7 @@ import { PedidosAdm } from './Pages/PedidosAdm'
 import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario';
-import { EditarEquipamento } from './Pages/editarEquipamento';
+import { EditarEquipamento } from './Pages/EditarEquipamento';
 
 import './App.css'
 
@@ -59,7 +59,7 @@ function MainComponent() {
           <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
-          <Route path='/editar-equipamento' element={<EditarEquipamento/>}></Route>
+          <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>
         </Routes>
       <Rodape />
     </>

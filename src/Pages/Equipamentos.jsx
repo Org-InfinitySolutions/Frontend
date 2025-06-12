@@ -4,12 +4,14 @@ import Modal from '../components/ModalEquipamento';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import { IoCartSharp } from "react-icons/io5";
 import IconeNotebook from '../assets/notebook.png';
 import LoadingBar from 'react-top-loading-bar';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../provider/apiInstance';
 import Paginacao from '../components/Paginacao';
+import { CardProdutoEquipamentos } from '../components/CardProdutoEquipamentos'
+import { ToastContainer, toast } from 'react-toastify';
+import { FaCartShopping } from 'react-icons/fa6';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
@@ -23,7 +25,8 @@ const Equipamentos = () => {
     [categorias, setCategorias] = useState([]),
     [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false),
     [barraCarregamento, setBarraCarregamento] = useState(0),
-    [paginaAtual, setPaginaAtual] = useState(1);
+    [paginaAtual, setPaginaAtual] = useState(1),
+    [cargo, setCargo] = useState(sessionStorage.CARGO);
 
   const produtosPorPagina = 20;
 
@@ -36,29 +39,28 @@ const Equipamentos = () => {
   };
 
   useEffect(() => {
+
     setBarraCarregamento(30);
-    fetch('http://4.201.162.5:8080/api/produtos')
-      .then(res => res.json())
-      .then(data => {
-        const produtosApi = data.map(p => ({
-          ...p,
-          nome: p.modelo,
-          imagem: (typeof p.imagem === 'string' && p.imagem.trim() !== '')
-            ? p.imagem
-            : IconeNotebook,
-          linkFabricante: p.url_fabricante,
-        }));
-        setProdutos(produtosApi);
-        const categoriasUnicas = [];
-        produtosApi.forEach(p => {
-          if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
-            categoriasUnicas.push(p.categoria);
-          }
-        });
-        setCategorias(categoriasUnicas);
-        setBarraCarregamento(60);
-      })
-    setBarraCarregamento(100);
+    api.get('/produtos')
+    .then((res) => {
+      setBarraCarregamento(100);
+      const produtosApi = res.data.map(p => ({
+        ...p,
+        nome: p.modelo,
+        imagem: (typeof p.imagem === 'string' && p.imagem.trim() !== '')
+          ? p.imagem
+          : IconeNotebook,
+        linkFabricante: p.url_fabricante,
+      }));
+      setProdutos(produtosApi);
+      const categoriasUnicas = [];
+      produtosApi.forEach(p => {
+        if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
+          categoriasUnicas.push(p.categoria);
+        }
+      });
+      setCategorias(categoriasUnicas);
+    })
   }, []);
 
   useEffect(() => {
@@ -96,6 +98,7 @@ const Equipamentos = () => {
       });
     }
     sessionStorage.setItem('CARRINHO', JSON.stringify(carrinhoAtual));
+    toast(<> <FaCartShopping /> &nbsp; Produto adicionado no carrinho! </>);
   };
 
   return (
@@ -140,9 +143,15 @@ const Equipamentos = () => {
                 </select>
                 <IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`} />
               </div>
-              <button className="botao-secundario" onClick={() => setMostrarMaisProcurados(m => !m)}>
-                {mostrarMaisProcurados ? 'Exibir todos' : 'Exibir mais procurados'}
-              </button>
+              {cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO" ? (
+                <button className="botao-secundario" onClick={() => navegar('/adicionar-equipamento')}>
+                  Adicionar equipamento
+                </button>  
+              ) : (
+                <button className="botao-secundario" onClick={() => setMostrarMaisProcurados(m => !m)}>
+                  {mostrarMaisProcurados ? 'Exibir todos' : 'Exibir mais procurados'}
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -154,18 +163,11 @@ const Equipamentos = () => {
             <div className='nenhum-pedido'>Nenhum produto encontrado.</div>
           ) : (
             produtosPaginados.map((produto, index) => (
-              <div className="card-produto" key={index}>
-                <img src={produto.imagem} alt={produto.nome} />
-                <div className="info-produto">
-                  <a className='nomeProduto' onClick={() => navegar(`/produto/${produto.id}`)} style={{ cursor: 'pointer' }}>{produto.nome}</a>
-                  <div className="botoes-card">
-                    <button className="botao-adicionar" onClick={() => abrirModal(produto)}>+</button>
-                    <button className="botao-carrinho" onClick={() => adicionarAoCarrinho(produto)}>
-                      <IoCartSharp className="icone-carrinho-miniatura" size={24} />
-                    </button>
-                  </div>
-                </div>
-              </div>
+              <CardProdutoEquipamentos 
+                key={index} 
+                produto={produto} 
+                adicionarNoCarrinho={() => {adicionarAoCarrinho(produto)}}
+                abrirModal={() => {abrirModal(produto)}}/>
             ))
           )}
         </div>
@@ -184,6 +186,7 @@ const Equipamentos = () => {
           <Modal produto={produtoSelecionado} onClose={fecharModal} />
         )}
       </main>
+      <ToastContainer />
     </div>
   );
 };
