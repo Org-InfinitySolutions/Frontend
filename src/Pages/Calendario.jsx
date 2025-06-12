@@ -1,6 +1,6 @@
 import React from "react";
+import './Calendario.css'
 
-// Função utilitária para gerar os dias de um mês
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
   const ultimoDia = new Date(ano, mes + 1, 0);
@@ -9,17 +9,14 @@ function gerarDiasDoMes(ano, mes) {
 
   const dias = [];
 
-  // Preenche dias vazios antes do primeiro dia do mês
   for (let i = 0; i < diaSemanaInicio; i++) {
     dias.push(null);
   }
 
-  // Preenche os dias do mês
   for (let i = 1; i <= diasNoMes; i++) {
     dias.push(new Date(ano, mes, i));
   }
 
-  // Garante múltiplos de 7 (6 semanas máx.)
   while (dias.length % 7 !== 0) {
     dias.push(null);
   }
@@ -44,38 +41,42 @@ const pedidos = {
 
 export function Calendario() {
   const ano = 2023;
-  const mes = 0; // Janeiro (0-indexado)
+  const mes = 0;
   const dias = gerarDiasDoMes(ano, mes);
-
   const nomesDias = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 
   return (
-    <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
-      <h2 style={{ textAlign: "center" }}>JANEIRO</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", textAlign: "center", border: "1px solid #ccc" }}>
+   <div className="max-w-7xl mx-auto p-4 font-sans">
+
+      <h2 className="text-center text-2xl font-bold mb-6 text-gray-800">
+        JANEIRO
+      </h2>
+
+      <div className="grid grid-cols-7 gap-px bg-gray-300 rounded overflow-hidden shadow">
         {nomesDias.map((dia) => (
-          <div key={dia} style={{ padding: "0.5rem", border: "1px solid #ccc", fontWeight: "bold" }}>
+          <div
+            key={dia}
+            className="bg-gray-100 text-gray-700 font-semibold text-sm text-center py-2"
+          >
             {dia}
           </div>
         ))}
+
         {dias.map((data, index) => {
           const chave = data ? data.toISOString().split("T")[0] : "";
+          const temPedido = pedidos[chave];
+
           return (
             <div
               key={index}
-              style={{
-                minHeight: "80px",
-                border: "1px solid #ccc",
-                padding: "0.5rem",
-                textAlign: "left",
-              }}
+              className="bg-white min-h-[80px] text-sm text-gray-800 p-2 border border-gray-200"
             >
               {data && (
                 <>
-                  <div>{data.getDate()}</div>
-                  {pedidos[chave] && (
-                    <div style={{ color: "blue", fontSize: "0.8rem", marginTop: "0.25rem" }}>
-                      {pedidos[chave]}
+                  <div className="font-semibold">{data.getDate()}</div>
+                  {temPedido && (
+                    <div className="text-blue-600 text-xs mt-1">
+                      {temPedido}
                     </div>
                   )}
                 </>
