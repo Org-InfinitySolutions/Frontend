@@ -20,7 +20,7 @@ import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
 
 import { PedidosAdm } from './Pages/PedidosAdm' 
-import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
+import { DetalharPedidos } from './Pages/DetalharPedidos';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario';
 import { EditarEquipamento } from './Pages/EditarEquipamento';
@@ -56,7 +56,7 @@ function MainComponent() {
           <Route path='/produto' element={<Produto />} />
           <Route path='/produto/:id' element={<Produto />} />
           <Route path='/pedidos-adm' element={<PedidosAdm />}/>
-          <Route path='/detalhar-pedidos-adm' element={<DetalharPedidosAdm />}/>
+          <Route path='/detalhar-pedidos' element={<DetalharPedidos />}/>
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
           <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>

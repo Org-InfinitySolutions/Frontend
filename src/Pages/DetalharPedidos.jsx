@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './DetalharPedidosAdm.css'
+import './DetalharPedidos.css'
 import IconeNotebook from '../assets/notebook.png'
 import { CardProduto } from '../components/CardProduto'
 import axios from 'axios';
@@ -10,7 +10,7 @@ const itens = Array(9).fill({
     imagem: IconeNotebook
 });
 
-export function DetalharPedidosAdm() {
+export function DetalharPedidos() {
 
     return (
         <div className="detalhar-pedidos-adm">

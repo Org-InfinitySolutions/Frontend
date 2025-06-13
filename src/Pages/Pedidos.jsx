@@ -5,6 +5,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import Paginacao from '../components/Paginacao';
 import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
+import { useNavigate } from 'react-router-dom';
 
 const statusCores = {
 	'EM ANÁLISE': 'cinza',
@@ -24,8 +25,15 @@ const Pedidos = () => {
 		[pedidos, setPedidos] = useState([]),
 		tipoUsuario = sessionStorage.CARGO || 'USUARIO';
 
+	const navigate = useNavigate();
+
 	useEffect(() => {
-		api.get('/pedidos')
+		const token = sessionStorage.TOKEN;
+		api.get('/pedidos', {
+			headers: {
+				Authorization: token ? `Bearer ${token}` : undefined
+			}
+		})
 			.then((res) => {
 				if (Array.isArray(res.data) && res.data.length > 0) {
 					const pedidosApi = res.data.map(p => ({
@@ -40,6 +48,10 @@ const Pedidos = () => {
 				}
 			})
 	}, []);
+
+	const handleDetalhes = (pedido) => {
+		navigate(`/detalhar-pedidos?id=${pedido.id}`);
+	}
 
 	const pedidosFiltrados = pedidos
 		.filter((pedido) => {
@@ -123,7 +135,7 @@ const Pedidos = () => {
 								key={pedido.id}
 								pedido={pedido}
 								tipoUsuario={tipoUsuario}
-								onDetalhes={() => {/* redirecionar pra página de detalhes do pedido dps */ }}
+								onDetalhes={handleDetalhes}
 							/>
 						))
 					) : (
