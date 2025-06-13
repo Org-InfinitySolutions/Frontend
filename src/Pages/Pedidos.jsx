@@ -3,6 +3,8 @@ import './Pedidos.css';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import Paginacao from '../components/Paginacao';
+import { api } from '../provider/apiInstance';
+import { CardPedido } from '../components/CardPedido';
 
 const statusCores = {
 	'EM ANÁLISE': 'cinza',
@@ -19,18 +21,20 @@ const Pedidos = () => {
 		[filtroStatusAberto, setFiltroStatusAberto] = useState(false),
 		[ordemAberto, setOrdemAberto] = useState(false),
 		[paginaAtual, setPaginaAtual] = useState(1),
-		[pedidos, setPedidos] = useState([]);
+		[pedidos, setPedidos] = useState([]),
+		tipoUsuario = sessionStorage.CARGO || 'USUARIO';
 
 	useEffect(() => {
-		fetch(import.meta.env.VITE_ENDERECO_API + '/pedidos')
-			.then(res => res.json())
-			.then(data => {
-				if (Array.isArray(data) && data.length > 0) {
-					const pedidosApi = data.map(p => ({
+		api.get('/pedidos')
+			.then((res) => {
+				if (Array.isArray(res.data) && res.data.length > 0) {
+					const pedidosApi = res.data.map(p => ({
 						id: p.id,
 						itens: p.qtd_itens,
 						data: new Date(p.data).toLocaleDateString('pt-BR'),
-						status: p.situacao
+						status: p.situacao,
+						cliente: p.cliente || 'Cliente Teste',
+						valor: p.valor || 100
 					}));
 					setPedidos(pedidosApi);
 				}
@@ -115,17 +119,12 @@ const Pedidos = () => {
 				<div className="grid-pedidos">
 					{pedidosPaginados.length > 0 ? (
 						pedidosPaginados.map((pedido) => (
-							<div className="card-pedido" key={pedido.id}>
-								<h3>Pedido {pedido.id}</h3>
-								<p>Itens: {pedido.itens}</p>
-								<p>Data: {pedido.data}</p>
-								<div className="acoes">
-									<span className={`status ${statusCores[pedido.status] || ''}`}>
-										{pedido.status}
-									</span>
-									<button className="btn-detalhes">Detalhes</button>
-								</div>
-							</div>
+							<CardPedido
+								key={pedido.id}
+								pedido={pedido}
+								tipoUsuario={tipoUsuario}
+								onDetalhes={() => {/* redirecionar pra página de detalhes do pedido dps */ }}
+							/>
 						))
 					) : (
 						<p className="nenhum-pedido">Nenhum pedido encontrado.</p>
