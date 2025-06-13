@@ -1,4 +1,3 @@
-
 import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
 
@@ -24,6 +23,7 @@ import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario';
 import { EditarEquipamento } from './Pages/EditarEquipamento';
+import Dashboard from './Pages/Dashboard';
 
 import './App.css'
 
@@ -60,6 +60,7 @@ function MainComponent() {
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
           <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>
+          <Route path='/dashboard' element={<Dashboard />} />
         </Routes>
       <Rodape />
     </>

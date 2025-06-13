@@ -36,9 +36,11 @@ function BarraNavegacao(){
         }
 
     const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO === "True");
+    const [cargo, setCargo] = useState(sessionStorage.CARGO);
 
     useEffect(() => {
         setUsuarioLogado(sessionStorage.USUARIO_LOGADO === "True");
+        setCargo(sessionStorage.CARGO);
     }, []);
 
     return(
@@ -53,6 +55,9 @@ function BarraNavegacao(){
                     <a style={linkEquipamento()} href="/">Home</a>
                     <a href="/equipamentos">Equipamentos</a>
                     <a style={linkEquipamento()} href="/pedidos">Pedidos</a>
+                    {cargo === "ROLE_ADMIN" && (
+                        <a href="/dashboard">Dashboard</a>
+                    )}
                 </div>
             </section>
             ) : (
