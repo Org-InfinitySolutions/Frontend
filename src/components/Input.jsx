@@ -13,9 +13,9 @@ function Input(props) {
 
     const validarCampo = (valor, valorAdicional) => {
         if (!props.validacao) return;
-        
+
         const resultado = props.validacao(valor, valorAdicional);
-        
+
         if (resultado && typeof resultado === 'object') {
             if (!resultado.valido) {
                 setMensagemErro(resultado.mensagem);
@@ -28,20 +28,20 @@ function Input(props) {
     const verificarCampoAoSair = () => {
         setCampoInteragido(true);
         validarCampo(props.valor, props.valorAdicional);
-    };    return (
+    }; return (
         <>
             <div className="container-input">
                 <label htmlFor={props.id}>{props.label}</label>
-                <input 
-                    type={props.tipo} 
-                    id={props.id} 
-                    placeholder={props.placeholder} 
-                    onChange={props.onChange} 
+                <input
+                    type={props.tipo}
+                    id={props.id}
+                    placeholder={props.placeholder}
+                    onChange={props.onChange}
                     onBlur={verificarCampoAoSair}
-                    value={props.valor} 
-                    maxLength={props.maxLength || ""} 
-                    disabled={props.desabilitar || false} 
-                    className={mensagemErro ? "erro" : ""}
+                    value={props.valor}
+                    maxLength={props.maxLength || ""}
+                    disabled={props.desabilitar || false}
+                    className={`${mensagemErro ? "erro" : ""} ${props.className || ""}`}
                 />
                 {mensagemErro && <MensagemErro mensagem={mensagemErro} />}
             </div>
