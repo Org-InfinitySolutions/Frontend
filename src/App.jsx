@@ -24,6 +24,7 @@ import { DetalharPedidosAdm } from './Pages/DetalharPedidosAdm';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario';
 import { EditarEquipamento } from './Pages/EditarEquipamento';
+import {RecuperarSenha} from './Pages/RecuperarSenha';
 
 import './App.css'
 
@@ -60,6 +61,7 @@ function MainComponent() {
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
           <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>
+          <Route path='/recuperar-senha' element={<RecuperarSenha/>}></Route>
         </Routes>
       <Rodape />
     </>
