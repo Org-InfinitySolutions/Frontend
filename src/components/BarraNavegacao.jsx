@@ -20,7 +20,7 @@ function BarraNavegacao(){
     
         const logo = () => {
             if (deviced.mobile) {
-                return { width: "120%", height: "auto" };
+                return { width: "100%", height: "auto" };
             } else if (deviced.tablet) {
                 return { width: "60%", height: "auto" };
             } else if (deviced.desktop) {
@@ -28,7 +28,7 @@ function BarraNavegacao(){
             }
         }
 
-        const linkEquipamento = () => {
+        const mudancaLink = () => {
             if (deviced.mobile) {
                 return { display: "none" };
             } else 
@@ -52,17 +52,17 @@ function BarraNavegacao(){
             {usuarioLogado ? (
             <section className="container-links">
                 <div>
-                    <a style={linkEquipamento()} href="/">Home</a>
+                    <a style={mudancaLink()} href="/">Home</a>
                     <a href="/equipamentos">Equipamentos</a>
-                    <a style={linkEquipamento()} href="/pedidos">Pedidos</a>
+                    <a style={mudancaLink()} href="/pedidos">Pedidos</a>
                 </div>
             </section>
             ) : (
             <section className="container-links">
                 <div>
-                    <a style={linkEquipamento()} href="/#sobre-nos">Sobre nós</a>
-                    <a style={linkEquipamento()} href="/#servicos">Serviços</a>
-                    <a style={linkEquipamento()} href="/#projetos">Projetos</a>
+                    <a style={mudancaLink()} href="/#sobre-nos">Sobre nós</a>
+                    <a style={mudancaLink()} href="/#servicos">Serviços</a>
+                    <a style={mudancaLink()} href="/#projetos">Projetos</a>
                     <a href="/equipamentos">Equipamentos</a>
                 </div>
             </section>

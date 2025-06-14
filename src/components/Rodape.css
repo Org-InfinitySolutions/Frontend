@@ -36,8 +36,15 @@ footer {
                 display: flex;
                 align-items: center;
 
-                span {
+                .links-contato {
                     margin-left: 5%;
+                    font-family: var(--fonte-texto);
+                    color: black;
+                    text-decoration: none;
+                }
+
+                .links-contato:hover {
+                    text-decoration: underline;
                 }
             }
         }
@@ -70,15 +77,22 @@ footer {
 
     .container-endereco {
         height: 15%;
-        width: 32%;
+        width: 40%;
+        gap: 3%;
 
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: row;
 
-        span {
-            margin-left: 1%;
+        .links-endereco {
+            font-family: var(--fonte-texto);
+            color: black;
+            text-decoration: none;
+        }
+
+        .links-endereco:hover {
+            text-decoration: underline;
         }
     }
 }

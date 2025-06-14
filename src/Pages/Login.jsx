@@ -81,10 +81,10 @@ function Login(){
             </section>
             <button onClick={Login}>Entrar</button>
             <section className='links-navegacao'>
-                <a href="#">
+                <a href="/recuperar-senha">
                     Esqueci minha senha
                 </a>
-                <a href="#">
+                <a href="/cadastro">
                     Não tem cadastro? Clique aqui!
                 </a>
             </section>

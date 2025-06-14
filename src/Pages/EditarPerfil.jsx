@@ -585,8 +585,8 @@ function EditarPerfil() {
                         </section>
                     </section>
                     <section className="container-eventos">
-                        <a onClick={() => { navegar("/perfil")}}>Cancelar</a>
-                        <button onClick={validarFormulario}>Confirmar</button>
+                        <a className='botao-cancelar-edicao' onClick={() => { navegar("/perfil")}}>Cancelar</a>
+                        <button className='botao-confirmar-edicao' onClick={validarFormulario}>Confirmar</button>
                     </section>
                 </div>
             )}            {mostrarModalEmail && (
@@ -621,7 +621,7 @@ function EditarPerfil() {
                 </div>
             )}            {mostrarModalAlterarSenha && (
                 <div className="modal-content">
-                    <h1>Alterar senha</h1>
+                    <h1 className='input-alteracao-senha'>Alterar senha</h1>
                     <Input 
                         tipo={"password"} 
                         label={"* Senha atual:"} 
