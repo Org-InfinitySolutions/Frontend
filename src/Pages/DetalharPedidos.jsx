@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './DetalharPedidos.css';
-import IconeNotebook from '../assets/notebook.png';
-import { CardProduto } from '../components/CardProduto';
 import { api } from '../provider/apiInstance';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import LoadingBar from 'react-top-loading-bar';
+import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
+import { tokenExpirou } from '../Utils/token'
+import { DadosEndereco } from '../components/DadosEndereco'
+import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
+import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../Utils/formatacoes'
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',
@@ -25,7 +29,7 @@ const statusClassMap = {
     'APROVADO': 'status-btn status-verde',
 };
 
-const statusOptions = [
+let statusOptions = [
     { value: 'EM_ANALISE', label: 'Em Análise' },
     { value: 'APROVADO', label: 'Aprovado' },
     { value: 'EM_EVENTO', label: 'Em Evento' },
@@ -55,57 +59,101 @@ export function DetalharPedidos() {
     const [status, setStatus] = useState('');
     const [loading, setLoading] = useState(true);
     const [mudandoStatus, setMudandoStatus] = useState(false);
+    const [barraCarregamento, setBarraCarregamento] = useState(0);
+    const navegar = useNavigate();
 
     useEffect(() => {
         if (!id) return;
-        setLoading(true);
-        const token = sessionStorage.TOKEN;
-        api.get(`/pedidos/${id}`, {
-            headers: {
-                Authorization: token ? `Bearer ${token}` : undefined
-            }
-        })
-            .then(res => {
+        if(tokenExpirou()){
+            exibirAvisoTokenExpirado(navegar)
+        } else {
+            setBarraCarregamento(30);
+            setLoading(true);
+            api.get(`/pedidos/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${sessionStorage.TOKEN}`
+                }
+            }).then(res => {
+                console.log(res.data)
+                setBarraCarregamento(100);
                 setPedido(res.data);
-                setStatus(res.data.situacao);
+                const situacao = res.data.situacao;
+                if(situacao == 'FINALIZADO' || situacao == 'CANCELADO'){
+                    statusOptions = statusOptions.filter(x => x.value != 'APROVADO' && x.value != 'EM_ANALISE' && x.value != 'EM_EVENTO');
+                }
+                setStatus(situacao);
             })
             .catch(() => setPedido(null))
             .finally(() => setLoading(false));
+        }
     }, [id]);
 
     const handleMudarSituacao = async () => {
+        
         if (!id || !status) return;
+        setBarraCarregamento(30);
         setMudandoStatus(true);
-        const token = sessionStorage.TOKEN;
-        try {
+
+        if(tokenExpirou()){
+            exibirAvisoTokenExpirado(navegar);
+        } else {
             await api.put(`/pedidos/${id}/situacao`, { situacao: status }, {
                 headers: {
-                    Authorization: token ? `Bearer ${token}` : undefined
+                    Authorization: `Bearer ${sessionStorage.TOKEN}`
                 }
-            });
-            setPedido(p => ({ ...p, situacao: status }));
-            alert('Situação atualizada com sucesso!');
-        } catch (e) {
-            alert('Erro ao atualizar situação.');
+            }).then((res) => {
+                setBarraCarregamento(100);
+                setPedido(p => ({ ...p, situacao: status }));
+                exibirAviso('Operação realizada com sucesso', 'success');
+            }).catch((err) => {
+                if(err.status == 400){
+                    exibirAviso(err.response.data.message, 'error');
+                }
+            })
+            setMudandoStatus(false);
         }
-        setMudandoStatus(false);
     };
 
-    const isAdmin = sessionStorage.CARGO === 'ROLE_ADMIN';
+    const baixarArquivos = (arquivos) => {
+        arquivos.forEach(async (arquivo, i) => {
 
-    if (loading) return <div>Carregando...</div>;
-    if (!pedido) return <div>Pedido não encontrado.</div>;
+            const response = await fetch(arquivo.downloadUrl);
+
+            const blob = await response.blob();
+            const blobUrl = URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = arquivo.originalFilename || `arquivo-${i}`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+
+            await new Promise(resolve => setTimeout(resolve, 500));
+        });
+    }
+
+    const isAdmin = sessionStorage.CARGO === 'ROLE_ADMIN' || sessionStorage.CARGO === 'ROLE_FUNCIONARIO';
+
+    if (loading) return <div>gando...</div>;
+    if (!pedido) return <div>PedidCarreo não encontrado.</div>;
 
     const usuario = pedido.usuario || {};
     const endereco = pedido.endereco || usuario.endereco || {};
-    const documentos = (pedido.documentos || []).concat(usuario.documentos || []);
     const produtos = pedido.produtos || [];
 
     return (
         <div className="detalhar-pedidos-adm">
+            <LoadingBar
+                progress={barraCarregamento}
+                height={3}
+                color="#f11946"
+            />
             <div className="numero-serie-pedido">
                 <div className="informacoes-pedido">
-                    <p className="numero-pedido">Pedido #{pedido.id}</p>
+                    <p className="numero-pedido">Pedido #{formatarIdPedido(pedido.id)}</p>
                     <p className="data-pedido">Pedido feito em: {pedido.dataCriacao ? new Date(pedido.dataCriacao).toLocaleDateString('pt-BR') : '-'}</p>
                 </div>
                 <div className="condicoes-pedido">
@@ -133,61 +181,26 @@ export function DetalharPedidos() {
             <div className="dados-cliente">
                 <div className='dados'>
                     <p><strong>Nome:</strong> {usuario.nome}</p>
-                    {usuario.cnpj && <p><strong>CNPJ:</strong> {usuario.cnpj}</p>}
-                    {usuario.cpf && <p><strong>CPF:</strong> {usuario.cpf}</p>}
-                    {usuario.rg && <p><strong>RG:</strong> {usuario.rg}</p>}
-                    <p><strong>Celular:</strong> {usuario.telefone_celular}</p>
+                    {usuario.cnpj && <p><strong>CNPJ:</strong> {formatarCNPJ(usuario.cnpj)}</p>}
+                    {usuario.cpf && <p><strong>CPF:</strong> {formatarCPF(usuario.cpf)}</p>}
+                    {usuario.rg && <p><strong>RG:</strong> {formatarRegistroGeral(usuario.rg)}</p>}
+                    <p><strong>Celular:</strong> {formatarTelefone(usuario.telefone_celular)}</p>
                     <p><strong>E-mail:</strong> {usuario.email}</p>
                 </div>
                 <div className='documentos-baixar'>
                     <p>Documentos:</p>
-                    {documentos.length > 0 ? (
-                        documentos.map((doc, i) => (
-                            <a key={i} href={doc.downloadUrl || '#'} download target="_blank" rel="noopener noreferrer">
-                                <button className="btn-baixar-dados">{doc.originalFilename || 'BAIXAR'}</button>
-                            </a>
-                        ))
-                    ) : (
-                        <span>Nenhum documento</span>
-                    )}
+                    
+                    <button className="btn-baixar-dados" onClick={() => { baixarArquivos(pedido.usuario.documentos) }}>BAIXAR</button>
                 </div>
             </div>
 
             <div className='grid-itens'>
-                <div className="lista-itens-vertical">
-                    {produtos.length > 0 ? produtos.map((item, index) => (
-                        <CardProduto
-                            key={index}
-                            image={item.produto?.imagem || IconeNotebook}
-                            name={item.produto?.modelo || 'Produto'}
-                            quantidade={item.qtdAlugada}
-                        />
-                    )) : <span>Nenhum produto</span>}
-                </div>
+                {produtos.map((item, i) => (
+                    <CardProdutoCarrinho key={i} id={item.produto.id} nome={item.produto.modelo} imagem={item.produto.imagem} quantidade={item.qtdAlugada} apenasLeitura={true}/>
+                ))}
             </div>
 
-            <div className="endereco-pedido">
-                <h3>Endereço</h3>
-                <div className="grid-linha">
-                    <p><strong>CEP:</strong> {endereco.cep}</p>
-                    <p><strong>Rua:</strong> {endereco.logradouro}</p>
-                    <p><strong>Número:</strong> {endereco.numero}</p>
-                </div>
-                <div className="grid-linha">
-                    <p><strong>Bairro:</strong> {endereco.bairro}</p>
-                    <p><strong>Estado:</strong> {endereco.estado}</p>
-                    <p><strong>Cidade:</strong> {endereco.cidade}</p>
-                </div>
-                {endereco.complemento && (
-                    <div className="grid-linha grid-1">
-                        <p><strong>Complemento:</strong> {endereco.complemento}</p>
-                    </div>
-                )}
-                <div className="grid-linha">
-                    <p><strong>Data e hora de entrega:</strong> {pedido.dataEntrega ? new Date(pedido.dataEntrega).toLocaleString('pt-BR') : '-'}</p>
-                    <p><strong>Data e hora de retirada:</strong> {pedido.dataRetirada ? new Date(pedido.dataRetirada).toLocaleString('pt-BR') : '-'}</p>
-                </div>
-            </div>
+            <DadosEndereco endereco={endereco} dataEntrega={pedido.dataEntrega} dataRetirada={pedido.dataRetirada} tipo={pedido.tipoPedido}/>
 
             <div className="descricao-projeto">
                 <h3 className="titulo-descricao">Descrição do Projeto</h3>
@@ -199,11 +212,7 @@ export function DetalharPedidos() {
             {pedido.documentos && pedido.documentos.length > 0 && (
                 <div className="documento-auxiliar">
                     <p className="titulo-documento">Documento auxiliar:</p>
-                    {pedido.documentos.map((doc, i) => (
-                        <a key={i} href={doc.downloadUrl || '#'} download target="_blank" rel="noopener noreferrer">
-                            <button className="btn-baixar-dados">{doc.originalFilename || 'BAIXAR'}</button>
-                        </a>
-                    ))}
+                    <button className="btn-baixar-dados" onClick={() => {baixarArquivos(pedido.documentos)}}>BAIXAR</button>
                 </div>
             )}
         </div>

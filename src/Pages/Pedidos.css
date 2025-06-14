@@ -45,43 +45,6 @@ button {
   margin-bottom: 2rem;
 }
 
-.botoes-toggle {
-  display: flex;
-  flex-direction: row;
-  gap: var(--gap-medio);
-}
-
-.botoes-toggle a {
-  border-radius: var(--border-radius);
-  padding: var(--padding-medio);
-  font-weight: bold;
-}
-
-.botoes-toggle a.ativo {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-  border: none;
-}
-
-.botoes-toggle a.ativo:hover {
-  background-color: var(--color-branco);
-  color: var(--color-preto);
-  border: 1px solid var(--color-preto);
-  transition: background-color var(--transição);
-}
-
-.botoes-toggle a.inativo {
-  background-color: transparent;
-  border: 1px solid var(--color-preto);
-  color: var(--color-preto);
-}
-
-.botoes-toggle a:hover {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-  transition: background-color var(--transição);
-}
-
 .barra-pesquisa-container {
   display: flex;
   align-items: center;

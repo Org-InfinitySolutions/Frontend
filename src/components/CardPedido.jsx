@@ -37,8 +37,8 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
 
   const podeCancelar = () => {
     const statusNormalizado = normalizarStatus(status);
-    if (tipoUsuario === 'ROLE_ADMIN') {
-      return statusNormalizado === 'EM_EVENTO' || statusNormalizado === 'FINALIZADO' || statusNormalizado === 'EM_ANALISE';
+    if (tipoUsuario === 'ROLE_ADMIN' || tipoUsuario === 'ROLE_FUNCIONARIO') {
+      return statusNormalizado === 'APROVADO' || statusNormalizado === 'EM_ANALISE';
     } else {
       return statusNormalizado === 'EM_ANALISE';
     }
@@ -50,7 +50,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
     try {
       await api.put(`/pedidos/${pedido.id}/situacao`, { situacao: 'CANCELADO' }, {
         headers: {
-          Authorization: token ? `Bearer ${token}` : undefined
+          Authorization: `Bearer ${token}`
         }
       });
       setStatus('CANCELADO');
@@ -74,7 +74,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
     <section className="card-pedido">
       <h3>Pedido {pedido.id}</h3>
       <p><b>Items:</b> {pedido.itens}</p>
-      <p><b>Data:</b> {pedido.data}</p>
+      <p><b>Pedido feito em:</b> {pedido.data}</p>
       <p><b>Nome:</b> {pedido.cliente}</p>
       <div className="acoes">
         {podeCancelar() && status !== 'CANCELADO' && (

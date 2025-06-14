@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Calendario.css';
+import { BotoesFuncionalidades } from "../components/BotoesFuncionalidades";
 
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
@@ -68,6 +69,8 @@ export function Calendario() {
           pointer-events: none;
         }
       `}</style>
+
+      <BotoesFuncionalidades />
 
       <h2 className="text-center text-2xl font-bold mb-6 text-gray-800">
         {nomesMeses[mesAtual]} de {ano}

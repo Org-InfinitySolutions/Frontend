@@ -12,6 +12,7 @@ import Paginacao from '../components/Paginacao';
 import { CardProdutoEquipamentos } from '../components/CardProdutoEquipamentos'
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
+import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
@@ -116,10 +117,11 @@ const Equipamentos = () => {
       <main className="conteudo-equipamentos">
         <div className="filtros">
           <div className="linha-botoes-carrinho">
-            <div className="botoes-toggle">
+            {/* <div className="botoes-toggle">
               <a className="ativo">EQUIPAMENTOS</a>
               <a href="/pedidos" className="inativo">PEDIDOS</a>
-            </div>
+            </div> */}
+            <BotoesFuncionalidades />
             <div className="icone-carrinho">
               <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />
             </div>
