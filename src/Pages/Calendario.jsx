@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import './Calendario.css';
 import { api } from "../provider/apiInstance";
 
@@ -48,24 +47,32 @@ export function Calendario() {
         Authorization: `Bearer ${sessionStorage.TOKEN}`
       }
     })
-      .then(response => {
-        const pedidosRecebidos = response.data;
+    .then(response => {
+      const pedidosRecebidos = response.data;
 
-        // Ordenar por data do evento (crescente)
-        pedidosRecebidos.sort((a, b) => new Date(a.data) - new Date(b.data));
+      const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
+        pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
+      );
 
-        // Mapear para formato de chave do calendário (YYYY-MM-DD)
-        const mapeados = {};
-        pedidosRecebidos.forEach(pedido => {
-          const dataFormatada = new Date(pedido.data).toISOString().split('T')[0];
-          mapeados[dataFormatada] = `Pedido #${pedido.id}`;
-        });
+      pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
 
-        setPedidos(mapeados);
-      })
-      .catch(error => {
-        console.error('Erro ao buscar pedidos:', error);
+      const mapeados = {};
+      pedidosFiltrados.forEach(pedido => {
+        const data = new Date(pedido.dataEntrega);
+        const dataFormatada = data.toLocaleDateString('fr-CA'); // Formato: YYYY-MM-DD
+
+        if (!mapeados[dataFormatada]) {
+          mapeados[dataFormatada] = [];
+        }
+
+        mapeados[dataFormatada].push(`Pedido #${pedido.id}`);
       });
+
+      setPedidos(mapeados);
+    })
+    .catch(error => {
+      console.error('Erro ao buscar pedidos:', error);
+    });
   }, []);
 
   const anterior = () => {
@@ -106,8 +113,8 @@ export function Calendario() {
         ))}
 
         {dias.map((data, index) => {
-          const chave = data ? data.toISOString().split("T")[0] : "";
-          const temPedido = pedidos[chave];
+          const chave = data ? data.toLocaleDateString('fr-CA') : "";
+          const pedidosDoDia = pedidos[chave];
           const isHoje = data && data.toDateString() === hoje.toDateString();
           const isPassado = data && data < hojeLimpo;
 
@@ -122,9 +129,9 @@ export function Calendario() {
               {data && (
                 <>
                   <div className="font-semibold">{data.getDate()}</div>
-                  {temPedido && (
-                    <div className="text-blue-600 text-xs mt-1">{temPedido}</div>
-                  )}
+                  {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => (
+                    <div key={idx} className="text-blue-600 text-xs mt-1">{pedidoTexto}</div>
+                  ))}
                 </>
               )}
             </div>
