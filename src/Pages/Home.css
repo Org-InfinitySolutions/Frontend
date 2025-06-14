@@ -193,6 +193,7 @@
  }
 
  .container-projeto-conteudo {
+    margin-top: 1%;
      display: flex;
  }
 
@@ -265,7 +266,7 @@
      }
 
      img {
-         width: 35%;
+         width: 40%;
          height: 30%;
      }
  }

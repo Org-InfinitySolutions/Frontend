@@ -1,5 +1,6 @@
 import './Home.css';
 import fotoFundo from '../assets/nova-logo.png';
+import fotoEventoKKKK from '../assets/evento-kkkk-sesc.webp';
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
@@ -174,22 +175,21 @@ function Home() {
                         <img
                             className='container-projeto-primeira-foto'
                             style={fotoProjeto()}
-                            src="./src/assets/FotoPalco.png"
+                            src={fotoEventoKKKK}
                             alt="Foto de um palco"
                         />
                     )}
-                    <p> <b> Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, asperiores ipsam autem et voluptatem delectus
-                        quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
-                        vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
-                        nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
+                    <p> A antiga sede da Kaigai Kogyo Kabushiki Kaisha (KKKK), atualmente integrada ao Sesc Registro, recebe 
+                        a intervenção artística de Projeção Mapeada do Coletivo Coletores. A obra celebra a história da Imigração
+                         Japonesa no Vale do Ribeira e destaca a contribuição do povo negro na construção social e cultural da região. Fundada em 1925, 
+                         a KKKK teve papel fundamental na colonização agrícola e no acolhimento de imigrantes japoneses. Hoje, o edifício histórico 
+                         é revitalizado como espaço de memória e expressão artística.</p>
 
                     {deviced.desktop && (
                         <img
                             className='container-projeto-primeira-foto'
                             style={fotoProjeto()}
-                            src="./src/assets/FotoPalco.png"
+                            src={fotoEventoKKKK}
                             alt="Foto de um palco"
                         />
                     )}
@@ -197,7 +197,7 @@ function Home() {
                         <img
                             className='container-projeto-primeira-foto'
                             style={fotoProjeto()}
-                            src="./src/assets/FotoPalco.png"
+                            src={fotoEventoKKKK}
                             alt="Foto de um palco"
                         />
                     )}
