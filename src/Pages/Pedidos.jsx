@@ -7,12 +7,13 @@ import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
 
-const statusCores = {
-	'EM ANÁLISE': 'cinza',
-	'APROVADO': 'verde',
-	'EM EVENTO': 'azul',
-	'FINALIZADO': 'vermelho',
-	'CANCELADO': 'vermelho',
+const normalizarStatus = (status) => {
+	if (!status) return '';
+	return status
+		.normalize('NFD')
+		.replace(/[^\w\s]/g, '')
+		.replace(/\s+/g, '_')
+		.toUpperCase();
 };
 
 const Pedidos = () => {
@@ -55,7 +56,9 @@ const Pedidos = () => {
 
 	const pedidosFiltrados = pedidos
 		.filter((pedido) => {
-			const atendeStatus = filtroStatus ? pedido.status === filtroStatus : true,
+			const atendeStatus = filtroStatus
+				? normalizarStatus(pedido.status) === normalizarStatus(filtroStatus)
+				: true,
 				atendeBusca = busca ? String(pedido.id).includes(busca) : true;
 			return atendeStatus && atendeBusca;
 		})
