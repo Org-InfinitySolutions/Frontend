@@ -4,7 +4,7 @@ import Modal from '../components/ModalEquipamento';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import IconeNotebook from '../assets/notebook.png';
+import ImgNaoDisponivel from '/public/img-nao-disponivel.jpg';
 import LoadingBar from 'react-top-loading-bar';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../provider/apiInstance';
@@ -40,26 +40,31 @@ const Equipamentos = () => {
 
   useEffect(() => {
 
+    const header = sessionStorage.CARGO == "ROLE_ADMIN" || sessionStorage.CARGO == "ROLE_FUNCIONARIO";
+
     setBarraCarregamento(30);
-    api.get('/produtos')
+    api.get('/produtos', header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN }` } } : {})
     .then((res) => {
       setBarraCarregamento(100);
-      const produtosApi = res.data.map(p => ({
-        ...p,
-        nome: p.modelo,
-        imagem: (typeof p.imagem === 'string' && p.imagem.trim() !== '')
-          ? p.imagem
-          : IconeNotebook,
-        linkFabricante: p.url_fabricante,
-      }));
-      setProdutos(produtosApi);
-      const categoriasUnicas = [];
-      produtosApi.forEach(p => {
-        if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
-          categoriasUnicas.push(p.categoria);
-        }
-      });
-      setCategorias(categoriasUnicas);
+      
+      if(res.data.length > 0){
+        const produtosApi = res.data.map(p => ({
+          ...p,
+          nome: p.modelo,
+          imagem: (typeof p.imagem[0] === 'string' && p.imagem[0].trim() !== '')
+            ? p.imagem[0]
+            : ImgNaoDisponivel,
+          linkFabricante: p.url_fabricante,
+        }));
+        setProdutos(produtosApi);
+        const categoriasUnicas = [];
+        produtosApi.forEach(p => {
+          if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
+            categoriasUnicas.push(p.categoria);
+          }
+        });
+        setCategorias(categoriasUnicas);
+      }
     })
   }, []);
 
