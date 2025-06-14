@@ -1,33 +1,46 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiAutenticacao } from '../provider/apiInstance';
 import { exibirAviso } from '../Utils/exibirModalAviso';
 import { campoVazio, emailInvalido } from '../Utils/validarCampos';
-
 import './RecuperarSenha.css';
 import { Input } from '../components/Input';
-import { ConfirmacaoEmail } from '../components/ConfirmacaoEmail';
 
 export function RecuperarSenha() {
     const navigate = useNavigate();
     const [etapa, setEtapa] = useState(1);
 
     const [email, setEmail] = useState('');
-    const [codigo, setCodigo] = useState('');
+    const [codigo, setCodigo] = useState(Array(6).fill(''));
     const [senha, setSenha] = useState('');
     const [confirmarSenha, setConfirmarSenha] = useState('');
+    const inputRefs = useRef([]);
 
-    // Etapa 1: Enviar código
+    const handleCodigoChange = (e, index) => {
+        const valor = e.target.value.toUpperCase();
+
+        if (/^[A-Z0-9]?$/.test(valor)) {
+            const novoCodigo = [...codigo];
+            novoCodigo[index] = valor;
+            setCodigo(novoCodigo);
+
+            if (valor && index < inputRefs.current.length - 1) {
+                inputRefs.current[index + 1].focus();
+            }
+        }
+    };
+
     const enviarCodigo = async (e) => {
         e.preventDefault();
 
-        // Validação de campo vazio e e-mail inválido
         if (campoVazio(email) || emailInvalido(email)) {
             exibirAviso("Por favor, preencha um e-mail válido.");
             return;
         }
+
         try {
             await apiAutenticacao.post('/reset-senha/solicitar', { email });
+            localStorage.setItem('emailRecuperacao', email);
             exibirAviso("Código de confirmação enviado ao seu e-mail.");
             setEtapa(2);
         } catch (error) {
@@ -35,34 +48,45 @@ export function RecuperarSenha() {
             exibirAviso("Erro ao solicitar o código.");
         }
     };
-    
-    // Etapa 2: Confirmar código
-    const confirmarCodigo = (codigoDigitado) => {
-        setCodigo(codigoDigitado);
-        console.log('Código informado:', codigoDigitado);
-        setEtapa(3);
-    };
 
-    // Etapa 3: Salvar nova senha
-    const handleSubmitSenha = () => {
+    const handleSubmitSenha = async () => {
+        const emailRecuperado = localStorage.getItem('emailRecuperacao');
+        const codigoFinal = codigo.join('');
+
+        if (!emailRecuperado) {
+            exibirAviso('Erro', 'E-mail de recuperação não encontrado.');
+            return;
+        }
+
+        if (codigoFinal.length !== 6) {
+            exibirAviso('Atenção', 'Preencha todos os 6 caracteres do código.');
+            return;
+        }
+
+        if (!senha || !confirmarSenha) {
+            exibirAviso('Atenção', 'Preencha os campos de senha.');
+            return;
+        }
+
         if (senha !== confirmarSenha) {
-            exibirAviso("As senhas não coincidem.");
+            exibirAviso('Erro', 'As senhas não coincidem.');
             return;
         }
 
         try {
-            // Exemplo de chamada à API:
-            // await apiAutenticacao.post('/redefinir-senha', { email, codigo, novaSenha: senha });
-
-            console.log('Nova senha salva com sucesso:', senha);
-            navigate('/login'); // Redireciona para login, por exemplo
+            await apiAutenticacao.post('/reset-senha/confirmar', {
+                email: emailRecuperado,
+                codigo: codigoFinal,
+                novaSenha: senha,
+            });
+            exibirAviso('Sucesso', 'Senha redefinida com sucesso.');
+            navigate('/login');
         } catch (error) {
             console.error(error);
-            exibirAviso("Erro ao redefinir a senha.");
+            exibirAviso('Erro', error.response?.data?.mensagem || 'Falha ao redefinir senha.');
         }
     };
 
-    // ETAPA 1
     if (etapa === 1) {
         return (
             <section className="container-recuperar-senha">
@@ -71,7 +95,7 @@ export function RecuperarSenha() {
                     <div className="barra-divisoria"></div>
 
                     <p className="texto-informativo-senha">
-                        Informe o email associado à conta que você deseja alterar a senha.
+                        Informe o e-mail associado à conta que você deseja alterar a senha.
                     </p>
 
                     <section className="entrada-recuperar-senha">
@@ -99,27 +123,29 @@ export function RecuperarSenha() {
         );
     }
 
-    // ETAPA 2
     if (etapa === 2) {
         return (
-            <div className='bg-black p-32'>
-                <ConfirmacaoEmail
-                    onSubmit={confirmarCodigo}
-                    setEtapa={() => setEtapa(1)}
-                    etapa={1}
-                />
-            </div>
-        );
-    }
-
-    // ETAPA 3
-    if (etapa === 3) {
-        return (
-            <div className='bg-black p-12'>
+            <div className='container-nova-senha'>
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmitSenha(); }} className="formulario-nova-senha">
-                    <h1>Cadastro</h1>
+                    <h1>Confirmação de e-mail</h1>
+                    <p className='font-medium'>Preencha abaixo o código de confirmação que enviamos ao seu e-mail.</p>
                     <div className='barra-divisoria'></div>
-                    <p className='from-neutral-400'>Informe a nova senha para sua conta.</p>
+
+                    <div className="container-codigo-confirmacao">
+                        {codigo.map((valor, index) => (
+                            <input
+                                key={index}
+                                type="text"
+                                maxLength={1}
+                                value={valor}
+                                onChange={(e) => handleCodigoChange(e, index)}
+                                ref={(el) => (inputRefs.current[index] = el)}
+                                className="input-codigo"
+                            />
+                        ))}
+                    </div>
+
+                    <p className='font-semibold'>Informe a nova senha para sua conta.</p>
 
                     <Input
                         tipo="password"

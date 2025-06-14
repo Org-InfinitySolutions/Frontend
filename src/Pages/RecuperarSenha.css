@@ -104,12 +104,39 @@ h1 {
     transform: scale(0.97);
 }
 
+.container-nova-senha {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 50px;
+    background-color: black;
+    flex-wrap: wrap;
+}
+
+.lado-esquerdo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.lado-direito {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .formulario-nova-senha {
+    width: 100%;
+    max-width: 400px;
     background-color: white;
     padding: 40px 30px;
     border-radius: 8px;
-    width: 30%;
-    margin: 50px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -148,21 +175,21 @@ h1 {
 }
 
 .container-botao-salvar-nova-senha {
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .botao-salvar-nova-senha {
-  width: 24%;
-  height: 37px;
-  font-family: var(--fonte-texto);
-  border-radius: 6px;
-  cursor: pointer;
-  border: 1px solid black;
-  text-align: center;
-  background-color: black;
-  color: white;
+    width: 24%;
+    height: 37px;
+    font-family: var(--fonte-texto);
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid black;
+    text-align: center;
+    background-color: black;
+    color: white;
 }
 
 .botao-salvar-nova-senha:hover {
@@ -171,6 +198,31 @@ h1 {
     background-color: white;
 }
 
+/* >>>>>> ADIÇÃO: Estilo para os inputs de código de confirmação <<<<<< */
+
+.container-codigo-confirmacao {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.input-codigo {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-codigo:focus {
+    border-color: black;
+    outline: none;
+}
+
+/* Responsividade existente */
 @media (max-width: 768px) {
     .formulario-recuperar-senha {
         width: 80%;
@@ -213,5 +265,4 @@ h1 {
     .botao-salvar-nova-senha {
         padding: 0.7em;
     }
-
 }
