@@ -116,54 +116,54 @@ function Home() {
                 <h2>Serviços</h2>
                 <section className="container-carrosel" >
                     <Carousel>
-                        <DivCarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
+                        </CarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
+                        </CarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
+                        </CarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
+                        </CarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto1.png" alt="Foto de um evento" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
-                        <DivCarouselItem>
+                        </CarouselItem>
+                        <CarouselItem>
                             <section>
                                 <img src="./src/assets/Foto2.png" alt="Foto de um projetor" style={fotoCarrossel()} />
                                 <p>Lorem ipsum dolor sit amet consectetur? Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                     Incidunt beatae illum repudiandae cupiditate sequi reprehenderit quidem explicabo laudantium nesciunt reiciendis
                                     sed perspiciatis autem velit ducimus quod hic aliquid, excepturi voluptatibus!</p>
                             </section>
-                        </DivCarouselItem>
+                        </CarouselItem>
                     </Carousel>
                 </section>
             </section>

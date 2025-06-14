@@ -1,6 +1,5 @@
 .perfil {
     background-color: #171717;
-    /* min-height: 35rem; */
     padding: 10vh 0px;
     display: flex;
     align-items: center;
@@ -304,7 +303,6 @@
         .container-perfil {
             width: 20rem;
             height: 38rem;
-            position: absolute;
 
             .titulo-form {
                 width: 80%;
