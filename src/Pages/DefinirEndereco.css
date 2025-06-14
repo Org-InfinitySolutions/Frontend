@@ -8,6 +8,7 @@
     flex-direction: column;
 
     h1{
+        margin: 1em 0px;
         width: 85%;   
         font-family: var(--fonte-titulo);
     }

@@ -97,4 +97,10 @@
   background-color: #555;
 }
 
+@media (max-width: 768px) {
 
+  .product-card{
+    height: 100%;
+    width: 100%;
+  }
+}

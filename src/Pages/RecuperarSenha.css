@@ -1,0 +1,268 @@
+.container-recuperar-senha {
+    height: 70vh;
+    width: 100%;
+    background-color: #171717;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formulario-recuperar-senha {
+    width: 25%;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    text-align: center;
+}
+
+.input-recuperar {
+    width: 100%;
+    font-size: 0.7rem;
+    padding: 0.5rem 1.2rem;
+    border: 1px solid #999;
+    box-sizing: border-box;
+    margin: 0 auto;
+}
+
+.barra-divisoria {
+    height: 3.5px;
+    background-image: linear-gradient(to right, #ff0000, #351df1, #007d1d);
+}
+
+h1 {
+    font-family: var(--fonte-titulo);
+    font-size: 160%;
+    margin: 0;
+}
+
+.texto-informativo-senha {
+    font-family: var(--fonte-texto);
+    font-size: 0.85rem;
+    color: #333;
+    margin: 0;
+    font-weight: bold;
+}
+
+.entrada-recuperar-senha {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+}
+
+.botoes-recuperar-senha {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+}
+
+.botao-voltar-recuperar,
+.botao-enviar-recuperar {
+    padding: 0.45rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    font-family: var(--fonte-texto);
+    cursor: pointer;
+}
+
+.botao-voltar-recuperar {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+}
+
+.botao-voltar-recuperar:hover {
+    transition: 0.2s;
+    background-color: black;
+    color: white;
+}
+
+.botao-enviar-recuperar {
+    background-color: black;
+    color: white;
+    border: 1px solid black;
+}
+
+.botao-enviar-recuperar:hover {
+    transition: 0.2s;
+    background-color: white;
+    color: black;
+}
+
+.botao-enviar-recuperar:active,
+.botao-voltar-recuperar:active {
+    transition: 0.2s;
+    transform: scale(0.97);
+}
+
+.container-nova-senha {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 50px;
+    background-color: black;
+    flex-wrap: wrap;
+}
+
+.lado-esquerdo {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.lado-direito {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.formulario-nova-senha {
+    width: 100%;
+    max-width: 400px;
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.formulario-nova-senha h1 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.formulario-nova-senha p {
+    font-family: var(--fonte-texto);
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.formulario-nova-senha label {
+    display: block;
+    font-family: var(--fonte-texto);
+    margin-bottom: 5px;
+}
+
+.formulario-nova-senha input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    outline: none;
+}
+
+.formulario-nova-senha input:focus {
+    border-color: #000;
+}
+
+.container-botao-salvar-nova-senha {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.botao-salvar-nova-senha {
+    width: 24%;
+    height: 37px;
+    font-family: var(--fonte-texto);
+    border-radius: 6px;
+    cursor: pointer;
+    border: 1px solid black;
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+
+.botao-salvar-nova-senha:hover {
+    transition: 0.3s;
+    color: black;
+    background-color: white;
+}
+
+/* >>>>>> ADIÇÃO: Estilo para os inputs de código de confirmação <<<<<< */
+
+.container-codigo-confirmacao {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.input-codigo {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.input-codigo:focus {
+    border-color: black;
+    outline: none;
+}
+
+/* Responsividade existente */
+@media (max-width: 768px) {
+    .formulario-recuperar-senha {
+        width: 80%;
+        padding: 1rem;
+    }
+
+    h1 {
+        font-size: 130%;
+    }
+
+    .entrada-recuperar-senha {
+        font-size: 0.8rem;
+    }
+
+    .botoes-recuperar-senha {
+        justify-content: right;
+        flex-direction: row;
+        gap: 0.7rem;
+    }
+
+    .botao-voltar-recuperar,
+    .botao-enviar-recuperar {
+        width: 30%;
+        text-align: center;
+    }
+
+    .formulario-nova-senha {
+        width: 70%;
+        padding: 20px;
+    }
+
+    .formulario-nova-senha h1 {
+        font-size: 1.2rem;
+    }
+
+    .formulario-nova-senha p {
+        font-size: 0.9rem;
+    }
+
+    .botao-salvar-nova-senha {
+        padding: 0.7em;
+    }
+}

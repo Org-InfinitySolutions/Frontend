@@ -11,8 +11,7 @@
 .card-produto img {
   border-radius: var(--border-radius);
   width: 100%;
-  max-width: 150px;
-  height: auto;
+  height: 150px;
   margin-bottom: 0.5rem;
 }
 
@@ -141,13 +140,9 @@ height: 40px;
 
 @media screen and (max-width: 768px){
 
-    .card-produto {
-        padding: 0.5rem;
-        max-width: 100%;
-    }
-
-  .card-produto img {
-    max-width: 100px;
+  .card-produto {
+      padding: 0.5rem;
+      max-width: 100%;
   }
 
   .botao-adicionar,

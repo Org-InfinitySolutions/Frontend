@@ -30,7 +30,6 @@ function Perfil(){
 
             setBarraCarregamento(10);
             carregarDadosPessoais();
-            carregarDadoEmail();
         }
     }, []);
 
@@ -64,9 +63,6 @@ function Perfil(){
             .catch((err) => {
                 setBarraCarregamento(100);
 
-                if(err.status == 401){
-                    exibirAvisoTokenExpirado(navegar);
-                }
                 if(err.status == 400){
                     
                     const dataErro = err.response.data;
@@ -87,7 +83,7 @@ function Perfil(){
             }
         }).then((res) => {
             
-            setBarraCarregamento(87);
+            setBarraCarregamento(100);
             const dados = res.data;
             const dadosEndereco = dados.endereco;
             setUsuario(dados)
@@ -100,19 +96,6 @@ function Perfil(){
         });
     }
 
-    const carregarDadoEmail = () => {
-        apiAutenticacao.get(`/credenciais/${sessionStorage.ID_USUARIO}/email`, {
-        headers: {
-            Authorization: `Bearer ${sessionStorage.TOKEN}`
-        }
-        }).then((res) => {
-            setBarraCarregamento(100)
-            setUsuario((usuario) => ({
-                ...(usuario || {}),
-                email: res.data.email
-            }))
-        });
-    }
 
     const abrirModalExcluirConta = () => {
         setMostrarModalExcluirConta(true);
