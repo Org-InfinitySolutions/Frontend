@@ -1,24 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Pedidos.css';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
+import Paginacao from '../components/Paginacao';
+import { api } from '../provider/apiInstance';
+import { CardPedido } from '../components/CardPedido';
+import { useNavigate } from 'react-router-dom';
 
-const listaPedidos = [
-	{ id: '123456', itens: 12, data: '01/12/2009', status: 'Em análise' },
-	{ id: '123457', itens: 7, data: '02/12/2009', status: 'Aprovado' },
-	{ id: '123458', itens: 9, data: '03/12/2009', status: 'Em evento' },
-	{ id: '123459', itens: 5, data: '04/12/2009', status: 'Em evento' },
-	{ id: '123460', itens: 15, data: '05/12/2009', status: 'Finalizado' },
-	{ id: '123461', itens: 3, data: '06/12/2009', status: 'Cancelado' },
-],
-
-	statusCores = {
-		'Em análise': 'cinza',
-		'Aprovado': 'verde',
-		'Em evento': 'azul',
-		'Finalizado': 'vermelho',
-		'Cancelado': 'vermelho',
-	};
+const normalizarStatus = (status) => {
+	if (!status) return '';
+	return status
+		.normalize('NFD')
+		.replace(/[^\w\s]/g, '')
+		.replace(/\s+/g, '_')
+		.toUpperCase();
+};
 
 const Pedidos = () => {
 	const [filtroStatus, setFiltroStatus] = useState(''),
@@ -26,19 +22,59 @@ const Pedidos = () => {
 		[busca, setBusca] = useState(''),
 		[filtroStatusAberto, setFiltroStatusAberto] = useState(false),
 		[ordemAberto, setOrdemAberto] = useState(false),
+		[paginaAtual, setPaginaAtual] = useState(1),
+		[pedidos, setPedidos] = useState([]),
+		tipoUsuario = sessionStorage.CARGO || 'USUARIO';
 
-		pedidosFiltrados = listaPedidos
-			.filter((pedido) => {
-				const atendeStatus = filtroStatus ? pedido.status === filtroStatus : true,
-					atendeBusca = busca ? pedido.id.includes(busca) : true;
-				return atendeStatus && atendeBusca;
-			})
-			.sort((a, b) => {
-				if (ordem === 'Mais Recentes') {
-					return b.id.localeCompare(a.id);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = sessionStorage.TOKEN;
+		api.get('/pedidos', {
+			headers: {
+				Authorization: token ? `Bearer ${token}` : undefined
+			}
+		})
+			.then((res) => {
+				if (Array.isArray(res.data) && res.data.length > 0) {
+					const pedidosApi = res.data.map(p => ({
+						id: p.id,
+						itens: p.qtd_itens,
+						data: new Date(p.data).toLocaleDateString('pt-BR'),
+						status: p.situacao,
+						cliente: p.cliente || 'Cliente Teste',
+						valor: p.valor || 100
+					}));
+					setPedidos(pedidosApi);
 				}
-				return a.id.localeCompare(b.id);
-			});
+			})
+	}, []);
+
+	const handleDetalhes = (pedido) => {
+		navigate(`/detalhar-pedidos?id=${pedido.id}`);
+	}
+
+	const pedidosFiltrados = pedidos
+		.filter((pedido) => {
+			const atendeStatus = filtroStatus
+				? normalizarStatus(pedido.status) === normalizarStatus(filtroStatus)
+				: true,
+				atendeBusca = busca ? String(pedido.id).includes(busca) : true;
+			return atendeStatus && atendeBusca;
+		})
+		.sort((a, b) => {
+			if (ordem === 'Mais Recentes') {
+				return b.id - a.id;
+			}
+			return a.id - b.id;
+		});
+
+	const pedidosPorPagina = 6;
+	const totalPaginas = Math.ceil(pedidosFiltrados.length / pedidosPorPagina);
+	const pedidosPaginados = pedidosFiltrados.slice(
+		(paginaAtual - 1) * pedidosPorPagina,
+		paginaAtual * pedidosPorPagina
+	);
 
 	return (
 		<div className="pagina-pedidos">
@@ -70,11 +106,11 @@ const Pedidos = () => {
 									onBlur={() => setFiltroStatusAberto(false)}
 								>
 									<option value="">Todos</option>
-									<option value="Em análise">Em Análise</option>
-									<option value="Aprovado">Aprovado</option>
-									<option value="Em evento">Em Evento</option>
-									<option value="Finalizado">Finalizado</option>
-									<option value="Cancelado">Cancelado</option>
+									<option value="EM ANÁLISE">Em Análise</option>
+									<option value="APROVADO">Aprovado</option>
+									<option value="EM EVENTO">Em Evento</option>
+									<option value="FINALIZADO">Finalizado</option>
+									<option value="CANCELADO">Cancelado</option>
 								</select>
 								<IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`} />
 							</div>
@@ -96,34 +132,25 @@ const Pedidos = () => {
 				</div>
 
 				<div className="grid-pedidos">
-					{pedidosFiltrados.length > 0 ? (
-						pedidosFiltrados.map((pedido) => (
-							<div className="card-pedido" key={pedido.id}>
-								<h3>Pedido {pedido.id}</h3>
-								<p>Itens: {pedido.itens}</p>
-								<p>Data: {pedido.data}</p>
-								<div className="acoes">
-									<span className={`status ${statusCores[pedido.status]}`}>
-										{pedido.status}
-									</span>
-									<button className="btn-detalhes">Detalhes</button>
-								</div>
-							</div>
+					{pedidosPaginados.length > 0 ? (
+						pedidosPaginados.map((pedido) => (
+							<CardPedido
+								key={pedido.id}
+								pedido={pedido}
+								tipoUsuario={tipoUsuario}
+								onDetalhes={handleDetalhes}
+							/>
 						))
 					) : (
 						<p className="nenhum-pedido">Nenhum pedido encontrado.</p>
 					)}
 				</div>
 
-				<div className="paginacao">
-					<span>{'<'}</span>
-					<span className="pagina-ativa">1</span>
-					<span>2</span>
-					<span>3</span>
-					<span>4</span>
-					<span>5</span>
-					<span>{'>'}</span>
-				</div>
+				<Paginacao
+					paginaAtual={paginaAtual}
+					totalPaginas={totalPaginas}
+					onChange={setPaginaAtual}
+				/>
 			</main>
 		</div>
 	);

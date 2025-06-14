@@ -153,7 +153,7 @@ button {
 
 .grid-pedidos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(2, 1fr) !important;
   gap: var(--gap-grande);
 }
 
@@ -223,31 +223,6 @@ button {
   background-color: #333;
 }
 
-.paginacao {
-  display: flex;
-  justify-content: center;
-  margin-top: 2rem;
-  gap: var(--gap-pequeno);
-  font-weight: bold;
-}
-
-.paginacao span {
-  cursor: pointer;
-  padding: var(--padding-pequeno);
-  border-radius: var(--border-radius);
-}
-
-.pagina-ativa {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-}
-
-.paginacao span:hover {
-  background-color: var(--color-preto);
-  color: var(--color-branco);
-  transition: background-color var(--transição);
-}
-
 .nenhum-pedido {
   text-align: center;
   font-weight: bold;
@@ -307,11 +282,5 @@ button {
     flex-direction: row;
     gap: var(--gap-pequeno);
     align-items: stretch;
-  }
-
-  .paginacao {
-    flex-wrap: nowrap;
-    gap: 0.2rem;
-    font-size: 0.95rem;
   }
 }

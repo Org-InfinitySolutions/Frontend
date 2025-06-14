@@ -4,22 +4,34 @@ import './Paginacao.css';
 const Paginacao = ({ paginaAtual, totalPaginas, onChange }) => {
   if (totalPaginas <= 1) return null;
   const paginas = [];
+
   paginas.push(1);
-  let left = paginaAtual - 1;
-  let right = paginaAtual + 1;
-  if (left > 2) paginas.push('...');
-  for (let i = Math.max(2, left); i <= Math.min(right, totalPaginas - 1); i++) {
-    paginas.push(i);
+
+  for (let i = Math.max(2, paginaAtual - 1); i <= Math.min(totalPaginas - 1, paginaAtual + 1); i++) {
+    if (i !== 1 && i !== totalPaginas) {
+      paginas.push(i);
+    }
   }
-  if (right < totalPaginas - 1) paginas.push('...');
+
   if (totalPaginas > 1) paginas.push(totalPaginas);
+
+  const paginasUnicas = [...new Set(paginas)].sort((a, b) => a - b);
+
+  const paginasComElipses = [];
+  for (let i = 0; i < paginasUnicas.length; i++) {
+    if (i > 0 && paginasUnicas[i] - paginasUnicas[i - 1] > 1) {
+      paginasComElipses.push('...');
+    }
+    paginasComElipses.push(paginasUnicas[i]);
+  }
+
   return (
     <div className="paginacao">
       <span
         onClick={() => onChange(Math.max(1, paginaAtual - 1))}
         style={{ cursor: paginaAtual > 1 ? 'pointer' : 'default', opacity: paginaAtual > 1 ? 1 : 0.5 }}
       >{'<'}</span>
-      {paginas.map((p, idx) =>
+      {paginasComElipses.map((p, idx) =>
         p === '...'
           ? <span key={idx} className="paginacao-elipse">...</span>
           : <span

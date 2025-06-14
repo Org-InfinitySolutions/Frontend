@@ -7,11 +7,7 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
-
-module.exports = {
   corePlugins: {
-    preflight: false,
+    preflight: false, 
   },
-  // o restante da config continua igual
-}
+};

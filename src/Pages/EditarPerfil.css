@@ -1,12 +1,10 @@
-.editar-conta{
-    min-height: 70vh;
-    padding: 10vh 0px;
+.editar-conta {
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #171717;
 
-    .container-formulario{
+    .container-formulario {
         min-height: 90vh;
         width: 35%;
         background-color: white;
@@ -17,7 +15,7 @@
         align-items: center;
         font-family: var(--fonte-texto);
 
-        .container-titulo{
+        .container-titulo {
             height: 10%;
             width: 50%;
 
@@ -26,36 +24,37 @@
             flex-direction: column;
             justify-content: space-evenly;
 
-            h2{
+            h2 {
                 margin: 0.5em 0px;
                 font-family: var(--fonte-titulo);
             }
-            .barra{
+
+            .barra {
                 height: 2px;
                 width: 85%;
                 background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
             }
         }
 
-        .container-dados-pessoais{
+        .container-dados-pessoais {
             min-height: 40vh;
-            width: 80%;
+            width: 70%;
 
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: space-evenly;
 
-            h3{
+            h3 {
                 padding: 2%;
-                width: 50%;
+                width: 95%;
                 margin: 1em 0px;
                 margin-bottom: 2%;
                 border-bottom: 1px solid black;
                 font-weight: normal;
             }
 
-            section{
+            section {
                 height: 10vh;
                 width: 100%;
                 display: flex;
@@ -63,14 +62,16 @@
                 justify-content: space-between;
                 align-items: end;
 
-                img{
+                img {
                     margin-left: 0.5em;
                     margin-bottom: 0.3em;
                     cursor: pointer;
                 }
             }
 
-            button{
+            .botao-alterar-senha {
+                height: 2.375rem;
+                width: 7.375rem;
                 padding: 0.8em;
                 margin-top: 1em;
                 border: none;
@@ -80,30 +81,32 @@
                 background-color: black;
                 font-family: var(--fonte-texto);
             }
-            button:hover{
+
+            .botao-alterar-senha:hover {
                 transition: 0.2s;
                 transform: scale(0.98);
             }
         }
-        .container-dados-endereco{
+
+        .container-dados-endereco {
             height: 65vh;
-            width: 80%;
+            width: 70%;
 
             display: flex;
             flex-direction: column;
             align-items: flex-start;
             justify-content: space-evenly;
 
-            h3{
+            h3 {
                 padding: 2%;
-                width: 30%;
+                width: 95%;
                 margin: 0.5em 0px;
                 margin-bottom: 2%;
                 border-bottom: 1px solid black;
                 font-weight: normal;
             }
 
-            section{
+            section {
                 width: 100%;
                 height: 15%;
 
@@ -112,27 +115,30 @@
                 justify-content: center;
             }
 
-            .box-cidade{
+            .box-cidade {
                 display: flex;
                 justify-content: flex-start;
-                .box{
+
+                .box {
                     width: 68.5%;
                     height: 100%;
 
-                    div{
+                    div {
                         width: 90%;
                         height: 100%;
                     }
                 }
-                div{
+
+                div {
                     width: 30%;
-                    .error{
+
+                    .error {
                         width: 100%;
                     }
                 }
             }
 
-            button{
+            button {
                 padding: 2%;
                 border: none;
                 color: white;
@@ -140,13 +146,14 @@
                 border-radius: 8px;
                 background-color: black;
             }
-            button:hover{
+
+            button:hover {
                 transition: 0.2s;
                 transform: scale(0.98);
             }
         }
 
-        .container-eventos{
+        .container-eventos {
             height: 10vh;
             width: 80%;
 
@@ -154,9 +161,11 @@
             flex-direction: row;
             justify-content: flex-end;
             align-items: center;
-            
 
-            button{
+
+            .botao-confirmar-edicao {
+                height: 2.375rem;
+                width: 6.375rem;
                 padding: 2%;
                 border-radius: 8px;
                 background-color: black;
@@ -166,17 +175,21 @@
                 cursor: pointer;
                 font-family: var(--fonte-texto);
             }
-            button:hover{
+
+            .botao-confirmar-edicao:hover {
                 background-color: white;
                 color: black;
                 transition: 0.2s;
             }
-            button:active{
+
+            .botao-confirmar-edicao:active {
                 transform: scale(0.98);
                 transition: 0.3s;
             }
 
-            a{
+            .botao-cancelar-edicao {
+                height: 2.375rem;
+                width: 6.375rem;
                 padding: 2%;
                 font-size: 0.8em;
                 margin-right: 2%;
@@ -185,7 +198,7 @@
                 align-items: center;
                 text-decoration: none;
                 justify-content: center;
-            
+
                 color: black;
                 cursor: pointer;
                 border-radius: 8px;
@@ -193,12 +206,14 @@
                 border: 1px solid black;
                 font-family: var(--fonte-texto);
             }
-            a:hover{
+
+            .botao-cancelar-edicao:hover {
                 color: white;
                 transition: 0.3s;
                 background-color: black;
             }
-            a:active{
+
+            .botao-cancelar-edicao:active {
                 transition: 0.2s;
                 transform: scale(0.95);
             }
@@ -214,28 +229,30 @@
         text-align: center;
         display: flex;
         flex-direction: column;
-        h2{
+
+        h2 {
             font-family: "Montserrat", sans-serif;
         }
 
-        h1{
+        h1 {
             margin: 0.2em 0px;
+            font-size: 1.6rem;
         }
 
-        .input-alteracao-senha{
+        .input-alteracao-senha {
             text-align: start;
         }
 
-        .container-input{
+        .container-input {
             padding: 0px;
             margin-top: 1em;
-            
+
             label {
                 justify-content: flex-start;
                 display: flex;
             }
 
-            input{
+            input {
                 width: 94%;
                 margin-top: 0.3em;
             }
@@ -249,13 +266,12 @@
         align-items: flex-end;
         gap: 10px;
     }
-    
-    
+
     .aviso-obrigatorio-etapa-3 {
         font-size: 0.75rem;
         font-family: var(--fonte-texto);
         margin: 0;
-        font-size: 100%;
+        font-size: 80%;
     }
 
 
@@ -265,11 +281,11 @@
         padding: 0.5rem;
     }
 
-    .confirmar-alteracao-email{
+    .confirmar-alteracao-email {
         color: #FF0000;
         font-family: "Montserrat Alternates", sans-serif;
     }
-    
+
     .botoes {
         display: flex;
         justify-content: right;
@@ -277,9 +293,9 @@
         gap: 2%;
         min-height: 100%;
 
-        .botao-continuar{
-            height: 38px;
-            width: 102px;
+        .botao-continuar {
+            height: 2.375rem;
+            width: 6.375rem;
             margin-top: 10px;
             background-color: black;
             color: white;
@@ -291,21 +307,21 @@
             transition: 0.2s ease;
         }
 
-        .botao-continuar:hover{
+        .botao-continuar:hover {
             transition: 0.2s;
             color: black;
             background-color: white;
             border: 1px solid black;
         }
 
-        .botao-continuar:active{
+        .botao-continuar:active {
             transform: scale(0.95);
             transition: 0.3s;
         }
 
-        .botao-cancelar{
-            height: 38px;
-            width: 102px;
+        .botao-cancelar {
+            height: 2.375rem;
+            width: 6.375rem;
             margin-top: 10px;
             background-color: white;
             color: black;
@@ -318,7 +334,7 @@
             border: 1px black solid;
         }
 
-        .botao-cancelar:hover{
+        .botao-cancelar:hover {
             transition: 0.3s;
             background-color: black;
             color: white;
@@ -328,7 +344,7 @@
             transform: scale(0.95);
         }
 
-        .botao-confirmar{
+        .botao-confirmar {
             height: 38px;
             width: 102px;
             margin-top: 10px;
@@ -343,62 +359,127 @@
             border: 1px black solid;
         }
 
-        .botao-confirmar:hover{
+        .botao-confirmar:hover {
             background-color: white;
             color: black;
             transition: 0.3s;
         }
 
-        .botao-confirmar:active{
+        .botao-confirmar:active {
             transition: 0.3s;
             transform: scale(0.95);
         }
     }
 }
 
-@media screen and (max-width: 576px) {
-    .editar-conta{
+@media (max-width: 768px) {
+    .editar-conta {
 
-        .container-formulario{
+        .container-formulario {
             width: 80%;
-        
-            .container-dados-pessoais{
-                min-height: 60vh;
+            height: 90%;
 
-                section{
-                    img{
-                        height: 1.5em;
+            .container-titulo {
+                height: 10%;
+                width: 60%;
+
+                h2 {
+                    font-size: 1.5rem;
+                }
+
+                .barra {
+                    height: 2px;
+                    width: 100%;
+                    margin-bottom: 4%;
+                    background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+                }
+            }
+
+            .container-dados-pessoais {
+                width: 80%;
+
+                h3 {
+                    width: 95%;
+                }
+
+                section {
+                    height: 10vh;
+                    width: 100%;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+                    align-items: end;
+
+                    img {
+                        width: 10%;
+                        height: 30%;
                     }
                 }
-                button{
-                    margin: 2vh 0px;
-                    padding: 0.6em;
+
+                .botao-cancelar-edicao .botao-confirmar-edicao {
+                    height: 2.375rem;
+                    width: 6.375rem;
                 }
             }
 
-            .container-dados-endereco{
-                height: 75vh;
+            .container-eventos {
+                padding: 0.3rem;
+
+                button {
+                    height: 2.375rem;
+                    width: 6.375rem;
+                }
             }
 
-            .container-eventos{
-                height: 15vh;
+            .botoes-e-aviso-etapa-3 {
+                height: 2.375rem;
+                width: 6.375rem;
+            }
+
+            .container-dados-endereco {
+                height: 65vh;
+                width: 80%;
+
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: space-evenly;
+
+                h3 {
+                    width: 95%;
+                }
             }
         }
 
-        .modal-content{
+        .modal-content {
             width: 60%;
+            height: 90%;
 
-            h1{
-                font-size: 1.5em;
+            h2 {
+                font-family: "Montserrat", sans-serif;
             }
 
-            .botoes{
-                height: 8vh;
-                align-items: center;
-            
-                .botao-cancelar, .botao-continuar, .botao-confirmar{
-                    height: 70%;
-                    margin: 0px;
+            h1 {
+                margin: 0.2em 0px;
+                font-size: 1.2rem;
+            }
+
+            .input-alteracao-senha {
+                text-align: start;
+            }
+
+            .container-input {
+                padding: 0px;
+                margin-top: 1em;
+
+                label {
+                    justify-content: flex-start;
+                    display: flex;
+                }
+
+                input {
+                    width: 94%;
+                    margin-top: 0.3em;
                 }
             }
         }

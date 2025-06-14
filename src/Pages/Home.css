@@ -38,7 +38,7 @@ body{
 .container-video {
         position: relative;
         width: 100%;
-        height: 630px;
+        height: 100vh;
         overflow: hidden;
 
         .container-titulo {
@@ -57,8 +57,7 @@ body{
             height: 100%;
             object-fit: cover;
             z-index: -1;
-        }
-        
+        }       
 }
 
 .container-sobre-nos {
@@ -135,7 +134,30 @@ body{
 }
 
 .container-projeto-conteudo {
-    display: flex;;
+    display: flex;
+}
+
+.container-projeto-primeira-foto,
+.container-projeto-segunda-foto {
+    display: flex;
+}
+
+@media (max-width: 768px) {
+
+    .container-projeto-conteudo {
+    display: flex;
+        flex-direction: column;
+    }
+
+    .container-projeto-primeira-foto {
+        flex-direction: column-reverse;
+    }
+
+    .container-projeto-segunda-foto {
+        flex-direction: column;
+    }
+
+    
 }
 
 .container-projeto {
@@ -167,8 +189,6 @@ body{
         }
 
         img {
-            margin-right: var(--margin-textos);
-            margin-left: var(--margin-textos);
             width: 35%;
             height: 30%;
         }

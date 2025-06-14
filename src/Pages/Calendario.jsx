@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
+import './Calendario.css';
 
-// Função utilitária para gerar os dias de um mês
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
   const ultimoDia = new Date(ano, mes + 1, 0);
@@ -9,17 +9,14 @@ function gerarDiasDoMes(ano, mes) {
 
   const dias = [];
 
-  // Preenche dias vazios antes do primeiro dia do mês
   for (let i = 0; i < diaSemanaInicio; i++) {
     dias.push(null);
   }
 
-  // Preenche os dias do mês
   for (let i = 1; i <= diasNoMes; i++) {
     dias.push(new Date(ano, mes, i));
   }
 
-  // Garante múltiplos de 7 (6 semanas máx.)
   while (dias.length % 7 !== 0) {
     dias.push(null);
   }
@@ -27,62 +24,104 @@ function gerarDiasDoMes(ano, mes) {
   return dias;
 }
 
+const nomesMeses = [
+  "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+  "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+];
+
+const nomesDias = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+
 const pedidos = {
-  "2023-01-01": "Pedido #00001",
-  "2023-01-04": "Pedido #00001",
-  "2023-01-06": "Pedido #00001",
-  "2023-01-11": "Pedido #00001",
-  "2023-01-12": "Pedido #00001",
-  "2023-01-13": "Pedido #00001",
-  "2023-01-16": "Pedido #00001",
-  "2023-01-19": "Pedido #00001",
-  "2023-01-21": "Pedido #00001",
-  "2023-01-25": "Pedido #00001",
-  "2023-01-28": "Pedido #00001",
-  "2023-01-30": "Pedido #00001",
+  "2025-01-04": "Pedido #00001",
+  "2025-03-12": "Pedido #00002",
+  "2025-06-25": "Pedido #00003",
+  "2025-10-08": "Pedido #00004",
 };
 
 export function Calendario() {
-  const ano = 2023;
-  const mes = 0; // Janeiro (0-indexado)
-  const dias = gerarDiasDoMes(ano, mes);
+  const ano = 2025;
+  const [mesAtual, setMesAtual] = useState(new Date().getFullYear() === ano ? new Date().getMonth() : 0);
+  const dias = gerarDiasDoMes(ano, mesAtual);
 
-  const nomesDias = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
+  const hoje = new Date();
+  const hojeLimpo = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+  const anterior = () => {
+    if (mesAtual > 0) setMesAtual(mesAtual - 1);
+  };
+
+  const proximo = () => {
+    if (mesAtual < 11) setMesAtual(mesAtual + 1);
+  };
 
   return (
-    <div style={{ padding: "1rem", fontFamily: "sans-serif" }}>
-      <h2 style={{ textAlign: "center" }}>JANEIRO</h2>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(7, 1fr)", textAlign: "center", border: "1px solid #ccc" }}>
+    <div className="max-w-4xl mx-auto p-4 font-sans">
+      <style>{`
+        .hoje {
+          background-color: #e0f2fe;
+          border: 2px solid #2563eb;
+        }
+        .dia-passado {
+          background-color: #f3f4f6;
+          color: #9ca3af;
+          opacity: 0.6;
+          pointer-events: none;
+        }
+      `}</style>
+
+      <h2 className="text-center text-2xl font-bold mb-6 text-gray-800">
+        {nomesMeses[mesAtual]} de {ano}
+      </h2>
+
+      <div className="grid grid-cols-7 gap-px bg-gray-300 rounded overflow-hidden shadow mb-4">
         {nomesDias.map((dia) => (
-          <div key={dia} style={{ padding: "0.5rem", border: "1px solid #ccc", fontWeight: "bold" }}>
+          <div
+            key={dia}
+            className="bg-gray-100 text-gray-700 font-semibold text-sm text-center py-2"
+          >
             {dia}
           </div>
         ))}
+
         {dias.map((data, index) => {
           const chave = data ? data.toISOString().split("T")[0] : "";
+          const temPedido = pedidos[chave];
+          const isHoje = data && data.toDateString() === hoje.toDateString();
+          const isPassado = data && data < hojeLimpo;
+
           return (
             <div
               key={index}
-              style={{
-                minHeight: "80px",
-                border: "1px solid #ccc",
-                padding: "0.5rem",
-                textAlign: "left",
-              }}
+              className={`min-h-[80px] text-sm text-gray-800 p-2 border border-gray-200 
+                ${isHoje ? "hoje" : ""} 
+                ${isPassado ? "dia-passado" : ""} 
+                bg-white`}
             >
               {data && (
                 <>
-                  <div>{data.getDate()}</div>
-                  {pedidos[chave] && (
-                    <div style={{ color: "blue", fontSize: "0.8rem", marginTop: "0.25rem" }}>
-                      {pedidos[chave]}
-                    </div>
+                  <div className="font-semibold">{data.getDate()}</div>
+                  {temPedido && (
+                    <div className="text-blue-600 text-xs mt-1">{temPedido}</div>
                   )}
                 </>
               )}
             </div>
           );
         })}
+      </div>
+
+      <div className="paginacao">
+        <span onClick={anterior} className={mesAtual === 0 ? "disabled" : ""}>{'<'}</span>
+        {Array.from({ length: 12 }, (_, index) => (
+          <span
+            key={index}
+            className={mesAtual === index ? "pagina-ativa" : ""}
+            onClick={() => setMesAtual(index)}
+          >
+            {index + 1}
+          </span>
+        ))}
+        <span onClick={proximo} className={mesAtual === 11 ? "disabled" : ""}>{'>'}</span>
       </div>
     </div>
   );

@@ -8,7 +8,7 @@
     justify-content: center;
 
     .container-formulario{
-        height: 60%;
+        height: 70%;
         width: 30%;
         border-radius: 6px;
         background-color: white;
@@ -18,8 +18,17 @@
         flex-direction: column;
         justify-content: space-evenly;
 
+        .barra-divisoria-login{
+            border-radius: 3px;
+            height: 3.5px;
+            width: 60%;
+            background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+            margin: 1%
+        }
+
         h1{
             font-family: var(--fonte-titulo);
+            font-size: 200%;
             margin: 0;
         }
 
@@ -52,6 +61,7 @@
             color: white;
             cursor: pointer;
             font-size: 1.2em;
+            margin-top: 3%;
             border-radius: 6px;
             background-color: black;
             border: 1px solid black;
@@ -60,6 +70,33 @@
         button:active{
             transition: 0.3s;
             transform: scale(0.95);
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .container-login{
+        .container-formulario{
+            height: 60%;
+            width: 80%;
+
+                h1{
+                    font-family: var(--fonte-titulo);
+                    font-size: 150%;
+                    color: black;
+                    margin: 0;
+                }
+
+                button{
+                height: 10%;
+                width: 40%;
+                }
+
+                .links-navegacao {
+                height: 15%;
+                width: 80%;
+                }
         }
     }
 }
