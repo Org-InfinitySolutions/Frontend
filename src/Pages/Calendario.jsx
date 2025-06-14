@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import './Calendario.css';
+import { api } from "../provider/apiInstance";
 
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
@@ -31,20 +33,40 @@ const nomesMeses = [
 
 const nomesDias = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 
-const pedidos = {
-  "2025-01-04": "Pedido #00001",
-  "2025-03-12": "Pedido #00002",
-  "2025-06-25": "Pedido #00003",
-  "2025-10-08": "Pedido #00004",
-};
-
 export function Calendario() {
   const ano = 2025;
   const [mesAtual, setMesAtual] = useState(new Date().getFullYear() === ano ? new Date().getMonth() : 0);
+  const [pedidos, setPedidos] = useState({});
   const dias = gerarDiasDoMes(ano, mesAtual);
 
   const hoje = new Date();
   const hojeLimpo = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+  useEffect(() => {
+    api.get('/pedidos', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.TOKEN}`
+      }
+    })
+      .then(response => {
+        const pedidosRecebidos = response.data;
+
+        // Ordenar por data do evento (crescente)
+        pedidosRecebidos.sort((a, b) => new Date(a.data) - new Date(b.data));
+
+        // Mapear para formato de chave do calendário (YYYY-MM-DD)
+        const mapeados = {};
+        pedidosRecebidos.forEach(pedido => {
+          const dataFormatada = new Date(pedido.data).toISOString().split('T')[0];
+          mapeados[dataFormatada] = `Pedido #${pedido.id}`;
+        });
+
+        setPedidos(mapeados);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar pedidos:', error);
+      });
+  }, []);
 
   const anterior = () => {
     if (mesAtual > 0) setMesAtual(mesAtual - 1);
