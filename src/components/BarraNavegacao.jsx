@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
-import { limparSession } from '../utils/limpar';
+import { limparSession } from '../Utils/limpar';
 
 const getDevice = () => ({
     mobile: window.innerWidth <= 768,
@@ -55,9 +55,6 @@ function BarraNavegacao(){
                     <a style={linkEquipamento()} href="/">Home</a>
                     <a href="/equipamentos">Equipamentos</a>
                     <a style={linkEquipamento()} href="/pedidos">Pedidos</a>
-                    {cargo === "ROLE_ADMIN" && (
-                        <a href="/dashboard">Dashboard</a>
-                    )}
                 </div>
             </section>
             ) : (
@@ -72,7 +69,9 @@ function BarraNavegacao(){
             )}
             {usuarioLogado ? (
             <section className="container-eventos">
-                <a href='/perfil' className='botao-cadastro'>Perfil</a>
+                {cargo != 'ROLE_ADMIN' ? (
+                    <a href='/perfil' className='botao-cadastro'>Perfil</a>
+                ) : (<></>)}
                 <a href='/' onClick={() => { limparSession()}} className='botao-login'>Sair</a>
             </section>
             ) : (

@@ -6,6 +6,8 @@ import Paginacao from '../components/Paginacao';
 import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
+import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
+import { formatarData } from '../Utils/formatacoes'
 
 const normalizarStatus = (status) => {
 	if (!status) return '';
@@ -40,7 +42,7 @@ const Pedidos = () => {
 					const pedidosApi = res.data.map(p => ({
 						id: p.id,
 						itens: p.qtd_itens,
-						data: new Date(p.data).toLocaleDateString('pt-BR'),
+						data: formatarData(p.dataCriacao),
 						status: p.situacao,
 						cliente: p.cliente || 'Cliente Teste',
 						valor: p.valor || 100
@@ -80,10 +82,7 @@ const Pedidos = () => {
 		<div className="pagina-pedidos">
 			<main className="conteudo-pedidos">
 				<div className="filtros">
-					<div className="botoes-toggle">
-						<a href="/equipamentos" className="inativo">EQUIPAMENTOS</a>
-						<a className="ativo">PEDIDOS</a>
-					</div>
+					<BotoesFuncionalidades />
 
 					<div className="linha-pesquisa-filtros">
 						<div className="barra-pesquisa-container">
