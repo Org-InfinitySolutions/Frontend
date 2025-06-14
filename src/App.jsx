@@ -17,6 +17,7 @@ import { Carrinho } from './Pages/Carrinho';
 import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
+import Dashboard from './Pages/Dashboard';
 
 import { PedidosAdm } from './Pages/PedidosAdm' 
 import { DetalharPedidos } from './Pages/DetalharPedidos';
@@ -59,6 +60,7 @@ function MainComponent() {
           <Route path='/detalhar-pedidos' element={<DetalharPedidos />}/>
           <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
           <Route path='/calendario' element={<Calendario />}/>
+          <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>
           <Route path='/recuperar-senha' element={<RecuperarSenha/>}></Route>
         </Routes>
