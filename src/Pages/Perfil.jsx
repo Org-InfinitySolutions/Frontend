@@ -8,7 +8,7 @@ import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
-import { limparSession } from '../utils/limpar';
+import { limparSession } from '../Utils/limpar';
 import { validarSenha } from '../Utils/validarCampos'
 import { tokenExpirou } from '../Utils/token';
 
@@ -63,7 +63,7 @@ function Perfil(){
             })
             .catch((err) => {
                 setBarraCarregamento(100);
-
+                
                 if(err.status == 401){
                     exibirAvisoTokenExpirado(navegar);
                 }

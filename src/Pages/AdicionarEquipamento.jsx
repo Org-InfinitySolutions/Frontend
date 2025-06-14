@@ -19,7 +19,7 @@ export function AdicionarEquipamento() {
   const [marca, setMarca] = useState('');
   const [descricao, setDescricao] = useState('');
   const [linkFabricante, setLinkFabricante] = useState('');
-  const [categoriaEquipamento, setCategoriaEquipamento] = useState('1');
+  const [categoriaEquipamento, setCategoriaEquipamento] = useState('');
   const [imagem, setImagem] = useState(null);
   const [preview, setPreview] = useState(null);
 
@@ -122,7 +122,9 @@ export function AdicionarEquipamento() {
         Authorization: `Bearer ${sessionStorage.TOKEN}`
       }
     }).then((res) => {
-      setCategorias(res.data);
+      const caixote = res.data;
+      setCategorias(caixote);
+      setCategoriaEquipamento(caixote[0].id);
     }).catch((err) => {
       console.log(err.data.message);
     })
