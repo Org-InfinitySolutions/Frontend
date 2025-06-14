@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Calendario.css';
 import { BotoesFuncionalidades } from "../components/BotoesFuncionalidades";
+import { api } from "../provider/apiInstance";
 
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
@@ -32,20 +33,48 @@ const nomesMeses = [
 
 const nomesDias = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SAB"];
 
-const pedidos = {
-  "2025-01-04": "Pedido #00001",
-  "2025-03-12": "Pedido #00002",
-  "2025-06-25": "Pedido #00003",
-  "2025-10-08": "Pedido #00004",
-};
-
 export function Calendario() {
   const ano = 2025;
   const [mesAtual, setMesAtual] = useState(new Date().getFullYear() === ano ? new Date().getMonth() : 0);
+  const [pedidos, setPedidos] = useState({});
   const dias = gerarDiasDoMes(ano, mesAtual);
 
   const hoje = new Date();
   const hojeLimpo = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
+
+  useEffect(() => {
+    api.get('/pedidos', {
+      headers: {
+        Authorization: `Bearer ${sessionStorage.TOKEN}`
+      }
+    })
+    .then(response => {
+      const pedidosRecebidos = response.data;
+
+      const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
+        pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
+      );
+
+      pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
+
+      const mapeados = {};
+      pedidosFiltrados.forEach(pedido => {
+        const data = new Date(pedido.dataEntrega);
+        const dataFormatada = data.toLocaleDateString('fr-CA'); // Formato: YYYY-MM-DD
+
+        if (!mapeados[dataFormatada]) {
+          mapeados[dataFormatada] = [];
+        }
+
+        mapeados[dataFormatada].push(`Pedido #${pedido.id}`);
+      });
+
+      setPedidos(mapeados);
+    })
+    .catch(error => {
+      console.error('Erro ao buscar pedidos:', error);
+    });
+  }, []);
 
   const anterior = () => {
     if (mesAtual > 0) setMesAtual(mesAtual - 1);
@@ -87,8 +116,8 @@ export function Calendario() {
         ))}
 
         {dias.map((data, index) => {
-          const chave = data ? data.toISOString().split("T")[0] : "";
-          const temPedido = pedidos[chave];
+          const chave = data ? data.toLocaleDateString('fr-CA') : "";
+          const pedidosDoDia = pedidos[chave];
           const isHoje = data && data.toDateString() === hoje.toDateString();
           const isPassado = data && data < hojeLimpo;
 
@@ -103,9 +132,9 @@ export function Calendario() {
               {data && (
                 <>
                   <div className="font-semibold">{data.getDate()}</div>
-                  {temPedido && (
-                    <div className="text-blue-600 text-xs mt-1">{temPedido}</div>
-                  )}
+                  {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => (
+                    <div key={idx} className="text-blue-600 text-xs mt-1">{pedidoTexto}</div>
+                  ))}
                 </>
               )}
             </div>
