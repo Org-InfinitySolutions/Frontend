@@ -5,9 +5,13 @@ import { Input } from '../components/Input';
 import { useNavigate } from 'react-router-dom';
 import { formatarCEP, formatarTelefone, formatarTelefoneFixo } from '../Utils/formatacoes';
 import axios from 'axios';
-import { api } from '../provider/apiInstance';
-import { exibirAviso, exibirAvisoTokenExpirado, exibirAvisoTimer } from '../Utils/exibirModalAviso' 
+import { api, apiAutenticacao } from '../provider/apiInstance';
+import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso' 
 import LoadingBar from 'react-top-loading-bar';
+import { limparSession } from '../Utils/limpar';
+import { ToastContainer, toast } from 'react-toastify';
+
+
 import {  
     campoNaoAtendeTamanho, 
     campoVazio, 
@@ -18,7 +22,8 @@ import {
     validarNumero,
     validarRazaoSocial,
     validarConfirmacaoSenha,
-    validarEmail
+    validarEmail,
+    validarSenha
 } from '../Utils/validarCampos';
 import { tokenExpirou } from '../Utils/token';
 
@@ -43,6 +48,11 @@ function EditarPerfil() {
     const [mostrarModalEmail, setMostrarModalEmail] = useState(false);
     const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false);
     const [mostrarModalAlterarSenha, setMostrarModalAlterarSenha] = useState(false);
+    const [novoEmail, setNovoEmail] = useState('');
+    const [senhaConfirmacao, setSenhaConfirmacao] = useState('');
+    const [senhaAtual, setSenhaAtual] = useState('');
+    const [novaSenha, setNovaSenha] = useState('');
+    const [confirmarNovaSenha, setConfirmarNovaSenha] = useState('');
 
     const navegar = useNavigate();
 
@@ -124,43 +134,128 @@ function EditarPerfil() {
             headers: {
                 Authorization: `Bearer ${sessionStorage.TOKEN}`
             }
-        }
-        ).then(() => {
+        }        ).then(() => {
 
             setBarraCarregamento(70);
             setTimeout(() => {
                 setBarraCarregamento(100);
-                exibirAvisoTimer("Operação realizado com sucesso!", 'success');
+                toast.success("Perfil alterado com sucesso!");
+            
+                setTimeout(() => {
+                    limparSession();
+                    navegar('/login');
+                }, 2000);
             }, 1000);
-
-            setTimeout(() => {
-                navegar('/perfil');
-            }, 4500);
         }).catch((err) => {
 
             setBarraCarregamento(100);
             if(err.status == 401){
                 exibirAvisoTokenExpirado();
-            }
-            console.log(err);
+            }            console.log(err);
         })
     }
 
     const abrirModalEmail = () => {
         setMostrarModalEmail(true);
     }
-
-    const fecharModalEmail = () => {
+      const fecharModalEmail = () => {
         setMostrarModalEmail(false);
+        setNovoEmail('');
     }
 
     const continuarModalEmail = () => {
-        setMostrarModalEmail(false); 
-        setMostrarModalConfirmacao(true); 
+        if (!validarEmail(novoEmail).valido) {
+            toast.error("Por favor, insira um e-mail válido");
+            return;
+        }
+        if (tokenExpirou()) {
+            exibirAvisoTokenExpirado(navegar);
+            return;
+        }
+        if (novoEmail === usuario.email) {
+            toast.error("O novo email deve ser diferente do atual");
+            return;
+        }
+
+        setBarraCarregamento(20);
+        apiAutenticacao.get(`/email/verificar?email=${novoEmail}`)
+            .then((res) => {
+                setBarraCarregamento(100);                
+                if (res.data.disponivel) {
+                    setMostrarModalEmail(false);
+                    setMostrarModalConfirmacao(true);
+                } 
+            })
+            .catch((err) => {
+                setBarraCarregamento(100);
+                if (err.status === 401) {
+                    exibirAvisoTokenExpirado(navegar);
+                } else if (err.status === 409) {
+                    toast.error("Este email já está sendo usado por outra conta");
+                }else {
+                    toast.error("Erro ao verificar disponibilidade do email. Tente novamente.");
+                }
+            });
+    }
+      const finalizarAlteracaoEmail = () => {
+        if (!senhaConfirmacao) {
+            toast.error("Digite sua senha para confirmar a alteração");
+            return;
+        }
+
+        if (tokenExpirou()) {
+            exibirAvisoTokenExpirado(navegar);
+            return;
+        }
+
+        setBarraCarregamento(30);
+        
+        apiAutenticacao.patch('/credenciais/email', {
+            senha: senhaConfirmacao,
+            novoEmail: novoEmail
+        }, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then(() => {
+            setBarraCarregamento(70);
+            setTimeout(() => {
+                setBarraCarregamento(100);
+                setMostrarModalConfirmacao(false);
+                toast.success("Email alterado com sucesso!");
+                
+                setTimeout(() => {
+                    limparSession();
+                    navegar('/login');
+                }, 2000);
+            }, 1000);
+        }).catch((err) => {
+            setBarraCarregamento(100);
+            
+            if (err.status === 401) {
+                   if(err.response.data.error === "Credenciais incorretas"){
+                    toast.error("Credenciais incorretas")
+                }else {
+                    exibirAvisoTokenExpirado(navegar);
+                }
+            } else if (err.status === 400) {
+                const dataErro = err.response.data;
+                if (dataErro.validationErrors != null) {
+                    toast.error(dataErro.validationErrors[0].message);
+                } else {
+                    toast.error(dataErro.error || "Erro ao alterar email");
+                }
+            } else if (err.status === 409) {
+                    toast.error("Email já está em uso.");
+            } else {
+                toast.error("Erro interno do servidor. Tente novamente mais tarde.");
+            }
+        });
     }
 
     const fecharModalConfirmacao = () => {
         setMostrarModalConfirmacao(false);
+        setSenhaConfirmacao('');
     }
 
     const abrirModalAlterarSenha = () => {
@@ -169,6 +264,74 @@ function EditarPerfil() {
     
     const fecharModalAlterarSenha = () => {
         setMostrarModalAlterarSenha(false);
+        setSenhaAtual('');
+        setNovaSenha('');        setConfirmarNovaSenha('');
+    }
+
+    const confirmarAlteracaoSenha = () => {
+        if (!senhaAtual || !novaSenha || !confirmarNovaSenha) {
+            toast.error("Preencha todos os campos obrigatórios");
+            return;
+        }
+
+        const senhaValida = validarSenha(novaSenha);
+        if (!senhaValida.valido) {
+            toast.error(senhaValida.mensagem);
+            return;
+        }
+
+        const confirmacaoValida = validarConfirmacaoSenha(confirmarNovaSenha, novaSenha);
+        if (!confirmacaoValida.valido) {
+            toast.error(confirmacaoValida.mensagem);
+            return;
+        }
+
+        if (tokenExpirou()) {
+            exibirAvisoTokenExpirado(navegar);
+            return;
+        }
+
+        setBarraCarregamento(30);
+
+        apiAutenticacao.patch('/credenciais/senha', {
+            senhaAtual: senhaAtual,
+            novaSenha: novaSenha
+        }, {
+            headers: {
+                Authorization: `Bearer ${sessionStorage.TOKEN}`
+            }
+        }).then(() => {
+            setBarraCarregamento(70);
+            setTimeout(() => {
+                setBarraCarregamento(100);
+                toast.success("Senha alterada com sucesso!");
+                fecharModalAlterarSenha();
+                
+                setTimeout(() => {
+                    limparSession();
+                    navegar('/login');
+                }, 2000);
+            }, 1000);
+        }).catch((err) => {
+            setBarraCarregamento(100);
+            
+            if (err.status === 401) {
+                if(err.response.data.error === "Credenciais incorretas"){
+                    toast.error("Credenciais incorretas")
+                }else {
+                    exibirAvisoTokenExpirado(navegar);
+                }
+            } else if (err.status === 400) {
+                const dataErro = err.response.data;
+                if (dataErro.validationErrors != null) {
+                    toast.error(dataErro.validationErrors[0].message);
+                } else {
+                    toast.error(dataErro.error || "Erro ao alterar senha");
+                }
+            } else {
+                toast.error("Erro interno do servidor. Tente novamente mais tarde.");
+            }
+        });
     }
     return (
         <div className="editar-conta">
@@ -426,45 +589,73 @@ function EditarPerfil() {
                         <button onClick={validarFormulario}>Confirmar</button>
                     </section>
                 </div>
-            )}
-
-            {mostrarModalEmail && (
+            )}            {mostrarModalEmail && (
                 <div className="modal-content">
                     <h1>Preencha o novo e-mail</h1>
-                    <Input tipo={"text"} label={"* E-mail:"} placeholder={"Ex.: email@email.com"} validacao={validarEmail} />
+                    <Input 
+                        tipo={"text"} 
+                        label={"* E-mail:"} 
+                        placeholder={"Ex.: email@email.com"} 
+                        valor={novoEmail}
+                        validacao={validarEmail}
+                        onChange={(e) => setNovoEmail(e.target.value)}
+                    />
                     <div className="botoes">
                         <button className="botao-cancelar" onClick={fecharModalEmail}>Cancelar</button>
                         <button className="botao-continuar" onClick={continuarModalEmail}>Continuar</button>
                     </div>
                 </div>
-            )}
-
-            {mostrarModalConfirmacao && (
+            )}            {mostrarModalConfirmacao && (
                 <div className="modal-content">
                     <h1 className="confirmar-alteracao-email">Deseja confirmar as alterações?</h1>
                     <p>Preencha a senha para continuar</p>
-                    <Input tipo={"text"} placeholder={"Senha"} />
-                    <div className="botoes">
-                        <button className="botao-confirmar" onClick={fecharModalConfirmacao}>Confirmar</button>
+                    <Input 
+                        tipo={"password"} 
+                        placeholder={"Senha"} 
+                        valor={senhaConfirmacao}
+                        onChange={(e) => setSenhaConfirmacao(e.target.value)}
+                    />                    <div className="botoes">
+                        <button className="botao-cancelar" onClick={fecharModalConfirmacao}>Cancelar</button>
+                        <button className="botao-confirmar" onClick={finalizarAlteracaoEmail}>Confirmar</button>
                     </div>
                 </div>
-            )}
-
-            {mostrarModalAlterarSenha && (
+            )}            {mostrarModalAlterarSenha && (
                 <div className="modal-content">
                     <h1>Alterar senha</h1>
-                    <Input tipo={"text"} label={"* Senha atual:"} placeholder="Senha atual" />
-                    <Input tipo={"text"} label={"* Nova senha:"} placeholder={"Nova senha"} />
-                    <Input tipo={"text"} label={"* Confirmar nova senha:"} placeholder={"Confirmar nova senha"} validacao={validarConfirmacaoSenha} />
+                    <Input 
+                        tipo={"password"} 
+                        label={"* Senha atual:"} 
+                        placeholder="Senha atual" 
+                        valor={senhaAtual}
+                        onChange={(e) => setSenhaAtual(e.target.value)}
+                    />
+                    <Input 
+                        tipo={"password"} 
+                        label={"* Nova senha:"} 
+                        placeholder={"Nova senha"} 
+                        valor={novaSenha}
+                        validacao={validarSenha}
+                        onChange={(e) => setNovaSenha(e.target.value)}
+                    />
+                    <Input 
+                        tipo={"password"} 
+                        label={"* Confirmar nova senha:"} 
+                        placeholder={"Confirmar nova senha"} 
+                        valor={confirmarNovaSenha}
+                        validacao={validarConfirmacaoSenha}
+                        valorAdicional={novaSenha}
+                        onChange={(e) => setConfirmarNovaSenha(e.target.value)}
+                    />
                     <div className="botoes-e-aviso-etapa-3">
                         <div className="botoes">
                             <button className="botao-cancelar" onClick={fecharModalAlterarSenha}>Cancelar</button>
-                            <button className="botao-confirmar" onClick={() => { navegar("/perfil") }}>Confirmar</button>
+                            <button className="botao-confirmar" onClick={confirmarAlteracaoSenha}>Confirmar</button>
                         </div>
                         <span className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</span>
                     </div>
                 </div>
             )}
+            <ToastContainer />
         </div>
     );
 }
