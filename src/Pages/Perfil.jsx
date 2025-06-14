@@ -8,7 +8,7 @@ import { Input } from '../components/Input';
 import { formatarData } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
-import { limparSession } from '../utils/limpar';
+import { limparSession } from '../Utils/limpar';
 import { validarSenha } from '../Utils/validarCampos'
 import { tokenExpirou } from '../Utils/token';
 
@@ -167,10 +167,8 @@ function Perfil(){
             )}
             <section className="dados-endereco">
                 <h3>Endereço:</h3>
-                <div>
-                    <span>Rua: {endereco.logradouro}</span>
-                    <span>Número: {endereco.numero}</span>
-                </div>
+                <span>Rua: {endereco.logradouro}</span>
+                <span>Número: {endereco.numero}</span>
                 <span>Bairro: {endereco.bairro}</span>
                 <div>
                     <span>Cidade: {endereco.cidade}</span>
@@ -198,7 +196,7 @@ function Perfil(){
         )}
         {mostrarModalExcluirConta && (
             <div className="modal-content">
-                <h1 className='aviso-excluir-conta'>Uma vez excluído os dados não poderão ser recuperados.</h1>
+                <h1 className="aviso-excluir-conta">Uma vez excluído os dados não poderão ser recuperados.</h1>
                 <p>Preencha a senha para excluir sua conta</p>
                 <Input 
                     tipo="password" 

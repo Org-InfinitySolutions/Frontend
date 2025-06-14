@@ -1,6 +1,6 @@
 .perfil {
     background-color: #171717;
-    min-height: 35rem;
+    /* min-height: 35rem; */
     padding: 10vh 0px;
     display: flex;
     align-items: center;
@@ -90,7 +90,7 @@
                 .botao-excluir,
                 .botao-editar {
                     height: 2.375rem;
-                    width: 6.375rem;
+                    width: 6.700rem;
                     margin-left: 2%;
                     font-size: 0.8em;
                     font-family: var(--fonte-texto);
@@ -195,7 +195,7 @@
         background-color: white;
         padding: 2rem;
         border-radius: 10px;
-        width: 25rem;
+        width: 25%;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -225,9 +225,8 @@
             }
 
             input {
-                width: 20rem;
-                height: 4vh;
-                margin-top: 0.3em;
+                width: 84%;
+                height: 4.9vh;
             }
         }
     }
@@ -240,8 +239,8 @@
         height: 100%;
 
         .botao-cancelar {
-            height: 38px;
-            width: 102px;
+            height: 2.375rem;
+            width: 6.375rem;
             margin-top: 10px;
             background-color: white;
             color: black;
@@ -265,8 +264,8 @@
         }
 
         .botao-confirmar {
-            height: 38px;
-            width: 102px;
+            height: 2.375rem;
+            width: 6.375rem;
             margin-top: 10px;
             background-color: black;
             color: white;
@@ -337,7 +336,7 @@
             }
 
             .dados-endereco {
-                height: 30%;
+                height: 40%;
                 width: 80%;
 
                 display: flex;
@@ -363,9 +362,8 @@
 
                     .botao-excluir,
                     .botao-editar {
-                        padding: 0;
                         height: 2.375rem;
-                        width: 5.5rem;
+                        width: 6.7rem;
                     }
                 }
 

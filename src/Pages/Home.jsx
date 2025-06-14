@@ -1,7 +1,5 @@
 import './Home.css';
 import videoFundo from '../assets/video-institucional.mp4';
-import videoFundo2 from '../assets/Arq-home-pt1-v1.mp4';
-
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
@@ -59,7 +57,7 @@ function Home() {
                     playsInline
                     className="video-fundo"
                 >
-                    <source src={videoFundo2} type="video/mp4" />
+                <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
                 </video>
 
                 <section className="container-titulo">
@@ -75,8 +73,7 @@ function Home() {
                     quos itaque dolore, minima dolor fugiat consequuntur? Possimus quo iusto assumenda eos labore reiciendis in?
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias quaerat obcaecati eveniet provident optio adipisci</b>
                     vitae maiores numquam culpa quam vero, illum iusto voluptate aliquam cum eaque debitis, voluptas amet!
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo aut fugit cupiditate tempora provident laborum molestias nam voluptas libero,
-                    nobis fugiat quasi repellendus eum, quidem sapiente quisquam excepturi corporis assumenda.</p>
+                </p>
             </section>
 
             <section className="container-servicos" id='servicos'>

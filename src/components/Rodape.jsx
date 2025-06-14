@@ -29,7 +29,7 @@ function Rodape() {
                 } else if (deviced.tablet) {
                     return { width: "100%", height: "auto" };
                 } else if (deviced.desktop) {
-                    return { width: "80%", height: "auto" };
+                    return { width: "100%", height: "auto", marginTop: "2%" };
                 }
             }
 
@@ -48,19 +48,19 @@ function Rodape() {
                     </div>
                     <div>
                         <img src={wpp} alt="icone whatsapp" height='25em'/>
-                        <span>11 94144-2113</span>
+                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>11 94144-2113</Link>
                     </div>
                     <div>
                         <img src={telefone} alt="icone telefone" height='25em'/>
-                        <span>11 4786-3508</span>
+                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>11 4786-3508</Link>
                     </div>
                     <div>
                         <img src={instagram} alt="icone instagram" height='25em'/>
-                        <span>@nova_locacoes</span>
+                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>@nova_locacoes</Link>
                     </div>
                     <div>
                         <img src={email} alt="icone email" height='25em'/>
-                        <span>comercial@novalocacoes.com</span>
+                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>comercial@novalocacoes.com</Link>
                     </div>
                 </section>
 
@@ -75,7 +75,7 @@ function Rodape() {
             
             <section className='container-endereco'>
                 <img src={empresa} alt="icone empresa" height='25em'/>
-                <span>Rua joão pires de camargo, 28, Taboão da Serra</span>
+                <Link className='links-endereco' to={"https://chatgpt.com/"}>Rua joão pires de camargo, 28, Taboão da Serra</Link>
             </section>
         </footer>
     </>

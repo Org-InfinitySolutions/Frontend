@@ -51,7 +51,7 @@
 
     .botao-voltar-etapa-4,
     .botao-confirmar-etapa-4 {
-      padding: 1em;
+      /* padding: 1em; */
       font-family: var(--fonte-texto);
       border-radius: 6px;
       cursor: pointer;

@@ -1,4 +1,5 @@
 .editar-conta {
+    padding: 10vh 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6,7 +7,7 @@
 
     .container-formulario {
         min-height: 90vh;
-        width: 35%;
+        width: 30%;
         background-color: white;
 
         border-radius: 10px;
@@ -31,14 +32,14 @@
 
             .barra {
                 height: 2px;
-                width: 85%;
+                width: 100%;
                 background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
             }
         }
 
         .container-dados-pessoais {
             min-height: 40vh;
-            width: 70%;
+            width: 80%;
 
             display: flex;
             flex-direction: column;
@@ -90,7 +91,7 @@
 
         .container-dados-endereco {
             height: 65vh;
-            width: 70%;
+            width: 80%;
 
             display: flex;
             flex-direction: column;
@@ -166,7 +167,6 @@
             .botao-confirmar-edicao {
                 height: 2.375rem;
                 width: 6.375rem;
-                padding: 2%;
                 border-radius: 8px;
                 background-color: black;
                 border: 1px solid black;
@@ -190,7 +190,6 @@
             .botao-cancelar-edicao {
                 height: 2.375rem;
                 width: 6.375rem;
-                padding: 2%;
                 font-size: 0.8em;
                 margin-right: 2%;
 
@@ -225,7 +224,7 @@
         background-color: white;
         padding: 2rem;
         border-radius: 10px;
-        width: 30%;
+        width: 25%;
         text-align: center;
         display: flex;
         flex-direction: column;
@@ -240,20 +239,23 @@
         }
 
         .input-alteracao-senha {
-            text-align: start;
+            text-align: center;
         }
 
         .container-input {
             padding: 0px;
             margin-top: 1em;
+            align-items: center;
 
             label {
+                width: 80%;
+
                 justify-content: flex-start;
                 display: flex;
             }
 
             input {
-                width: 94%;
+                width: 80%;
                 margin-top: 0.3em;
             }
         }
@@ -376,7 +378,7 @@
     .editar-conta {
 
         .container-formulario {
-            width: 80%;
+            width: 80vh;
             height: 90%;
 
             .container-titulo {
@@ -452,7 +454,7 @@
         }
 
         .modal-content {
-            width: 60%;
+            width: 70vh;
             height: 90%;
 
             h2 {
