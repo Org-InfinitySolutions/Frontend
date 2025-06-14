@@ -1,5 +1,5 @@
 import './Home.css';
-import videoFundo from '../assets/video-institucional.mp4';
+import fotoFundo from '../assets/nova-logo.png';
 import { Carousel } from "../components/Carrossel/Carousel"
 import { CarouselItem } from "../components/Carrossel/CarouselItem"
 import { DivCarouselItem } from '../components/Carrossel/style';
@@ -15,13 +15,13 @@ function Home() {
 
     const [deviced, setDeviced] = useState(getDevice());
 
-        useEffect(() => {
+    useEffect(() => {
         const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
-        if(carrinho.produtos.length == 0){
+        if (carrinho.produtos.length == 0) {
             sessionStorage.CARRINHO = JSON.stringify({ produtos: [] });
         }
     }, []);
-  
+
     useEffect(() => {
         const onResize = () => setDeviced(getDevice());
         window.addEventListener('resize', onResize);
@@ -47,24 +47,59 @@ function Home() {
     }
 
     return (
-        <section className="container-home">
+            
+            <section className="home">    
 
-            <section className='container-video' id='inicio'>
-                <video
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    className="video-fundo"
-                >
-                <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
-                </video>
+            {deviced.desktop && (
+                    <section className="container-home">
 
-                <section className="container-titulo">
-                    <h1 className='titulo'>NOVA LOCAÇÕES</h1>
-                    <div className="barra"></div>
+                        <section className="parallax-container">
+                                <source src="..." type="video/mp4" />
+                        </section>
+
+                        <section className='container-inicial'>
+                            <section className='container-imagem'>
+                                <img src={fotoFundo} alt="Logo Nova Locações" className='logo-inicial' />
+                                <section className="container-titulo">
+                                    <h1 className='titulo'>NOVA LOCAÇÕES</h1>
+                                    <div className="barra"></div>
+                                </section>
+                            </section>
+                            <section className='container-video' id='inicio'>
+                                <video
+                                    autoPlay
+                                    muted
+                                    loop
+                                    playsInline
+                                    className="video-fundo"
+                                >
+                                    <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
+                                </video>
+
+                            </section>
+                        </section>
+                    </section>
+            )}
+
+            {deviced.mobile && (
+
+                <section className='container-video' id='inicio'>
+                    <video
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="video-fundo"
+                    >
+                        <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
+                    </video>
+
+                    <section className="container-titulo">
+                        <h1 className='titulo'>NOVA LOCAÇÕES</h1>
+                        <div className="barra"></div>
+                    </section>
                 </section>
-            </section>
+            )}
 
 
             <section className="container-sobre-nos" id='sobre-nos'>

@@ -1,4 +1,5 @@
 import './Rodape.css';
+import logoNovaLocacoes from '../assets/logoNovaSemTexto.jpg';
 import wpp from '../assets/wpp.png';
 import instagram from '../assets/instagram.png';
 import telefone from '../assets/telefone.png';
@@ -39,7 +40,7 @@ function Rodape() {
         <footer>
             <section className='container-informacoes-gerais'>
                 <section className='container-logo'>
-                    <img src='/logoNovaSemTexto.jpg' alt='Logo nova locações' style={logo()}/>
+                    <img src={logoNovaLocacoes} alt='Logo nova locações' style={logo()}/>
                 </section>
 
                 <section className='container-contatos'>
