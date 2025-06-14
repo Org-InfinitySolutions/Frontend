@@ -1,0 +1,59 @@
+.paginacao {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  gap: var(--gap-pequeno, 0.5rem);
+  font-weight: bold;
+}
+
+.paginacao span {
+  cursor: pointer;
+  padding: var(--padding-pequeno, 0.4rem 0.6rem);
+  border-radius: var(--border-radius, 4px);
+  user-select: none;
+}
+
+.pagina-ativa {
+  background-color: var(--color-preto, #000);
+  color: var(--color-branco, #fff);
+}
+
+.paginacao span:hover {
+  background-color: var(--color-preto, #000);
+  color: var(--color-branco, #fff);
+  transition: background-color var(--transição, 0.3s);
+}
+
+.paginacao span.disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .calendario-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .calendario-dia {
+    min-height: 60px !important;
+    font-size: 0.75rem !important;
+    padding: 0.3rem !important;
+  }
+
+  .calendario-dia-nome {
+    font-size: 0.7rem !important;
+  }
+
+  .calendario-pedido {
+    font-size: 0.65rem !important;
+  }
+
+  .paginacao {
+    gap: 0.3rem;
+  }
+
+  .paginacao span {
+    font-size: 0.85rem;
+    padding: 0.25rem 0.45rem;
+  }
+}
