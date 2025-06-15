@@ -57,6 +57,7 @@ export function Calendario() {
 
       pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
 
+      console.log(pedidosFiltrados)
       const mapeados = {};
       pedidosFiltrados.forEach(pedido => {
         const data = new Date(pedido.dataEntrega);
@@ -133,7 +134,7 @@ export function Calendario() {
                 <>
                   <div className="font-semibold">{data.getDate()}</div>
                   {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => (
-                    <div key={idx} className="text-blue-600 text-xs mt-1">{pedidoTexto}</div>
+                    <a key={idx} href={`/detalhar-pedidos?id=${pedidoTexto.substr(pedidoTexto.indexOf('#') + 1)}`} className="text-blue-600 text-xs mt-1">{pedidoTexto}</a>
                   ))}
                 </>
               )}

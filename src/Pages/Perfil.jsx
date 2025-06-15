@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
-import { formatarData } from '../Utils/formatacoes';
+import { formatarData, formatarCNPJ, formatarCPF, formatarRegistroGeral, formatarTelefone, formatarTelefoneFixo } from '../Utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
 import { limparSession } from '../Utils/limpar';
@@ -85,6 +85,16 @@ function Perfil(){
             
             setBarraCarregamento(100);
             const dados = res.data;
+            if(dados.tipo == 'PJ'){
+                dados.cnpj = formatarCNPJ(dados.cnpj);
+                dados.telefone_residencial = formatarTelefone(dados.telefone_residencial);
+            } else {
+                dados.rg = formatarRegistroGeral(dados.rg);
+                dados.cpf = formatarCPF(dados.cpf);
+            }
+
+            dados.telefone_celular = formatarTelefone(dados.telefone_celular);
+
             const dadosEndereco = dados.endereco;
             setUsuario(dados)
             setEndereco(dadosEndereco);

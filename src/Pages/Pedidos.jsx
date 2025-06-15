@@ -8,6 +8,8 @@ import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
 import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
 import { formatarData } from '../Utils/formatacoes'
+import { tokenExpirou } from '../Utils/token';
+import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 
 const normalizarStatus = (status) => {
 	if (!status) return '';
@@ -32,24 +34,29 @@ const Pedidos = () => {
 
 	useEffect(() => {
 		const token = sessionStorage.TOKEN;
-		api.get('/pedidos', {
+		if(tokenExpirou()){
+			exibirAvisoTokenExpirado(navigate);
+		} else {
+		
+			api.get('/pedidos', {
 			headers: {
 				Authorization: token ? `Bearer ${token}` : undefined
 			}
 		})
-			.then((res) => {
-				if (Array.isArray(res.data) && res.data.length > 0) {
-					const pedidosApi = res.data.map(p => ({
-						id: p.id,
-						itens: p.qtd_itens,
-						data: formatarData(p.dataCriacao),
-						status: p.situacao,
-						cliente: p.cliente || 'Cliente Teste',
-						valor: p.valor || 100
-					}));
-					setPedidos(pedidosApi);
-				}
-			})
+		.then((res) => {
+			if (Array.isArray(res.data) && res.data.length > 0) {
+				const pedidosApi = res.data.map(p => ({
+					id: p.id,
+					itens: p.qtd_itens,
+					data: formatarData(p.dataCriacao),
+					status: p.situacao,
+					cliente: p.nome,
+					valor: p.valor || 100
+				}));
+				setPedidos(pedidosApi);
+			}
+		})
+		}
 	}, []);
 
 	const handleDetalhes = (pedido) => {
