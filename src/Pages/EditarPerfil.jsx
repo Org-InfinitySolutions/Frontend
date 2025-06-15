@@ -140,6 +140,10 @@ function EditarPerfil() {
             setTimeout(() => {
                 setBarraCarregamento(100);
                 toast.success("Perfil alterado com sucesso!");
+
+                setTimeout(() => {
+                    navegar('/perfil');
+                }, 2000);
             }, 1000);
         }).catch((err) => {
 
@@ -644,7 +648,7 @@ function EditarPerfil() {
                     <div className="botoes-e-aviso-etapa-3">
                         <div className="botoes">
                             <button className="botao-cancelar" onClick={fecharModalAlterarSenha}>Cancelar</button>
-                            <button className="botao-confirmar" onClick={confirmarAlteracaoSenha}>Confirmar</button>
+                            <button className="botao-confirmar" onClick={confirmarAlteracaoSenha}>C onfirmar</button>
                         </div>
                         <span className="aviso-obrigatorio-etapa-3">* Preenchimento obrigatório</span>
                     </div>
