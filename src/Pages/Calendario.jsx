@@ -86,7 +86,7 @@ export function Calendario() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-4 font-sans">
+    <div className="max-w-8xl mx-auto p-4 font-sans">
       <style>{`
         .hoje {
           background-color: #e0f2fe;

@@ -29,7 +29,7 @@ body {
 
 .conteudo-equipamentos {
   flex: 1;
-  padding: 2rem 5rem;
+  padding: 1rem 1.5rem;
 }
 
 .filtros {
@@ -43,6 +43,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+
 }
 
 .input-pesquisa {
@@ -162,7 +164,7 @@ body {
 
 @media (max-width: 768px) {
   .conteudo-equipamentos {
-    padding: 1rem 0.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .linha-pesquisa-filtros,
@@ -175,6 +177,13 @@ body {
   .filtros {
     gap: var(--gap-pequeno);
     margin-bottom: 1rem;
+  }
+
+  .linha-botoes-carrinho {
+    flex-direction: column;
+    align-items: stretch; 
+    gap: var(--gap-pequeno);
+    align-items: center;
   }
 
   .grid-produtos {

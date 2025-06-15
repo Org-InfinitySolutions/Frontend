@@ -35,7 +35,7 @@ button {
 
 .conteudo-pedidos {
   flex: 1;
-  padding: 2rem 5rem;
+  padding: 1rem 1.5rem;
 }
 
 .filtros {
@@ -196,7 +196,7 @@ button {
 
 @media (max-width: 768px) {
   .conteudo-pedidos {
-    padding: 1rem 0.5rem;
+    padding: 1rem 1.5rem;
   }
 
   .container-filtros {

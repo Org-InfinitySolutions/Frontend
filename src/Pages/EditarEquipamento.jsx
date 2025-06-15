@@ -271,6 +271,7 @@ export function EditarEquipamento() {
       </form>
 
       <div className="botao-container">
+        <button className="botao-cancelar-edicao" onClick={() => {navegar(`/equipamentos`)}}>Cancelar</button>
         <button type="button" className="botao-editar" onClick={validarForm} disabled={desativarBotao}>SALVAR</button>
       </div>
     </div>
