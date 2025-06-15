@@ -13,6 +13,8 @@ import { CardProdutoEquipamentos } from '../components/CardProdutoEquipamentos'
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
 import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
+import { tokenExpirou } from '../Utils/token';
+import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
@@ -44,29 +46,34 @@ const Equipamentos = () => {
     const header = sessionStorage.CARGO == "ROLE_ADMIN" || sessionStorage.CARGO == "ROLE_FUNCIONARIO";
 
     setBarraCarregamento(30);
-    api.get('/produtos', header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN }` } } : {})
-    .then((res) => {
-      setBarraCarregamento(100);
-      
-      if(res.data.length > 0){
-        const produtosApi = res.data.map(p => ({
-          ...p,
-          nome: p.modelo,
-          imagem: (typeof p.imagem[0] === 'string' && p.imagem[0].trim() !== '')
-            ? p.imagem[0]
-            : ImgNaoDisponivel,
-          linkFabricante: p.url_fabricante,
-        }));
-        setProdutos(produtosApi);
-        const categoriasUnicas = [];
-        produtosApi.forEach(p => {
-          if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
-            categoriasUnicas.push(p.categoria);
-          }
-        });
-        setCategorias(categoriasUnicas);
-      }
-    })
+    if(tokenExpirou()){
+      exibirAvisoTokenExpirado(navegar)
+    } else {
+
+      api.get('/produtos', header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN }` } } : {})
+      .then((res) => {
+        setBarraCarregamento(100);
+        
+        if(res.data.length > 0){
+          const produtosApi = res.data.map(p => ({
+            ...p,
+            nome: p.modelo,
+            imagem: (typeof p.imagem[0] === 'string' && p.imagem[0].trim() !== '')
+              ? p.imagem[0]
+              : ImgNaoDisponivel,
+            linkFabricante: p.url_fabricante,
+          }));
+          setProdutos(produtosApi);
+          const categoriasUnicas = [];
+          produtosApi.forEach(p => {
+            if (p.categoria && !categoriasUnicas.some(c => c.id === p.categoria.id)) {
+              categoriasUnicas.push(p.categoria);
+            }
+          });
+          setCategorias(categoriasUnicas);
+        }
+      })
+    }
   }, []);
 
   useEffect(() => {
@@ -117,10 +124,6 @@ const Equipamentos = () => {
       <main className="conteudo-equipamentos">
         <div className="filtros">
           <div className="linha-botoes-carrinho">
-            {/* <div className="botoes-toggle">
-              <a className="ativo">EQUIPAMENTOS</a>
-              <a href="/pedidos" className="inativo">PEDIDOS</a>
-            </div> */}
             <BotoesFuncionalidades />
             <div className="icone-carrinho">
               <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />

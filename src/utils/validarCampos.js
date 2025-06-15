@@ -55,10 +55,15 @@ const validarRG = (rg) => {
 };
 
 const validarCPF = (cpf) => {
+
+    const regex = /^(\d)\1{10}$/;
+
     if (campoVazio(cpf)) {
         return { valido: false, mensagem: "Este campo é obrigatório" };
     } else if (cpf.trim().length < 14) {
         return { valido: false, mensagem: "O CPF deve estar completo" };
+    } else if(!regex.test(cpf)){
+        return { valido: false, mensagem: "O CPF é inválido" };
     }
     return { valido: true, mensagem: "" };
 };
@@ -104,10 +109,16 @@ const validarTelefoneFixo = (telefone) => {
 };
 
 const validarCNPJ = (cnpj) => {
+
+    const regex = /^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/;
+    const regex2 = /^\d{14}$/;
+
     if (campoVazio(cnpj)) {
         return { valido: false, mensagem: "Este campo é obrigatório" };
     } else if (cnpj.trim().length < 18) {
         return { valido: false, mensagem: "O CNPJ deve estar completo" };
+    } else if(!regex.test(cnpj) || !regex2(cnpj)){
+        return { valido: false, mensagem: "O CNPJ é inválido" };
     }
     return { valido: true, mensagem: "" };
 };

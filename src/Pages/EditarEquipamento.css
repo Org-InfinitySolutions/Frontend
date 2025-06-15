@@ -48,7 +48,7 @@
 
 .upload-foto img{
   height: 100%;
-  object-fit: cover;
+  width: 100%;
 }
 
 .subir-foto {
@@ -233,6 +233,10 @@
 
   .upload-foto {
     min-height: 200px;
+  }
+
+  .upload-foto img{
+    width: 100%;
   }
 
   .container-equipamento {

@@ -5,10 +5,12 @@ import { exibirAviso } from '../Utils/exibirModalAviso';
 import { campoVazio, emailInvalido } from '../Utils/validarCampos';
 import './RecuperarSenha.css';
 import { Input } from '../components/Input';
+import LoadingBar from 'react-top-loading-bar';
 
 export function RecuperarSenha() {
     const navigate = useNavigate();
     const [etapa, setEtapa] = useState(1);
+    const [barraCarregamento, setBarraCarregamento] = useState(0);
 
     const [email, setEmail] = useState('');
     const [codigo, setCodigo] = useState(Array(6).fill(''));
@@ -34,62 +36,68 @@ export function RecuperarSenha() {
         e.preventDefault();
 
         if (campoVazio(email) || emailInvalido(email)) {
-            exibirAviso("Por favor, preencha um e-mail válido.");
+            exibirAviso("Por favor, preencha um e-mail válido.", 'error');
             return;
         }
-
-        try {
-            await apiAutenticacao.post('/reset-senha/solicitar', { email });
+        
+        apiAutenticacao.post('/reset-senha/solicitar', { email })
+        .then((res) => {
             localStorage.setItem('emailRecuperacao', email);
-            exibirAviso("Código de confirmação enviado ao seu e-mail.");
             setEtapa(2);
-        } catch (error) {
-            console.error(error);
-            exibirAviso("Erro ao solicitar o código.");
-        }
+        }).catch((err) => {
+            exibirAviso(error.response?.data?.mensagem || "Erro ao solicitar o código.", 'error');
+        })
     };
 
     const handleSubmitSenha = async () => {
         const emailRecuperado = localStorage.getItem('emailRecuperacao');
         const codigoFinal = codigo.join('');
 
+        setBarraCarregamento(30);
         if (!emailRecuperado) {
-            exibirAviso('Erro', 'E-mail de recuperação não encontrado.');
+            exibirAviso('E-mail de recuperação não encontrado.', 'error');
             return;
         }
 
         if (codigoFinal.length !== 6) {
-            exibirAviso('Atenção', 'Preencha todos os 6 caracteres do código.');
+            exibirAviso('Preencha todos os 6 caracteres do código.', 'error');
             return;
         }
 
         if (!senha || !confirmarSenha) {
-            exibirAviso('Atenção', 'Preencha os campos de senha.');
+            exibirAviso('Preencha os campos de senha.', 'error');
             return;
         }
 
         if (senha !== confirmarSenha) {
-            exibirAviso('Erro', 'As senhas não coincidem.');
+            exibirAviso('As senhas não coincidem.', 'error');
             return;
         }
-
-        try {
-            await apiAutenticacao.post('/reset-senha/confirmar', {
-                email: emailRecuperado,
-                codigo: codigoFinal,
-                novaSenha: senha,
-            });
-            exibirAviso('Sucesso', 'Senha redefinida com sucesso.');
-            navigate('/login');
-        } catch (error) {
-            console.error(error);
-            exibirAviso('Erro', error.response?.data?.mensagem || 'Falha ao redefinir senha.');
-        }
+        
+        apiAutenticacao.post('/reset-senha/confirmar', {
+            email: emailRecuperado,
+            codigo: codigoFinal,
+            novaSenha: senha,
+        }).then((res) => {
+            setBarraCarregamento(100);
+            exibirAviso('Senha redefinida com sucesso.', 'success');
+            setTimeout(() => {
+                navigate('/login');
+            }, 2000)
+        }).catch((err) => {
+            setBarraCarregamento(100);
+            exibirAviso(error.response?.data?.mensagem || 'Falha ao redefinir senha.', 'error');
+        })
     };
 
     if (etapa === 1) {
         return (
             <section className="container-recuperar-senha">
+                <LoadingBar
+                    progress={barraCarregamento}
+                    height={3}
+                    color="#f11946"
+                />
                 <form onSubmit={enviarCodigo} className="formulario-recuperar-senha">
                     <h1>Esqueci minha senha</h1>
                     <div className="barra-divisoria"></div>
@@ -126,6 +134,11 @@ export function RecuperarSenha() {
     if (etapa === 2) {
         return (
             <div className='container-nova-senha'>
+                <LoadingBar
+                    progress={barraCarregamento}
+                    height={3}
+                    color="#f11946"
+                />
                 <form onSubmit={(e) => { e.preventDefault(); handleSubmitSenha(); }} className="formulario-nova-senha">
                     <h1>Confirmação de e-mail</h1>
                     <p className='font-medium'>Preencha abaixo o código de confirmação que enviamos ao seu e-mail.</p>

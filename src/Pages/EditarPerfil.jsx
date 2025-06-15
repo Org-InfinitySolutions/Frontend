@@ -134,13 +134,13 @@ function EditarPerfil() {
             headers: {
                 Authorization: `Bearer ${sessionStorage.TOKEN}`
             }
-        }        ).then(() => {
+        }).then(() => {
 
             setBarraCarregamento(70);
             setTimeout(() => {
                 setBarraCarregamento(100);
                 toast.success("Perfil alterado com sucesso!");
-            
+
                 setTimeout(() => {
                     navegar('/perfil');
                 }, 2000);

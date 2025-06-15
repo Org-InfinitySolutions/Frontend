@@ -20,7 +20,6 @@ const statusLabel = {
 };
 
 const statusClassMap = {
-    'EM ANÁLISE': 'status-btn status-cinza',
     'EM_ANALISE': 'status-btn status-cinza',
     'EM EVENTO': 'status-btn status-azul',
     'EM_EVENTO': 'status-btn status-azul',
@@ -49,7 +48,7 @@ const getStatusClass = (status) => {
     const normalizado = status
         ? status.normalize('NFD').replace(/[^\w\s]/g, '').replace(/\s+/g, '_').toUpperCase()
         : '';
-    return statusClassMap[normalizado] || 'status-btn status-cinza';
+    return statusClassMap[normalizado];
 };
 
 export function DetalharPedidos() {
@@ -80,6 +79,8 @@ export function DetalharPedidos() {
                 const situacao = res.data.situacao;
                 if(situacao == 'FINALIZADO' || situacao == 'CANCELADO'){
                     statusOptions = statusOptions.filter(x => x.value != 'APROVADO' && x.value != 'EM_ANALISE' && x.value != 'EM_EVENTO');
+                } else if(situacao == 'EM_EVENTO'){
+                    statusOptions = statusOptions.filter(x => x.value != 'APROVADO' && x.value != 'EM_ANALISE' && x.value != 'CANCELADO');    
                 }
                 setStatus(situacao);
             })
@@ -106,9 +107,8 @@ export function DetalharPedidos() {
                 setPedido(p => ({ ...p, situacao: status }));
                 exibirAviso('Operação realizada com sucesso', 'success');
             }).catch((err) => {
-                if(err.status == 400){
-                    exibirAviso(err.response.data.message, 'error');
-                }
+                setBarraCarregamento(100);
+                exibirAviso(err.response.data.message, 'error');
             })
             setMudandoStatus(false);
         }
@@ -157,7 +157,7 @@ export function DetalharPedidos() {
                     <p className="data-pedido">Pedido feito em: {pedido.dataCriacao ? new Date(pedido.dataCriacao).toLocaleDateString('pt-BR') : '-'}</p>
                 </div>
                 <div className="condicoes-pedido">
-                    <span className={`situacao-pedido ${getStatusClass(status)}`}>{exibirStatus(status)}</span>
+                    <span className={`${statusClassMap[status]}`}>{exibirStatus(status)}</span>
                     {isAdmin && (
                         <>
                             <select
