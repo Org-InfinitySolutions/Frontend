@@ -11,6 +11,7 @@ export const CarouselContainer = styled.div`
 export const Inner = styled.div`
   display: flex;
   gap: 30px;
+  align-items: center;
   transition: transform 0.3s;
   will-change: transform;
 
@@ -52,7 +53,6 @@ export const Indicadores = styled.div`
 export const Prev = styled.button`
   position: absolute;
   z-index: 4;
-  left: 30px;
   align-self: center;
   background: none;
   border: none;
@@ -67,7 +67,7 @@ export const Prev = styled.button`
 export const Next = styled.button`
   position: absolute;
   z-index: 4;
-  right: 30px;
+  right: 0%;
   align-self: center;
   background: none;
   border: none;
