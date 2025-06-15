@@ -62,9 +62,9 @@ const getTransform = () => {
   });
 
   const foto = () => {
-    if (deviced.mobile) return { width: "30px", height: "30px" };
-    if (deviced.tablet) return { width: "35px", height: "35px" };
-    return { width: "40px", height: "40px" };
+    if (deviced.mobile) return { width: "25px", height: "25px" };
+    if (deviced.tablet) return { width: "30px", height: "30px" };
+    return { width: "30px", height: "30px" };
   };
 
   return (
