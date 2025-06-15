@@ -10,6 +10,13 @@
   text-decoration: none;
   padding: var(--padding-medio);
   font-weight: bold;
+  font-family: var(--fonte-texto);
+  font-size: 12px;
+  width: 8rem; 
+  height: 1.375rem; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
 }
 
 .botoes-toggle a.ativo {
@@ -34,4 +41,24 @@
   background-color: var(--color-preto);
   color: var(--color-branco);
   transition: background-color var(--transição);
+}
+
+@media (max-width: 768px) {
+  .botoes-toggle {
+  display: flex;
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  gap: var(--gap-medio); 
+}
+
+.botoes-toggle a {
+  flex: 1 1 calc(45% - var(--gap-medio)); 
+  border-radius: var(--border-radius);
+  text-decoration: none;
+  padding: var(--padding-medio);
+  font-weight: bold;
+  height: 2.375rem;
+  box-sizing: border-box;
+}
+
 }

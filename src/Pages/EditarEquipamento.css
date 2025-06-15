@@ -46,7 +46,7 @@
   background-color: #c7c7c7;
 }
 
-.upload-foto img{
+.upload-foto img {
   height: 100%;
   object-fit: cover;
 }
@@ -74,14 +74,14 @@
   border-radius: 0.3rem;
 }
 
-.box-informacoes-gerenciais{
+.box-informacoes-gerenciais {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.5rem;
 }
 
-.box-definir-categoria{
+.box-definir-categoria {
   display: flex;
   align-items: flex-start;
   flex-direction: column;
@@ -89,7 +89,7 @@
   width: 40%;
 }
 
-.box-definir-categoria select{
+.box-definir-categoria select {
   height: 2.75rem;
   padding: 0px 0.5rem;
   width: 100%;
@@ -99,7 +99,7 @@
   border: 1px solid #ccc;
 }
 
-.box-definir-quantidade{
+.box-definir-quantidade {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
@@ -123,7 +123,7 @@
   background-color: #fff;
 }
 
-.estoque-contador button:hover{
+.estoque-contador button:hover {
   transition: 0.3s;
   color: white;
   background-color: #000;
@@ -151,7 +151,7 @@
 }
 
 .descricao-section label,
-.url-section label{
+.url-section label {
   font-weight: 500;
 }
 
@@ -182,7 +182,8 @@
   background-color: black;
   color: white;
   padding: 0 1em;
-  height: 2.5rem;
+  height: 2.375rem;
+  width: 6.375rem;
   border: 1px solid black;
   border-radius: 8px;
   cursor: pointer;
@@ -202,7 +203,7 @@
   transform: scale(0.95);
 }
 
-.botao-editar:disabled{
+.botao-editar:disabled {
   background-color: #cccccc !important;
   color: #666666 !important;
   border: 1px solid #999999 !important;
@@ -210,7 +211,38 @@
   cursor: not-allowed;
 }
 
-.situacao-section{
+
+.botao-cancelar-edicao {
+  height: 2.375rem;
+  width: 6.375rem;
+  font-size: 0.8em;
+  margin-right: 2%;
+
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  justify-content: center;
+
+  color: black;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: white;
+  border: 1px solid black;
+  font-family: var(--fonte-texto);
+}
+
+.botao-cancelar-edicao:hover {
+  color: white;
+  transition: 0.3s;
+  background-color: black;
+}
+
+.botao-cancelar-edicao:active {
+  transition: 0.2s;
+  transform: scale(0.95);
+}
+
+.situacao-section {
   margin-top: 1.5rem;
   align-items: center;
   display: flex;
@@ -242,13 +274,13 @@
   .botao-container {
     justify-content: center;
   }
-  
-  .box-informacoes-gerenciais{
+
+  .box-informacoes-gerenciais {
     flex-direction: column;
     align-items: flex-start;
     gap: 2rem;
   }
-  
+
   .box-definir-categoria {
     width: 100%;
   }

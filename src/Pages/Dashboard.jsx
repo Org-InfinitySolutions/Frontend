@@ -15,8 +15,8 @@ const Dashboard = () => {
     }
   }, [navigate]);
 
-  return (
-    <div className="p-8 bg-white min-h-screen">
+  return (  
+  <div className="pt-4 pb-6 pl-4 pr-4 bg-white min-h-screen">
       <BotoesFuncionalidades />
       <MetricasKpis />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
