@@ -4,7 +4,7 @@ import Modal from '../components/ModalEquipamento';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import ImgNaoDisponivel from '/public/img-nao-disponivel.jpg';
+import ImgNaoDisponivel from '/img-nao-disponivel.jpg';
 import LoadingBar from 'react-top-loading-bar';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../provider/apiInstance';
@@ -29,7 +29,7 @@ const Equipamentos = () => {
     [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false),
     [barraCarregamento, setBarraCarregamento] = useState(0),
     [paginaAtual, setPaginaAtual] = useState(1),
-    [cargo, setCargo] = useState(sessionStorage.CARGO);
+    [cargo, setCargo] = useState(sessionStorage.CARGO || '');
 
   const produtosPorPagina = 20;
 
@@ -43,7 +43,7 @@ const Equipamentos = () => {
 
   useEffect(() => {
 
-    const header = sessionStorage.CARGO == "ROLE_ADMIN" || sessionStorage.CARGO == "ROLE_FUNCIONARIO";
+    const header = cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO";
 
     setBarraCarregamento(30);
     if(tokenExpirou()){

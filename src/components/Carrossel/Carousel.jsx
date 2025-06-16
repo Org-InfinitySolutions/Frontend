@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { CarouselContainer, Indicadores, Inner, Next, Prev } from "./style";
 import { useSwipeable } from "react-swipeable";
 
+
 export const Carousel = ({ children }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -76,7 +77,7 @@ const getTransform = () => {
       <Indicadores>
         {activeIndex > 0 && (
           <Prev onClick={() => updateIndex(activeIndex - 1)}>
-            <img src="./src/assets/setaEsquerda.png" alt="seta esquerda" style={foto()} />
+            <img src="/setaEsquerda.png" alt="seta esquerda" style={foto()} />
           </Prev>
         )}
         <Inner style={{ transform: getTransform() }}>
@@ -84,7 +85,7 @@ const getTransform = () => {
         </Inner>
         {activeIndex < React.Children.count(children) - getVisibleItems() && (
           <Next onClick={() => updateIndex(activeIndex + 1)}>
-            <img src="./src/assets/setaDireita.png" alt="seta direita" style={foto()} />
+            <img src="/setaDireita.png" alt="seta direita" style={foto()} />
           </Next>
         )}
       </Indicadores>
