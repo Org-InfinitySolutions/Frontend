@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
-import { limparSession } from '../Utils/limpar';
+import { limparSession } from '../utils/limpar';
 import Logo from '/Logo.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,8 +26,8 @@ function BarraNavegacao(){
                 return { width: "100%", height: "auto" };
             } else if (deviced.tablet) {
                 return { width: "60%", height: "auto" };
-            } else if (deviced.desktop) {
-                return { width: "30%", height: "auto" };
+            } else {
+                return { width: "70%", height: "auto" };
             }
         }
 
