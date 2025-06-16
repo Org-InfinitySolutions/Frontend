@@ -26,8 +26,8 @@ function BarraNavegacao(){
                 return { width: "100%", height: "auto" };
             } else if (deviced.tablet) {
                 return { width: "60%", height: "auto" };
-            } else if (deviced.desktop) {
-                return { width: "30%", height: "auto" };
+            } else {
+                return { width: "70%", height: "auto" };
             }
         }
 
