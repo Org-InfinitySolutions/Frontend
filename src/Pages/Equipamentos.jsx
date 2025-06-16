@@ -29,7 +29,7 @@ const Equipamentos = () => {
     [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false),
     [barraCarregamento, setBarraCarregamento] = useState(0),
     [paginaAtual, setPaginaAtual] = useState(1),
-    [cargo, setCargo] = useState(sessionStorage.CARGO);
+    [cargo, setCargo] = useState(sessionStorage.CARGO || '');
 
   const produtosPorPagina = 20;
 
@@ -43,7 +43,7 @@ const Equipamentos = () => {
 
   useEffect(() => {
 
-    const header = sessionStorage.CARGO == "ROLE_ADMIN" || sessionStorage.CARGO == "ROLE_FUNCIONARIO";
+    const header = cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO";
 
     setBarraCarregamento(30);
     if(tokenExpirou()){
