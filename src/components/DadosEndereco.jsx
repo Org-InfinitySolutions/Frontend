@@ -1,5 +1,5 @@
 
-import { formatarCEP } from '../Utils/formatacoes'
+import { formatarCEP } from '../utils/formatacoes'
 import './DadosEndereco.css'
 
 function DadosEndereco({

@@ -7,9 +7,9 @@ import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
 import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
-import { formatarData } from '../Utils/formatacoes'
-import { tokenExpirou } from '../Utils/token';
-import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
+import { formatarData } from '../utils/formatacoes'
+import { tokenExpirou } from '../utils/token';
+import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 
 const normalizarStatus = (status) => {
 	if (!status) return '';

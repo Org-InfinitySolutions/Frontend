@@ -3,12 +3,12 @@ import './EditarPerfil.css';
 import iconeEditar from '../assets/iconeEditar.png';
 import { Input } from '../components/Input';
 import { useNavigate } from 'react-router-dom';
-import { formatarCEP, formatarTelefone, formatarTelefoneFixo } from '../Utils/formatacoes';
+import { formatarCEP, formatarTelefone, formatarTelefoneFixo } from '../utils/formatacoes';
 import axios from 'axios';
 import { api, apiAutenticacao } from '../provider/apiInstance';
-import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso' 
+import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
 import LoadingBar from 'react-top-loading-bar';
-import { limparSession } from '../Utils/limpar';
+import { limparSession } from '../utils/limpar';
 import { ToastContainer, toast } from 'react-toastify';
 
 
@@ -24,8 +24,8 @@ import {
     validarConfirmacaoSenha,
     validarEmail,
     validarSenha
-} from '../Utils/validarCampos';
-import { tokenExpirou } from '../Utils/token';
+} from '../utils/validarCampos';
+import { tokenExpirou } from '../utils/token';
 
 function EditarPerfil() {
 

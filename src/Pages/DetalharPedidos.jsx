@@ -3,11 +3,11 @@ import './DetalharPedidos.css';
 import { api } from '../provider/apiInstance';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
-import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
-import { tokenExpirou } from '../Utils/token'
+import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
+import { tokenExpirou } from '../utils/token'
 import { DadosEndereco } from '../components/DadosEndereco'
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
-import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../Utils/formatacoes'
+import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../utils/formatacoes'
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',

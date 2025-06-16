@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import { apiAutenticacao } from '../provider/apiInstance'
-import { exibirAviso } from '../Utils/exibirModalAviso';
-import { campoVazio, emailInvalido } from '../Utils/validarCampos';
+import { exibirAviso } from '../utils/exibirModalAviso';
+import { campoVazio, emailInvalido } from '../utils/validarCampos';
 
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
