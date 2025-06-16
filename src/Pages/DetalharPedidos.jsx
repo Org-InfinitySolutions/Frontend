@@ -195,9 +195,13 @@ export function DetalharPedidos() {
             </div>
 
             <div className='grid-itens'>
-                {produtos.map((item, i) => (
-                    <CardProdutoCarrinho key={i} id={item.produto.id} nome={item.produto.modelo} imagem={item.produto.imagem} quantidade={item.qtdAlugada} apenasLeitura={true}/>
-                ))}
+                {produtos.map((item, i) => 
+                (
+                    <CardProdutoCarrinho key={i} id={item.produto.id} nome={item.produto.modelo} imagem={item.produto.imagens[0]} quantidade={item.qtdAlugada} apenasLeitura={true}/>
+                )
+                
+                
+                )}
             </div>
 
             <DadosEndereco endereco={endereco} dataEntrega={pedido.dataEntrega} dataRetirada={pedido.dataRetirada} tipo={pedido.tipoPedido}/>

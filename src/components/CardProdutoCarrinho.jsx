@@ -16,7 +16,7 @@ function CardProdutoCarrinho({
 
     return (
         <section className="box-produto">
-            <img src={imagem || "/public/img-nao-disponivel.jpg"} height="100%" alt="foto do equipamento" />
+            <img src={imagem || "/img-nao-disponivel.jpg"} height="100%" alt="foto do equipamento" />
 
 
             <div className="box-informacoes">
