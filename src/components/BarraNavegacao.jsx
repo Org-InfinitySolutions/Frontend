@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
 import { limparSession } from '../utils/limpar';
+import Logo from '/Logo.png';
+import { useNavigate } from 'react-router-dom';
 
 const getDevice = () => ({
     mobile: window.innerWidth <= 768,
@@ -9,6 +11,7 @@ const getDevice = () => ({
 });
 
 function BarraNavegacao(){
+        const navigate = useNavigate();
     
         const [deviced, setDeviced] = useState(getDevice());
     
@@ -18,7 +21,7 @@ function BarraNavegacao(){
             return () => window.removeEventListener('resize', onResize);
         }, []);
     
-        const logo = () => {
+        const logoResponsividade = () => {
             if (deviced.mobile) {
                 return { width: "100%", height: "auto" };
             } else if (deviced.tablet) {
@@ -47,7 +50,9 @@ function BarraNavegacao(){
     <>
         <nav className="barra-navegacao">
             <section className="container-logo">
-                <img src="/Logo.png" style={logo()} alt="logo nova locações" />
+                <button className='botao-logo' onClick={() => navigate('/')}>
+                <img style={logoResponsividade()} src={Logo} alt="Logo Nova Locações" />
+                </button>            
             </section>
             {usuarioLogado ? (
             <section className="container-links">
