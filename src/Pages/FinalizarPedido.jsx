@@ -8,6 +8,7 @@ import { api } from '../provider/apiInstance'
 import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
 import { tokenExpirou } from '../utils/token'
 import LoadingBar from 'react-top-loading-bar';
+import { FaCheck } from 'react-icons/fa';
 
 function FinalizarPedido() {
 
@@ -162,6 +163,53 @@ function FinalizarPedido() {
         }
     }
 
+    // métodos para validar se arquivo foi enviado
+    const [exibirDocAuxiliar, setExibirDocAuxiliar] = useState(false);
+    const [exibirDocEndereco, setExibirDocEndereco] = useState(false);
+    const [exibirDocRG, setExibirDocRG] = useState(false);
+    const [exibirDocCNPJ, setExibirDocCNPJ] = useState(false);
+    const [exibirDocContratoSocial, setExibirDocContratoSocial] = useState(false);    
+    
+    useEffect(() => {
+        if(documentoAuxiliar){
+            setExibirDocAuxiliar(true);
+        } else {
+            setExibirDocAuxiliar(false);
+        }
+    }, [documentoAuxiliar]);
+
+    useEffect(() => {
+        if(documentoEndereco){
+            setExibirDocEndereco(true);
+        } else {
+            setExibirDocEndereco(false);
+        }
+    }, [documentoEndereco]);
+
+    useEffect(() => {
+        if(documentoRG){
+            setExibirDocRG(true);
+        } else {
+            setExibirDocRG(false);
+        }
+    }, [documentoRG]);
+
+    useEffect(() => {
+        if(documentoCNPJ){
+            setExibirDocCNPJ(true);
+        } else {
+            setExibirDocCNPJ(false);
+        }
+    }, [documentoCNPJ]);
+
+    useEffect(() => {
+        if(documentoContratoSocial){
+            setExibirDocContratoSocial(true);
+        } else {
+            setExibirDocContratoSocial(false);
+        }
+    }, [documentoContratoSocial]);
+
     return (
         <div className="finalizar-pedido">
             <LoadingBar
@@ -253,37 +301,52 @@ function FinalizarPedido() {
                     <section className='container-documentos'>
                         <span>Se desejar, você pode anexar um documento que nos ajude a visualizar o seu projeto de forma mais clara, agilizando nossa análise e te oferecendo uma resposta o mais breve possível.</span>
                         <div className='box-documento'>
-                            <span>DOCUMENTO DO PROJETO</span>
-                            <label htmlFor="inp_documentoProjeto" className="custom-file-upload">
-                                SUBIR ARQUIVO
-                            </label>
+                            <span>DOCUMENTO DO PROJETO </span>
+                            <div className='icone-check'>
+                                <label htmlFor="inp_documentoProjeto" className="custom-file-upload">
+                                    SUBIR ARQUIVO
+                                </label>
                                 <input id="inp_documentoProjeto" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => { setDocumentoAuxiliar(e.target.files[0])}} style={{ display: "none" }} />
+                                <FaCheck size={18} display={exibirDocAuxiliar ? 'flex' : 'none'}/>
+                            </div>
                         </div>
                         {!cadastroCompleto && (
                             <>
                                 <span>Forneça os documentos abaixo para agilizar a geração de contrato. Não será necessário um segundo envio após o primeiro pedido.</span>
                                 <div className='box-documento'>
                                     <span>* COMPROVANTE DE ENDEREÇO</span>
-                                    <label htmlFor="inp_documentoEndereco" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                    <input id="inp_documentoEndereco" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoEndereco(e.target.files[0])}} style={{ display: "none" }} />
+                                    <div className='icone-check'>
+                                        <label htmlFor="inp_documentoEndereco" className="custom-file-upload">SUBIR ARQUIVO</label>
+                                        <input id="inp_documentoEndereco" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoEndereco(e.target.files[0])}} style={{ display: "none" }} />
+                                        <FaCheck size={18} display={exibirDocEndereco ? 'flex' : 'none'}/>
+                                    </div>
                                 </div>
                                 {cargo === "ROLE_USUARIO_PF" ? (
                                     <div className='box-documento'>
                                         <span>* CÓPIA DO RG</span>
-                                        <label htmlFor="inp_documentoRg" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                        <input id="inp_documentoRg" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoRG(e.target.files[0])}} style={{ display: "none" }} />
+                                        <div className='icone-check'>
+                                            <label htmlFor="inp_documentoRg" className="custom-file-upload">SUBIR ARQUIVO</label>
+                                            <input id="inp_documentoRg" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoRG(e.target.files[0])}} style={{ display: "none" }} />
+                                            <FaCheck size={18} display={exibirDocRG ? 'flex' : 'none'}/>
+                                        </div>
                                     </div>
                                 ) : (
                                     <>
                                         <div className='box-documento'>
                                             <span>* CÓPIA DO CARTÃO CNPJ</span>
-                                            <label htmlFor="inp_documentoCartaoCnpj" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                            <input id="inp_documentoCartaoCnpj" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoCNPJ(e.target.files[0])}} style={{ display: "none" }} />
+                                            <div className='icone-check'>
+                                                <label htmlFor="inp_documentoCartaoCnpj" className="custom-file-upload">SUBIR ARQUIVO</label>
+                                                <input id="inp_documentoCartaoCnpj" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoCNPJ(e.target.files[0])}} style={{ display: "none" }} />
+                                                <FaCheck size={18} display={exibirDocCNPJ ? 'flex' : 'none'}/>
+                                            </div>
                                         </div>
                                         <div className='box-documento'>
                                             <span>* CÓPIA DO CONTRATO SOCIAL</span>
-                                            <label htmlFor="inp_documentoContratoSocial" className="custom-file-upload">SUBIR ARQUIVO</label>
-                                            <input id="inp_documentoContratoSocial" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoContratoSocial(e.target.files[0])}} style={{ display: "none" }} />
+                                            <div className='icone-check'>
+                                                <label htmlFor="inp_documentoContratoSocial" className="custom-file-upload">SUBIR ARQUIVO</label>
+                                                <input id="inp_documentoContratoSocial" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoContratoSocial(e.target.files[0])}} style={{ display: "none" }} />
+                                                <FaCheck size={18} display={exibirDocContratoSocial ? 'flex' : 'none'}/>
+                                            </div>
                                         </div>
                                     </>
                                 )}

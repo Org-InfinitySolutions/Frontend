@@ -228,13 +228,13 @@ button {
   }
 
   .select-filtro a {
-    /* width: 100%; */
     font-size: 1rem;
   }
 
   .grid-pedidos {
-    grid-template-columns: 1fr;
+    display: flex !important;
     gap: var(--gap-medio);
+    flex-direction: column;
   }
 
   .card-pedido {
