@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { CarouselContainer, Indicadores, Inner, Next, Prev } from "./style";
 import { useSwipeable } from "react-swipeable";
-import { setaEsquerda } from '../../assets/setaEsquerda.png'
-import { setaDireita } from '../../assets/setaDireita.png'
 
 
 export const Carousel = ({ children }) => {
