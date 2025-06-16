@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './CardPedido.css';
 import { api } from '../provider/apiInstance';
+import { formatarIdPedido } from '../Utils/formatacoes'
 
 const statusLabel = {
   'EM ANÁLISE': 'Em Análise',
@@ -34,6 +35,7 @@ const exibirStatus = (status) => {
 export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
   const [status, setStatus] = useState(pedido.status);
   const [cancelando, setCancelando] = useState(false);
+  const [cargo, setCargo] = useState(sessionStorage.CARGO == 'ROLE_ADMIN' || sessionStorage.CARGO == 'ROLE_FUNCIONARIO');
 
   const podeCancelar = () => {
     const statusNormalizado = normalizarStatus(status);
@@ -69,13 +71,13 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
     'CANCELADO': 'status-btn status-vermelho',
     'APROVADO': 'status-btn status-verde',
   }[status] || 'status-btn status-cinza';
-
+  
   return (
     <section className="card-pedido">
-      <h3>Pedido {pedido.id}</h3>
+      <h3>Pedido #{formatarIdPedido(pedido.id)}</h3>
       <p><b>Items:</b> {pedido.itens}</p>
       <p><b>Pedido feito em:</b> {pedido.data}</p>
-      <p><b>Nome:</b> {pedido.cliente}</p>
+      {cargo && (<p><b>Nome:</b> {pedido.cliente}</p>)}
       <div className="acoes">
         {podeCancelar() && status !== 'CANCELADO' && (
           <button className="btn-cancelar" onClick={cancelarPedido} disabled={cancelando}>

@@ -7,7 +7,7 @@ import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso
 import { tokenExpirou } from '../utils/token'
 import { DadosEndereco } from '../components/DadosEndereco'
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
-import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../utils/formatacoes'
+import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../Utils/formatacoes'
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',
@@ -73,7 +73,6 @@ export function DetalharPedidos() {
                     Authorization: `Bearer ${sessionStorage.TOKEN}`
                 }
             }).then(res => {
-                console.log(res.data)
                 setBarraCarregamento(100);
                 setPedido(res.data);
                 const situacao = res.data.situacao;

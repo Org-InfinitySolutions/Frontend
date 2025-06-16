@@ -128,20 +128,29 @@
             display: flex;
             align-items: center;
             font-size: 0.8em;
-
+            gap: 1em;
             font-family: var(--fonte-texto);
 
-            label{
-                border: 1px solid black;
-                padding: 0.7%;
-                margin-left: 1%;
-                cursor: pointer;
-                border-radius: 6px;
-            }
-            label:hover{
-                color: white;
-                transition: 0.2s;
-                background-color: black;
+            .icone-check{
+                height: 100%;
+                width: 30%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 1em;
+
+                label{
+                    border: 1px solid black;
+                    padding: 0.6em;
+                    margin-left: 1%;
+                    cursor: pointer;
+                    border-radius: 6px;
+                }
+                label:hover{
+                    color: white;
+                    transition: 0.2s;
+                    background-color: black;
+                }
             }
         }
     }
@@ -301,9 +310,12 @@
                 height: auto;
                 margin: 4% 0px;
 
-                label{
-                    padding: 3% 2%;
-                    margin: 2% 0px;
+                .icone-check{
+                    width: 100%;
+                    label{
+                        padding: 3% 2%;
+                        margin: 2% 0px;
+                    }
                 }
             }
         }
