@@ -1,7 +1,7 @@
-
 import { useNavigate } from 'react-router-dom'
 import { Navegabilidade } from '../components/Navegabilidade';
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
+import { FaShoppingCart } from 'react-icons/fa';
 
 import './Carrinho.css'
 import { useState } from 'react';
@@ -69,10 +69,20 @@ function Carrinho() {
 
     return (
         <div className="carrinho">
-            <h1>Conferir Carrinho</h1>
+            <div className="carrinho-header">
+                <h1>Meu Carrinho</h1>
+            </div>
             {carrinho.length == 0 ? (
-                <div className='box-sem-produtos'>
-                    <h2>Você não tem produtos adicionados.</h2>
+                <div className='carrinho-vazio'>
+                    <div className='carrinho-vazio-icon'>
+                        <FaShoppingCart />
+                    </div>
+                    <h2>Seu carrinho está vazio</h2>
+                    <p>Você ainda não tem produtos adicionados ao seu carrinho.</p>
+                    <p>Explore nossa seleção de equipamentos e encontre o que você precisa!</p>
+                    <button className="btn-explorar-produtos" onClick={() => navigate('/equipamentos')}>
+                        Explorar Equipamentos
+                    </button>
                 </div>
             ) : (
                 <>
