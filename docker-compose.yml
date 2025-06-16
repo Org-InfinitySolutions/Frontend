@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nova-locacoes-frontend
+    ports:
+      - "80:80"
+    restart: unless-stopped
+    # Healthcheck para garantir que o contêiner está saudável
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://localhost:80"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    # Para ambientes de desenvolvimento, você pode habilitar volumes
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    networks:
+      - app-network
+
+# Rede dedicada para o aplicativo
+networks:
+  app-network:
+    driver: bridge
