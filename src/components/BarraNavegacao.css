@@ -14,6 +14,14 @@ nav{
         display: flex;
         padding-left: 3%;
         align-items: center;
+
+        .botao-logo {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+        }
     }
     
     .container-links{
