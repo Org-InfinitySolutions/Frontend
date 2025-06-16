@@ -29,7 +29,7 @@ const GraficoPizza = () => {
       const data = window.google.visualization.arrayToDataTable(dataArr);
       const options = {
         legend: { position: 'right', textStyle: { fontSize: 14, fontFamily: 'inherit' } },
-        pieSliceText: 'label',
+        pieSliceText: 'none',
         chartArea: { width: '90%', height: '80%' },
         fontName: 'inherit',
       };

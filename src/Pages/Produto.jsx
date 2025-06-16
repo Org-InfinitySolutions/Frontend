@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './Produto.css';
 import IconeNotebook from '../assets/notebook.png';
-import IconePesquisa from '../assets/iconePesquisar.png';
 import IconeCarrinho from '../assets/iconeCarrinho.png';
+import { api } from '../provider/apiInstance';
+import { ToastContainer, toast } from 'react-toastify';
+import { FaCartShopping } from 'react-icons/fa6';
 
 const Produto = () => {
   const { id } = useParams();
@@ -13,18 +15,41 @@ const Produto = () => {
 
   useEffect(() => {
     setCarregando(true);
-    fetch(`http://4.201.162.5:8080/api/produtos/${id}`)
-      .then(res => res.json())
-      .then(data => {
+    api.get(`/produtos/${id}`)
+      .then(res => {
+        const data = res.data;
         setProduto({
           ...data,
           nome: data.modelo,
-          imagem: (typeof data.imagem === 'string' && data.imagem.trim() !== '') ? data.imagem : IconeNotebook,
+          imagem: Array.isArray(data.imagem) && data.imagem.length > 0 && data.imagem[0] ? data.imagem[0] : IconeNotebook,
         });
         setCarregando(false);
       })
       .catch(() => setCarregando(false));
   }, [id]);
+
+  const adicionarAoCarrinho = (produto) => {
+    const carrinhoAtual = JSON.parse(sessionStorage.getItem('CARRINHO')) || { produtos: [] };
+    const index = carrinhoAtual.produtos.findIndex(item => item.produtoId === produto.id);
+    if (index !== -1) {
+      carrinhoAtual.produtos[index].quantidade += 1;
+    } else {
+      carrinhoAtual.produtos.push({
+        produtoId: produto.id,
+        quantidade: 1,
+        imagem: produto.imagem,
+        nome: produto.nome
+      });
+    }
+    sessionStorage.setItem('CARRINHO', JSON.stringify(carrinhoAtual));
+    toast(<> <FaCartShopping /> &nbsp; Produto adicionado no carrinho! </>);
+  };
+
+  const adicionarCarrinho = () => {
+    if (produto) {
+      adicionarAoCarrinho(produto);
+    }
+  };
 
   if (carregando) {
     return <div className="pagina-detalhes"><p>Carregando...</p></div>;
@@ -36,11 +61,9 @@ const Produto = () => {
 
   return (
     <div className="pagina-detalhes">
+      <ToastContainer />
       <header className="topo-produto">
-        <div className="barra-pesquisa">
-          <img src={IconePesquisa} alt="Buscar" className="icone-lupa" />
-          <input type="text" placeholder="Pesquisar equipamento" />
-        </div>
+        <button className="botao-adicionar-carrinho" onClick={adicionarCarrinho}>ADICIONAR AO CARRINHO</button>
         <div className="icone-carrinho">
           <a href="/carrinho">
             <img src={IconeCarrinho} alt="Carrinho de compras" />
@@ -55,7 +78,6 @@ const Produto = () => {
           <div className="info-textual">
             <h2>{produto.nome}</h2>
             <h4>{produto.categoria?.nome || 'Sem categoria'}</h4>
-            <button className="botao-adicionar-carrinho">ADICIONAR CARRINHO</button>
           </div>
         </div>
 

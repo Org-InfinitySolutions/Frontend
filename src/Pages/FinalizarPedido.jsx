@@ -191,7 +191,7 @@ function FinalizarPedido() {
                     <h1>Finalizar Pedido</h1>
                     <section className='container-equipamentos'>
                         {carrinho.produtos.map((item) => (
-                            <CardProdutoCarrinho key={item.produtoId} id={item.id} nome={item.nome} imagem={""} quantidade={item.quantidade} apenasLeitura={true}/>
+                            <CardProdutoCarrinho key={item.produtoId} id={item.id} nome={item.nome} imagem={item.imagem} quantidade={item.quantidade} apenasLeitura={true}/>
                         ))}
                     </section>
 
