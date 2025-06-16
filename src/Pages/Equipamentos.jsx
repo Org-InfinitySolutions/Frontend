@@ -4,7 +4,7 @@ import Modal from '../components/ModalEquipamento';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
-import ImgNaoDisponivel from '/public/img-nao-disponivel.jpg';
+import ImgNaoDisponivel from '/img-nao-disponivel.jpg';
 import LoadingBar from 'react-top-loading-bar';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../provider/apiInstance';
