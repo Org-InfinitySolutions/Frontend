@@ -2,10 +2,10 @@ import './AdicionarEquipamento.css';
 import LoadingBar from 'react-top-loading-bar';
 import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
-import { tokenExpirou } from '../Utils/token'
-import { exibirAvisoTokenExpirado, exibirAviso } from '../Utils/exibirModalAviso'
+import { tokenExpirou } from '../utils/token'
+import { exibirAvisoTokenExpirado, exibirAviso } from '../utils/exibirModalAviso'
 import { useNavigate } from 'react-router-dom';
-import { campoVazio } from '../Utils/validarCampos'
+import { campoVazio } from '../utils/validarCampos'
 import { api } from '../provider/apiInstance';
 
 export function AdicionarEquipamento() {

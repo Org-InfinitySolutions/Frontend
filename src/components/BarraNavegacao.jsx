@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './BarraNavegacao.css';
-import { limparSession } from '../Utils/limpar';
+import { limparSession } from '../utils/limpar';
 
 const getDevice = () => ({
     mobile: window.innerWidth <= 768,

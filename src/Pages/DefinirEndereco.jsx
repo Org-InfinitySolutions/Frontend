@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import { Input } from '../components/Input'
 import { Navegabilidade } from '../components/Navegabilidade';
 import './DefinirEndereco.css'
-import { validarCEP, validarNumero, validarEndereco, campoNaoAtendeTamanho, campoVazio } from '../Utils/validarCampos'
+import { validarCEP, validarNumero, validarEndereco, campoNaoAtendeTamanho, campoVazio } from '../utils/validarCampos'
 import { api } from '../provider/apiInstance'
 import { use, useEffect, useState } from 'react';
-import { formatarCEP } from '../Utils/formatacoes'
-import { tokenExpirou } from '../Utils/token'
-import { exibirAvisoTokenExpirado, exibirAviso } from '../Utils/exibirModalAviso'
+import { formatarCEP } from '../utils/formatacoes'
+import { tokenExpirou } from '../utils/token'
+import { exibirAvisoTokenExpirado, exibirAviso } from '../utils/exibirModalAviso'
 import { buscarEndereco } from '../provider/buscarCEP';
 
 function DefinirEndereco(){

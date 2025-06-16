@@ -3,10 +3,10 @@ import { Navegabilidade } from '../components/Navegabilidade';
 import './FinalizarPedido.css';
 import { useNavigate } from 'react-router-dom';
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
-import { formatarCEP, formatarIdPedido } from '../Utils/formatacoes'
+import { formatarCEP, formatarIdPedido } from '../utils/formatacoes'
 import { api } from '../provider/apiInstance'
-import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
-import { tokenExpirou } from '../Utils/token'
+import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
+import { tokenExpirou } from '../utils/token'
 import LoadingBar from 'react-top-loading-bar';
 
 function FinalizarPedido() {
