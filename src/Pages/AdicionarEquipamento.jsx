@@ -145,15 +145,15 @@ export function AdicionarEquipamento() {
   }
 
   const limparCampos = () => {
-      setQuantidade(1);
-      setModelo('');
-      setMarca('');
-      setDescricao('');
-      setLinkFabricante('');
-      setPreview(null);
-      setExibirPreview(false);
-      setImagem('')
-      setCategoriaEquipamento('#')
+    setQuantidade(1);
+    setModelo('');
+    setMarca('');
+    setDescricao('');
+    setLinkFabricante('');
+    setPreview(null);
+    setExibirPreview(false);
+    setImagem('')
+    setCategoriaEquipamento(categorias[0].id)
   }
 
   return (
@@ -217,6 +217,7 @@ export function AdicionarEquipamento() {
       </form>
 
       <div className="botao-container">
+        <button type="button" className="botao-adicionar" onClick={() => { navegar('/equipamentos')}}>CANCELAR</button>
         <button type="button" className="botao-adicionar" onClick={validarForm} disabled={desativarBotao}>ADICIONAR</button>
       </div>
     </div>

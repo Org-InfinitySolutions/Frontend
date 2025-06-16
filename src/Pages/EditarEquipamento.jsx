@@ -92,6 +92,10 @@ export function EditarEquipamento() {
           }
           setBarraCarregamento(100);
           exibirAviso('Operação realizada com sucesso!', 'success');
+
+          setTimeout(() => {
+            navegar('/equipamentos');
+          }, 2000)
         }).catch((err) => {
           setBarraCarregamento(100);
           const erro = err.response.data;
