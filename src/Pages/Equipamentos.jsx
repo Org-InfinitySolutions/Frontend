@@ -13,8 +13,8 @@ import { CardProdutoEquipamentos } from '../components/CardProdutoEquipamentos'
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
 import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
-import { tokenExpirou } from '../Utils/token';
-import { exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
+import { tokenExpirou } from '../utils/token';
+import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 
 const Equipamentos = () => {
   const navegar = useNavigate();

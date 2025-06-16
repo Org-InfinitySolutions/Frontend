@@ -1,11 +1,11 @@
 import './EditarEquipamento.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'
-import { tokenExpirou } from '../Utils/token';
+import { tokenExpirou } from '../utils/token';
 import { api } from '../provider/apiInstance';
-import { campoVazio } from '../Utils/validarCampos';
+import { campoVazio } from '../utils/validarCampos';
 import { FaMinus, FaPlus } from 'react-icons/fa';
-import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso'
+import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
 import LoadingBar from 'react-top-loading-bar';
 
 export function EditarEquipamento() {

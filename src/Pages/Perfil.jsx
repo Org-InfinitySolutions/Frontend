@@ -2,15 +2,15 @@
 import './Perfil.css'
 import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useEffect, useState } from 'react';
-import { exibirAviso, exibirAvisoTokenExpirado } from '../Utils/exibirModalAviso';
+import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 import LoadingBar from 'react-top-loading-bar';
 import { Input } from '../components/Input';
-import { formatarData, formatarCNPJ, formatarCPF, formatarRegistroGeral, formatarTelefone, formatarTelefoneFixo } from '../Utils/formatacoes';
+import { formatarData, formatarCNPJ, formatarCPF, formatarRegistroGeral, formatarTelefone, formatarTelefoneFixo } from '../utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
-import { exibirAvisoTimer } from '../Utils/exibirModalAviso';
-import { limparSession } from '../Utils/limpar';
-import { validarSenha } from '../Utils/validarCampos'
-import { tokenExpirou } from '../Utils/token';
+import { exibirAvisoTimer } from '../utils/exibirModalAviso';
+import { limparSession } from '../utils/limpar';
+import { validarSenha } from '../utils/validarCampos'
+import { tokenExpirou } from '../utils/token';
 
 function Perfil(){
 

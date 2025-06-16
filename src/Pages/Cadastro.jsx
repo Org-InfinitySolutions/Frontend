@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import './Cadastro.css';
 
-import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../Utils/formatacoes';
-import { exibirAviso } from '../Utils/exibirModalAviso';
+import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../utils/formatacoes';
+import { exibirAviso } from '../utils/exibirModalAviso';
 import { 
     emailInvalido, 
     campoNaoAtendeTamanho, 
@@ -22,7 +22,7 @@ import {
     validarSenha,
     validarConfirmacaoSenha,
     validarRazaoSocial
-} from '../Utils/validarCampos';
+} from '../utils/validarCampos';
 import axios from 'axios';
 import { api, apiAutenticacao } from '../provider/apiInstance';
 import { useNavigate } from 'react-router-dom';

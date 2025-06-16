@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { apiAutenticacao } from '../provider/apiInstance';
-import { exibirAviso } from '../Utils/exibirModalAviso';
-import { campoVazio, emailInvalido } from '../Utils/validarCampos';
+import { exibirAviso } from '../utils/exibirModalAviso';
+import { campoVazio, emailInvalido } from '../utils/validarCampos';
 import './RecuperarSenha.css';
 import { Input } from '../components/Input';
 import LoadingBar from 'react-top-loading-bar';
