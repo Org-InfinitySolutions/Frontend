@@ -306,6 +306,7 @@ function Cadastro() {
     const buscarEmailNoBanco = () => {
         apiAutenticacao.get(`/email/verificar?email=${dadosBase.email}`)
         .then((res) => {
+            console.log(res.data)
             if(res.data.disponivel){
                 const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
                 enviarEmail(usuario.dadosBase.nome, usuario.dadosBase.email);

@@ -7,7 +7,7 @@ import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso
 import { tokenExpirou } from '../utils/token'
 import { DadosEndereco } from '../components/DadosEndereco'
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
-import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../Utils/formatacoes'
+import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../utils/formatacoes'
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',

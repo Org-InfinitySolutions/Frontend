@@ -19,7 +19,7 @@ export function CardProdutoEquipamentos({
             <img src={produto.imagem} alt={produto.nome} />
             <div className="info-produto">
                 <div className="box-nome-produto">
-                    <a className='nomeProduto' onClick={() => navegar(`/produto/${produto.id}`)} style={{ cursor: 'pointer' }}>{produto.nome}</a>
+                    <a className='nomeProduto' onClick={() => navegar(`/produto/${produto.id}`)} style={{ cursor: 'pointer' }} title={produto.nome}>{produto.nome}</a>
                 </div>
                 { cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO" ? (
                     <div className="box-dados-gerenciais">

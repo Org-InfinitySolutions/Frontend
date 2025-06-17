@@ -171,6 +171,7 @@
   justify-content: flex-end;
   margin-top: 3rem;
   width: 100%;
+  gap: 1em;
 }
 
 .botao-adicionar {
