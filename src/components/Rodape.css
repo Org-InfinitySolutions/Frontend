@@ -36,6 +36,12 @@ footer {
                 display: flex;
                 align-items: center;
 
+                .texto-contato {
+                    margin-left: 5%;
+                    font-family: var(--fonte-texto);
+                    color: black;
+                }
+
                 .links-contato {
                     margin-left: 5%;
                     font-family: var(--fonte-texto);

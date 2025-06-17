@@ -49,19 +49,21 @@ function Rodape() {
                     </div>
                     <div>
                         <img src={wpp} alt="icone whatsapp" height='25em'/>
-                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>11 94144-2113</Link>
+                        <Link className='links-contato' to={"https://wa.me/c/5511947583180"}>11 94758-3180</Link>
                     </div>
                     <div>
-                        <img src={telefone} alt="icone telefone" height='25em'/>
-                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>11 4786-3508</Link>
+                        <img src={telefone} alt="icone telefone" height='25em'/> 
+                        <a className='texto-contato'>11 4786-3508</a>
+                        {/* <Link className='links-contato'>11 4786-3508</Link> */}
                     </div>
                     <div>
                         <img src={instagram} alt="icone instagram" height='25em'/>
-                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>@nova_locacoes</Link>
+                        <Link className='links-contato' to={"https://www.instagram.com/nova_locacoes?igsh=MTBudXo1ZmFtaDRydQ=="}>@nova_locacoes</Link>
                     </div>
                     <div>
                         <img src={email} alt="icone email" height='25em'/>
-                        <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>comercial@novalocacoes.com</Link>
+                        <a className='texto-contato'>comercial@novalocacoes.com</a>
+                        {/* <Link className='links-contato' to={"https://chatgpt.com/c/684c8f08-34f0-800f-8355-b887bf2c5035"}>comercial@novalocacoes.com</Link> */}
                     </div>
                 </section>
 
@@ -76,7 +78,7 @@ function Rodape() {
             
             <section className='container-endereco'>
                 <img src={empresa} alt="icone empresa" height='25em'/>
-                <Link className='links-endereco' to={"https://chatgpt.com/"}>Rua joão pires de camargo, 28, Taboão da Serra</Link>
+                <Link className='links-endereco' to={"https://g.co/kgs/8JcmzfB"}>Rua joão pires de camargo, 28, Taboão da Serra</Link>
             </section>
         </footer>
     </>
