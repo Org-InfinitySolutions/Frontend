@@ -1,18 +1,20 @@
-nav{
+.barra-navegacao{
     width: 100%;
     height: 13vh;
+    overflow-x: hidden;
 
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-around;
     font-family: var(--fonte-texto);
+    align-items: center;
+    background-color: white;
 
     .container-logo{
         height: 100%;
-        width: 25%;
+        width: 20%;
 
         display: flex;
-        padding-left: 3%;
         align-items: center;
 
         .botao-logo {
@@ -24,100 +26,122 @@ nav{
         }
     }
     
-    .container-links{
+    .box-links-navbar{
+        width: 75%;
         height: 100%;
-        width: 50%;
-        
         display: flex;
         align-items: center;
-        justify-content: center;
-        
-        div{
-            height: 100%;
-            width: 75%;
-    
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            list-style-type: none;
-            justify-content: space-around;
+        flex-direction: row;
+        justify-content: space-between;
 
-            a{
-                font-weight: 600;
-                color: #000000;
-                text-decoration: none;
+        .container-links{
+            height: 100%;
+            width: 70%;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+                
+            div{
+                height: 100%;
+                width: 75%;
+        
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                list-style-type: none;
+                justify-content: space-around;
+                a{
+                    font-weight: 600;
+                    color: #000000;
+                    text-decoration: none;
+                }
+                a:hover{
+                    transition: 0.2s;
+                    transform: scale(1.05);
+                }
             }
-            a:hover{
+        }
+            
+        .container-eventos{
+            height: 100%;
+            width: 25%;
+        
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;    
+            
+            .botao-cadastro{
+                height: 2.375rem;
+                width: 6.375rem;
+                margin: 3%;
+
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                justify-content: center;
+
+                color: white;
+                cursor: pointer;
+                font-weight: 600;
+                border-radius: 6px;
+                border: 1px solid black;
+                background-color: #000000;
+                font-family: var(--fonte-texto);
+            }
+            .botao-cadastro:hover{
+                color: black;
+                transition: 0.3s;
+                background-color: white;
+            }
+            .botao-cadastro:active{
                 transition: 0.2s;
-                transform: scale(1.05);
+                transform: scale(0.95);
+            }
+                
+            .botao-login{
+                height: 2.375rem;
+                width: 6.375rem;
+                margin: 3%;
+
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                justify-content: center;
+
+                color: black;
+                cursor: pointer;
+                font-weight: 600;
+                border-radius: 6px;
+                background-color: white;
+                border: 1px solid black;
+                font-family: var(--fonte-texto);
+            }
+            .botao-login:hover{
+                color: white;
+                transition: 0.3s;
+                background-color: black;
+            }
+            .botao-login:active{
+                transition: 0.2s;
+                transform: scale(0.95);
             }
         }
     }
-    
-    .container-eventos{
-        height: 100%;
-        width: 25%;
-    
-        display: flex;
+
+    .menu-hambuguer{
+        display: none;
         align-items: center;
         justify-content: center;
-        flex-direction: row;    
-    
-        .botao-cadastro{
-            height: 2.375rem;
-            width: 6.375rem;
-            margin: 3%;
+    }
 
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            justify-content: center;
+    .menu-hambuguer:hover{
+        cursor: pointer;
+    }
 
-            color: white;
-            cursor: pointer;
-            font-weight: 600;
-            border-radius: 6px;
-            border: 1px solid black;
-            background-color: #000000;
-            font-family: var(--fonte-texto);
-        }
-        .botao-cadastro:hover{
-            color: black;
-            transition: 0.3s;
-            background-color: white;
-        }
-        .botao-cadastro:active{
-            transition: 0.2s;
-            transform: scale(0.95);
-        }
-        
-        .botao-login{
-            height: 2.375rem;
-            width: 6.375rem;
-            margin: 3%;
-
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            justify-content: center;
-
-            color: black;
-            cursor: pointer;
-            font-weight: 600;
-            border-radius: 6px;
-            background-color: white;
-            border: 1px solid black;
-            font-family: var(--fonte-texto);
-        }
-        .botao-login:hover{
-            color: white;
-            transition: 0.3s;
-            background-color: black;
-        }
-        .botao-login:active{
-            transition: 0.2s;
-            transform: scale(0.95);
-        }
+    .menu-hambuguer:active{
+        outline: 2px solid black;
     }
 }
 
@@ -127,29 +151,99 @@ nav{
     background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
 }
 
-@media (max-width: 768px) {
+@media screen and (max-width: 768px) {
     nav{
-    
-    .container-eventos{
-        height: 100%;
-        width: 60%;
-        border: none;
-        padding: none;
-        margin: none;
+        position: relative;
+        isolation: isolate;
+        z-index: 10;
 
-        .botao-cadastro{
-            height: 2.375rem;
-            width: 4.375rem;
-            margin: 1%;
-            font-size: 80%;
-        }
-        
-        .botao-login{
-            height: 2.375rem;
-            width: 3.375rem;
-            margin: 1%;
-            font-size: 80%;
+        .barra-navegacao{
+            padding: 0px 1em;
+            box-sizing: border-box;
+            justify-content: space-between;
+            overflow-x: hidden;
+            z-index: 9;
+    
+            .box-links-navbar{
+                position: absolute;
+                top: 13.375vh;
+                right: 0;
+                width: 100%;
+                height: auto;
+                background-color: silver;
+                z-index: -1;
+                flex-direction: column;
+                transform: translateY(-200%);
+                transition: transform 0.3s ease-in;
+                justify-content: flex-start;
+                align-items: flex-start;
+                opacity: 95%;
+
+                .container-links{
+                    width: 100%;
+                    flex-direction: column;
+                    height: auto;
+    
+                    div{
+                        flex-direction: column;
+                        width: 100%;
+                        a {
+                            height: auto;
+                            width: 100%;
+                            padding: 1em;
+                            box-sizing: border-box;
+                        }
+    
+                        a:hover{
+                            transform: none;
+                            transition: 0.2s;
+                            background-color: #ccc;
+                        }
+                    }
+                }
+    
+                .container-eventos{
+                    flex-direction: column;
+                    width: 100%;
+                    height: auto;
+    
+                    .botao-cadastro, .botao-login{
+                        height: auto;
+                        width: 100%;
+                        margin: 0px;
+                        padding: 1em;
+                        justify-content: flex-start;
+                        color: black;
+                        box-sizing: border-box;
+                        border: none;
+                        border-radius: 0px;
+                        background-color: transparent;
+                    }
+    
+                    .botao-cadastro:hover, .botao-login:hover{
+                        transition: 0.2s;
+                        background-color: #ccc;
+                        color: black;
+                    }
+    
+                    .botao-cadastro:active, .botao-login:active{
+                        transform: none;
+                    }
+                }
+            }
+    
+            .box-links-navbar.ativo{
+                transform: translateY(0);
+            }
+    
+            .inativar{
+                pointer-events: none !important;
+                background-color: gray !important;
+            }
+    
+            .menu-hambuguer{
+                display: block;
+            }
         }
     }
-}
 }

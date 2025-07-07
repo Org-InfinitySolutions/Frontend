@@ -3,7 +3,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import MetricasKpis from '../components/Dashboard/MetricasKpis';
 import GraficoLinha from '../components/Dashboard/GraficoLinha';
 import GraficoPizza from '../components/Dashboard/GraficoPizza';
-import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ const Dashboard = () => {
 
   return (  
   <div className="pt-4 pb-6 pl-4 pr-4 bg-white min-h-screen">
-      <BotoesFuncionalidades />
       <MetricasKpis />
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <GraficoLinha />
