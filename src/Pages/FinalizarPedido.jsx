@@ -9,6 +9,7 @@ import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../util
 import { tokenExpirou } from '../utils/token'
 import LoadingBar from 'react-top-loading-bar';
 import { FaCheck } from 'react-icons/fa';
+import { DadosEndereco } from '../components/DadosEndereco';
 
 function FinalizarPedido() {
 
@@ -243,55 +244,7 @@ function FinalizarPedido() {
                         ))}
                     </section>
 
-                    <section className='container-endereco'>
-                        <h2>ENDEREÇO</h2>
-                        <section className='box-informacoes'>
-                            <div className='secao-informacoes'>
-                                <label>CEP:</label>
-                                <input type="text" value={formatarCEP(carrinho.endereco.cep)} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>RUA:</label>
-                                <input type="text" value={carrinho.endereco.logradouro} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>NÚMERO:</label>
-                                <input type="text" value={carrinho.endereco.numero} readOnly />
-                            </div>
-                        </section>
-                        <section className='box-informacoes'>
-                            <div className='secao-informacoes'>
-                                <label>BAIRRO:</label>
-                                <input type="text" value={carrinho.endereco.bairro} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>CIDADE:</label>
-                                <input type="text" value={carrinho.endereco.cidade} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>ESTADO:</label>
-                                <input type="text" value={carrinho.endereco.estado} readOnly />
-                            </div>
-                        </section>
-                        <section className='box-complemento'>
-                            <label>COMPLEMENTO:</label>
-                            <input type="text" value={carrinho.endereco.complemento} readOnly />
-                        </section>
-                        <section className='box-informacoes'>
-                            <div className='secao-informacoes'>
-                                <label>DATA E HORA ENTREGA:</label>
-                                <input type="datetime-local" value={carrinho.dataEntrega} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>DATA E HORA DEVOLUÇÃO:</label>
-                                <input type="datetime-local" value={carrinho.dataRetirada} readOnly />
-                            </div>
-                            <div className='secao-informacoes'>
-                                <label>TIPO DE EVENTO:</label>
-                                <input type="text" value={carrinho.tipo} readOnly />
-                            </div>
-                        </section>
-                    </section>
+                    <DadosEndereco endereco={carrinho.endereco} dataEntrega={carrinho.dataEntrega} dataRetirada={carrinho.dataRetirada} tipo={carrinho.tipo}/>
 
                     <section className='container-observacao'>
                         <label htmlFor="txt_observacao">Observação (opcional):</label>

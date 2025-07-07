@@ -12,7 +12,6 @@ import Paginacao from '../components/Paginacao';
 import { CardProdutoEquipamentos } from '../components/CardProdutoEquipamentos'
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
-import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
 import { tokenExpirou } from '../utils/token';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 
@@ -124,7 +123,6 @@ const Equipamentos = () => {
       <main className="conteudo-equipamentos">
         <div className="filtros">
           <div className="linha-botoes-carrinho">
-            <BotoesFuncionalidades />
             <div className="icone-carrinho">
               <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />
             </div>

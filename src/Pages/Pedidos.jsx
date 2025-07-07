@@ -6,7 +6,6 @@ import Paginacao from '../components/Paginacao';
 import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
-import { BotoesFuncionalidades } from '../components/BotoesFuncionalidades';
 import { formatarData } from '../Utils/formatacoes'
 import { tokenExpirou } from '../utils/token';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
@@ -89,7 +88,6 @@ const Pedidos = () => {
 		<div className="pagina-pedidos">
 			<main className="conteudo-pedidos">
 				<div className="filtros">
-					<BotoesFuncionalidades />
 
 					<div className="linha-pesquisa-filtros">
 						<div className="barra-pesquisa-container">
