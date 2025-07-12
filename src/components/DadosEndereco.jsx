@@ -8,7 +8,7 @@ function DadosEndereco({
     dataRetirada,
     tipo
 }){
-
+    console.log(endereco)
     return (
         <section className='container-dados-pedido'>
             <h2>ENDEREÇO</h2>

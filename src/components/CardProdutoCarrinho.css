@@ -173,15 +173,19 @@
                 span{
                     font-size: 1.2em;
                 }
+
                 .botao-remover-produto{
                     position: absolute;
-                    bottom: 85%;
-                    left: 85%;
+                    top: 0%;
+                    right: 0%;
                     height: 1em;
                     width: 1em;
-                    padding: 1em;
                     background-color: white;
-                    border: 1px solid #ccc;
+                    border-radius: 0px;
+                    border-left: 1px solid;
+                    border-bottom: 1px solid;
+                    border-color: rgb(238, 238, 238);
+                    padding: 0.8em;
                 }
             }
             .box-quantidade{
