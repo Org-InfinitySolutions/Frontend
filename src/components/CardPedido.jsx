@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './CardPedido.css';
 import { api } from '../provider/apiInstance';
-import { formatarIdPedido } from '../Utils/formatacoes'
+import Swal from 'sweetalert2';
+import { formatarIdPedido } from '../utils/formatacoes'
 
 const statusLabel = {
   'EM ANÁLISE': 'Em Análise',
@@ -62,6 +63,21 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
     setCancelando(false);
   };
 
+  const confirmarCancelamentoPedido = () => {
+    Swal.fire({
+      title: `Você deseja cancelar o pedido número #${pedido.id}?`,
+      text: "A alteração não poderá ser desfeita.",
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: "Sim",
+      denyButtonText: `Não`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        cancelarPedido();
+      }
+    });
+  }
+
   const statusClass = {
     'EM ANÁLISE': 'status-btn status-cinza',
     'EM_ANALISE': 'status-btn status-cinza',
@@ -80,7 +96,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
       {cargo && (<p><b>Nome:</b> {pedido.cliente}</p>)}
       <div className="acoes">
         {podeCancelar() && status !== 'CANCELADO' && (
-          <button className="btn-cancelar" onClick={cancelarPedido} disabled={cancelando}>
+          <button className="btn-cancelar" onClick={confirmarCancelamentoPedido} disabled={cancelando}>
             {cancelando ? 'Cancelando...' : 'Cancelar'}
           </button>
         )}

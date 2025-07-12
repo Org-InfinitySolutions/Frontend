@@ -3,6 +3,7 @@ import './DetalharPedidos.css';
 import { api } from '../provider/apiInstance';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
+import JSZip from 'jszip';
 import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
 import { tokenExpirou } from '../utils/token'
 import { DadosEndereco } from '../components/DadosEndereco'
@@ -75,6 +76,9 @@ export function DetalharPedidos() {
             }).then(res => {
                 setBarraCarregamento(100);
                 setPedido(res.data);
+
+                console.log(res.data)
+
                 const situacao = res.data.situacao;
                 if(situacao == 'FINALIZADO' || situacao == 'CANCELADO'){
                     statusOptions = statusOptions.filter(x => x.value != 'APROVADO' && x.value != 'EM_ANALISE' && x.value != 'EM_EVENTO');
@@ -113,25 +117,29 @@ export function DetalharPedidos() {
         }
     };
 
-    const baixarArquivos = (arquivos) => {
-        arquivos.forEach(async (arquivo, i) => {
+    const baixarArquivos = async (arquivos) => {
 
-            const response = await fetch(arquivo.downloadUrl);
-
+        const zip = new JSZip();
+        
+        for(let i = 0; i < arquivos.length; i++){
+            const doc = arquivos[i];
+            const response = await fetch(doc.downloadUrl);
             const blob = await response.blob();
-            const blobUrl = URL.createObjectURL(blob);
+            const nome = doc.originalFilename || `documento-${i}`;
+            zip.file(nome, blob);
+        }
 
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = arquivo.originalFilename || `arquivo-${i}`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        const zipUrl = URL.createObjectURL(zipBlob);
 
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+        const link = document.createElement('a');
+        link.href = zipUrl;
+        link.download = `documentos.zip`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
-            await new Promise(resolve => setTimeout(resolve, 500));
-        });
+        setTimeout(() => URL.revokeObjectURL(zipUrl), 1000);
     }
 
     const isAdmin = sessionStorage.CARGO === 'ROLE_ADMIN' || sessionStorage.CARGO === 'ROLE_FUNCIONARIO';

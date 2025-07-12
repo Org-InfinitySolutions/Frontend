@@ -139,6 +139,10 @@
             font-size: 1.5rem;
         }
 
+        .container-equipamentos{
+            align-items: center;
+        }
+
         .carrinho-vazio {
             width: 85%;
             padding: 2rem 1rem;

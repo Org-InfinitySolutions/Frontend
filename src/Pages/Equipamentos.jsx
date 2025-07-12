@@ -122,11 +122,13 @@ const Equipamentos = () => {
       />
       <main className="conteudo-equipamentos">
         <div className="filtros">
-          <div className="linha-botoes-carrinho">
-            <div className="icone-carrinho">
-              <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />
+          {cargo != "ROLE_ADMIN" && cargo != "ROLE_FUNCIONARIO" && (
+            <div className="linha-botoes-carrinho">
+              <div className="icone-carrinho">
+                <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="linha-pesquisa-filtros">
             <div className="barra-pesquisa-container" style={{ position: 'relative' }}>

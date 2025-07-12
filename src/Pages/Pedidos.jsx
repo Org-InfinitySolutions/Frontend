@@ -6,7 +6,7 @@ import Paginacao from '../components/Paginacao';
 import { api } from '../provider/apiInstance';
 import { CardPedido } from '../components/CardPedido';
 import { useNavigate } from 'react-router-dom';
-import { formatarData } from '../Utils/formatacoes'
+import { formatarData } from '../utils/formatacoes'
 import { tokenExpirou } from '../utils/token';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
 

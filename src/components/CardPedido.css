@@ -102,3 +102,18 @@
 .status {
   display: none;
 }
+
+@media screen and (max-width: 768px) {
+  .acoes{
+    flex-direction: column-reverse;
+
+    .btn-cancelar{
+      width: 100%;
+    }
+
+    .acoes-direita{
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+}
