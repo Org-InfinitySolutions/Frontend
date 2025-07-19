@@ -5,6 +5,7 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 import './Carrinho.css'
 import { useState } from 'react';
+import { ROUTERS } from '../routers/routers';
 function Carrinho() {
 
     const navigate = useNavigate();
@@ -80,7 +81,7 @@ function Carrinho() {
                     <h2>Seu carrinho está vazio</h2>
                     <p>Você ainda não tem produtos adicionados ao seu carrinho.</p>
                     <p>Explore nossa seleção de equipamentos e encontre o que você precisa!</p>
-                    <button className="btn-explorar-produtos" onClick={() => navigate('/equipamentos')}>
+                    <button className="btn-explorar-produtos" onClick={() => navigate(ROUTERS.EQUIPAMENTOS)}>
                         Explorar Equipamentos
                     </button>
                 </div>
@@ -102,7 +103,7 @@ function Carrinho() {
                             />
                         ))}
                     </section>
-                    <Navegabilidade linkVoltar={"/equipamentos"} funcaoAvancar={() => { navigate("/carrinho/endereco") }} textoAvancar={"Continuar"} />
+                    <Navegabilidade linkVoltar={ROUTERS.EQUIPAMENTOS} funcaoAvancar={() => { navigate(ROUTERS.CARRINHOENDERECO) }} textoAvancar={"Continuar"} />
                 </>
             )}
         </div>

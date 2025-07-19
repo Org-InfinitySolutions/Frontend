@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Input } from '../components/Input';
 import './Cadastro.css';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 import { formatarRegistroGeral, formatarCNPJ, formatarCPF, formatarTelefone, formatarTelefoneFixo, formatarCEP } from '../utils/formatacoes';
 import { exibirAviso } from '../utils/exibirModalAviso';
@@ -119,7 +121,7 @@ function Cadastro() {
     }
 
     function enviarEmail(nome, email) {
-        api.post('/emails/enviar-codigo', {
+        api.post(ENDPOINTS.ENVIARCODIGOEMAIL, {
             nome,
             email
         });
@@ -128,7 +130,7 @@ function Cadastro() {
     function validarCodigoConfirmacao(codigo) {
 
         const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ
-        api.post('/emails/validar-codigo', {
+        api.post(ENDPOINTS.VALIDARCODIGOEMAIL, {
             email: usuario.dadosBase.email,
             codigo
         }).then((res) => {
@@ -233,7 +235,7 @@ function Cadastro() {
             telefone_residencial: form.telefone
         }
 
-        api.post("/usuarios", {
+        api.post(ENDPOINTS.USUARIOS, {
             nome: form.dadosBase.nome,
             tipo: tipoUsuario == 'fisica' ? 'PF' : 'PJ',
             email: form.dadosBase.email,
@@ -256,7 +258,7 @@ function Cadastro() {
                 setBarraCarregamento(100);
             }, 1000);
             setTimeout(() => {
-                navegar('/login');
+                navegar(ROUTERS.LOGIN);
             }, 1500);
         }).catch((erro) => {
             setBarraCarregamento(100);
@@ -279,7 +281,7 @@ function Cadastro() {
     }
 
     const buscarCpfNoBanco = () => {
-        api.get(`/usuarios/cpf?cpf_like=${formularioCPF.cpf}`)
+        api.get(`${ENDPOINTS.GETUSUARIOCPF}?cpf_like=${formularioCPF.cpf}`)
         .then((res) => {
             if(res.data.disponivel){
                 setEtapa(2);
@@ -291,7 +293,7 @@ function Cadastro() {
     }
 
     const buscarCnpjNoBanco = () => {
-        api.get(`/usuarios/cnpj?cnpj_like=${formularioCNPJ.cnpj}`)
+        api.get(`${ENDPOINTS.GETUSUARIOCNPJ}?cnpj_like=${formularioCNPJ.cnpj}`)
         .then((res) => {
             if(res.data.disponivel){
                 setEtapa(2);
@@ -303,7 +305,7 @@ function Cadastro() {
     }
 
     const buscarEmailNoBanco = () => {
-        apiAutenticacao.get(`/email/verificar?email=${dadosBase.email}`)
+        apiAutenticacao.get(`${ENDPOINTS.EMAILVERIFICAR}?email=${dadosBase.email}`)
         .then((res) => {
             if(res.data.disponivel){
                 const usuario = tipoUsuario == 'fisica' ? formularioCPF : formularioCNPJ

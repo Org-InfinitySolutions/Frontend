@@ -3,13 +3,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import MetricasKpis from '../components/Dashboard/MetricasKpis';
 import GraficoLinha from '../components/Dashboard/GraficoLinha';
 import GraficoPizza from '../components/Dashboard/GraficoPizza';
+import { ROUTERS } from '../routers/routers';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     if (sessionStorage.CARGO !== 'ROLE_ADMIN') {
-      navigate('/');
+      navigate(ROUTERS.HOME);
       return;
     }
   }, [navigate]);

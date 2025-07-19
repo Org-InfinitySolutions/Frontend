@@ -11,6 +11,8 @@ import { exibirAvisoTimer } from '../utils/exibirModalAviso';
 import { limparSession } from '../utils/limpar';
 import { validarSenha } from '../utils/validarCampos'
 import { tokenExpirou } from '../utils/token';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 function Perfil(){
 
@@ -39,7 +41,7 @@ function Perfil(){
             exibirAvisoTokenExpirado(navegar);
         } else {
             setBarraCarregamento(30)
-            apiAutenticacao.delete(`/credenciais/${sessionStorage.ID_USUARIO?.trim()}`, 
+            apiAutenticacao.delete(ENDPOINTS.CREDENCIAISIDUSUARIO.replace(':id', sessionStorage.ID_USUARIO?.trim()), 
             {
                 data: { senha },   
                 headers: {
@@ -57,7 +59,7 @@ function Perfil(){
 
                 setTimeout(() => {
                     limparSession();
-                    navegar('/');
+                    navegar(`${ROUTERS.HOME}`);
                 }, 4000);
             })
             .catch((err) => {
@@ -77,7 +79,7 @@ function Perfil(){
     }
 
     const carregarDadosPessoais = () => {
-        api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
+        api.get(ENDPOINTS.USUARIOID.replace(':id', sessionStorage.ID_USUARIO), {
             headers: {
                 Authorization: `Bearer ${sessionStorage.TOKEN}`
             }
@@ -174,11 +176,11 @@ function Perfil(){
                     <button className="botao-excluir" onClick={abrirModalExcluirConta}>Excluir Conta</button>
                     <button className="botao-editar" onClick={() => {
                         sessionStorage.DADOS_USUARIO = JSON.stringify(usuario);
-                        navegar('/editar-perfil');
+                        navegar(`${ROUTERS.EDITARPERFIL}`);
                     }}>Editar Conta</button>
                 </div>
                 <div className="evento-voltar">
-                    <button className='botao-retroceder' onClick={() => { navegar('/equipamentos')}}>Voltar</button>
+                    <button className='botao-retroceder' onClick={() => { navegar(`${ROUTERS.EQUIPAMENTOS}`)}}>Voltar</button>
                 </div>
             </section>
             <section className="dados-utilitarios">

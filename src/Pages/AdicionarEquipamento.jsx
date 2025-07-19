@@ -7,6 +7,8 @@ import { exibirAvisoTokenExpirado, exibirAviso } from '../utils/exibirModalAviso
 import { useNavigate } from 'react-router-dom';
 import { campoVazio } from '../utils/validarCampos'
 import { api } from '../provider/apiInstance';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 export function AdicionarEquipamento() {
 
@@ -79,7 +81,7 @@ export function AdicionarEquipamento() {
 
       setTimeout(() => {
         setBarraCarregamento(70);
-        api.post('/produtos', formData, {
+        api.post(ENDPOINTS.PRODUTOS, formData, {
           headers: {
             Authorization: `Bearer ${sessionStorage.TOKEN}`,
             'Content-Type': 'multipart/form-data'
@@ -101,7 +103,6 @@ export function AdicionarEquipamento() {
   }
 
   const validarForm = () => {
-    console.log(categoriaEquipamento);
     if(campoVazio(modelo) || campoVazio(marca) || campoVazio(descricao) || campoVazio(linkFabricante)){
       exibirAviso('Preencher todos os campos obrigatórios', 'error');
     } else if(quantidade <= 0){
@@ -117,11 +118,8 @@ export function AdicionarEquipamento() {
 
   const listarCategorias = () => {
 
-    api.get('/categorias', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.TOKEN}`
-      }
-    }).then((res) => {
+    api.get(ENDPOINTS.CATEGORIAS)
+    .then((res) => {
       const caixote = res.data;
       setCategorias(caixote);
       setCategoriaEquipamento(caixote[0].id);
@@ -217,7 +215,7 @@ export function AdicionarEquipamento() {
       </form>
 
       <div className="botao-container">
-        <button type="button" className="botao-adicionar" onClick={() => { navegar('/equipamentos')}}>CANCELAR</button>
+        <button type="button" className="botao-adicionar" onClick={() => { navegar(`${ROUTERS.EQUIPAMENTOS}`)}}>CANCELAR</button>
         <button type="button" className="botao-adicionar" onClick={validarForm} disabled={desativarBotao}>ADICIONAR</button>
       </div>
     </div>

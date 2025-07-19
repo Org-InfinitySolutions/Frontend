@@ -10,6 +10,8 @@ import { tokenExpirou } from '../utils/token'
 import LoadingBar from 'react-top-loading-bar';
 import { FaCheck } from 'react-icons/fa';
 import { DadosEndereco } from '../components/DadosEndereco';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 function FinalizarPedido() {
 
@@ -49,9 +51,8 @@ function FinalizarPedido() {
             setBarraCarregamento(30);
             
             setTimeout(() => {
-                api.post('/pedidos', formData, {
+                api.post(ENDPOINTS.PEDIDOS, formData, {
                     headers: {
-                        'Authorization': `bearer ${sessionStorage.TOKEN}`,
                         'Content-Type': 'multipart/form-data'
                     }
                 }).then(async (res) => {
@@ -69,7 +70,7 @@ function FinalizarPedido() {
 
                     setTimeout(() => {
                         setMostrarModalConfirmacao(false);
-                        navegar("/pedidos")
+                        navegar(ROUTERS.PEDIDOS)
                     }, 4000);
                 }).catch((err) => {
                     setBarraCarregamento(100);
@@ -106,7 +107,7 @@ function FinalizarPedido() {
 
         if(!usuarioLogado){
             exibirAvisoTimer('Faça login para finalizar o pedido.', 'info');
-            setTimeout(() => { navegar('/login'); }, 3200);
+            setTimeout(() => { navegar(`${ROUTERS.LOGIN}`); }, 3200);
             houveErro = true;
         }
 
@@ -314,7 +315,7 @@ function FinalizarPedido() {
                     )}
 
                     <Navegabilidade
-                        linkVoltar={"/carrinho/endereco"}
+                        linkVoltar={`${ROUTERS.CARRINHOENDERECO}`}
                         textoAvancar={"Finalizar"}
                         desabilitar={desativarBotao}
                         funcaoAvancar={validarForm}

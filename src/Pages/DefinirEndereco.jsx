@@ -10,6 +10,8 @@ import { formatarCEP } from '../utils/formatacoes'
 import { tokenExpirou } from '../utils/token'
 import { exibirAvisoTokenExpirado, exibirAviso } from '../utils/exibirModalAviso'
 import { buscarEndereco } from '../provider/buscarCEP';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 function DefinirEndereco(){
 
@@ -45,7 +47,7 @@ function DefinirEndereco(){
             if(tokenExpirou()){
                 exibirAvisoTokenExpirado(navigate);
             } else {
-                api.get(`/usuarios/${sessionStorage.ID_USUARIO}`, {
+                api.get(ENDPOINTS.USUARIOID.replace(':id', sessionStorage.ID_USUARIO), {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.TOKEN}`
                     }
@@ -104,7 +106,7 @@ function DefinirEndereco(){
 
         sessionStorage.CARRINHO = JSON.stringify(montarCarrinho);
 
-        navigate("/carrinho/finalizar");
+        navigate(ROUTERS.CARRINHOFINALIZAR);
     }
 
     const validarForm = () => {
@@ -285,7 +287,7 @@ function DefinirEndereco(){
                 <span>* Preenchimento obrigatório</span>
             </section>
         </section>
-        <Navegabilidade linkVoltar={"/carrinho"} funcaoAvancar={validarForm} textoAvancar={"Continuar"} desabilitar={desativarBotao}/>
+        <Navegabilidade linkVoltar={`${ROUTERS.CARRINHO}`} funcaoAvancar={validarForm} textoAvancar={"Continuar"} desabilitar={desativarBotao}/>
     </div>
     )
 }

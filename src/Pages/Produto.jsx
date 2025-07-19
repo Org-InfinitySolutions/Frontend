@@ -6,6 +6,8 @@ import IconeCarrinho from '../assets/iconeCarrinho.png';
 import { api } from '../provider/apiInstance';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 const Produto = () => {
   const { id } = useParams();
@@ -15,7 +17,7 @@ const Produto = () => {
 
   useEffect(() => {
     setCarregando(true);
-    api.get(`/produtos/${id}`)
+    api.get(ENDPOINTS.PRODUTOID.replace(':id', id))
       .then(res => {
         const data = res.data;
         setProduto({
@@ -65,7 +67,7 @@ const Produto = () => {
       <header className="topo-produto">
         <button className="botao-adicionar-carrinho" onClick={adicionarCarrinho}>ADICIONAR AO CARRINHO</button>
         <div className="icone-carrinho">
-          <a href="/carrinho">
+          <a href={ROUTERS.CARRINHO}>
             <img src={IconeCarrinho} alt="Carrinho de compras" />
           </a>
         </div>
