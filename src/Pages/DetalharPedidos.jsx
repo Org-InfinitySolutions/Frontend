@@ -9,6 +9,7 @@ import { tokenExpirou } from '../utils/token'
 import { DadosEndereco } from '../components/DadosEndereco'
 import { CardProdutoCarrinho } from '../components/CardProdutoCarrinho';
 import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../utils/formatacoes'
+import { ENDPOINTS } from '../routers/endpoints';
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',
@@ -69,15 +70,13 @@ export function DetalharPedidos() {
         } else {
             setBarraCarregamento(30);
             setLoading(true);
-            api.get(`/pedidos/${id}`, {
+            api.get(ENDPOINTS.PEDIDOID.replace(':id', id), {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.TOKEN}`
                 }
             }).then(res => {
                 setBarraCarregamento(100);
                 setPedido(res.data);
-
-                console.log(res.data)
 
                 const situacao = res.data.situacao;
                 if(situacao == 'FINALIZADO' || situacao == 'CANCELADO'){
@@ -101,7 +100,7 @@ export function DetalharPedidos() {
         if(tokenExpirou()){
             exibirAvisoTokenExpirado(navegar);
         } else {
-            await api.put(`/pedidos/${id}/situacao`, { situacao: status }, {
+            await api.put(ENDPOINTS.PUTSITUACAOPEDIDO.replace(':id', id), { situacao: status }, {
                 headers: {
                     Authorization: `Bearer ${sessionStorage.TOKEN}`
                 }
@@ -109,6 +108,10 @@ export function DetalharPedidos() {
                 setBarraCarregamento(100);
                 setPedido(p => ({ ...p, situacao: status }));
                 exibirAviso('Operação realizada com sucesso', 'success');
+
+                setTimeout(()=> {
+                    navegar(0)
+                }, 2000)
             }).catch((err) => {
                 setBarraCarregamento(100);
                 exibirAviso(err.response.data.message, 'error');

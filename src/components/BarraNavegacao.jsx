@@ -6,6 +6,7 @@ import { useBlocker, useLocation, useNavigate } from 'react-router-dom';
 import { IoMenu } from 'react-icons/io5';
 import { getDevice } from '../utils/interface';
 import { IoMdClose } from 'react-icons/io';
+import { ROUTERS } from '../routers/routers';
 
 const dispositivo = getDevice();
 
@@ -49,7 +50,7 @@ function BarraNavegacao(){
     <nav >
         <section className={`barra-navegacao`}>
             <section className="container-logo">
-                <button className='botao-logo' onClick={() => navigate('/')}>
+                <button className='botao-logo' onClick={() => navigate(`${ROUTERS.HOME}`)}>
                 <img style={logoResponsividade()} src={Logo} alt="Logo Nova Locações" />
                 </button>            
             </section>
@@ -58,13 +59,13 @@ function BarraNavegacao(){
                     <div>
                         {usuarioLogado ? 
                             (<>
-                                <a href="/" className={`${desativarLinkPaginaAtual('/')}`}>Home</a>
-                                <a href="/equipamentos" className={`${desativarLinkPaginaAtual('/equipamentos')}`}>Equipamentos</a>
-                                {(!habilitarFuncoesGerenciais || !usuarioLogado) && <a href="/pedidos" className={`${desativarLinkPaginaAtual('/pedidos')}`}>Pedidos</a> }
+                                <a href={ROUTERS.HOME} className={`${desativarLinkPaginaAtual(`${ROUTERS.HOME}`)}`}>Home</a>
+                                <a href={ROUTERS.EQUIPAMENTOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.EQUIPAMENTOS}`)}`}>Equipamentos</a>
+                                {usuarioLogado && <a href={ROUTERS.PEDIDOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.PEDIDOS}`)}`}>Pedidos</a> }
                                 {habilitarFuncoesGerenciais &&
                                     (<>
-                                        <a href="/calendario" className={`${desativarLinkPaginaAtual('/calendario')}`}>Calendário</a>
-                                        <a href="/dashboard" className={`${desativarLinkPaginaAtual('/dashboard')}`}>Dashboard</a>    
+                                        <a href={ROUTERS.CALENDARIO} className={`${desativarLinkPaginaAtual(`${ROUTERS.CALENDARIO}`)}`}>Calendário</a>
+                                        <a href={ROUTERS.DASHBOARD} className={`${desativarLinkPaginaAtual(`${ROUTERS.DASHBOARD}`)}`}>Dashboard</a>    
                                     </>) 
                                 }
                             </>) 
@@ -75,7 +76,7 @@ function BarraNavegacao(){
                                     <a href="/#servicos" onClick={definirMenu}>Serviços</a>
                                     <a href="/#projetos" onClick={definirMenu}>Projetos</a>
                                 </>)}
-                                <a href="/equipamentos" className={`${desativarLinkPaginaAtual('/equipamentos')}`}>Equipamentos</a>
+                                <a href={ROUTERS.EQUIPAMENTOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.EQUIPAMENTOS}`)}`}>Equipamentos</a>
                             </>)
                         }
                     </div>  
@@ -84,14 +85,14 @@ function BarraNavegacao(){
                     {usuarioLogado ? 
                         (<>
                             {cargo != 'ROLE_ADMIN' ? (
-                                <a href='/perfil' className={`botao-cadastro ${desativarLinkPaginaAtual('/perfil')}`}>Perfil</a>
+                                <a href={ROUTERS.PERFIL} className={`botao-cadastro ${desativarLinkPaginaAtual(`${ROUTERS.PERFIL}`)}`}>Perfil</a>
                             ) : (<></>)}
-                            <a href='/' onClick={() => { limparSession()}} className='botao-login'>Sair</a>
+                            <a href={ROUTERS.HOME} onClick={() => { limparSession()}} className='botao-login'>Sair</a>
                         </>) 
                         : 
                         (<>
-                            <a href='/cadastro' className={`botao-cadastro ${desativarLinkPaginaAtual('/cadastro')}`}>Cadastro</a>
-                            <a href='/login' className={`botao-login ${desativarLinkPaginaAtual('/login')}`}>Login</a>
+                            <a href={ROUTERS.CADASTRO} className={`botao-cadastro ${desativarLinkPaginaAtual(`${ROUTERS.CADASTRO}`)}`}>Cadastro</a>
+                            <a href={ROUTERS.LOGIN} className={`botao-login ${desativarLinkPaginaAtual(`${ROUTERS.LOGIN}`)}`}>Login</a>
                         </>)}
                 </section>
             </div>

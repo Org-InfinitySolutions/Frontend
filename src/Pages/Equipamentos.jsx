@@ -14,6 +14,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
 import { tokenExpirou } from '../utils/token';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
@@ -49,7 +51,7 @@ const Equipamentos = () => {
       exibirAvisoTokenExpirado(navegar)
     } else {
 
-      api.get('/produtos', header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN }` } } : {})
+      api.get(ENDPOINTS.PRODUTOS, header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}`}} : {})
       .then((res) => {
         setBarraCarregamento(100);
         
@@ -125,7 +127,7 @@ const Equipamentos = () => {
           {cargo != "ROLE_ADMIN" && cargo != "ROLE_FUNCIONARIO" && (
             <div className="linha-botoes-carrinho">
               <div className="icone-carrinho">
-                <IoCartOutline size={40} onClick={() => { navegar('/carrinho') }} />
+                <IoCartOutline size={40} onClick={() => { navegar(`${ROUTERS.CARRINHO}`) }} />
               </div>
             </div>
           )}
@@ -154,7 +156,7 @@ const Equipamentos = () => {
                 <IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`} />
               </div>
               {cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO" ? (
-                <button className="botao-secundario" onClick={() => navegar('/adicionar-equipamento')}>
+                <button className="botao-secundario" onClick={() => navegar(`${ROUTERS.ADICIONAREQUIPAMENTO}`)}>
                   Adicionar equipamento
                 </button>  
               ) : (

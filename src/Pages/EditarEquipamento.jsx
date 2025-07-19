@@ -7,6 +7,8 @@ import { campoVazio } from '../utils/validarCampos';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso'
 import LoadingBar from 'react-top-loading-bar';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 export function EditarEquipamento() {
 
@@ -81,7 +83,7 @@ export function EditarEquipamento() {
       setBarraCarregamento(30);
       setTimeout(() => {
         setBarraCarregamento(70);
-        api.put(`/produtos/${id}`, req, {
+        api.put(ENDPOINTS.PRODUTOID.replace(':id', id), req, {
           headers: {
             Authorization: `Bearer ${sessionStorage.TOKEN}`
           }
@@ -94,7 +96,7 @@ export function EditarEquipamento() {
           exibirAviso('Operação realizada com sucesso!', 'success');
 
           setTimeout(() => {
-            navegar('/equipamentos');
+            navegar(ROUTERS.EQUIPAMENTOS);
           }, 2000)
         }).catch((err) => {
           setBarraCarregamento(100);
@@ -118,7 +120,7 @@ export function EditarEquipamento() {
     const formImagem = new FormData();
     formImagem.append('imagem', imagem);
 
-    api.put(`/produtos/${id}/imagem`, formImagem, {
+    api.put(ENDPOINTS.PUTIMAGEMPRODUTO.replace(':id', id), formImagem, {
       headers: {
         Authorization: `Bearer ${sessionStorage.TOKEN}`,
         'Content-Type': 'multipart/form-data'
@@ -137,7 +139,7 @@ export function EditarEquipamento() {
 
   const buscarDadosEquipamento = () => {
 
-    api.get(`/produtos/${id}`, {
+    api.get(ENDPOINTS.PRODUTOID.replace(':id', id), {
       headers: {
         Authorization: `Bearer ${sessionStorage.TOKEN}`
       }
@@ -159,7 +161,7 @@ export function EditarEquipamento() {
     }).catch((err) => {
       if(err.status == 404){
         exibirAvisoTimer(err.response.data.error, 'error');
-        setTimeout(() => { navegar('/equipamentos') }, 3300);
+        setTimeout(() => { navegar(ROUTERS.EQUIPAMENTOS) }, 3300);
       }
     })
   }
@@ -180,7 +182,7 @@ export function EditarEquipamento() {
 
   const listarCategorias = () => {
 
-    api.get('/categorias', {
+    api.get(ENDPOINTS.CATEGORIAS, {
       headers: {
         Authorization: `Bearer ${sessionStorage.TOKEN}`
       }
@@ -275,7 +277,7 @@ export function EditarEquipamento() {
       </form>
 
       <div className="botao-container">
-        <button className="botao-cancelar-edicao" onClick={() => {navegar(`/equipamentos`)}}>Cancelar</button>
+        <button className="botao-cancelar-edicao" onClick={() => {navegar(`${ROUTERS.EQUIPAMENTOS}`)}}>Cancelar</button>
         <button type="button" className="botao-editar" onClick={validarForm} disabled={desativarBotao}>SALVAR</button>
       </div>
     </div>

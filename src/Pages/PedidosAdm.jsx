@@ -1,6 +1,7 @@
 import React from 'react';
 import './PedidosAdm.css';
 import IconePesquisa from '../assets/iconePesquisar.png';
+import { ROUTERS } from '../routers/routers';
 
 const pedidos = [
     { status: 'Em análise', cor: 'cinza' },
@@ -17,7 +18,7 @@ const PedidosAdm = () => {
             <main className="conteudo-pedidos">
                 <div className="filtros">
                     <div className="botoes-toggle">
-                        <a href='/equipamentos' className="inativo">EQUIPAMENTOS</a>
+                        <a href={ROUTERS.EQUIPAMENTOS} className="inativo">EQUIPAMENTOS</a>
                         <a className="ativo">PEDIDOS</a>
                         <a className="inativo">CALENDÁRIO</a>
                     </div>

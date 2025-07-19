@@ -6,6 +6,7 @@ import { campoVazio, emailInvalido } from '../utils/validarCampos';
 import './RecuperarSenha.css';
 import { Input } from '../components/Input';
 import LoadingBar from 'react-top-loading-bar';
+import { ROUTERS } from '../routers/routers';
 
 export function RecuperarSenha() {
     const navigate = useNavigate();
@@ -119,7 +120,7 @@ export function RecuperarSenha() {
                     </section>
 
                     <div className="botoes-recuperar-senha">
-                        <button type="button" className="botao-voltar-recuperar" onClick={() => navigate('/')}>
+                        <button type="button" className="botao-voltar-recuperar" onClick={() => navigate(`${ROUTERS.HOME}`)}>
                             Voltar
                         </button>
                         <button type="submit" className="botao-enviar-recuperar">

@@ -1,9 +1,9 @@
 import { BarraNavegacao } from './components/BarraNavegacao'
 import { Rodape } from './components/Rodape'
 
-
 // Dependências do Router
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { ROUTERS } from './routers/routers';
 
 // Importando página
 import { Login } from './Pages/Login'
@@ -18,7 +18,6 @@ import { DefinirEndereco } from './Pages/DefinirEndereco';
 import { FinalizarPedido } from './Pages/FinalizarPedido';
 import { Home } from './Pages/Home';
 import Dashboard from './Pages/Dashboard';
-
 import { PedidosAdm } from './Pages/PedidosAdm' 
 import { DetalharPedidos } from './Pages/DetalharPedidos';
 import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
@@ -44,25 +43,25 @@ function MainComponent() {
     <>      
       <BarraNavegacao key={location.pathname}/>
         <Routes>
-          <Route path='/' element={<Home/>} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/cadastro' element={<Cadastro />} />
-          <Route path='/perfil' element={<Perfil />} />
-          <Route path='/editar-perfil' element={<EditarPerfil />} />
-          <Route path='/carrinho' element={<Carrinho />} />
-          <Route path='/carrinho/endereco' element={<DefinirEndereco />} />
-          <Route path='/carrinho/finalizar' element={<FinalizarPedido />} />
-          <Route path='/pedidos' element={<Pedidos />} />
-          <Route path='/equipamentos' element={<Equipamentos />} />
-          <Route path='/produto' element={<Produto />} />
-          <Route path='/produto/:id' element={<Produto />} />
-          <Route path='/pedidos-adm' element={<PedidosAdm />}/>
-          <Route path='/detalhar-pedidos' element={<DetalharPedidos />}/>
-          <Route path='/adicionar-equipamento' element={<AdicionarEquipamento />}/>
-          <Route path='/calendario' element={<Calendario />}/>
-          <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/editar-equipamento/:id' element={<EditarEquipamento/>}></Route>
-          <Route path='/recuperar-senha' element={<RecuperarSenha/>}></Route>
+          <Route path={ROUTERS.HOME} element={<Home/>} />
+          <Route path={ROUTERS.LOGIN} element={<Login />} />
+          <Route path={ROUTERS.CADASTRO} element={<Cadastro />} />
+          <Route path={ROUTERS.PERFIL} element={<Perfil />} />
+          <Route path={ROUTERS.EDITARPERFIL} element={<EditarPerfil />} />
+          <Route path={ROUTERS.CARRINHO} element={<Carrinho />} />
+          <Route path={ROUTERS.CARRINHOENDERECO} element={<DefinirEndereco />} />
+          <Route path={ROUTERS.CARRINHOFINALIZAR} element={<FinalizarPedido />} />
+          <Route path={ROUTERS.PEDIDOS} element={<Pedidos />} />
+          <Route path={ROUTERS.EQUIPAMENTOS} element={<Equipamentos />} />
+          <Route path={ROUTERS.PRODUTO} element={<Produto />} />
+          <Route path={ROUTERS.PRODUTOID} element={<Produto />} />
+          <Route path={ROUTERS.PEDIDOSADM} element={<PedidosAdm />}/>
+          <Route path={ROUTERS.DETALHARPEDIDOS} element={<DetalharPedidos />}/>
+          <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/>
+          <Route path={ROUTERS.CALENDARIO} element={<Calendario />}/>
+          <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
+          <Route path={ROUTERS.EDITAREQUIPAMENTOID} element={<EditarEquipamento/>}></Route>
+          <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
         </Routes>
       <Rodape />
     </>

@@ -3,6 +3,7 @@ import './CardPedido.css';
 import { api } from '../provider/apiInstance';
 import Swal from 'sweetalert2';
 import { formatarIdPedido } from '../utils/formatacoes'
+import { ENDPOINTS } from '../routers/endpoints';
 
 const statusLabel = {
   'EM ANÁLISE': 'Em Análise',
@@ -51,7 +52,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
     setCancelando(true);
     const token = sessionStorage.TOKEN;
     try {
-      await api.put(`/pedidos/${pedido.id}/situacao`, { situacao: 'CANCELADO' }, {
+      await api.put(ENDPOINTS.PUTSITUACAOPEDIDO.replace(':id', pedido.id), { situacao: 'CANCELADO' }, {
         headers: {
           Authorization: `Bearer ${token}`
         }

@@ -1,0 +1,21 @@
+export const ROUTERS = {
+    HOME: '/',
+    LOGIN: '/login',
+    CADASTRO: '/cadastro',
+    PERFIL: '/perfil',
+    EDITARPERFIL: '/editar-perfil',
+    CARRINHO: '/carrinho',
+    CARRINHOENDERECO: '/carrinho/endereco',
+    CARRINHOFINALIZAR: '/carrinho/finalizar',
+    PEDIDOS: '/pedidos',
+    EQUIPAMENTOS: '/equipamentos',
+    PRODUTO: '/produto',
+    PRODUTOID: '/produto/:id',
+    PEDIDOSADM: '/pedidos-adm',
+    DETALHARPEDIDOS: '/detalhar-pedidos',
+    ADICIONAREQUIPAMENTO: '/adicionar-equipamento',
+    CALENDARIO: '/calendario',
+    DASHBOARD: '/dashboard',
+    EDITAREQUIPAMENTOID: '/editar-equipamento/:id',
+    RECUPERARSENHA: '/recuperar-senha'
+}

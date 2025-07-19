@@ -10,7 +10,7 @@ import { exibirAviso, exibirAvisoTokenExpirado } from '../utils/exibirModalAviso
 import LoadingBar from 'react-top-loading-bar';
 import { limparSession } from '../utils/limpar';
 import { ToastContainer, toast } from 'react-toastify';
-
+import { ROUTERS } from '../routers/routers';
 
 import {  
     campoNaoAtendeTamanho, 
@@ -26,6 +26,7 @@ import {
     validarSenha
 } from '../utils/validarCampos';
 import { tokenExpirou } from '../utils/token';
+import { ENDPOINTS } from '../routers/endpoints';
 
 function EditarPerfil() {
 
@@ -129,7 +130,7 @@ function EditarPerfil() {
     const editarPerfil = (formulario) => {
 
         setBarraCarregamento(30)
-        api.put(`/usuarios/${sessionStorage.ID_USUARIO}`, formulario,
+        api.put(ENDPOINTS.USUARIOID.replace(':id', sessionStorage.ID_USUARIO), formulario,
         {
             headers: {
                 Authorization: `Bearer ${sessionStorage.TOKEN}`
@@ -142,7 +143,7 @@ function EditarPerfil() {
                 toast.success("Perfil alterado com sucesso!");
 
                 setTimeout(() => {
-                    navegar('/perfil');
+                    navegar(ROUTERS.PERFIL);
                 }, 2000);
             }, 1000);
         }).catch((err) => {
@@ -150,7 +151,7 @@ function EditarPerfil() {
             setBarraCarregamento(100);
             if(err.status == 401){
                 exibirAvisoTokenExpirado();
-            }            console.log(err);
+            }
         })
     }
 
@@ -177,7 +178,7 @@ function EditarPerfil() {
         }
 
         setBarraCarregamento(20);
-        apiAutenticacao.get(`/email/verificar?email=${novoEmail}`)
+        apiAutenticacao.get(`${ENDPOINTS.EMAILVERIFICAR}?email=${novoEmail}`)
             .then((res) => {
                 setBarraCarregamento(100);                
                 if (res.data.disponivel) {
@@ -209,13 +210,9 @@ function EditarPerfil() {
 
         setBarraCarregamento(30);
         
-        apiAutenticacao.patch('/credenciais/email', {
+        apiAutenticacao.patch(ENDPOINTS.CREDENCIAISEMAIL, {
             senha: senhaConfirmacao,
             novoEmail: novoEmail
-        }, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.TOKEN}`
-            }
         }).then(() => {
             setBarraCarregamento(70);
             setTimeout(() => {
@@ -225,7 +222,7 @@ function EditarPerfil() {
                 
                 setTimeout(() => {
                     limparSession();
-                    navegar('/login');
+                    navegar(ROUTERS.LOGIN);
                 }, 2000);
             }, 1000);
         }).catch((err) => {
@@ -292,13 +289,9 @@ function EditarPerfil() {
 
         setBarraCarregamento(30);
 
-        apiAutenticacao.patch('/credenciais/senha', {
+        apiAutenticacao.patch(ENDPOINTS.CREDENCIAISSENHA, {
             senhaAtual: senhaAtual,
             novaSenha: novaSenha
-        }, {
-            headers: {
-                Authorization: `Bearer ${sessionStorage.TOKEN}`
-            }
         }).then(() => {
             setBarraCarregamento(70);
             setTimeout(() => {
@@ -308,7 +301,7 @@ function EditarPerfil() {
                 
                 setTimeout(() => {
                     limparSession();
-                    navegar('/login');
+                    navegar(ROUTERS.LOGIN);
                 }, 2000);
             }, 1000);
         }).catch((err) => {

@@ -3,6 +3,8 @@ import { Input } from '../components/Input';
 import { apiAutenticacao } from '../provider/apiInstance'
 import { exibirAviso } from '../utils/exibirModalAviso';
 import { campoVazio, emailInvalido } from '../utils/validarCampos';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
@@ -27,7 +29,7 @@ function Login(){
         } else{
             
             setBarraCarregamento(30)
-            apiAutenticacao.post("/login", {
+            apiAutenticacao.post(ENDPOINTS.LOGIN, {
                 email,
                 senha
             }).then((res) => { 
@@ -45,7 +47,7 @@ function Login(){
                     setBarraCarregamento(100)
                 }, 1000);
                 setTimeout(() => {
-                    navegar('/equipamentos')
+                    navegar(`${ROUTERS.EQUIPAMENTOS}`)
                 }, 1500);
             }).catch((err) => {
                 
@@ -81,10 +83,10 @@ function Login(){
             </section>
             <button onClick={Login}>Entrar</button>
             <section className='links-navegacao'>
-                <a href="/recuperar-senha">
+                <a href={ROUTERS.RECUPERARSENHA}>
                     Esqueci minha senha
                 </a>
-                <a href="/cadastro">
+                <a href={ROUTERS.CADASTRO}>
                     Não tem cadastro? Clique aqui!
                 </a>
             </section>

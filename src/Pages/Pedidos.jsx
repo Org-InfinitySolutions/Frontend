@@ -9,6 +9,8 @@ import { useNavigate } from 'react-router-dom';
 import { formatarData } from '../utils/formatacoes'
 import { tokenExpirou } from '../utils/token';
 import { exibirAvisoTokenExpirado } from '../utils/exibirModalAviso';
+import { ROUTERS } from '../routers/routers';
+import { ENDPOINTS } from '../routers/endpoints';
 
 const normalizarStatus = (status) => {
 	if (!status) return '';
@@ -37,29 +39,25 @@ const Pedidos = () => {
 			exibirAvisoTokenExpirado(navigate);
 		} else {
 		
-			api.get('/pedidos', {
-			headers: {
-				Authorization: token ? `Bearer ${token}` : undefined
-			}
-		})
-		.then((res) => {
-			if (Array.isArray(res.data) && res.data.length > 0) {
-				const pedidosApi = res.data.map(p => ({
-					id: p.id,
-					itens: p.qtd_itens,
-					data: formatarData(p.dataCriacao),
-					status: p.situacao,
-					cliente: p.nome,
-					valor: p.valor || 100
-				}));
-				setPedidos(pedidosApi);
-			}
-		})
+			api.get(ENDPOINTS.PEDIDOS)
+			.then((res) => {
+				if (Array.isArray(res.data) && res.data.length > 0) {
+					const pedidosApi = res.data.map(p => ({
+						id: p.id,
+						itens: p.qtd_itens,
+						data: formatarData(p.dataCriacao),
+						status: p.situacao,
+						cliente: p.nome,
+						valor: p.valor || 100
+					}));
+					setPedidos(pedidosApi);
+				}
+			})
 		}
 	}, []);
 
 	const handleDetalhes = (pedido) => {
-		navigate(`/detalhar-pedidos?id=${pedido.id}`);
+		navigate(`${ROUTERS.DETALHARPEDIDOS}?id=${pedido.id}`);
 	}
 
 	const pedidosFiltrados = pedidos

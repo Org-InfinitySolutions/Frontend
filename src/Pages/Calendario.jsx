@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import './Calendario.css';
 import { api } from "../provider/apiInstance";
+import { ROUTERS } from "../routers/routers";
+import { ENDPOINTS } from "../routers/endpoints";
 
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
@@ -42,11 +44,7 @@ export function Calendario() {
   const hojeLimpo = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
 
   useEffect(() => {
-    api.get('/pedidos', {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.TOKEN}`
-      }
-    })
+    api.get(ENDPOINTS.PEDIDOS)
     .then(response => {
       const pedidosRecebidos = response.data;
 
@@ -56,7 +54,6 @@ export function Calendario() {
 
       pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
 
-      console.log(pedidosFiltrados)
       const mapeados = {};
       pedidosFiltrados.forEach(pedido => {
         const data = new Date(pedido.dataEntrega);
@@ -131,7 +128,7 @@ export function Calendario() {
                 <>
                   <div className="font-semibold">{data.getDate()}</div>
                   {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => (
-                    <a key={idx} href={`/detalhar-pedidos?id=${pedidoTexto.substr(pedidoTexto.indexOf('#') + 1)}`} className="text-blue-600 text-xs mt-1">{pedidoTexto}</a>
+                    <a key={idx} href={`${ROUTERS.DETALHARPEDIDOS}?id=${pedidoTexto.substr(pedidoTexto.indexOf('#') + 1)}`} className="text-blue-600 text-xs mt-1">{pedidoTexto}</a>
                   ))}
                 </>
               )}
