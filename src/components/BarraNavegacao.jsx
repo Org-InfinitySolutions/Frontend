@@ -47,7 +47,7 @@ function BarraNavegacao(){
     } 
 
     return(
-    <nav >
+    <nav className={url == ROUTERS.CADASTRO ? 'hidden' : ''}>
         <section className={`barra-navegacao`}>
             <section className="container-logo">
                 <button className='botao-logo' onClick={() => navigate(`${ROUTERS.HOME}`)}>
