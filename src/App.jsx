@@ -38,32 +38,33 @@ function App(){
 
 function MainComponent() {
 
-  const location = useLocation();
+  const localizacao = useLocation().pathname;
+
   return (
     <>      
-      <BarraNavegacao key={location.pathname}/>
-        <Routes>
-          <Route path={ROUTERS.HOME} element={<Home/>} />
-          <Route path={ROUTERS.LOGIN} element={<Login />} />
-          <Route path={ROUTERS.CADASTRO} element={<Cadastro />} />
-          <Route path={ROUTERS.PERFIL} element={<Perfil />} />
-          <Route path={ROUTERS.EDITARPERFIL} element={<EditarPerfil />} />
-          <Route path={ROUTERS.CARRINHO} element={<Carrinho />} />
-          <Route path={ROUTERS.CARRINHOENDERECO} element={<DefinirEndereco />} />
-          <Route path={ROUTERS.CARRINHOFINALIZAR} element={<FinalizarPedido />} />
-          <Route path={ROUTERS.PEDIDOS} element={<Pedidos />} />
-          <Route path={ROUTERS.EQUIPAMENTOS} element={<Equipamentos />} />
-          <Route path={ROUTERS.PRODUTO} element={<Produto />} />
-          <Route path={ROUTERS.PRODUTOID} element={<Produto />} />
-          <Route path={ROUTERS.PEDIDOSADM} element={<PedidosAdm />}/>
-          <Route path={ROUTERS.DETALHARPEDIDOS} element={<DetalharPedidos />}/>
-          <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/>
-          <Route path={ROUTERS.CALENDARIO} element={<Calendario />}/>
-          <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
-          <Route path={ROUTERS.EDITAREQUIPAMENTOID} element={<EditarEquipamento/>}></Route>
-          <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
-        </Routes>
-      <Rodape />
+      <BarraNavegacao key={localizacao}/>
+      <Routes>
+        <Route path={ROUTERS.HOME} element={<Home/>} />
+        <Route path={ROUTERS.LOGIN} element={<Login />} />
+        <Route path={ROUTERS.CADASTRO} element={<Cadastro />} />
+        <Route path={ROUTERS.PERFIL} element={<Perfil />} />
+        <Route path={ROUTERS.EDITARPERFIL} element={<EditarPerfil />} />
+        <Route path={ROUTERS.CARRINHO} element={<Carrinho />} />
+        <Route path={ROUTERS.CARRINHOENDERECO} element={<DefinirEndereco />} />
+        <Route path={ROUTERS.CARRINHOFINALIZAR} element={<FinalizarPedido />} />
+        <Route path={ROUTERS.PEDIDOS} element={<Pedidos />} />
+        <Route path={ROUTERS.EQUIPAMENTOS} element={<Equipamentos />} />
+        <Route path={ROUTERS.PRODUTO} element={<Produto />} />
+        <Route path={ROUTERS.PRODUTOID} element={<Produto />} />
+        <Route path={ROUTERS.PEDIDOSADM} element={<PedidosAdm />}/>
+        <Route path={ROUTERS.DETALHARPEDIDOS} element={<DetalharPedidos />}/>
+        <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/>
+        <Route path={ROUTERS.CALENDARIO} element={<Calendario />}/>
+        <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
+        <Route path={ROUTERS.EDITAREQUIPAMENTOID} element={<EditarEquipamento/>}></Route>
+        <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
+      </Routes>
+      <Rodape/>
     </>
   )
 }

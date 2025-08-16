@@ -145,10 +145,15 @@
     }
 }
 
-.barra-divisoria{
-    height: 5px;
-    width: 100%;
-    background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+.inativar-link{
+    border-bottom: 1px solid black;
+    padding: 0.5em;
+    box-sizing: border-box;
+    transform: scale(0.90);
+}
+
+.inativar{
+    pointer-events: none !important;
 }
 
 @media screen and (max-width: 768px) {
@@ -236,7 +241,7 @@
                 transform: translateY(0);
             }
     
-            .inativar{
+            .inativar-link, .inativar-botao{
                 pointer-events: none !important;
                 background-color: gray !important;
             }

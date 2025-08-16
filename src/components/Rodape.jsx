@@ -7,6 +7,7 @@ import email from '../assets/email.png';
 import empresa from '../assets/empresa.png' ;
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ROUTERS } from '../routers/routers';
 
 const getDevice = () => ({
     mobile: window.innerWidth <= 768,
@@ -17,6 +18,7 @@ const getDevice = () => ({
 function Rodape() {
     
     const [deviced, setDeviced] = useState(getDevice());
+    const url = location.pathname;
 
     useEffect(() => {
                 const onResize = () => setDeviced(getDevice());
@@ -35,9 +37,9 @@ function Rodape() {
             }
 
   return (
-    <>
+    <footer className={url == ROUTERS.CADASTRO ? 'hidden' : ''}>
         <div className='barra-divisoria'></div>
-        <footer>
+        <div className='rodape'>
             <section className='container-informacoes-gerais'>
                 <section className='container-logo'>
                     <img src={logoNovaLocacoes} alt='Logo nova locações' style={logo()}/>
@@ -80,8 +82,8 @@ function Rodape() {
                 <img src={empresa} alt="icone empresa" height='25em'/>
                 <Link className='links-endereco' to={"https://g.co/kgs/8JcmzfB"}>Rua joão pires de camargo, 28, Taboão da Serra</Link>
             </section>
-        </footer>
-    </>
+        </div>
+    </footer>
   );
 }
 
