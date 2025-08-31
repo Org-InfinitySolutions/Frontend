@@ -1,0 +1,59 @@
+.form-dados-acesso{
+    gap: 0.75em;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    
+    div{
+        gap: 0.25em;
+        min-height: auto;
+    }   
+
+    section{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.75em;
+        margin-top: 1em;
+
+        .botao-continuar, .botao-voltar{
+            padding: 0.75em;
+            border-radius: 6px;
+            font-family: var(--fo▬nte-texto);
+        }
+
+        .botao-continuar{
+            border: none;
+            color: white;
+            background-color: black;
+        }
+
+        .botao-continuar:disabled{
+            background-color: #cccccc !important;
+            color: #666666 !important;
+            cursor: not-allowed !important;
+            border: 1px solid #999999 !important;
+            opacity: 0.7;
+        }
+
+        .botao-voltar{
+            border: 1px solid black;
+            color: black;
+            background-color: white;
+        }
+
+        .botao-voltar:hover{
+            transition: 0.2s;
+            color: white;
+            background-color: black;
+        }
+    }
+}
+
+@media screen and (max-width:768px){
+
+    .form-dados-acesso{
+        div{
+            min-height: 2vh;
+        }
+    }
+}

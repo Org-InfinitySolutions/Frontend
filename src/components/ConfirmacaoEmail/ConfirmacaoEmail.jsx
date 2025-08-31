@@ -1,8 +1,10 @@
 
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import './ConfirmacaoEmail.css'
 
-function ConfirmacaoEmail(props){
+function ConfirmacaoEmail({
+    onSubmit
+}){
 
     const inputRefs = [useRef(''), useRef(''), useRef(''), useRef(''), useRef(''), useRef('')];
     const retornarCodigoConfirmacao = () => {
@@ -12,7 +14,7 @@ function ConfirmacaoEmail(props){
             codigo += item.current.value;
         })    
 
-        props.onSubmit(codigo);
+        onSubmit(codigo);
     }
 
     // funcao para colocar o foco no proximo campo
@@ -27,7 +29,7 @@ function ConfirmacaoEmail(props){
     };
 
     return (
-        <form className='container-formulario-4' onSubmit={(e) => e.preventDefault()}>
+        <form className='container-confirmar-email' onSubmit={(e) => e.preventDefault()}>
             <h1>Confirmação de e-mail</h1>
             <p>Preencha abaixo o código de confirmação que enviamos ao seu e-mail.</p>
             <div className='codigo-confirmacao'>
@@ -41,16 +43,10 @@ function ConfirmacaoEmail(props){
                     />
                 ))}
             </div>
-            <div className="botoes-etapa-4">
-                <button
-                    type='button'
-                    className='botao-voltar-etapa-4'
-                    onClick={() => props.setEtapa(props.etapa)}>
-                    Voltar
-                </button>
+            <div className="eventos">
                 <button
                     type='submit'
-                    className='botao-confirmar-etapa-4'
+                    className='botao-confirmar-email'
                     onClick={retornarCodigoConfirmacao}>
                     Confirmar
                 </button>

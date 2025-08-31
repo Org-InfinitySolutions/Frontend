@@ -1,0 +1,126 @@
+.Cadastro{
+    height: auto;
+    min-height: 100vh;
+    padding: 2em 0px;
+    background-color: #171717;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .formulario{
+        height: auto;
+        min-height: 60vh;
+        width: 30%;
+        background-color: white;
+        padding: 2em 0px;
+
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .box-titulo{
+            height: 10vh;
+            width: 80%;
+        
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1em;
+
+            h1{
+                font-family: var(--fonte-titulo);
+            }
+
+            .linha-colorida{
+                width: 80%;
+                height: 1vh;
+                border-radius: 4px;
+                background-image: linear-gradient(to right, #FF0000, #351DF1, #007D1D);
+            }
+        }
+
+        .box-tipos-usuario{
+            width: 85%;
+            height: 10vh;
+        
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+            gap: 0.5em;
+
+            button{
+                padding: 0.75em;
+
+                border: none;
+                border-radius: 0px;
+                border-top-left-radius: 6px;
+                border-top-right-radius: 6px;
+                background-color: transparent;
+            }
+
+            .borda-embaixo{
+                border-bottom: 2px solid black;
+            }
+
+            button:hover{
+                transition: 0.3s;
+                background-color: #F0F0F0;
+            }
+        }
+
+        .box-dados{
+            min-height: 40vh;
+            width: 85%;
+        }
+
+        .msg-preenchimento-obrigatorio{
+            width: 85%;
+            justify-content: right;
+            display: flex;
+            margin-top: 0.75em;
+            font-family: var(--fonte-texto);
+            text-align: end;
+        }
+    }
+}
+
+@media screen and (max-width: 768px){
+
+    .Cadastro{
+        .formulario{
+            min-height: 30vh;
+            width: 75%;
+            padding: 1.5em 0px;
+
+            .box-titulo{
+                height: 8vh;
+
+                h1{
+                    font-size: 1.5em;
+                }
+
+                .linha-colorida{
+                    height: 0.75vh;
+                }
+            }
+
+            .box-tipos-usuario{
+                height: 8vh;
+                margin-bottom: 0.5em;
+            }
+        
+            .box-dados{
+                min-height: 20vh;
+            }
+
+            .msg-preenchimento-obrigatorio{
+                font-size: 14px;
+                margin-top: 0.5em;
+            }
+        }
+    }
+}
