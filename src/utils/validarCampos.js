@@ -103,7 +103,7 @@ const validarTelefoneFixo = (telefone) => {
         return { valido: false, mensagem: "O telefone fixo deve ter 10 dígitos (DDD + 8 dígitos)" };
     } else if (!regexTelefoneFixo.test(numeroLimpo)) {
         const primeiroDigito = numeroLimpo.length > 2 ? numeroLimpo[2] : '';
-        return { valido: false, mensagem: `Telefone fixo inválido. O primeiro dígito após o DDD deve ser 2, 3, 4 ou 5. Formato: (DDD) xxxx-xxxx` };
+        return { valido: false, mensagem: `Telefone fixo inválido.` };
     }
     
     return { valido: true, mensagem: "" };

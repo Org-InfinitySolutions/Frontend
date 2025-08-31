@@ -7,7 +7,7 @@ import { ROUTERS } from './routers/routers';
 
 // Importando página
 import { Login } from './Pages/Login'
-import { Cadastro } from './Pages/Cadastro'
+import { Cadastro } from './Pages/Cadastro/Cadastro'
 import { Perfil } from './Pages/Perfil'
 import { Pedidos } from './Pages/Pedidos';
 import { Equipamentos } from './Pages/Equipamentos';
