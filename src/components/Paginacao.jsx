@@ -3,12 +3,12 @@ import './Paginacao.css';
 
 const Paginacao = ({ paginaAtual, totalPaginas, onChange }) => {
   if (totalPaginas <= 1) return null;
-  const paginas = [];
 
+  const paginas = [];
   paginas.push(1);
 
-  for (let i = Math.max(2, paginaAtual - 1); i <= Math.min(totalPaginas - 1, paginaAtual + 1); i++) {
-    if (i !== 1 && i !== totalPaginas) {
+  for (let i = paginaAtual - 2; i <= paginaAtual + 2; i++) {
+    if (i > 1 && i < totalPaginas) {
       paginas.push(i);
     }
   }
@@ -33,12 +33,12 @@ const Paginacao = ({ paginaAtual, totalPaginas, onChange }) => {
       >{'<'}</span>
       {paginasComElipses.map((p, idx) =>
         p === '...'
-          ? <span key={idx} className="paginacao-elipse">...</span>
+          ? <span key={"elipse-" + idx} className="paginacao-elipse">...</span>
           : <span
             key={p}
             className={p === paginaAtual ? 'pagina-ativa' : ''}
-            style={{ cursor: 'pointer' }}
-            onClick={() => typeof p === 'number' && onChange(p)}
+            style={{ cursor: p !== paginaAtual ? 'pointer' : 'default' }}
+            onClick={() => typeof p === 'number' && p !== paginaAtual && onChange(p)}
           >{p}</span>
       )}
       <span
