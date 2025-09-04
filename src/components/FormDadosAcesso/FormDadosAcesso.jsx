@@ -1,5 +1,5 @@
 import './FormDadosAcesso.css'
-import { Input } from '../Input'
+import { Input } from '../Input/Input'
 import { useEffect, useState } from 'react';
 
 import {

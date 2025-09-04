@@ -1,29 +1,29 @@
-import { BarraNavegacao } from './components/BarraNavegacao'
-import { Rodape } from './components/Rodape'
+import { BarraNavegacao } from './components/BarraNavegacao/BarraNavegacao'
+import { Rodape } from './components/Rodape/Rodape'
 
 // Dependências do Router
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ROUTERS } from './routers/routers';
 
 // Importando página
-import { Login } from './Pages/Login'
+import { Login } from './Pages/Login/Login'
 import { Cadastro } from './Pages/Cadastro/Cadastro'
-import { Perfil } from './Pages/Perfil'
-import { Pedidos } from './Pages/Pedidos';
-import { Equipamentos } from './Pages/Equipamentos';
-import { Produto } from './Pages/Produto';
-import { EditarPerfil } from './Pages/EditarPerfil';
-import { Carrinho } from './Pages/Carrinho';
-import { DefinirEndereco } from './Pages/DefinirEndereco';
-import { FinalizarPedido } from './Pages/FinalizarPedido';
-import { Home } from './Pages/Home';
-import Dashboard from './Pages/Dashboard';
+import { Perfil } from './Pages/Perfil/Perfil'
+import { Pedidos } from './Pages/Pedidos/Pedidos';
+import { Equipamentos } from './Pages/Equipamentos/Equipamentos';
+import { Produto } from './Pages/Produto/Produto';
+import { EditarPerfil } from './Pages/EditarPerfil/EditarPerfil';
+import { Carrinho } from './Pages/Carrinho/Carrinho';
+import { DefinirEndereco } from './Pages/DefinirEndereco/DefinirEndereco';
+import { FinalizarPedido } from './Pages/FinalizarPedido/FinalizarPedido';
+import { Home } from './Pages/Home/Home';
+import  Dashboard  from './Pages/Dashboard/Dashboard';
 import { PedidosAdm } from './Pages/PedidosAdm' 
-import { DetalharPedidos } from './Pages/DetalharPedidos';
-import { AdicionarEquipamento } from './Pages/AdicionarEquipamento';
-import { Calendario } from './Pages/Calendario';
-import { EditarEquipamento } from './Pages/EditarEquipamento';
-import {RecuperarSenha} from './Pages/RecuperarSenha';
+import { DetalharPedidos } from './Pages/DetalharPedidos/DetalharPedidos';
+import { AdicionarEquipamento } from './Pages/AdicionarEquipamento/AdicionarEquipamento';
+import { Calendario } from './Pages/Calendario/Calendario';
+import { EditarEquipamento } from './Pages/EditarEquipamento/EditarEquipamento';
+import {RecuperarSenha} from './Pages/RecuperarSenha/RecuperarSenha';
 
 import './App.css'
 

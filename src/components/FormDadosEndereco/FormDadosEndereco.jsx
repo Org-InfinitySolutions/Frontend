@@ -1,5 +1,5 @@
 import './FormDadosEndereco.css'
-import { Input } from '../Input.jsx'
+import { Input } from '../Input/Input.jsx'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 
