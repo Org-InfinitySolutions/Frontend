@@ -1,5 +1,5 @@
 import './FormDadosPessoais.css'
-import { Input } from '../Input'
+import { Input } from '../Input/Input'
 import { useState, useEffect } from 'react';
 import { api } from '../../provider/apiInstance';
 
