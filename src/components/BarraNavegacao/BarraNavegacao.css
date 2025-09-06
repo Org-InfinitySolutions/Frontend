@@ -23,6 +23,7 @@
             padding: 0;
             margin: 0;
             cursor: pointer;
+            outline: none;
         }
     }
     
@@ -130,17 +131,17 @@
         }
     }
 
-    .menu-hambuguer{
+    .menu-hamburguer{
         display: none;
         align-items: center;
         justify-content: center;
     }
 
-    .menu-hambuguer:hover{
+    .menu-hamburguer:hover{
         cursor: pointer;
     }
 
-    .menu-hambuguer:active{
+    .menu-hamburguer:active{
         outline: 2px solid black;
     }
 }
@@ -157,25 +158,39 @@
 }
 
 @media screen and (max-width: 768px) {
-    nav{
-        position: relative;
+    /* nao sei como esta funcionando >:v */
+    nav {
+        position: fixed;
         isolation: isolate;
-        z-index: 10;
+        z-index: 20;
+        width: 100%;
 
-        .barra-navegacao{
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0; 
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: -2;
+        }
+
+        .overlay.ativo {
+            display: block;
+        }
+
+        .barra-navegacao {
             padding: 0px 1em;
             box-sizing: border-box;
             justify-content: space-between;
             overflow-x: hidden;
-            z-index: 9;
-    
-            .box-links-navbar{
+            z-index: 30;
+
+            .box-links-navbar {
                 position: absolute;
                 top: 13.375vh;
                 right: 0;
                 width: 100%;
                 height: auto;
-                background-color: silver;
+                background-color: #fff;
                 z-index: -1;
                 flex-direction: column;
                 transform: translateY(-200%);
@@ -184,35 +199,37 @@
                 align-items: flex-start;
                 opacity: 95%;
 
-                .container-links{
+                .container-links {
                     width: 100%;
                     flex-direction: column;
                     height: auto;
-    
-                    div{
+
+                    div {
                         flex-direction: column;
                         width: 100%;
+
                         a {
                             height: auto;
                             width: 100%;
                             padding: 1em;
                             box-sizing: border-box;
                         }
-    
-                        a:hover{
+
+                        a:hover {
                             transform: none;
                             transition: 0.2s;
                             background-color: #ccc;
                         }
                     }
                 }
-    
-                .container-eventos{
+
+                .container-eventos {
                     flex-direction: column;
                     width: 100%;
                     height: auto;
-    
-                    .botao-cadastro, .botao-login{
+
+                    .botao-cadastro,
+                    .botao-login {
                         height: auto;
                         width: 100%;
                         margin: 0px;
@@ -224,31 +241,48 @@
                         border-radius: 0px;
                         background-color: transparent;
                     }
-    
-                    .botao-cadastro:hover, .botao-login:hover{
+
+                    .botao-cadastro:hover,
+                    .botao-login:hover {
                         transition: 0.2s;
                         background-color: #ccc;
                         color: black;
                     }
-    
-                    .botao-cadastro:active, .botao-login:active{
+
+                    .botao-cadastro:active,
+                    .botao-login:active {
                         transform: none;
                     }
                 }
             }
-    
-            .box-links-navbar.ativo{
+
+            .box-links-navbar.ativo {
                 transform: translateY(0);
+                position: fixed;
+                top: 13.375vh;
+                left: 0;
+                right: 0;
             }
-    
-            .inativar-link, .inativar-botao{
+
+            .inativar-link,
+            .inativar-botao {
                 pointer-events: none !important;
-                background-color: gray !important;
+                background-color: #dbdbdb !important;
             }
-    
-            .menu-hambuguer{
+
+            .menu-hamburguer {
                 display: block;
             }
         }
+
+    }
+    
+    .espaco-navbar{
+        height: 13.375vh;
+        width: 100%;
+    }
+
+    body.menu-ativo {
+        overflow: hidden;
     }
 }

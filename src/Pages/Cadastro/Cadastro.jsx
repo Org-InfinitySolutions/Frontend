@@ -100,7 +100,7 @@ function Cadastro(){
                 cadastrarUsuario();
             }
         }).catch((err) => {
-            exibirAviso(err.response.data.mensagem, 'error')
+            exibirAviso(err.response.data.detalhes, 'error')
         })
     }
 

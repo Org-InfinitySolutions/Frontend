@@ -38,71 +38,183 @@ function BarraNavegacao(){
     const [habilitarFuncoesGerenciais, setHabilitarFuncoesGerenciais] = useState(cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO");
 
     const desativarLinkPaginaAtual = (urlAtual) => {
-        return url == urlAtual ? "inativar" : "";
+        return url == urlAtual ? "inativar-botao" : "";
     }
 
     const [abrirMenu, setAbrirMenu] = useState(false);
     const definirMenu = () => {
         setAbrirMenu(!abrirMenu);
-    } 
+    }
+    
+    useEffect(() => {
+        if (abrirMenu) {
+            document.body.classList.add("menu-ativo");
+        } else {
+            document.body.classList.remove("menu-ativo");
+        }
+    }, [abrirMenu]);  
 
     return(
-    <nav className={url == ROUTERS.CADASTRO ? 'hidden' : ''}>
-        <section className={`barra-navegacao`}>
-            <section className="container-logo">
-                <button className='botao-logo' onClick={() => navigate(`${ROUTERS.HOME}`)}>
-                <img style={logoResponsividade()} src={Logo} alt="Logo Nova Locações" />
-                </button>            
+      <main className={url == ROUTERS.CADASTRO ? "hidden" : ""}>
+        <nav>
+        <section className="barra-navegacao">
+          <section className="container-logo">
+            <button
+              className="botao-logo"
+              onClick={() => navigate(`${ROUTERS.HOME}`)}
+            >
+              <img
+                style={logoResponsividade()}
+                src={Logo}
+                alt="Logo Nova Locações"
+              />
+            </button>
+          </section>
+
+          <div className={`box-links-navbar ${abrirMenu ? "ativo" : ""}`}>
+            <section className="container-links">
+              <div>
+                {usuarioLogado ? (
+                  <>
+                    <a
+                      href={ROUTERS.HOME}
+                      className={`${desativarLinkPaginaAtual(`${ROUTERS.HOME}`)}`}
+                    >
+                      Home
+                    </a>
+                    <a
+                      href={ROUTERS.EQUIPAMENTOS}
+                      className={`${desativarLinkPaginaAtual(
+                        `${ROUTERS.EQUIPAMENTOS}`
+                      )}`}
+                    >
+                      Equipamentos
+                    </a>
+                    {usuarioLogado && (
+                      <a
+                        href={ROUTERS.PEDIDOS}
+                        className={`${desativarLinkPaginaAtual(
+                          `${ROUTERS.PEDIDOS}`
+                        )}`}
+                      >
+                        Pedidos
+                      </a>
+                    )}
+                    {habilitarFuncoesGerenciais && (
+                      <>
+                        <a
+                          href={ROUTERS.CALENDARIO}
+                          className={`${desativarLinkPaginaAtual(
+                            `${ROUTERS.CALENDARIO}`
+                          )}`}
+                        >
+                          Calendário
+                        </a>
+                        <a
+                          href={ROUTERS.DASHBOARD}
+                          className={`${desativarLinkPaginaAtual(
+                            `${ROUTERS.DASHBOARD}`
+                          )}`}
+                        >
+                          Dashboard
+                        </a>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {url == "/" && (
+                      <>
+                        <a href="/#sobre-nos" onClick={definirMenu}>
+                          Sobre nós
+                        </a>
+                        <a href="/#servicos" onClick={definirMenu}>
+                          Serviços
+                        </a>
+                        <a href="/#projetos" onClick={definirMenu}>
+                          Projetos
+                        </a>
+                      </>
+                    )}
+                    <a
+                      href={ROUTERS.EQUIPAMENTOS}
+                      className={`${desativarLinkPaginaAtual(
+                        `${ROUTERS.EQUIPAMENTOS}`
+                      )}`}
+                    >
+                      Equipamentos
+                    </a>
+                  </>
+                )}
+              </div>
             </section>
-            <div className={`box-links-navbar ${abrirMenu && "ativo"}`}>
-                <section className="container-links">
-                    <div>
-                        {usuarioLogado ? 
-                            (<>
-                                <a href={ROUTERS.HOME} className={`${desativarLinkPaginaAtual(`${ROUTERS.HOME}`)}`}>Home</a>
-                                <a href={ROUTERS.EQUIPAMENTOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.EQUIPAMENTOS}`)}`}>Equipamentos</a>
-                                {usuarioLogado && <a href={ROUTERS.PEDIDOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.PEDIDOS}`)}`}>Pedidos</a> }
-                                {habilitarFuncoesGerenciais &&
-                                    (<>
-                                        <a href={ROUTERS.CALENDARIO} className={`${desativarLinkPaginaAtual(`${ROUTERS.CALENDARIO}`)}`}>Calendário</a>
-                                        <a href={ROUTERS.DASHBOARD} className={`${desativarLinkPaginaAtual(`${ROUTERS.DASHBOARD}`)}`}>Dashboard</a>    
-                                    </>) 
-                                }
-                            </>) 
-                            : 
-                            (<>
-                                {url == '/' && (<>
-                                    <a href="/#sobre-nos" onClick={definirMenu}>Sobre nós</a>
-                                    <a href="/#servicos" onClick={definirMenu}>Serviços</a>
-                                    <a href="/#projetos" onClick={definirMenu}>Projetos</a>
-                                </>)}
-                                <a href={ROUTERS.EQUIPAMENTOS} className={`${desativarLinkPaginaAtual(`${ROUTERS.EQUIPAMENTOS}`)}`}>Equipamentos</a>
-                            </>)
-                        }
-                    </div>  
-                </section>
-                <section className="container-eventos">
-                    {usuarioLogado ? 
-                        (<>
-                            {cargo != 'ROLE_ADMIN' ? (
-                                <a href={ROUTERS.PERFIL} className={`botao-cadastro ${desativarLinkPaginaAtual(`${ROUTERS.PERFIL}`)}`}>Perfil</a>
-                            ) : (<></>)}
-                            <a href={ROUTERS.HOME} onClick={() => { limparSession()}} className='botao-login'>Sair</a>
-                        </>) 
-                        : 
-                        (<>
-                            <a href={ROUTERS.CADASTRO} className={`botao-cadastro ${desativarLinkPaginaAtual(`${ROUTERS.CADASTRO}`)}`}>Cadastro</a>
-                            <a href={ROUTERS.LOGIN} className={`botao-login ${desativarLinkPaginaAtual(`${ROUTERS.LOGIN}`)}`}>Login</a>
-                        </>)}
-                </section>
-            </div>
-            <div className='menu-hambuguer'>
-                {!abrirMenu ? <IoMenu size={40} onClick={definirMenu}/> : <IoMdClose size={40} onClick={definirMenu}/>}
-            </div>
+
+            <section className="container-eventos">
+              {usuarioLogado ? (
+                <>
+                  {cargo != "ROLE_ADMIN" ? (
+                    <a
+                      href={ROUTERS.PERFIL}
+                      className={`botao-cadastro ${desativarLinkPaginaAtual(
+                        `${ROUTERS.PERFIL}`
+                      )}`}
+                    >
+                      Perfil
+                    </a>
+                  ) : (
+                    <></>
+                  )}
+                  <a
+                    href={ROUTERS.HOME}
+                    onClick={() => {
+                      limparSession();
+                    }}
+                    className="botao-login"
+                  >
+                    Sair
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href={ROUTERS.CADASTRO}
+                    className={`botao-cadastro ${desativarLinkPaginaAtual(
+                      `${ROUTERS.CADASTRO}`
+                    )}`}
+                  >
+                    Cadastro
+                  </a>
+                  <a
+                    href={ROUTERS.LOGIN}
+                    className={`botao-login ${desativarLinkPaginaAtual(
+                      `${ROUTERS.LOGIN}`
+                    )}`}
+                  >
+                    Login
+                  </a>
+                </>
+              )}
+            </section>
+          </div>
+
+          <div className="menu-hamburguer">
+            {!abrirMenu ? (
+              <IoMenu size={40} onClick={definirMenu} />
+            ) : (
+              <IoMdClose size={40} onClick={definirMenu} />
+            )}
+          </div>
         </section>
-        <div className='barra-divisoria'></div>
-    </nav>
-    )
+        <div
+          className={`overlay ${abrirMenu ? "ativo" : ""}`}
+          onClick={definirMenu}
+        ></div>
+        <div className="barra-divisoria"></div>
+      </nav>
+      
+      <div className="espaco-navbar"></div>
+    </main>
+  )
 }
 
 export { BarraNavegacao }
