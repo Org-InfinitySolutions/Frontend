@@ -43,8 +43,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
-
+  flex-wrap: wrap;
 }
 
 .input-pesquisa {

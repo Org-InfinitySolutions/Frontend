@@ -22,10 +22,19 @@ const GraficoPizza = () => {
       } catch (e) {
         response = { data: [] };
       }
+      let equipamentos = response.data.slice();
+      equipamentos.sort((a, b) => b.quantidadeSolicitacoes - a.quantidadeSolicitacoes);
+      const top6 = equipamentos.slice(0, 6);
+      const outros = equipamentos.slice(6);
+      let outrosTotal = 0;
+      outros.forEach(item => {
+        outrosTotal += item.quantidadeSolicitacoes;
+      });
       const dataArr = [['Equipamento', 'Procuras']];
-      response.data.forEach(item => {
+      top6.forEach(item => {
         dataArr.push([item.nomeEquipamento, item.quantidadeSolicitacoes]);
       });
+
       const data = window.google.visualization.arrayToDataTable(dataArr);
       const options = {
         legend: { position: 'right', textStyle: { fontSize: 14, fontFamily: 'inherit' } },
@@ -42,9 +51,9 @@ const GraficoPizza = () => {
   }, []);
 
   return (
-    <div className="border-2 border-black rounded-lg p-6 flex flex-col items-center bg-white min-h-[350px]">
+  <div className="border-solid border-black rounded-lg p-4 flex flex-col gap-6 items-center bg-white min-h-[300px] shadow">
       <span className="text-xs font-bold mb-2">EQUIPAMENTOS MAIS PROCURADOS (Últimos 6 meses)</span>
-      <div ref={chartRef} className="w-full h-64" />
+  <div ref={chartRef} className="w-full h-64 bg-white" style={{boxSizing: 'border-box'}} />
     </div>
   );
 };
