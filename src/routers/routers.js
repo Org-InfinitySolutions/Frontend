@@ -13,9 +13,9 @@ export const ROUTERS = {
     PRODUTOID: '/produto/:id',
     PEDIDOSADM: '/pedidos-adm',
     DETALHARPEDIDOS: '/detalhar-pedidos',
-    ADICIONAREQUIPAMENTO: '/adicionar-equipamento',
+    ADICIONAREQUIPAMENTO: '/gerenciar-equipamento/null',
     CALENDARIO: '/calendario',
     DASHBOARD: '/dashboard',
-    EDITAREQUIPAMENTOID: '/editar-equipamento/:id',
+    GERENCIAREQUIPAMENTOID: '/gerenciar-equipamento/:id',
     RECUPERARSENHA: '/recuperar-senha'
 }

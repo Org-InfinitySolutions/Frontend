@@ -20,9 +20,9 @@ import { Home } from './Pages/Home/Home';
 import  Dashboard  from './Pages/Dashboard/Dashboard';
 import { PedidosAdm } from './Pages/PedidosAdm' 
 import { DetalharPedidos } from './Pages/DetalharPedidos/DetalharPedidos';
-import { AdicionarEquipamento } from './Pages/AdicionarEquipamento/AdicionarEquipamento';
+// import { AdicionarEquipamento } from './Pages/AdicionarEquipamento/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario/Calendario';
-import { EditarEquipamento } from './Pages/EditarEquipamento/EditarEquipamento';
+import { GerenciarEquipamento } from './Pages/GerenciarEquipamento/GerenciarEquipamento';
 import {RecuperarSenha} from './Pages/RecuperarSenha/RecuperarSenha';
 
 import './App.css'
@@ -58,10 +58,10 @@ function MainComponent() {
         <Route path={ROUTERS.PRODUTOID} element={<Produto />} />
         <Route path={ROUTERS.PEDIDOSADM} element={<PedidosAdm />}/>
         <Route path={ROUTERS.DETALHARPEDIDOS} element={<DetalharPedidos />}/>
-        <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/>
+        {/* <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/> */}
         <Route path={ROUTERS.CALENDARIO} element={<Calendario />}/>
         <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
-        <Route path={ROUTERS.EDITAREQUIPAMENTOID} element={<EditarEquipamento/>}></Route>
+        <Route path={ROUTERS.GERENCIAREQUIPAMENTOID} element={<GerenciarEquipamento/>}></Route>
         <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
       </Routes>
       <Rodape/>
