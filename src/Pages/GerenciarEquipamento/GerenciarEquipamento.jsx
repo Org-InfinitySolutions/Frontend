@@ -1,4 +1,4 @@
-import './EditarEquipamento.css';
+import './GerenciarEquipamento.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'
 import { tokenExpirou } from '../../utils/token';
@@ -10,7 +10,7 @@ import LoadingBar from 'react-top-loading-bar';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
 
-export function EditarEquipamento() {
+export function GerenciarEquipamento() {
 
   const { id } = useParams();
   const navegar = useNavigate();
@@ -27,13 +27,27 @@ export function EditarEquipamento() {
   const [preview, setPreview] = useState(null);
   const [ativo, setAtivo] = useState('');
 
-  // métodos callback
+  const [gerenciarEquipamento, setGerenciarEquipamento] = useState({
+    executar: id != "null" ? (req, imagem) => salvarEquipamento(req, imagem) : (req, imagem) => adicionarEquipamento(req, imagem),
+    exibirCheckboxSituacao: id != "null" ? true : false,
+    titulo: id != "null" ? "Editar" : "Adicionar",
+    textoBotao: id != "null" ? "Salvar" : "Adicionar"
+  })
+
+  // Métodos callback
   useEffect(() => {
-    if(tokenExpirou()){
-      exibirAvisoTokenExpirado(navegar);
-    }
+    if(sessionStorage.TOKEN != null){
+      if(tokenExpirou()){
+        exibirAvisoTokenExpirado(navegar);
+      }
+    } 
+    // else{
+    //   exibirAvisoTokenExpirado(navegar);
+    // }
   
-    buscarDadosEquipamento();
+    if(id != "null"){
+      buscarDadosEquipamento();
+    }
     listarCategorias();
   }, []);
 
@@ -63,22 +77,12 @@ export function EditarEquipamento() {
     }
   }, [linkFabricante, modelo, marca, imagem, categoriaEquipamento, descricao]);
 
-  // métodos
-  const salvarEquipamento = () => {
+  // Métodos
+  const salvarEquipamento = (req, imagem) => {
 
     if(tokenExpirou()){
       exibirAvisoTokenExpirado(navegar);
     } else {
-      setBarraCarregamento(10);
-      const req = {
-        modelo,
-        marca,
-        descricao,
-        url_fabricante: linkFabricante,
-        qtd_estoque: quantidade,
-        categoria_id: categoriaEquipamento,
-        is_ativo: !ativo
-      }
 
       setBarraCarregamento(30);
       setTimeout(() => {
@@ -90,10 +94,10 @@ export function EditarEquipamento() {
         }).then(async (res) => {
 
           if(imagem){
-            await salvarImagem();
+            await salvarImagem(imagem);
           }
           setBarraCarregamento(100);
-          exibirAviso('Operação realizada com sucesso!', 'success');
+          exibirAvisoTimer('Operação realizada com sucesso!', 'success', 2000);
 
           setTimeout(() => {
             navegar(ROUTERS.EQUIPAMENTOS);
@@ -115,10 +119,10 @@ export function EditarEquipamento() {
     }
   }
 
-  const salvarImagem = () => {
+  const salvarImagem = (novaImagem) => {
 
     const formImagem = new FormData();
-    formImagem.append('imagem', imagem);
+    formImagem.append('imagem', novaImagem);
 
     api.put(ENDPOINTS.PUTIMAGEMPRODUTO.replace(':id', id), formImagem, {
       headers: {
@@ -135,6 +139,44 @@ export function EditarEquipamento() {
         exibirAviso('Não foi possivel atualizar a foto do produto', 'error');
       }
     })
+  }
+
+  const adicionarEquipamento = (req, imagem) => {
+
+    if(tokenExpirou()){
+      exibirAvisoTokenExpirado(navegar);
+    } else {
+
+      setBarraCarregamento(30);
+      const formData = new FormData();
+      formData.append('produto', new Blob([JSON.stringify(req)], { type: 'application/json' }));
+      formData.append('imagem', imagem);
+
+      setTimeout(() => {
+        setBarraCarregamento(70);
+        api.post(ENDPOINTS.PRODUTOS, formData, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.TOKEN}`,
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then((res) => {
+          setBarraCarregamento(100);
+          exibirAvisoTimer('Operação realizada com sucesso!', 'success', 2000);
+
+          setTimeout(() => {
+            navegar(ROUTERS.EQUIPAMENTOS);
+          }, 2000)
+        }).catch((err) => {
+          setBarraCarregamento(100);
+          const erro = err.response.data;
+          if(erro.validationErrors.length > 0){
+            exibirAviso(erro.validationErrors[0].message, 'error');
+          } else {
+            exibirAviso(erro.message, 'error');
+          }
+        })
+      }, 1000)
+    }
   }
 
   const buscarDadosEquipamento = () => {
@@ -176,7 +218,16 @@ export function EditarEquipamento() {
     } else if(!imagem && !exibirPreview){
       exibirAviso('É obrigatório informar uma foto para o produto', 'error');
     } else{
-      salvarEquipamento();
+
+      gerenciarEquipamento.executar({
+        modelo,
+        marca,
+        descricao,
+        url_fabricante: linkFabricante,
+        qtd_estoque: quantidade,
+        categoria_id: categoriaEquipamento,
+        ...(gerenciarEquipamento.exibirCheckboxSituacao ? {is_ativo: !ativo} : {})
+      }, imagem);
     }
   }
 
@@ -216,7 +267,7 @@ export function EditarEquipamento() {
           height={3}
           color="#f11946"
       />
-      <h2>Editar Equipamento</h2>
+      <h2>{gerenciarEquipamento.titulo} Equipamento</h2>
 
       <form className="formulario-equipamento">
         <div className="linha-principal">
@@ -267,18 +318,20 @@ export function EditarEquipamento() {
           <input type="url" placeholder="URL..." value={linkFabricante} onChange={(e) => { setLinkFabricante(e.target.value)}}/>
         </div>
 
-        <div className="situacao-section">
-          <label htmlFor='situacao-registro'>Situação registro</label>
-          <input type="checkbox" id='situacao-registro' checked={ativo} onChange={(e) => {setAtivo(e.target.checked)}}/>
-          <span>inativo</span>
-        </div>
+        {gerenciarEquipamento.exibirCheckboxSituacao && (
+          <div className="situacao-section">
+            <label htmlFor='situacao-registro'>Situação registro</label>
+            <input type="checkbox" id='situacao-registro' checked={ativo} onChange={(e) => {setAtivo(e.target.checked)}}/>
+            <span>inativo</span>
+          </div>
+        )}
 
         <p className="info-obrigatorio">* Preenchimento Obrigatório</p>
       </form>
 
       <div className="botao-container">
         <button className="botao-cancelar-edicao" onClick={() => {navegar(`${ROUTERS.EQUIPAMENTOS}`)}}>Cancelar</button>
-        <button type="button" className="botao-editar" onClick={validarForm} disabled={desativarBotao}>SALVAR</button>
+        <button type="button" className="botao-editar" onClick={validarForm} disabled={desativarBotao}>{gerenciarEquipamento.textoBotao}</button>
       </div>
     </div>
   );

@@ -26,7 +26,7 @@ export function CardProdutoEquipamentos({
                     <div className="box-dados-gerenciais">
                         <span className="qtd-estoque">Estoque: {produto.qtd_estoque}</span>
                         <span className={ produto.is_ativo ? "situacao-ativo" : "situacao-inativo"}>{ produto.is_ativo ? "ATIVO" : "INATIVO" }</span>
-                        <button className="btn-editar" onClick={() => navegar(ROUTERS.EDITAREQUIPAMENTOID.replace(':id', produto.id))}><RiPencilFill size={20}/></button>
+                        <button className="btn-editar" onClick={() => navegar(ROUTERS.GERENCIAREQUIPAMENTOID.replace(':id', produto.id))}><RiPencilFill size={20}/></button>
                     </div>
                 ) : (
                     <div className="botoes-card">

@@ -1,3 +1,6 @@
+
+/* EM BREVE SERÁ EXCLUIDO ESSE ARQUIVO */
+
 import './AdicionarEquipamento.css';
 import LoadingBar from 'react-top-loading-bar';
 import { useEffect, useState } from 'react';
