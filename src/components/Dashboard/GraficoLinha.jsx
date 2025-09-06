@@ -49,9 +49,9 @@ const GraficoLinha = () => {
   }, []);
 
   return (
-    <div className="border-2 border-black rounded-lg p-6 bg-white min-h-[350px] flex flex-col">
+  <div className="border-solid border-black rounded-lg p-4 bg-white min-h-[350px] flex flex-col shadow">
       <span className="text-xs font-bold mb-2">MESES COM MAIS PEDIDOS (Últimos 6 meses)</span>
-      <div ref={chartRef} className="w-full h-64" />
+  <div ref={chartRef} className="w-full h-64 bg-white" style={{boxSizing: 'border-box'}} />
     </div>
   );
 };
