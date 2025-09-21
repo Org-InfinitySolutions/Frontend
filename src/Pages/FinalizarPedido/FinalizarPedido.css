@@ -22,7 +22,7 @@
         width: 75%;
         padding: 1% 2%;
         border-radius: 4px;
-        border: 1px solid black;
+        border: 1px solid #ccc;
 
         display: flex;
         align-items: center;

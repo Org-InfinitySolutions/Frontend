@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import './Pedidos.css';
 import { IoIosSearch } from "react-icons/io";
 import { IoIosArrowDown } from "react-icons/io";
@@ -34,7 +34,6 @@ const Pedidos = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		const token = sessionStorage.TOKEN;
 		if(tokenExpirou()){
 			exibirAvisoTokenExpirado(navigate);
 		} else {
@@ -86,7 +85,6 @@ const Pedidos = () => {
 		<div className="pagina-pedidos">
 			<main className="conteudo-pedidos">
 				<div className="filtros">
-
 					<div className="linha-pesquisa-filtros">
 						<div className="barra-pesquisa-container">
 							<input

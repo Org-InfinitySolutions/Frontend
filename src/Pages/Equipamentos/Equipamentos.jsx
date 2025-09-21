@@ -124,20 +124,21 @@ const Equipamentos = () => {
       />
       <main className="conteudo-equipamentos">
         <div className="filtros">
-          {cargo != "ROLE_ADMIN" && cargo != "ROLE_FUNCIONARIO" && (
-            <div className="linha-botoes-carrinho">
-              <div className="icone-carrinho">
-                <IoCartOutline size={40} onClick={() => { navegar(`${ROUTERS.CARRINHO}`) }} />
-              </div>
-            </div>
-          )}
-
           <div className="linha-pesquisa-filtros">
             <div className="barra-pesquisa-container" style={{ position: 'relative' }}>
-              <input className="input-pesquisa" placeholder="Pesquisar equipamento" value={pesquisa} onChange={e => setPesquisa(e.target.value)} />
-              <span className="icone-pesquisa">
-                <IoIosSearch size={18} />
-              </span>
+              <div className='campo-pesquisar'>
+                <input className="input-pesquisa" placeholder="Pesquisar equipamento" value={pesquisa} onChange={e => setPesquisa(e.target.value)} />
+                <span className="icone-pesquisa">
+                  <IoIosSearch size={18} />
+                </span>
+              </div>
+              {cargo != "ROLE_ADMIN" && cargo != "ROLE_FUNCIONARIO" && (
+                <div className="linha-botoes-carrinho">
+                  <div className="icone-carrinho">
+                    <IoCartOutline size={40} onClick={() => { navegar(`${ROUTERS.CARRINHO}`) }} />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="container-filtros">
