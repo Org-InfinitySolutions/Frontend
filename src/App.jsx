@@ -19,7 +19,6 @@ import { FinalizarPedido } from './Pages/FinalizarPedido/FinalizarPedido';
 import { Home } from './Pages/Home/Home';
 import  Dashboard  from './Pages/Dashboard/Dashboard';
 import { DetalharPedidos } from './Pages/DetalharPedidos/DetalharPedidos';
-// import { AdicionarEquipamento } from './Pages/AdicionarEquipamento/AdicionarEquipamento';
 import { Calendario } from './Pages/Calendario/Calendario';
 import { GerenciarEquipamento } from './Pages/GerenciarEquipamento/GerenciarEquipamento';
 import {RecuperarSenha} from './Pages/RecuperarSenha/RecuperarSenha';
@@ -56,7 +55,6 @@ function MainComponent() {
         <Route path={ROUTERS.PRODUTO} element={<Produto />} />
         <Route path={ROUTERS.PRODUTOID} element={<Produto />} />
         <Route path={ROUTERS.DETALHARPEDIDOS} element={<DetalharPedidos />}/>
-        {/* <Route path={ROUTERS.ADICIONAREQUIPAMENTO} element={<AdicionarEquipamento />}/> */}
         <Route path={ROUTERS.CALENDARIO} element={<Calendario />}/>
         <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
         <Route path={ROUTERS.GERENCIAREQUIPAMENTOID} element={<GerenciarEquipamento/>}></Route>
