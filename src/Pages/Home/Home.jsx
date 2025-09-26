@@ -81,7 +81,7 @@ function Home() {
                                 playsInline
                                 className="video-fundo"
                             >
-                                <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
+                                <source src="https://infinitysolutionsbucket.s3.us-east-1.amazonaws.com/20230805_220750.mp4" type="video/mp4" />
                             </video>
 
                         </section>
@@ -99,7 +99,7 @@ function Home() {
                         playsInline
                         className="video-fundo"
                     >
-                        <source src="https://novalocacoesblobstorage.blob.core.windows.net/arquivospublicos/WhatsApp%20Video%202025-06-10%20at%2016.09.29.mp4" type="video/mp4" />
+                        <source src="https://infinitysolutionsbucket.s3.us-east-1.amazonaws.com/20230805_220750.mp4" type="video/mp4" />
                     </video>
 
                     <section className="container-titulo">
