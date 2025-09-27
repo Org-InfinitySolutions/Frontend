@@ -25,7 +25,7 @@ import {
     validarEmail,
     validarSenha
 } from '../../utils/validarCampos';
-import { tokenExpirou } from '../../utils/token';
+import { bloquearAcessoUsuario, tokenExpirou } from '../../utils/token';
 import { ENDPOINTS } from '../../routers/endpoints';
 
 function EditarPerfil() {
@@ -58,6 +58,12 @@ function EditarPerfil() {
     const navegar = useNavigate();
 
     const [desabilitar, setDesabilitar] = useState(false);
+    useEffect(() => {
+        if(bloquearAcessoUsuario()){
+            exibirAvisoTokenExpirado();
+        }
+    }, []);
+
     useEffect(() => {
 
         const cep = dadosBase.endereco.cep.replace('-', '');

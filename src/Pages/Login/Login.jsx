@@ -47,7 +47,19 @@ function Login(){
                     setBarraCarregamento(100)
                 }, 1000);
                 setTimeout(() => {
-                    navegar(`${ROUTERS.EQUIPAMENTOS}`)
+
+                    const carrinho = JSON.parse(sessionStorage.CARRINHO);
+                    if(carrinho.produtos.length > 0){
+                        if(carrinho.etapaPedido == 2)
+                            navegar(`${ROUTERS.CARRINHOENDERECO}`)
+                        else if(carrinho.etapaPedido == 3)
+                            navegar(`${ROUTERS.CARRINHOFINALIZAR}`)                    
+                        else
+                            navegar(`${ROUTERS.CARRINHO}`)
+                    } else{
+                        navegar(`${ROUTERS.EQUIPAMENTOS}`)
+                    }
+
                 }, 1500);
             }).catch((err) => {
                 

@@ -3,6 +3,9 @@ import './Calendario.css';
 import { api } from "../../provider/apiInstance";
 import { ROUTERS } from "../../routers/routers";
 import { ENDPOINTS } from "../../routers/endpoints";
+import { bloquearAcessoGerencia } from "../../utils/token";
+import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
+import { useNavigate } from "react-router-dom";
 
 function gerarDiasDoMes(ano, mes) {
   const primeiroDia = new Date(ano, mes, 1);
@@ -43,34 +46,40 @@ export function Calendario() {
   const hoje = new Date();
   const hojeLimpo = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate());
 
+  const navegar = useNavigate();
   useEffect(() => {
-    api.get(ENDPOINTS.PEDIDOS)
-    .then(response => {
-      const pedidosRecebidos = response.data;
+    if(bloquearAcessoGerencia(true)){
+      exibirAvisoAcessoNegado(navegar);
+    } else {
 
-      const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
-        pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
-      );
-
-      pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
-
-      const mapeados = {};
-      pedidosFiltrados.forEach(pedido => {
-        const data = new Date(pedido.dataEntrega);
-        const dataFormatada = data.toLocaleDateString('fr-CA'); // Formato: YYYY-MM-DD
-
-        if (!mapeados[dataFormatada]) {
-          mapeados[dataFormatada] = [];
-        }
-
-        mapeados[dataFormatada].push(`Pedido #${pedido.id}`);
+      api.get(ENDPOINTS.PEDIDOS)
+      .then(response => {
+        const pedidosRecebidos = response.data;
+  
+        const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
+          pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
+        );
+  
+        pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
+  
+        const mapeados = {};
+        pedidosFiltrados.forEach(pedido => {
+          const data = new Date(pedido.dataEntrega);
+          const dataFormatada = data.toLocaleDateString('fr-CA'); // Formato: YYYY-MM-DD
+  
+          if (!mapeados[dataFormatada]) {
+            mapeados[dataFormatada] = [];
+          }
+  
+          mapeados[dataFormatada].push(`Pedido #${pedido.id}`);
+        });
+  
+        setPedidos(mapeados);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar pedidos:', error);
       });
-
-      setPedidos(mapeados);
-    })
-    .catch(error => {
-      console.error('Erro ao buscar pedidos:', error);
-    });
+    }
   }, []);
 
   const anterior = () => {

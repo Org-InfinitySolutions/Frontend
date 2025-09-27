@@ -1,19 +1,18 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import MetricasKpis from '../../components/Dashboard/MetricasKpis';
 import GraficoLinha from '../../components/Dashboard/GraficoLinha';
 import GraficoPizza from '../../components/Dashboard/GraficoPizza';
-import { ROUTERS } from '../../routers/routers';
+import { bloquearAcessoGerencia } from '../../utils/token';
+import { exibirAvisoAcessoNegado } from '../../utils/exibirModalAviso';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   useEffect(() => {
-    if (sessionStorage.CARGO !== 'ROLE_ADMIN') {
-      navigate(ROUTERS.HOME);
-      return;
+    if(bloquearAcessoGerencia(true)){
+      exibirAvisoAcessoNegado(navigate);
     }
-  }, [navigate]);
+  }, []);
 
   return (  
   <div className="pt-4 pb-6 pl-4 pr-4 bg-white min-h-screen">
