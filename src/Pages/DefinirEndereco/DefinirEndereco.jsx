@@ -57,7 +57,12 @@ function DefinirEndereco(){
                     setEndereco((dados) => ({ ...dados, ...caixote }));
                 })
             }
-        }
+        } 
+        
+        const carrinho = JSON.parse(session);
+        carrinho.etapaPedido = 2;
+        sessionStorage.CARRINHO = JSON.stringify(carrinho);
+        setSession(sessionStorage.CARRINHO)
     }, []);
 
     const [desabilitar, setDesabilitar] = useState(true);
@@ -103,6 +108,7 @@ function DefinirEndereco(){
         montarCarrinho.dataEntrega = dadosAdicionais.dataEntrega;
         montarCarrinho.dataRetirada = dadosAdicionais.dataRetirada;
         montarCarrinho.tipo = dadosAdicionais.tipo;
+        montarCarrinho.etapaPedido = 3;
 
         sessionStorage.CARRINHO = JSON.stringify(montarCarrinho);
 

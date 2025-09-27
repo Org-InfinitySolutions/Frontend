@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { exibirAvisoTimer } from '../../utils/exibirModalAviso';
 import { limparSession } from '../../utils/limpar';
 import { validarSenha } from '../../utils/validarCampos'
-import { tokenExpirou } from '../../utils/token';
+import { tokenExpirou, bloquearAcessoUsuario } from '../../utils/token';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
 
@@ -26,7 +26,7 @@ function Perfil(){
 
     useEffect(() => {
 
-        if(tokenExpirou()){
+        if(bloquearAcessoUsuario()){
             exibirAvisoTokenExpirado(navegar);
         } else {
 

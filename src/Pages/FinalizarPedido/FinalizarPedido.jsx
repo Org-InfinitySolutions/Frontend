@@ -1,11 +1,11 @@
-import { use, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Navegabilidade } from '../../components/Navegabilidade/Navegabilidade';
 import './FinalizarPedido.css';
 import { useNavigate } from 'react-router-dom';
 import { CardProdutoCarrinho } from '../../components/CardProdutoCarrinho/CardProdutoCarrinho';
-import { formatarCEP, formatarIdPedido } from '../../utils/formatacoes'
+import { formatarIdPedido } from '../../utils/formatacoes'
 import { api } from '../../provider/apiInstance'
-import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso'
+import { exibirAviso, exibirAvisoTokenExpirado, exibirAvisoLogin } from '../../utils/exibirModalAviso'
 import { tokenExpirou } from '../../utils/token'
 import LoadingBar from 'react-top-loading-bar';
 import { FaCheck } from 'react-icons/fa';
@@ -106,8 +106,7 @@ function FinalizarPedido() {
         }
 
         if(!usuarioLogado){
-            exibirAvisoTimer('Faça login para finalizar o pedido.', 'info');
-            setTimeout(() => { navegar(`${ROUTERS.LOGIN}`); }, 3200);
+            exibirAvisoLogin(navegar);
             houveErro = true;
         }
 

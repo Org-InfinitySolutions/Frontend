@@ -7,7 +7,7 @@ import { api } from '../../provider/apiInstance';
 import { CardPedido } from '../../components/CardPedido/CardPedido';
 import { useNavigate } from 'react-router-dom';
 import { formatarData } from '../../utils/formatacoes'
-import { tokenExpirou } from '../../utils/token';
+import { bloquearAcessoUsuario, tokenExpirou } from '../../utils/token';
 import { exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
@@ -34,7 +34,7 @@ const Pedidos = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if(tokenExpirou()){
+		if(bloquearAcessoUsuario()){
 			exibirAvisoTokenExpirado(navigate);
 		} else {
 		

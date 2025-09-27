@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import LoadingBar from 'react-top-loading-bar';
 import JSZip from 'jszip';
 import { exibirAviso, exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso'
-import { tokenExpirou } from '../../utils/token'
+import { bloquearAcessoUsuario, tokenExpirou } from '../../utils/token'
 import { DadosEndereco } from '../../components/DadosEndereco/DadosEndereco'
 import { CardProdutoCarrinho } from '../../components/CardProdutoCarrinho/CardProdutoCarrinho';
 import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../../utils/formatacoes'
@@ -65,7 +65,7 @@ export function DetalharPedidos() {
 
     useEffect(() => {
         if (!id) return;
-        if(tokenExpirou()){
+        if(bloquearAcessoUsuario()){
             exibirAvisoTokenExpirado(navegar)
         } else {
             setBarraCarregamento(30);

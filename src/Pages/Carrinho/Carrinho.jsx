@@ -64,7 +64,7 @@ function Carrinho() {
     const atualizarCarrinho = (novoCarrinho) => {
         setCarrinho(novoCarrinho);
         const json = JSON.parse(sessionStorage.CARRINHO);
-        json.produtos = novoCarrinho
+        json.produtos = novoCarrinho;
         sessionStorage.CARRINHO = JSON.stringify(json);
     }
 

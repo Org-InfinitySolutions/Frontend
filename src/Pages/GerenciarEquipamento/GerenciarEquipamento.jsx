@@ -1,11 +1,11 @@
 import './GerenciarEquipamento.css';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react'
-import { tokenExpirou } from '../../utils/token';
+import { tokenExpirou, bloquearAcessoGerencia } from '../../utils/token';
 import { api } from '../../provider/apiInstance';
 import { campoVazio } from '../../utils/validarCampos';
 import { FaMinus, FaPlus } from 'react-icons/fa';
-import { exibirAviso, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso'
+import { exibirAviso, exibirAvisoAcessoNegado, exibirAvisoTimer, exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso'
 import LoadingBar from 'react-top-loading-bar';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
@@ -36,19 +36,14 @@ export function GerenciarEquipamento() {
 
   // Métodos callback
   useEffect(() => {
-    if(sessionStorage.TOKEN != null){
-      if(tokenExpirou()){
-        exibirAvisoTokenExpirado(navegar);
+    if(bloquearAcessoGerencia(true)){
+      exibirAvisoAcessoNegado(navegar);
+    } else{
+      if(id != "null"){
+        buscarDadosEquipamento();
       }
-    } 
-    // else{
-    //   exibirAvisoTokenExpirado(navegar);
-    // }
-  
-    if(id != "null"){
-      buscarDadosEquipamento();
-    }
-    listarCategorias();
+      listarCategorias();
+    }  
   }, []);
 
   useEffect(() => {
