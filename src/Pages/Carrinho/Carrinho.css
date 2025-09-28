@@ -128,6 +128,7 @@
     
     .carrinho{
         padding: 1em 0px;
+        min-height: 60vh;
         
         .carrinho-header {
             width: 80%;
