@@ -22,6 +22,8 @@ import { DetalharPedidos } from './Pages/DetalharPedidos/DetalharPedidos';
 import { Calendario } from './Pages/Calendario/Calendario';
 import { GerenciarEquipamento } from './Pages/GerenciarEquipamento/GerenciarEquipamento';
 import {RecuperarSenha} from './Pages/RecuperarSenha/RecuperarSenha';
+import {GerenciarUsuarios} from './Pages/GerenciamentoUsuarios/GerenciarUsuarios';
+
 
 import './App.css'
 
@@ -59,6 +61,7 @@ function MainComponent() {
         <Route path={ROUTERS.DASHBOARD} element={<Dashboard />} />
         <Route path={ROUTERS.GERENCIAREQUIPAMENTOID} element={<GerenciarEquipamento/>}></Route>
         <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
+        <Route path={ROUTERS.GERENCIARUSUARIOS} element={<GerenciarUsuarios/>}></Route>
       </Routes>
       <Rodape/>
     </>
