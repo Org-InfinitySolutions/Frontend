@@ -16,5 +16,6 @@ export const ROUTERS = {
     CALENDARIO: '/calendario',
     DASHBOARD: '/dashboard',
     GERENCIAREQUIPAMENTOID: '/gerenciar-equipamento/:id',
-    RECUPERARSENHA: '/recuperar-senha'
+    RECUPERARSENHA: '/recuperar-senha',
+    GERENCIARUSUARIOS: '/usuarios'
 }

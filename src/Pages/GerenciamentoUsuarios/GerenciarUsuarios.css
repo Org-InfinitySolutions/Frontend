@@ -1,0 +1,169 @@
+:root {
+    --fonte-titulo: "Montserrat Alternates", sans-serif;
+    --fonte-texto: "Montserrat", sans-serif;
+    --textos-branco: #FFFFFF;
+    --textos-preto: #000000;
+    --margin-textos: 3%;
+    --tamanho-fonte-texto: 20px;
+}
+
+body {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   overflow-x: hidden;
+}
+
+.usuarios {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: black;
+    font-family: var(--fonte-texto);
+    color: var(--textos-branco);
+    padding: var(--margin-textos);
+}
+
+.titulo {
+    align-self: flex-start;
+    margin-right: 40px; 
+    font-family: var(--fonte-titulo);
+    font-size: 36px;
+}
+
+.pesquisas {
+    display: flex;
+    gap: 40px;
+    margin-top: 10px;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.pesquisas input {
+    width: 19rem;
+    height: 1.2rem;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #ffffff00;
+    border: 1px solid #ccc;
+    color: var(--textos-branco);
+}
+
+.botao button {
+    height: 2.6rem;
+    width: 6.7rem;
+    padding: 0 20px;
+    font-size: var(--fonte-texto);
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.lista-usuarios {
+  margin-top: 40px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.lista-usuarios table {
+  border-collapse: collapse;
+  width: 95%;
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.lista-usuarios th, 
+.lista-usuarios td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+.lista-usuarios td {
+  font-size: 16px;
+}
+
+.lista-usuarios th {
+  font-size: 18px;
+  font-weight: bold;
+  background-color: #2a2a2a;
+}
+
+.lista-usuarios tr:hover {
+  background-color: #333;
+}
+
+.btn-editar {
+  background: none;  
+  border: none;       
+  padding: 0;      
+  cursor: pointer;   
+}
+
+.btn-editar img {
+  width: 20px; 
+  height: 20px;
+}
+
+@media (max-width: 768px) {
+
+  .titulo {
+    font-size: 28px;
+    margin-right: 0;
+    text-align: center;
+  }
+
+  .pesquisas {
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+  }
+
+  .campo {
+    gap: 0px;
+    width: 90%;
+  }
+
+  .pesquisas input {
+    width: 94%;
+    height: 20px;
+  }
+
+  .botao button {
+    margin-top: 15px;
+    width: 100%;
+  }
+
+  .lista-usuarios table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  .lista-usuarios th:nth-child(2),
+  .lista-usuarios th:nth-child(3),
+  .lista-usuarios td:nth-child(2),
+  .lista-usuarios td:nth-child(3) {
+    display: none; 
+  }
+
+  .lista-usuarios th,
+  .lista-usuarios td {
+    padding: 8px 10px;
+  }
+
+  .btn-editar img {
+    width: 18px;
+    height: 18px;
+  }
+}
