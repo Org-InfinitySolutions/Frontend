@@ -48,9 +48,9 @@ export function Calendario() {
 
   const navegar = useNavigate();
   useEffect(() => {
-    if(bloquearAcessoGerencia(true)){
-      exibirAvisoAcessoNegado(navegar);
-    } else {
+    // if(bloquearAcessoGerencia(true)){
+    //   exibirAvisoAcessoNegado(navegar);
+    // } else {
 
       api.get(ENDPOINTS.PEDIDOS)
       .then(response => {
@@ -80,7 +80,7 @@ export function Calendario() {
         console.error('Erro ao buscar pedidos:', error);
       });
     }
-  }, []);
+  , []);
 
   const anterior = () => {
     if (mesAtual > 0) setMesAtual(mesAtual - 1);
@@ -91,7 +91,7 @@ export function Calendario() {
   };
 
   return (
-    <div className="max-w-8xl mx-auto p-4 font-sans">
+    <div className="max-w-8xl mx-auto p-4 font-sans bg-black">
       <style>{`
         .hoje {
           background-color: #e0f2fe;
@@ -105,15 +105,16 @@ export function Calendario() {
         }
       `}</style>
 
-      <h2 className="text-center text-2xl font-bold mb-6 text-gray-800">
+      <h2 className="text-center text-2xl font-bold mb-6 text-white">
         {nomesMeses[mesAtual]} de {ano}
       </h2>
 
+    <div className="mx-auto w-[1100px]">
       <div className="grid grid-cols-7 gap-px bg-gray-300 rounded overflow-hidden shadow mb-4">
         {nomesDias.map((dia) => (
           <div
             key={dia}
-            className="bg-gray-100 text-gray-700 font-semibold text-sm text-center py-2"
+            className="bg-gray text-gray-900 font-bold text-sm text-center py-2"
           >
             {dia}
           </div>
@@ -145,19 +146,26 @@ export function Calendario() {
           );
         })}
       </div>
+    </div>
 
       <div className="paginacao">
-        <span onClick={anterior} className={mesAtual === 0 ? "disabled" : ""}>{'<'}</span>
+        <span 
+          onClick={anterior} 
+          className={`cursor-pointer ${mesAtual === 0 ? "opacity-50 pointer-events-none" : "text-white"}`}>{'<<'}
+        </span>
         {Array.from({ length: 12 }, (_, index) => (
           <span
             key={index}
-            className={mesAtual === index ? "pagina-ativa" : ""}
             onClick={() => setMesAtual(index)}
+            className={`cursor-pointer ${mesAtual === index ? "font-bold underline text-white" : "text-white"}`}
           >
             {index + 1}
           </span>
         ))}
-        <span onClick={proximo} className={mesAtual === 11 ? "disabled" : ""}>{'>'}</span>
+          <span
+            onClick={proximo}
+            className={`cursor-pointer ${mesAtual === 11 ? "opacity-50 pointer-events-none" : "text-white"}`}>{'>>'}
+          </span>  
       </div>
     </div>
   );
