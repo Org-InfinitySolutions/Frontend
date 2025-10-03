@@ -51,9 +51,9 @@ body {
     font-size: 16px;
     padding: 10px;
     border-radius: 5px;
-    background-color: #ffffff00;
+    background-color: #efefef;
     border: 1px solid #ccc;
-    color: var(--textos-branco);
+    color: var(--textos-preto);
 }
 
 .botao button {
@@ -142,7 +142,12 @@ body {
 
   .botao button {
     margin-top: 15px;
-    width: 100%;
+    align-self: center;
+    width: 30%;
+  }
+
+  .lista-usuarios {
+    margin-top: 20px;
   }
 
   .lista-usuarios table {
