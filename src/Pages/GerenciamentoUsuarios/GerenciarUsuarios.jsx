@@ -4,41 +4,15 @@ import { api } from '../../provider/apiInstance';
 import { ENDPOINTS } from '../../routers/endpoints';
 import { formatarCPF, formatarCNPJ } from '../../utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
+import { bloquearAcessoGerencia } from "../../utils/token";
+import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
 
 const normalizarTexto = (texto) => {
   return texto
-    ? texto.normalize("NFD").replace(/[̀-\u036f]/g, "").toLowerCase()
+    ? texto.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
     : "";
 };
-
-// Lista de usuários fake para desenvolvimento / fallback
-const getMockUsuarios = () => ([
-  {
-    id: 1,
-    nome: "João Souza Santos",
-    email: "joao.souza@email.com",
-    documento: formatarCPF('12345678900')
-  },
-  {
-    id: 2,
-    nome: "Maria Oliveira",
-    email: "maria.oliveira@email.com",
-    documento: formatarCPF('98765432199')
-  },
-  {
-    id: 3,
-    nome: "Empresa XPTO LTDA",
-    email: "contato@xpto.com.br",
-    documento: formatarCNPJ('12345678000190')
-  },
-  {
-    id: 4,
-    nome: "Carlos Pereira",
-    email: "carlos.pereira@email.com",
-    documento: formatarCPF('32165498777')
-  }
-]);
 
 function GerenciarUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
@@ -52,8 +26,14 @@ function GerenciarUsuarios() {
     carregarUsuarios();
   }, []);
 
+    const [desabilitar, setDesabilitar] = useState(false);
+    useEffect(() => {
+        if(bloquearAcessoGerencia()){
+            exibirAvisoAcessoNegado();
+        }
+    }, []);
+
   const carregarUsuarios = () => {
-    // tenta carregar da API primeiro
     api.get(ENDPOINTS.USUARIOS, {
       headers: {
         Authorization: `Bearer ${sessionStorage.TOKEN}`
@@ -78,24 +58,8 @@ function GerenciarUsuarios() {
         setUsuariosFiltrados(lista);
       })
       .catch((err) => {
-        console.error("Erro ao carregar usuários (usando mock):", err);
-        // fallback para usuários fake caso o endpoint não esteja ativo
-        // simula um pequeno delay pra aproximar da experiência real
-        setTimeout(() => {
-          const listaMock = getMockUsuarios();
-          setUsuarios(listaMock);
-          setUsuariosFiltrados(listaMock);
-        }, 300);
+        console.error("Erro ao carregar usuários", err);
       });
-
-    // --- Alternativa: se quiser forçar apenas o mock, descomente abaixo e comente o bloco acima ---
-    /*
-    setTimeout(() => {
-      const listaMock = getMockUsuarios();
-      setUsuarios(listaMock);
-      setUsuariosFiltrados(listaMock);
-    }, 300);
-    */
   };
 
   const aplicarFiltros = (e) => {
