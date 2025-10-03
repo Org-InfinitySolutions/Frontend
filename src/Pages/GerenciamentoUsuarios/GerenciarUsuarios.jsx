@@ -4,6 +4,8 @@ import { api } from '../../provider/apiInstance';
 import { ENDPOINTS } from '../../routers/endpoints';
 import { formatarCPF, formatarCNPJ } from '../../utils/formatacoes';
 import { useNavigate } from 'react-router-dom';
+import { bloquearAcessoGerencia } from "../../utils/token";
+import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
 
 const normalizarTexto = (texto) => {
@@ -23,6 +25,13 @@ function GerenciarUsuarios() {
   useEffect(() => {
     carregarUsuarios();
   }, []);
+
+    const [desabilitar, setDesabilitar] = useState(false);
+    useEffect(() => {
+        if(bloquearAcessoGerencia()){
+            exibirAvisoAcessoNegado();
+        }
+    }, []);
 
   const carregarUsuarios = () => {
     api.get(ENDPOINTS.USUARIOS, {
@@ -90,7 +99,7 @@ function GerenciarUsuarios() {
         <div className="campo">
           <h3>CPF/CNPJ</h3>
           <input
-            type="text"
+            type="number"
             placeholder='Ex: 123.456.789-91'
             value={filtroDocumento}
             onChange={(e) => setFiltroDocumento(e.target.value)}
