@@ -17,5 +17,6 @@ export const ROUTERS = {
     DASHBOARD: '/dashboard',
     GERENCIAREQUIPAMENTOID: '/gerenciar-equipamento/:id',
     RECUPERARSENHA: '/recuperar-senha',
-    GERENCIARUSUARIOS: '/usuarios'
+    GERENCIARUSUARIOS: '/usuarios',
+    ALTERARCARGO: '/usuarios/editar/:id'
 }

@@ -118,6 +118,16 @@ function BarraNavegacao(){
                         >
                           Dashboard
                         </a>
+                        {cargo == "ROLE_ADMIN" && (
+                          <a
+                            href={ROUTERS.GERENCIARUSUARIOS}
+                            className={`${desativarLinkPaginaAtual(
+                              `${ROUTERS.GERENCIARUSUARIOS}`
+                            )}`}
+                          >
+                            Usuarios
+                          </a>
+                        )}
                       </>
                     )}
                   </>

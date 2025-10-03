@@ -3,10 +3,11 @@ import { useEffect, useState } from 'react';
 import { api } from '../../provider/apiInstance';
 import { ENDPOINTS } from '../../routers/endpoints';
 import { formatarCPF, formatarCNPJ } from '../../utils/formatacoes';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { bloquearAcessoGerencia } from "../../utils/token";
 import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
+import { ROUTERS } from '../../routers/routers';
 
 const normalizarTexto = (texto) => {
   return texto
@@ -26,12 +27,12 @@ function GerenciarUsuarios() {
     carregarUsuarios();
   }, []);
 
-    const [desabilitar, setDesabilitar] = useState(false);
-    useEffect(() => {
-        if(bloquearAcessoGerencia()){
-            exibirAvisoAcessoNegado();
-        }
-    }, []);
+  const [desabilitar, setDesabilitar] = useState(false);
+  useEffect(() => {
+    if(bloquearAcessoGerencia(false)){
+      exibirAvisoAcessoNegado();
+    }
+  }, []);
 
   const carregarUsuarios = () => {
     api.get(ENDPOINTS.USUARIOS, {
@@ -48,9 +49,11 @@ function GerenciarUsuarios() {
             documento = formatarCNPJ(u.cnpj);
           }
           return {
+            tipo: u.tipo,
             id: u.id,
             nome: u.nome,
             email: u.email,
+            telefone_celular: u.telefone_celular,
             documento
           };
         });
@@ -128,13 +131,14 @@ function GerenciarUsuarios() {
                   <td>{u.email}</td>
                   <td>{u.documento}</td>
                   <td>
-                    <button
+                    <Link
                       className="btn-editar"
-                      onClick={() => navegar(`/usuarios/editar/${u.id}`)}
+                      to={`${ROUTERS.ALTERARCARGO.replace(":id", u.id)}`}
                       title="Editar usuário"
+                      state={{u}}
                     >
                       <img src={lapisEditor} alt="Editar" />
-                    </button>
+                    </Link>
                   </td>
                 </tr>
               ))

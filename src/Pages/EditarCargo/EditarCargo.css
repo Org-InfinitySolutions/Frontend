@@ -1,0 +1,152 @@
+.container-editar-cargo{
+    height: 90vh;
+    width: 100%;
+    background-color: #171717;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .formulario-perfil{
+        height: 75%;
+        width: 35%;
+        background-color: white;
+    
+        display: flex;
+        border-radius: 8px;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-evenly;
+    
+        .box-titulo{
+            height: 15vh;
+            width: 80%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            .titulo-perfil{
+                font-family: var(--fonte-titulo);
+            }
+
+            .linha-colorida{
+                height: 1vh;
+                width: 80%;
+                border-radius: 6px;
+                background-image: linear-gradient(to right, #ff0000, #351df1, #007d1d);
+            }
+        }
+
+        .box-campos{
+            height: 50%;
+            width: 80%;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+
+            .campo{
+                height: 5vh;
+                width: 100%;
+
+                display: flex;
+                align-items: center;
+                flex-direction: row;
+                justify-content: space-between;
+
+                span, select{
+                    width: 80%;
+                }
+
+                select{
+                    height: 100%;
+                }
+            }
+        }
+
+        .box-eventos{
+            height: 10%;
+            width: 80%;
+
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5em;
+            
+            button{
+                cursor: pointer;
+                padding: 0.75em;
+                font-family: var(--fonte-titulo);
+                font-weight: 600;
+            }
+
+            .btn-voltar{
+                border: 1px solid black;
+                background-color: white;
+            }
+            .btn-voltar:hover{
+                color: white;
+                transition: 0.2s;
+                background-color: black;
+            }
+
+            .btn-alterar{
+                color: white;
+                border: 1px solid black;
+                background-color: black;
+            }
+            .btn-alterar:hover{
+                color: black;
+                transition: 0.2s;
+                background-color: white;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .container-editar-cargo{
+        height: 70vh;
+
+        .formulario-perfil{
+            height: 75%;
+            width: 80%;
+            justify-content: space-evenly;
+
+            .box-titulo{
+                height: 20%;
+                width: 95%;
+                gap: 1em;
+
+                .titulo-perfil{
+                    margin: 0px;
+                }
+                .linha-colorida{
+                    height: 0.75vh;
+                }
+            }
+
+            .box-campos{
+                height: 60%;
+                width: 90%;
+                .campo{
+                    span, select{
+                        width: 70%;
+                    }
+                    select{
+                        height: 90%;
+                    }
+                }
+            }
+
+            .box-eventos{
+                width: 90%;
+                button{
+                    height: 80%;
+                    padding: 0px 1em;
+                }
+            }
+        }
+    }
+}
