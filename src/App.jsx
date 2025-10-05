@@ -23,7 +23,7 @@ import { Calendario } from './Pages/Calendario/Calendario';
 import { GerenciarEquipamento } from './Pages/GerenciarEquipamento/GerenciarEquipamento';
 import {RecuperarSenha} from './Pages/RecuperarSenha/RecuperarSenha';
 import {GerenciarUsuarios} from './Pages/GerenciamentoUsuarios/GerenciarUsuarios';
-
+import { EditarCargo } from './Pages/EditarCargo/EditarCargo';
 
 import './App.css'
 
@@ -62,6 +62,7 @@ function MainComponent() {
         <Route path={ROUTERS.GERENCIAREQUIPAMENTOID} element={<GerenciarEquipamento/>}></Route>
         <Route path={ROUTERS.RECUPERARSENHA} element={<RecuperarSenha/>}></Route>
         <Route path={ROUTERS.GERENCIARUSUARIOS} element={<GerenciarUsuarios/>}></Route>
+        <Route path={ROUTERS.ALTERARCARGO} element={<EditarCargo />}></Route>
       </Routes>
       <Rodape/>
     </>
