@@ -5,6 +5,7 @@ import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTERS } from "../../routers/routers";
+import { retornarCargos, isAdmin, isFuncionario } from "../../utils/usuario";
 
 export function CardProdutoEquipamentos({ 
     produto,
@@ -13,7 +14,7 @@ export function CardProdutoEquipamentos({
 }){
 
     const navegar = useNavigate();
-    const [cargo, setCargo] = useState(sessionStorage.CARGO);
+    const [cargo, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
 
     return(
         <section className="card-produto">
@@ -22,7 +23,7 @@ export function CardProdutoEquipamentos({
                 <div className="box-nome-produto">
                     <a className='nomeProduto' onClick={() => navegar(ROUTERS.PRODUTOID.replace(':id', produto.id))} style={{ cursor: 'pointer' }} title={produto.nome}>{produto.nome}</a>
                 </div>
-                { cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO" ? (
+                {isAdmin(cargo) || isFuncionario(cargo) ? (
                     <div className="box-dados-gerenciais">
                         <span className="qtd-estoque">Estoque: {produto.qtd_estoque}</span>
                         <span className={ produto.is_ativo ? "situacao-ativo" : "situacao-inativo"}>{ produto.is_ativo ? "ATIVO" : "INATIVO" }</span>

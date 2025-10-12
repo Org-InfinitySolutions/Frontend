@@ -4,6 +4,7 @@ import { api } from '../../provider/apiInstance';
 import Swal from 'sweetalert2';
 import { formatarIdPedido } from '../../utils/formatacoes'
 import { ENDPOINTS } from '../../routers/endpoints';
+import { isAdmin, isFuncionario } from '../../utils/usuario';
 
 const statusLabel = {
   'EM ANÁLISE': 'Em Análise',
@@ -37,11 +38,11 @@ const exibirStatus = (status) => {
 export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
   const [status, setStatus] = useState(pedido.status);
   const [cancelando, setCancelando] = useState(false);
-  const [cargo, setCargo] = useState(sessionStorage.CARGO == 'ROLE_ADMIN' || sessionStorage.CARGO == 'ROLE_FUNCIONARIO');
+  const [habilitarFuncoesGerenciais, setHabilitarFuncoesGerenciais] = useState(isAdmin(tipoUsuario) || isFuncionario(tipoUsuario));
 
   const podeCancelar = () => {
     const statusNormalizado = normalizarStatus(status);
-    if (tipoUsuario === 'ROLE_ADMIN' || tipoUsuario === 'ROLE_FUNCIONARIO') {
+    if (habilitarFuncoesGerenciais) {
       return statusNormalizado === 'APROVADO' || statusNormalizado === 'EM_ANALISE';
     } else {
       return statusNormalizado === 'EM_ANALISE';
@@ -94,7 +95,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
       <h3>Pedido #{formatarIdPedido(pedido.id)}</h3>
       <p><b>Items:</b> {pedido.itens}</p>
       <p><b>Pedido feito em:</b> {pedido.data}</p>
-      {cargo && (<p><b>Nome:</b> {pedido.cliente}</p>)}
+      {habilitarFuncoesGerenciais && (<p><b>Nome:</b> {pedido.cliente}</p>)}
       <div className="acoes">
         {podeCancelar() && status !== 'CANCELADO' && (
           <button className="btn-cancelar" onClick={confirmarCancelamentoPedido} disabled={cancelando}>

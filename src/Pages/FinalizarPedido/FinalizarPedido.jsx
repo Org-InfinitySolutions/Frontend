@@ -12,6 +12,7 @@ import { FaCheck } from 'react-icons/fa';
 import { DadosEndereco } from '../../components/DadosEndereco/DadosEndereco';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
+import { retornarCargos, isUsuarioPf, isUsuarioPj } from '../../utils/usuario';
 
 function FinalizarPedido() {
 
@@ -22,7 +23,7 @@ function FinalizarPedido() {
     const [mostrarModalConfirmacao, setMostrarModalConfirmacao] = useState(false)
     const [carrinho, setCarrinho] = useState(JSON.parse(sessionStorage.CARRINHO));
     const [cadastroCompleto, setCadastroCompleto] = useState(sessionStorage.CADASTRO_COMPLETO == "true");
-    const [cargo, setCargo] = useState(sessionStorage.CARGO);
+    const [cargo, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
     const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO == "True");
 
     const [numeroPedido, setNumeroPedido] = useState(0);
@@ -119,12 +120,12 @@ function FinalizarPedido() {
     useEffect(() => {
         if(usuarioLogado) {
             if(!cadastroCompleto){
-                if(cargo == "ROLE_USUARIO_PF"){
+                if(isUsuarioPf(cargo)){
                     if(documentoRG && documentoEndereco){
                         setDesativarBotao(false);
                     }
                 } 
-                if(cargo == "ROLE_USUARIO_PJ"){
+                if(isUsuarioPj(cargo)){
                     if(documentoCNPJ && documentoContratoSocial && documentoEndereco){
                         setDesativarBotao(false);
                     }
@@ -274,7 +275,7 @@ function FinalizarPedido() {
                                         <FaCheck size={18} display={exibirDocEndereco ? 'flex' : 'none'}/>
                                     </div>
                                 </div>
-                                {cargo === "ROLE_USUARIO_PF" ? (
+                                {isUsuarioPf(cargo) ? (
                                     <div className='box-documento'>
                                         <span>* CÓPIA DO RG</span>
                                         <div className='icone-check'>

@@ -13,6 +13,7 @@ import { validarSenha } from '../../utils/validarCampos'
 import { tokenExpirou, bloquearAcessoUsuario } from '../../utils/token';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
+import { retornarCargos, isUsuarioPf, isUsuarioPj } from '../../utils/usuario';
 
 function Perfil(){
 
@@ -23,6 +24,7 @@ function Perfil(){
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [mostrarModalExcluirConta, setMostrarModalExcluirConta] = useState(false);
     const [senha, setSenha] = useState("");
+    const [cargos, setCargos] = useState(retornarCargos(sessionStorage.CARGO));
 
     useEffect(() => {
 
@@ -108,7 +110,6 @@ function Perfil(){
         });
     }
 
-
     const abrirModalExcluirConta = () => {
         setMostrarModalExcluirConta(true);
     }
@@ -137,10 +138,10 @@ function Perfil(){
         {!mostrarModalExcluirConta &&( 
         <div className="container-perfil">
             <section className="titulo-form">
-                <h2>{sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "Meu perfil" : "Minha empresa"}</h2>
+                <h2>{isUsuarioPf(cargos) ? "Meu perfil" : "Minha empresa"}</h2>
                 <div className="barra"></div>
             </section>
-            {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
+            {isUsuarioPf(cargos) ? (
             <section className="dados-pessoais">
                 <h3>Dados pessoais:</h3>
                 <span>Nome: {usuario.nome}</span>

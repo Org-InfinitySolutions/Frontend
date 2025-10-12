@@ -43,6 +43,7 @@ function GerenciarUsuarios() {
       .then((res) => {
         const lista = res.data.map(u => {
           var documento = '';
+          console.log(u);
           if (u.cpf) {
             documento = formatarCPF(u.cpf);
           } else if (u.cnpj) {

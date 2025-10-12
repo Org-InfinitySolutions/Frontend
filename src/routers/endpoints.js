@@ -21,6 +21,8 @@ export const ENDPOINTS = {
     GETUSUARIORG: '/usuarios/rg',
     GETUSUARIOCPF: '/usuarios/cpf',
     GETUSUARIOCNPJ: '/usuarios/cnpj',
+    PUTPROMOVERUSUARIO: '/usuarios/promover/:id',
+    PUTREBAIXARUSUARIO: '/usuarios/rebaixar/:id',
 
     // Documentos
     POSTDOCUMENTO: '/usuarios/documentos/:id',
