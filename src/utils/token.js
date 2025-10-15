@@ -1,3 +1,4 @@
+import { isAdmin, isFuncionario } from './usuario';
 
 const tokenExpirou = () => {
     return new Date() > new Date(sessionStorage.EXP);
@@ -19,7 +20,7 @@ const bloquearAcessoUsuario = () => {
 // Executar funcão 'exibirAvisoAcessoNegado()' para exibir a mensagem
 const bloquearAcessoGerencia = (permitirFuncionario) => {
     if(!bloquearAcessoUsuario()){
-        if(sessionStorage.CARGO == 'ROLE_ADMIN' || (sessionStorage.CARGO == 'ROLE_FUNCIONARIO' && permitirFuncionario)){
+        if(isAdmin(sessionStorage.CARGO) || (isFuncionario(sessionStorage.CARGO) && permitirFuncionario)){
             return false;
         } 
     }

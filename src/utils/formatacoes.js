@@ -90,9 +90,10 @@ function formatarCEP(cep) {
 const formatarData = (data) => {
         
     let dt = new Date(data);
+    let dia = dt.getDate() < 10 ? '0' + dt.getDate() : dt.getDate();
     let mes = dt.getMonth() + 1;
     mes = mes < 10 ? '0' + mes : mes;
-    const dataFormatadaTexto = `${dt.getDate()}/${mes}/${dt.getFullYear()}`
+    const dataFormatadaTexto = `${dia}/${mes}/${dt.getFullYear()}`
     return dataFormatadaTexto;
 }
 

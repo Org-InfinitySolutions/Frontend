@@ -7,6 +7,7 @@ import { IoMenu } from 'react-icons/io5';
 import { getDevice } from '../../utils/interface';
 import { IoMdClose } from 'react-icons/io';
 import { ROUTERS } from '../../routers/routers';
+import { retornarCargos, isAdmin, isFuncionario } from '../../utils/usuario';
 
 const dispositivo = getDevice();
 
@@ -34,8 +35,8 @@ function BarraNavegacao(){
     }
 
     const [usuarioLogado, setUsuarioLogado] = useState(sessionStorage.USUARIO_LOGADO === "True");
-    const [cargo, setCargo] = useState(sessionStorage.CARGO);
-    const [habilitarFuncoesGerenciais, setHabilitarFuncoesGerenciais] = useState(cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO");
+    const [cargos, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
+    const [habilitarFuncoesGerenciais, setHabilitarFuncoesGerenciais] = useState(isAdmin(cargos) || isFuncionario(cargos));
 
     const desativarLinkPaginaAtual = (urlAtual) => {
         return url == urlAtual ? "inativar-botao" : "";
@@ -118,7 +119,7 @@ function BarraNavegacao(){
                         >
                           Dashboard
                         </a>
-                        {cargo == "ROLE_ADMIN" && (
+                        {isAdmin(cargos) && (
                           <a
                             href={ROUTERS.GERENCIARUSUARIOS}
                             className={`${desativarLinkPaginaAtual(
@@ -162,7 +163,7 @@ function BarraNavegacao(){
             <section className="container-eventos">
               {usuarioLogado ? (
                 <>
-                  {cargo != "ROLE_ADMIN" ? (
+                  {!isAdmin(cargos) ? (
                     <a
                       href={ROUTERS.PERFIL}
                       className={`botao-cadastro ${desativarLinkPaginaAtual(

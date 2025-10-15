@@ -11,6 +11,7 @@ import { bloquearAcessoUsuario, tokenExpirou } from '../../utils/token';
 import { exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
+import { retornarCargos } from '../../utils/usuario';
 
 const normalizarStatus = (status) => {
 	if (!status) return '';
@@ -29,7 +30,7 @@ const Pedidos = () => {
 		[ordemAberto, setOrdemAberto] = useState(false),
 		[paginaAtual, setPaginaAtual] = useState(1),
 		[pedidos, setPedidos] = useState([]),
-		tipoUsuario = sessionStorage.CARGO || 'USUARIO';
+		tipoUsuario = retornarCargos(sessionStorage.CARGO);
 
 	const navigate = useNavigate();
 

@@ -11,6 +11,7 @@ import LoadingBar from 'react-top-loading-bar';
 import { limparSession } from '../../utils/limpar';
 import { ToastContainer, toast } from 'react-toastify';
 import { ROUTERS } from '../../routers/routers';
+import { isUsuarioPf, isUsuarioPj } from '../../utils/usuario';
 
 import {  
     campoNaoAtendeTamanho, 
@@ -32,11 +33,12 @@ function EditarPerfil() {
 
     const [usuario] = useState(JSON.parse(sessionStorage.DADOS_USUARIO));
     const [endereco] = useState(usuario.endereco);
+    const [cargos, setCargos] = useState(sessionStorage.CARGO);
     const [barraCarregamento, setBarraCarregamento] = useState(0);
 
     const [dadosBase, setDadosBase] = useState({
         endereco,   
-        tipo: sessionStorage.CARGO === "ROLE_USUARIO_PF" ? "PF" : "PJ",
+        tipo: isUsuarioPf(cargos) ? "PF" : "PJ",
         nome: usuario.nome,
         telefone_celular: usuario.telefone_celular,
     })
@@ -111,12 +113,6 @@ function EditarPerfil() {
             campoVazio(formulario.endereco.cep)
         ) {
             exibirAviso("Preencher todos os campos obrigatórios", 'error');
-            houveErro = true;
-        } else if(campoNaoAtendeTamanho(formulario.endereco.cep, 9)){
-            exibirAviso("O campo CEP é inválido", 'error')
-            houveErro = true;
-        } else if(campoNaoAtendeTamanho(formulario.telefone_celular, 15)){
-            exibirAviso("O campo Celular é inválido", 'error')
             houveErro = true;
         } else if (dadosBase.tipo == "PJ"){
             if(campoVazio(formulario.razao_social) || campoVazio(formulario.telefone_residencial)){
@@ -344,7 +340,7 @@ function EditarPerfil() {
                     </section>
 
                     <section className="container-dados-pessoais">
-                        {sessionStorage.CARGO === "ROLE_USUARIO_PF" ? (
+                        {isUsuarioPf(cargos) ? (
                             <>
                                 <h3>Dados pessoais</h3>
                                 <section>

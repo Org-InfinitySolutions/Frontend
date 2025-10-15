@@ -10,6 +10,7 @@ import { DadosEndereco } from '../../components/DadosEndereco/DadosEndereco'
 import { CardProdutoCarrinho } from '../../components/CardProdutoCarrinho/CardProdutoCarrinho';
 import { formatarCPF, formatarRegistroGeral, formatarTelefone, formatarCNPJ, formatarIdPedido } from '../../utils/formatacoes'
 import { ENDPOINTS } from '../../routers/endpoints';
+import { isAdmin, isFuncionario } from '../../utils/usuario';
 
 const statusLabel = {
     'EM_ANALISE': 'Em Análise',
@@ -145,7 +146,7 @@ export function DetalharPedidos() {
         setTimeout(() => URL.revokeObjectURL(zipUrl), 1000);
     }
 
-    const isAdmin = sessionStorage.CARGO === 'ROLE_ADMIN' || sessionStorage.CARGO === 'ROLE_FUNCIONARIO';
+    const habilitarFuncoesGerenciais = isAdmin(sessionStorage.CARGO) || isFuncionario(sessionStorage.CARGO);
 
     if (loading) return <div>gando...</div>;
     if (!pedido) return <div>PedidCarreo não encontrado.</div>;
@@ -168,7 +169,7 @@ export function DetalharPedidos() {
                 </div>
                 <div className="condicoes-pedido">
                     <span className={`${statusClassMap[status]}`}>{exibirStatus(status)}</span>
-                    {isAdmin && (
+                    {habilitarFuncoesGerenciais && (
                         <>
                             <select
                                 className="select-filtro"

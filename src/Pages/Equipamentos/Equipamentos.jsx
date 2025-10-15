@@ -16,6 +16,7 @@ import { tokenExpirou } from '../../utils/token';
 import { exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
+import { retornarCargos, isAdmin, isFuncionario } from '../../utils/usuario';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
@@ -30,7 +31,7 @@ const Equipamentos = () => {
     [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false),
     [barraCarregamento, setBarraCarregamento] = useState(0),
     [paginaAtual, setPaginaAtual] = useState(1),
-    [cargo, setCargo] = useState(sessionStorage.CARGO || '');
+    [cargos, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
 
   const produtosPorPagina = 20;
 
@@ -44,7 +45,7 @@ const Equipamentos = () => {
 
   useEffect(() => {
 
-    const header = cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO";
+    const header = isAdmin(cargos) || isFuncionario(cargos);
 
     setBarraCarregamento(30);
     if(tokenExpirou()){
@@ -132,7 +133,7 @@ const Equipamentos = () => {
                   <IoIosSearch size={18} />
                 </span>
               </div>
-              {cargo != "ROLE_ADMIN" && cargo != "ROLE_FUNCIONARIO" && (
+              {!isAdmin(cargos) && !isFuncionario(cargos) && (
                 <div className="linha-botoes-carrinho">
                   <div className="icone-carrinho">
                     <IoCartOutline size={40} onClick={() => { navegar(`${ROUTERS.CARRINHO}`) }} />
@@ -156,7 +157,7 @@ const Equipamentos = () => {
                 </select>
                 <IoIosArrowDown className={`icone-arrow-select${filtroStatusAberto ? ' aberto' : ''}`} />
               </div>
-              {cargo == "ROLE_ADMIN" || cargo == "ROLE_FUNCIONARIO" ? (
+              {isAdmin(cargos) || isFuncionario(cargos) ? (
                 <button className="botao-secundario" onClick={() => navegar(`${ROUTERS.ADICIONAREQUIPAMENTO}`)}>
                   Adicionar equipamento
                 </button>  
