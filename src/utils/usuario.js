@@ -22,4 +22,8 @@ const isUsuarioPj = (cargos) => {
     return cargos.includes("ROLE_USUARIO_PJ");
 }
 
-export { retornarCargos, isAdmin, isFuncionario, isUsuarioPf, isUsuarioPj }
+const definirCargo = (cargo) => {
+    return cargo != "FUNCIONARIO" ? "CLIENTE" : "FUNCIONÁRIO";
+}
+
+export { retornarCargos, isAdmin, isFuncionario, isUsuarioPf, isUsuarioPj, definirCargo }

@@ -8,6 +8,7 @@ import { bloquearAcessoGerencia } from "../../utils/token";
 import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
 import { ROUTERS } from '../../routers/routers';
+import { definirCargo } from '../../utils/usuario';
 
 const normalizarTexto = (texto) => {
   return texto
@@ -30,7 +31,7 @@ function GerenciarUsuarios() {
   const [desabilitar, setDesabilitar] = useState(false);
   useEffect(() => {
     if(bloquearAcessoGerencia(false)){
-      exibirAvisoAcessoNegado();
+      exibirAvisoAcessoNegado(navegar);
     }
   }, []);
 
@@ -43,14 +44,13 @@ function GerenciarUsuarios() {
       .then((res) => {
         const lista = res.data.map(u => {
           var documento = '';
-          console.log(u);
           if (u.cpf) {
             documento = formatarCPF(u.cpf);
           } else if (u.cnpj) {
             documento = formatarCNPJ(u.cnpj);
           }
           return {
-            tipo: u.tipo,
+            tipo: definirCargo(u.tipo),
             id: u.id,
             nome: u.nome,
             email: u.email,
@@ -121,6 +121,7 @@ function GerenciarUsuarios() {
               <th>Nome</th>
               <th>E-mail</th>
               <th>CPF/CNPJ</th>
+              <th>Tipo</th>
               <th></th>
             </tr>
           </thead>
@@ -131,6 +132,7 @@ function GerenciarUsuarios() {
                   <td>{u.nome}</td>
                   <td>{u.email}</td>
                   <td>{u.documento}</td>
+                  <td>{u.tipo}</td>
                   <td>
                     <Link
                       className="btn-editar"

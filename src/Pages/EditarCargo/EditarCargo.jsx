@@ -15,14 +15,13 @@ function EditarCargo(){
     const location = useLocation();
     const { u } = location.state;
 
-    const [cargo, setCargo] = useState(u.tipo);
-    const [definirCargo, setDefinirCargo] = useState(1);
+    const [definirCargo, setDefinirCargo] = useState(u.tipo);
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     
     const alterarCargoUsuario = () => {
-        if(definirCargo == 1){
+        if(definirCargo == "CLIENTE"){
             rebaixarUsuario();
-        } else if (definirCargo == 2){
+        } else if (definirCargo == "FUNCIONÁRIO"){
             promoverUsuario();
         } else {
             exibirAviso('Ocorreu um erro, tente novamente mais tarde', 'error');
@@ -93,8 +92,8 @@ function EditarCargo(){
                     <div className='campo'>
                         <strong>Cargo:</strong>
                         <select value={definirCargo} onChange={(e) => { setDefinirCargo(e.target.value)}}>
-                            <option value="1">Cliente</option>
-                            <option value="2">Funcionário</option>
+                            <option value="CLIENTE">Cliente</option>
+                            <option value="FUNCIONÁRIO">Funcionário</option>
                         </select>
                     </div>
                 </section>
