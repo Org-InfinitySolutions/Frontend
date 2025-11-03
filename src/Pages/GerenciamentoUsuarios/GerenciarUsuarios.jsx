@@ -22,15 +22,17 @@ function GerenciarUsuarios() {
   const [filtroNome, setFiltroNome] = useState("");
   const [filtroEmail, setFiltroEmail] = useState("");
   const [filtroDocumento, setFiltroDocumento] = useState("");
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const usuariosPorPagina = 8; // quantidade de usuários por página
+
   const navegar = useNavigate();
 
   useEffect(() => {
     carregarUsuarios();
   }, []);
 
-  const [desabilitar, setDesabilitar] = useState(false);
   useEffect(() => {
-    if(bloquearAcessoGerencia(false)){
+    if (bloquearAcessoGerencia(false)) {
       exibirAvisoAcessoNegado(navegar);
     }
   }, []);
@@ -42,8 +44,16 @@ function GerenciarUsuarios() {
       }
     })
       .then((res) => {
-        const lista = res.data.map(u => {
-          var documento = '';
+        const origem = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data?.content)
+            ? res.data.content
+            : Array.isArray(res.data?.data)
+              ? res.data.data
+              : [];
+
+        const lista = origem.map(u => {
+          let documento = '';
           if (u.cpf) {
             documento = formatarCPF(u.cpf);
           } else if (u.cnpj) {
@@ -75,7 +85,14 @@ function GerenciarUsuarios() {
       return nomeOk && emailOk && docOk;
     });
     setUsuariosFiltrados(lista);
+    setPaginaAtual(1); // volta pra primeira página ao filtrar
   };
+
+  // Paginação
+  const totalPaginas = Math.ceil(usuariosFiltrados.length / usuariosPorPagina);
+  const inicio = (paginaAtual - 1) * usuariosPorPagina;
+  const fim = inicio + usuariosPorPagina;
+  const usuariosPaginados = usuariosFiltrados.slice(inicio, fim);
 
   return (
     <section className='usuarios'>
@@ -126,8 +143,8 @@ function GerenciarUsuarios() {
             </tr>
           </thead>
           <tbody>
-            {usuariosFiltrados.length > 0 ? (
-              usuariosFiltrados.map((u) => (
+            {usuariosPaginados.length > 0 ? (
+              usuariosPaginados.map((u) => (
                 <tr key={u.id}>
                   <td>{u.nome}</td>
                   <td>{u.email}</td>
@@ -138,7 +155,7 @@ function GerenciarUsuarios() {
                       className="btn-editar"
                       to={`${ROUTERS.ALTERARCARGO.replace(":id", u.id)}`}
                       title="Editar usuário"
-                      state={{u}}
+                      state={{ u }}
                     >
                       <img src={lapisEditor} alt="Editar" />
                     </Link>
@@ -147,7 +164,7 @@ function GerenciarUsuarios() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" style={{ textAlign: "center" }}>
+                <td colSpan="5" style={{ textAlign: "center" }}>
                   Nenhum usuário encontrado
                 </td>
               </tr>
