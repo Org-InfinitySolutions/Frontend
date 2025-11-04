@@ -165,7 +165,7 @@ function Home() {
                 </section>
             )}
 
-            <section className="container-equipamentos" id='equipamentos'>
+            <section className="container-equipamentos-home" id='equipamentos'>
                 <h2>Equipamentos</h2>
                 <div className="conteudo-equipamentos">
                     <p>Disponibilizamos uma ampla variedade de projetores de imagem, com modelos que abrangem desde 5.000 até 30.000 lumens, 

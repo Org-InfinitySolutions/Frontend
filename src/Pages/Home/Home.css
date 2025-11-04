@@ -148,7 +148,7 @@
 
 
 
-  .container-equipamentos {
+  .container-equipamentos-home {
      display: flex;
      background-color: black;
      flex-direction: column;
@@ -267,7 +267,7 @@
          margin: 0;
      }
 
-     .container-equipamentos {
+     .container-equipamentos-home {
         .conteudo-equipamentos {
             padding-right: 0%;
             flex-direction: column;
