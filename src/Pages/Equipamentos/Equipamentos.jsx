@@ -55,6 +55,7 @@ const Equipamentos = () => {
       const nome = cat.nome?.trim() ?? id;
       return id || nome ? { id, nome } : null;
     }
+
     return null;
   };
 
@@ -151,18 +152,17 @@ const Equipamentos = () => {
   const produtosFiltrados = produtos.filter(p => {
     let cond = true;
 
-    if (filtroStatus) {
-      const produtoCatId = p.categoria?.id ?? '';
-      cond = produtoCatId === filtroStatus; // comparação simples, sem toLowerCase
+    if (filtroStatus && filtroStatus !== '') {
+      const produtoCatId = p.categoria?.id != null ? String(p.categoria.id) : '';
+      cond = String(produtoCatId) === String(filtroStatus);
     }
 
-    if (pesquisa) {
+    if (pesquisa && pesquisa.trim() !== '') {
       cond = cond && p.nome?.toLowerCase().includes(pesquisa.toLowerCase());
     }
 
     return cond;
   });
-
 
 
   const adicionarAoCarrinho = (produto) => {
