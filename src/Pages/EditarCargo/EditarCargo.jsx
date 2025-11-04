@@ -82,7 +82,7 @@ function EditarCargo(){
                         <span>{u.email || "Não encontrado"}</span>
                     </div>
                     <div className='campo'>
-                        <strong>CPF:</strong>
+                        <strong>{u.documento.length == "14" ? "CPF:" : "CNPJ:"}</strong>
                         <span>{u.documento || "Não encontrado"}</span>
                     </div>
                     <div className='campo'>
