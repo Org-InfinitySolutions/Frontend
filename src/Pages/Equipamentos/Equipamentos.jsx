@@ -71,7 +71,7 @@ const Equipamentos = () => {
 
     try {
       const response = await api.get(
-        `${ENDPOINTS.PRODUTOS}?page=${pagina - 1}&size=${produtosPorPagina}`,
+        `${ENDPOINTS.PRODUTOS}?offset=${pagina - 1}&limit=${produtosPorPagina}`,
         header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } } : {}
       );
 

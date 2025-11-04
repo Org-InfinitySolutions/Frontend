@@ -43,7 +43,7 @@ const Pedidos = () => {
     }
 
     try {
-      const response = await api.get(`${ENDPOINTS.PEDIDOS}?page=${pagina - 1}&size=${pedidosPorPagina}`, {
+      const response = await api.get(`${ENDPOINTS.PEDIDOS}?offset=${pagina - 1}&limit=${pedidosPorPagina}`, {
         headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
       });
 
