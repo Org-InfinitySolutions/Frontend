@@ -46,7 +46,7 @@ export function RecuperarSenha() {
             localStorage.setItem('emailRecuperacao', email);
             setEtapa(2);
         }).catch((err) => {
-            exibirAviso(error.response?.data?.mensagem || "Erro ao solicitar o código.", 'error');
+            exibirAviso(err.response?.data?.mensagem || "Erro ao solicitar o código.", 'error');
         })
     };
 
@@ -87,7 +87,8 @@ export function RecuperarSenha() {
             }, 2000)
         }).catch((err) => {
             setBarraCarregamento(100);
-            exibirAviso(error.response?.data?.mensagem || 'Falha ao redefinir senha.', 'error');
+            console.log(err);
+            exibirAviso(err.response?.data?.message || 'Falha ao redefinir senha.', 'error');
         })
     };
 
