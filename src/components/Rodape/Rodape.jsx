@@ -37,7 +37,7 @@ function Rodape() {
             }
 
   return (
-    <footer className={url == ROUTERS.CADASTRO ? 'hidden' : ''}>
+    <footer className={url == ROUTERS.CADASTRO || url == ROUTERS.LOGIN ? 'hidden' : ''}>
         <div className='barra-divisoria'></div>
         <div className='rodape'>
             <section className='container-informacoes-gerais'>
