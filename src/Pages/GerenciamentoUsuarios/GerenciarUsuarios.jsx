@@ -52,6 +52,8 @@ function GerenciarUsuarios() {
               ? res.data.data
               : [];
 
+        console.log(res.data)
+
         const lista = origem.map(u => {
           let documento = '';
           if (u.cpf) {
@@ -60,7 +62,7 @@ function GerenciarUsuarios() {
             documento = formatarCNPJ(u.cnpj);
           }
           return {
-            tipo: definirCargo(u.tipo),
+            tipo: definirCargo(u.cargo),
             id: u.id,
             nome: u.nome,
             email: u.email,

@@ -56,7 +56,7 @@ function BarraNavegacao(){
     }, [abrirMenu]);  
 
     return(
-      <main className={url == ROUTERS.CADASTRO ? "hidden" : ""}>
+      <main className={url == ROUTERS.CADASTRO || url == ROUTERS.LOGIN ? "hidden" : ""}>
         <nav>
         <section className="barra-navegacao">
           <section className="container-logo">

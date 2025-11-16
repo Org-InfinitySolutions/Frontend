@@ -257,7 +257,7 @@ function DefinirEndereco(){
                 </div>
             </section>
             <section className='box-informacoes'>
-                <div className='secao-entrada'>
+                <div className='secao-entrada-data'>
                     <Input 
                         id={'inp_dtEntrega'}
                         label="* DATA E HORA ENTREGA:" 
@@ -268,7 +268,7 @@ function DefinirEndereco(){
                         }))}}
                     />
                 </div>
-                <div className='secao-entrada'>
+                <div className='secao-entrada-data'>
                     <Input 
                         id={'inp_bairro'}
                         label="* DATA E HORA DEVOLUÇÃO:" 
