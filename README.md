@@ -20,9 +20,9 @@ nova-locacoes/
 
 ## 🛠️ Tecnologias Utilizadas
 
-- <b>Node</b> 22.20.0
-- <b>NPM</b> 10.9.3
-- <b>React</b> 19.0.0
+- <b>Node</b> versão 22.20.0 ou superior
+- <b>NPM</b> versão 10.9.3 ou superior
+- <b>React</b> versão 19.0.0 ou superior
 
 # 🚀 Executando o Projeto
 
@@ -62,7 +62,7 @@ VITE_ENDERECO_API=http://localhost:8080/api                # Acesso aos endpoint
 npm run build
 ```
 
-2. Será gerado uma pasta chamada ``dist`` com o codigo estático do projeto, coloque-a no caminho de configuração do serviço nginx.
+2. Será gerado uma pasta chamada ``dist`` com o codigo estático do projeto, coloque-o no caminho de configuração do serviço nginx.
 ```bash
 sudo cp -r ~/dist/* /var/www/html/
 ```
