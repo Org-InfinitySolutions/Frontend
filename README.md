@@ -51,8 +51,8 @@ npm run dev
 
 Na raiz do projeto crie um arquivo .env com a seguinte estrutura:
 ```.env
-VITE_ENDERECO_API_AUTH=http://localhost:8080/auth          # Acesso aos endpoints de autenticação
-VITE_ENDERECO_API=http://localhost:8080/api                # Acesso aos endpoints das funcionalidades gerais
+VITE_ENDERECO_API_AUTH=http://localhost:8080/auth    # Acesso aos endpoints de autenticação
+VITE_ENDERECO_API=http://localhost:8080/api          # Acesso aos endpoints das funcionalidades gerais
 ```
 
 ### 🌐 Ambiente de Produção
