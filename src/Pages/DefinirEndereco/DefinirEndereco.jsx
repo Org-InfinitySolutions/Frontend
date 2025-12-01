@@ -93,7 +93,10 @@ function DefinirEndereco(){
         const dataEntrega = new Date(dadosAdicionais.dataEntrega);
         const dataRetirada = new Date(dadosAdicionais.dataRetirada);
 
-        if(campoNaoAtendeTamanho(formatarCEP(endereco.cep), 9) || campoVazio(endereco.numero) || campoVazio(endereco.logradouro) || campoVazio(endereco.estado) || campoVazio(endereco.cidade) || campoVazio(endereco.bairro) || campoVazio(dadosAdicionais.tipo) || dataEntrega.toString() == 'Invalid Date' || dataRetirada.toString() == 'Invalid Date'){
+        if(campoNaoAtendeTamanho(formatarCEP(endereco.cep), 9) || campoVazio(endereco.numero) || campoVazio(endereco.logradouro) || 
+           campoVazio(endereco.estado) || campoVazio(endereco.cidade) || campoVazio(endereco.bairro) || campoVazio(dadosAdicionais.tipo) || 
+           ((dataEntrega.toString() == 'Invalid Date' || dataEntrega.toString() == '') || (dataRetirada.toString() == 'Invalid Date' || dataRetirada.toString() == ''))
+        ){
             setDesativarBotao(true);
         } else {
             setDesativarBotao(false);
