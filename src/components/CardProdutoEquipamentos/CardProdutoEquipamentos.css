@@ -57,15 +57,12 @@ height: 40px;
 }
 
 .botao-adicionar {
-  width: 300%;
   height: 50px;
   background-color: var(--color-preto);
   color: var(--color-branco);
   border: none;
-  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s ease;
-  display: flex;
   align-items: center;
 }
 
@@ -76,7 +73,6 @@ height: 40px;
 }
 
 .botao-carrinho {
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -89,8 +85,9 @@ height: 40px;
 }
 
 .botao-carrinho:hover {
-  background-color: var(--color-preto);
-  border: 2px solid var(--color-branco);
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  border: 2px solid var(--color-preto);
 }
 
 .icone-carrinho-miniatura {

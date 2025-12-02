@@ -279,16 +279,16 @@ const Equipamentos = () => {
 
   const produtosFiltrados = produtos;
 
-  const adicionarAoCarrinho = (produto) => {
+  const adicionarAoCarrinho = (produto, quantidade = 1) => {
     const carrinhoAtual = JSON.parse(sessionStorage.getItem('CARRINHO')) || { produtos: [] };
     const index = carrinhoAtual.produtos.findIndex(item => item.produtoId === produto.id);
 
     if (index !== -1) {
-      carrinhoAtual.produtos[index].quantidade++;
+      carrinhoAtual.produtos[index].quantidade += quantidade;
     } else {
       carrinhoAtual.produtos.push({
         produtoId: produto.id,
-        quantidade: 1,
+        quantidade: quantidade,
         imagem: produto.imagem,
         nome: produto.nome
       });
@@ -374,7 +374,7 @@ const Equipamentos = () => {
               <CardProdutoEquipamentos
                 key={index}
                 produto={produto}
-                adicionarNoCarrinho={() => adicionarAoCarrinho(produto)}
+                adicionarNoCarrinho={(quantidade) => adicionarAoCarrinho(produto, quantidade)}
                 abrirModal={() => abrirModal(produto)}
               />
             ))

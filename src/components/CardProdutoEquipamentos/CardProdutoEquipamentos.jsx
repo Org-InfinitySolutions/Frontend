@@ -2,10 +2,12 @@ import { IoCartSharp } from "react-icons/io5";
 import './CardProdutoEquipamentos.css'
 import { RiPencilFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa";
+import { BsThreeDots } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ROUTERS } from "../../routers/routers";
 import { retornarCargos, isAdmin, isFuncionario } from "../../utils/usuario";
+import { ModalQuantidade } from "../ModalQuantidade/ModalQuantidade";
 
 export function CardProdutoEquipamentos({ 
     produto,
@@ -15,6 +17,12 @@ export function CardProdutoEquipamentos({
 
     const navegar = useNavigate();
     const [cargo, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
+    const [mostrarModalQuantidade, setMostrarModalQuantidade] = useState(false);
+
+    const handleAdicionarComQuantidade = (quantidade) => {
+        adicionarNoCarrinho(quantidade);
+        setMostrarModalQuantidade(false);
+    };
 
     return(
         <section className="card-produto">
@@ -30,12 +38,21 @@ export function CardProdutoEquipamentos({
                         <button className="btn-editar" onClick={() => navegar(ROUTERS.GERENCIAREQUIPAMENTOID.replace(':id', produto.id))}><RiPencilFill size={20}/></button>
                     </div>
                 ) : (
-                    <div className="botoes-card">
-                        <button className="botao-adicionar" onClick={abrirModal}><FaPlus /></button>
-                        <button className="botao-carrinho" onClick={adicionarNoCarrinho}>
-                            <IoCartSharp className="icone-carrinho-miniatura" size={24} />
-                        </button>
-                    </div>
+                    <>
+                        <div className="botoes-card">
+                            <button className="botao-adicionar" onClick={abrirModal}><BsThreeDots /></button>
+                            <button className="botao-carrinho" onClick={() => setMostrarModalQuantidade(true)}>
+                                <FaPlus />
+                            </button>
+                        </div>
+                        {mostrarModalQuantidade && (
+                            <ModalQuantidade 
+                                produto={produto} 
+                                onConfirm={handleAdicionarComQuantidade}
+                                onClose={() => setMostrarModalQuantidade(false)}
+                            />
+                        )}
+                    </>
                 ) }
             </div>
         </section>
