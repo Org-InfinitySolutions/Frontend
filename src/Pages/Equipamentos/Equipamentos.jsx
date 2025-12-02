@@ -5,7 +5,7 @@ import { IoIosSearch, IoIosArrowDown } from "react-icons/io";
 import { IoCartOutline } from "react-icons/io5";
 import ImgNaoDisponivel from '/img-nao-disponivel.jpg';
 import LoadingBar from 'react-top-loading-bar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../../provider/apiInstance';
 import Paginacao from '../../components/Paginacao/Paginacao';
 import { CardProdutoEquipamentos } from '../../components/CardProdutoEquipamentos/CardProdutoEquipamentos'
@@ -19,16 +19,17 @@ import { retornarCargos, isAdmin, isFuncionario } from '../../utils/usuario';
 
 const Equipamentos = () => {
   const navegar = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [produtoSelecionado, setProdutoSelecionado] = useState(null);
-  const [filtroStatus, setFiltroStatus] = useState('');
+  const [filtroStatus, setFiltroStatus] = useState(searchParams.get('filtro') || '');
   const [filtroStatusAberto, setFiltroStatusAberto] = useState(false);
-  const [pesquisa, setPesquisa] = useState('');
+  const [pesquisa, setPesquisa] = useState(searchParams.get('pesquisa') || '');
   const [produtos, setProdutos] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [mostrarMaisProcurados, setMostrarMaisProcurados] = useState(false);
   const [barraCarregamento, setBarraCarregamento] = useState(0);
-  const [paginaAtual, setPaginaAtual] = useState(1);
+  const [paginaAtual, setPaginaAtual] = useState(Number(searchParams.get('pagina')) || 1);
   const [totalPaginas, setTotalPaginas] = useState(1);
   const [cargos, setCargo] = useState(retornarCargos(sessionStorage.CARGO));
   const [totalItens, setTotalItens] = useState(0);
@@ -142,17 +143,77 @@ const Equipamentos = () => {
     }
 
     try {
+      if (filtro || (pesquisaQuery && pesquisaQuery.trim() !== '')) {
+        const matches = [];
+        const maxPages = 20;
+
+        for (let page = 1; page <= maxPages; page++) {
+          try {
+            const offsetPage = page - 1;
+            const resp = await api.get(
+              `${ENDPOINTS.PRODUTOS}?offset=${offsetPage}&limit=${produtosPorPagina}`,
+              headerObj
+            );
+            const dataPage = resp.data;
+            const origemPage = Array.isArray(dataPage)
+              ? dataPage
+              : Array.isArray(dataPage?.content)
+                ? dataPage.content
+                : Array.isArray(dataPage?.data)
+                  ? dataPage.data
+                  : (dataPage?.items ?? []);
+
+            const produtosPage = origemPage.map(p => ({
+              ...p,
+              nome: p.modelo ?? p.nome ?? "",
+              imagem:
+                Array.isArray(p.imagem) &&
+                  typeof p.imagem[0] === "string" &&
+                  p.imagem[0].trim() !== ""
+                  ? p.imagem[0]
+                  : ImgNaoDisponivel,
+              linkFabricante: p.url_fabricante,
+              categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId)
+            }));
+
+            produtosPage.forEach(p => {
+              let ok = true;
+              if (filtro) ok = ok && String(p.categoria?.id) === String(filtro);
+              if (pesquisaQuery && pesquisaQuery.trim() !== '') {
+                const termo = pesquisaQuery.trim().toLowerCase();
+                ok = ok && (p.nome ?? '').toLowerCase().includes(termo);
+              }
+              if (ok) matches.push(p);
+            });
+
+            if (origemPage.length < produtosPorPagina) break;
+          } catch (errPage) {
+            console.warn('Erro ao buscar página:', errPage);
+            break;
+          }
+        }
+
+        const totalFiltrado = matches.length;
+        const totalPaginasFiltrado = Math.max(1, Math.ceil(totalFiltrado / produtosPorPagina));
+        const paginaValida = pagina > totalPaginasFiltrado ? 1 : pagina;
+
+        const inicio = (paginaValida - 1) * produtosPorPagina;
+        const paginaAtualProdutos = matches.slice(inicio, inicio + produtosPorPagina);
+
+        setProdutos(paginaAtualProdutos);
+        setTotalItens(totalFiltrado);
+        setTotalPaginas(totalPaginasFiltrado);
+
+        if (pagina !== paginaValida) {
+          setPaginaAtual(paginaValida);
+        }
+
+        setBarraCarregamento(100);
+        return;
+      }
+
       const offset = pagina - 1;
-      let url = `${ENDPOINTS.PRODUTOS}?offset=${offset}&limit=${produtosPorPagina}`;
-
-      if (filtro) {
-        url += `&categoria=${encodeURIComponent(filtro)}&categoriaId=${encodeURIComponent(filtro)}`;
-      }
-
-      if (pesquisaQuery && pesquisaQuery.trim() !== '') {
-        const q = encodeURIComponent(pesquisaQuery.trim());
-        url += `&q=${q}&search=${q}`;
-      }
+      const url = `${ENDPOINTS.PRODUTOS}?offset=${offset}&limit=${produtosPorPagina}`;
 
       const response = await api.get(url, headerObj);
       const data = response.data;
@@ -178,91 +239,21 @@ const Equipamentos = () => {
         categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId)
       }));
 
-      let backendAplicouFiltro = true;
-      if (filtro) {
-        backendAplicouFiltro = produtosApi.some(p => String(p.categoria?.id) === String(filtro));
-      }
-      if (pesquisaQuery && pesquisaQuery.trim() !== '') {
-        const termo = pesquisaQuery.trim().toLowerCase();
-        backendAplicouFiltro = backendAplicouFiltro && produtosApi.some(p => (p.nome ?? '').toLowerCase().includes(termo));
-      }
+      setProdutos(produtosApi);
 
-      if ((!filtro && !(pesquisaQuery && pesquisaQuery.trim() !== '')) || backendAplicouFiltro) {
-        setProdutos(produtosApi);
+      const totalItemsFromApi =
+        Number(data.totalElements ?? data.totalItems ?? data.total ?? data?.meta?.total) ||
+        produtosApi.length ||
+        0;
 
-        const totalItemsFromApi =
-          Number(data.totalElements ?? data.totalItems ?? data.total ?? data?.meta?.total) ||
-          produtosApi.length ||
-          0;
+      setTotalItens(Number.isFinite(totalItemsFromApi) ? totalItemsFromApi : 0);
 
-        setTotalItens(Number.isFinite(totalItemsFromApi) ? totalItemsFromApi : 0);
+      const computedTotalPages =
+        Number(data.totalPages ?? Math.max(1, Math.ceil(totalItemsFromApi / produtosPorPagina))) || 1;
 
-        const computedTotalPages =
-          Number(data.totalPages ?? Math.max(1, Math.ceil(totalItemsFromApi / produtosPorPagina))) || 1;
-
-        setTotalPaginas(Number.isFinite(computedTotalPages) && computedTotalPages > 0 ? computedTotalPages : 1);
-        setBarraCarregamento(100);
-        return;
-      }
-
-      const matches = [];
-      const maxPagesFallback = 8;
-      for (let page = 1; page <= maxPagesFallback; page++) {
-        try {
-          const offsetPage = page - 1;
-          const resp = await api.get(`${ENDPOINTS.PRODUTOS}?offset=${offsetPage}&limit=${produtosPorPagina}`, headerObj);
-          const dataPage = resp.data;
-          const origemPage = Array.isArray(dataPage)
-            ? dataPage
-            : Array.isArray(dataPage?.content)
-              ? dataPage.content
-              : Array.isArray(dataPage?.data)
-                ? dataPage.data
-                : (dataPage?.items ?? []);
-
-          const produtosPage = origemPage.map(p => ({
-            ...p,
-            nome: p.modelo ?? p.nome ?? "",
-            imagem:
-              Array.isArray(p.imagem) &&
-                typeof p.imagem[0] === "string" &&
-                p.imagem[0].trim() !== ""
-                ? p.imagem[0]
-                : ImgNaoDisponivel,
-            linkFabricante: p.url_fabricante,
-            categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId)
-          }));
-
-          produtosPage.forEach(p => {
-            let ok = true;
-            if (filtro) ok = ok && String(p.categoria?.id) === String(filtro);
-            if (pesquisaQuery && pesquisaQuery.trim() !== '') ok = ok && (p.nome ?? '').toLowerCase().includes(pesquisaQuery.trim().toLowerCase());
-            if (ok) matches.push(p);
-          });
-
-          if (origemPage.length < produtosPorPagina) break;
-          if (matches.length >= produtosPorPagina * 3) break;
-        } catch (errPage) {
-          console.warn('fallback scan page error', errPage);
-        }
-      }
-
-      const totalFallback = matches.length;
-      const totalPaginasFallback = Math.max(1, Math.ceil(totalFallback / produtosPorPagina));
-            
-      const inicioFallback = (paginaValidaFallback - 1) * produtosPorPagina;
-      const paginaAtualFallback = matches.slice(inicioFallback, inicioFallback + produtosPorPagina);
-
-      setProdutos(paginaAtualFallback);
-      setTotalItens(Number.isFinite(totalFallback) ? totalFallback : 0);
-      setTotalPaginas(totalPaginasFallback);
-
-      if (pagina !== paginaValidaFallback) {
-        setPaginaAtual(paginaValidaFallback);
-      }
+      setTotalPaginas(Number.isFinite(computedTotalPages) && computedTotalPages > 0 ? computedTotalPages : 1);
 
       setBarraCarregamento(100);
-      return;
     } catch (err) {
       console.error("Erro ao carregar produtos:", err);
       setBarraCarregamento(100);
@@ -276,6 +267,15 @@ const Equipamentos = () => {
   useEffect(() => {
     carregarProdutos(paginaAtual, filtroStatus, pesquisa);
   }, [paginaAtual, filtroStatus, pesquisa]);
+
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (paginaAtual > 1) params.set('pagina', paginaAtual);
+    if (filtroStatus) params.set('filtro', filtroStatus);
+    if (pesquisa) params.set('pesquisa', pesquisa);
+
+    setSearchParams(params);
+  }, [paginaAtual, filtroStatus, pesquisa, setSearchParams]);
 
   const produtosFiltrados = produtos;
 
@@ -299,13 +299,13 @@ const Equipamentos = () => {
   };
 
   const handleFiltroChange = (e) => {
-    setPaginaAtual(1);
     setFiltroStatus(e.target.value);
+    setPaginaAtual(1);
   };
 
   const handlePesquisaChange = (e) => {
-    setPaginaAtual(1);
     setPesquisa(e.target.value);
+    setPaginaAtual(1);
   };
 
   return (
