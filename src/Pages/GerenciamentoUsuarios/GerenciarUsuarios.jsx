@@ -9,6 +9,7 @@ import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
 import { ROUTERS } from '../../routers/routers';
 import { definirCargo } from '../../utils/usuario';
+import Paginacao from '../../components/Paginacao/Paginacao';
 
 const normalizarTexto = (texto) => {
   return texto
@@ -174,6 +175,14 @@ function GerenciarUsuarios() {
           </tbody>
         </table>
       </section>
+
+      <Paginacao
+        paginaAtual={paginaAtual}
+        totalPaginas={totalPaginas}
+        totalItens={usuariosFiltrados.length}
+        itensPorPagina={usuariosPorPagina}
+        onChange={setPaginaAtual}
+      />
     </section>
   );
 }

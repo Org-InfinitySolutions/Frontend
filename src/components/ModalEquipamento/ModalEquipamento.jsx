@@ -7,7 +7,6 @@ const ModalEquipamento = ({ produto, onClose }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-container">
-        <button className="fechar-modal" onClick={onClose}>X</button>
         <div className="modal-conteudo">
           <img src={produto.imagem} alt={produto.nome} className="modal-imagem" />
           <div className="modal-info">
@@ -19,6 +18,7 @@ const ModalEquipamento = ({ produto, onClose }) => {
               <a href={produto.linkFabricante} target="_blank" rel="noreferrer">fabricante</a>.
             </small>
           </div>
+          <button className="fechar-modal" onClick={onClose}>x</button>
         </div>
       </div>
     </div>
