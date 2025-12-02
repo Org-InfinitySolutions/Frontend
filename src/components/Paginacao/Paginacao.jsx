@@ -13,7 +13,7 @@ const Paginacao = ({
 
   const paginas = [1];
   for (let i = paginaAtual - 2; i <= paginaAtual + 2; i++) {
-    if (i > 1 && i < totalPaginas) paginas.push(i);
+    if (i > 1 && i <= totalPaginas) paginas.push(i);
   }
   if (totalPaginas > 1) paginas.push(totalPaginas);
 

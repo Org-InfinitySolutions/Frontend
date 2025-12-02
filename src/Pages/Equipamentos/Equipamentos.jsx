@@ -40,28 +40,100 @@ const Equipamentos = () => {
 
   const normalizeCategoriaRaw = (cat) => {
     if (!cat) return null;
-
-    if (typeof cat === 'string') {
+    if (typeof cat === "string") {
       const v = cat.trim();
       return v ? { id: v, nome: v } : null;
     }
+    if (typeof cat === "number") return { id: String(cat), nome: String(cat) };
 
-    if (typeof cat === 'number') {
-      return { id: String(cat), nome: String(cat) };
-    }
-
-    if (typeof cat === 'object') {
-      const id = cat.id != null ? String(cat.id).trim() : '';
-      const nome = cat.nome?.trim() ?? id;
+    if (typeof cat === "object") {
+      const id = String(cat.id ?? "").trim();
+      const nome = (typeof cat.nome === 'string' ? cat.nome.trim() : '') || id;
       return id || nome ? { id, nome } : null;
     }
 
     return null;
   };
 
+  const buildHeaderObj = () => {
+    const needAuth = isAdmin(cargos) || isFuncionario(cargos);
+    return needAuth && sessionStorage.TOKEN
+      ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } }
+      : {};
+  };
 
-  const carregarProdutos = async (pagina = 1) => {
-    const header = isAdmin(cargos) || isFuncionario(cargos);
+  const carregarCategorias = async () => {
+    const headerObj = buildHeaderObj();
+    try {
+      if (!ENDPOINTS.CATEGORIAS) throw new Error('ENDPOINTS.CATEGORIAS não configurado');
+
+      const resCat = await api.get(ENDPOINTS.CATEGORIAS, headerObj);
+      const dataCat = resCat.data;
+      const origemCat = Array.isArray(dataCat)
+        ? dataCat
+        : Array.isArray(dataCat?.content)
+          ? dataCat.content
+          : Array.isArray(dataCat?.data)
+            ? dataCat.data
+            : (dataCat?.items ?? []);
+
+      const categoriasFormatadas = origemCat.map(c => {
+        const norm = normalizeCategoriaRaw(c);
+        return norm ? { id: norm.id, nome: norm.nome } : null;
+      }).filter(Boolean);
+
+      if (categoriasFormatadas.length) {
+        setCategorias(categoriasFormatadas);
+        return;
+      }
+
+      throw new Error('Categorias vazias — fallback');
+    } catch (err) {
+      console.warn("carregarCategorias: fallback ativado", err);
+      try {
+        const categoriasMap = new Map();
+        const maxPagesToScan = 6;
+        const fallbackPageSize = 50;
+
+        for (let page = 1; page <= maxPagesToScan; page++) {
+          try {
+            const offset = page - 1;
+            const resp = await api.get(
+              `${ENDPOINTS.PRODUTOS}?offset=${offset}&limit=${fallbackPageSize}`,
+              headerObj
+            );
+
+            const data = resp.data;
+            const origemProdutos = Array.isArray(data)
+              ? data
+              : Array.isArray(data?.content)
+                ? data.content
+                : Array.isArray(data?.data)
+                  ? data.data
+                  : (data?.items ?? []);
+
+            origemProdutos.forEach(p => {
+              const cat = normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId);
+              if (cat && cat.id) categoriasMap.set(String(cat.id), cat);
+            });
+
+            if (origemProdutos.length < fallbackPageSize) break;
+          } catch (innerErr) {
+            console.warn("carregarCategorias fallback — erro ao buscar página:", innerErr);
+          }
+        }
+
+        const categoriasFallback = Array.from(categoriasMap.values());
+        setCategorias(categoriasFallback);
+      } catch (fatal) {
+        console.error("carregarCategorias fallback falhou:", fatal);
+        setCategorias([]);
+      }
+    }
+  };
+
+  const carregarProdutos = async (pagina = 1, filtro = '', pesquisaQuery = '') => {
+    const headerObj = buildHeaderObj();
     setBarraCarregamento(30);
 
     if (tokenExpirou()) {
@@ -70,75 +142,127 @@ const Equipamentos = () => {
     }
 
     try {
-      const response = await api.get(
-        `${ENDPOINTS.PRODUTOS}?offset=${pagina - 1}&limit=${produtosPorPagina}`,
-        header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } } : {}
-      );
+      const offset = pagina - 1;
+      let url = `${ENDPOINTS.PRODUTOS}?offset=${offset}&limit=${produtosPorPagina}`;
 
-      setBarraCarregamento(100);
+      if (filtro) {
+        url += `&categoria=${encodeURIComponent(filtro)}&categoriaId=${encodeURIComponent(filtro)}`;
+      }
 
+      if (pesquisaQuery && pesquisaQuery.trim() !== '') {
+        const q = encodeURIComponent(pesquisaQuery.trim());
+        url += `&q=${q}&search=${q}`;
+      }
+
+      const response = await api.get(url, headerObj);
       const data = response.data;
-      const origemProdutos = Array.isArray(data) ? data : Array.isArray(data?.content) ? data.content : Array.isArray(data?.data) ? data.data : (data?.items ?? []);
+
+      const origemProdutos = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.content)
+          ? data.content
+          : Array.isArray(data?.data)
+            ? data.data
+            : (data?.items ?? []);
+
       const produtosApi = origemProdutos.map(p => ({
         ...p,
-        nome: p.modelo ?? p.nome ?? '',
-        imagem: (Array.isArray(p.imagem) && typeof p.imagem[0] === 'string' && p.imagem[0].trim() !== '')
-          ? p.imagem[0]
-          : ImgNaoDisponivel,
+        nome: p.modelo ?? p.nome ?? "",
+        imagem:
+          Array.isArray(p.imagem) &&
+            typeof p.imagem[0] === "string" &&
+            p.imagem[0].trim() !== ""
+            ? p.imagem[0]
+            : ImgNaoDisponivel,
         linkFabricante: p.url_fabricante,
-        categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId ?? p.categoriaId)
+        categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId)
       }));
 
-      setProdutos(produtosApi);
-
-      const totalItemsFromApi = data.totalElements ?? data.totalItems ?? data.total ?? data?.meta?.total ?? produtosApi.length;
-      setTotalItens(totalItemsFromApi ?? produtosApi.length ?? 0);
-      const computedTotalPages = (data.totalPages !== undefined && data.totalPages !== null)
-        ? Number(data.totalPages)
-        : Math.max(1, Math.ceil((totalItemsFromApi ?? produtosApi.length) / produtosPorPagina));
-      setTotalPaginas(Number.isNaN(computedTotalPages) ? 1 : computedTotalPages);
-
-      let categoriasUnicas = [];
-      if (ENDPOINTS.CATEGORIAS) {
-        try {
-          const resCat = await api.get(
-            ENDPOINTS.CATEGORIAS,
-            header ? { headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` } } : {}
-          );
-          const dataCat = resCat.data;
-          const origemCat = Array.isArray(dataCat)
-            ? dataCat
-            : Array.isArray(dataCat?.content)
-              ? dataCat.content
-              : Array.isArray(dataCat?.data)
-                ? dataCat.data
-                : (dataCat?.items ?? []);
-          categoriasUnicas = origemCat.map(c => {
-            const norm = normalizeCategoriaRaw(c);
-            return norm ? { id: String(norm.id), nome: norm.nome } : null;
-          }).filter(Boolean);
-        } catch (e) {
-          categoriasUnicas = [];
-          produtosApi.forEach(p => {
-            const cat = p.categoria;
-            if (!cat) return;
-            if (!categoriasUnicas.some(c => c.id === cat.id)) {
-              categoriasUnicas.push({ id: cat.id, nome: cat.nome });
-            }
-          });
-        }
-      } else {
-        categoriasUnicas = [];
-        produtosApi.forEach(p => {
-          const cat = p.categoria;
-          if (!cat) return;
-          if (!categoriasUnicas.some(c => c.id === cat.id)) {
-            categoriasUnicas.push({ id: cat.id, nome: cat.nome });
-          }
-        });
+      let backendAplicouFiltro = true;
+      if (filtro) {
+        backendAplicouFiltro = produtosApi.some(p => String(p.categoria?.id) === String(filtro));
       }
-      setCategorias(categoriasUnicas);
+      if (pesquisaQuery && pesquisaQuery.trim() !== '') {
+        const termo = pesquisaQuery.trim().toLowerCase();
+        backendAplicouFiltro = backendAplicouFiltro && produtosApi.some(p => (p.nome ?? '').toLowerCase().includes(termo));
+      }
 
+      if ((!filtro && !(pesquisaQuery && pesquisaQuery.trim() !== '')) || backendAplicouFiltro) {
+        setProdutos(produtosApi);
+
+        const totalItemsFromApi =
+          Number(data.totalElements ?? data.totalItems ?? data.total ?? data?.meta?.total) ||
+          produtosApi.length ||
+          0;
+
+        setTotalItens(Number.isFinite(totalItemsFromApi) ? totalItemsFromApi : 0);
+
+        const computedTotalPages =
+          Number(data.totalPages ?? Math.max(1, Math.ceil(totalItemsFromApi / produtosPorPagina))) || 1;
+
+        setTotalPaginas(Number.isFinite(computedTotalPages) && computedTotalPages > 0 ? computedTotalPages : 1);
+        setBarraCarregamento(100);
+        return;
+      }
+
+      const matches = [];
+      const maxPagesFallback = 8;
+      for (let page = 1; page <= maxPagesFallback; page++) {
+        try {
+          const offsetPage = page - 1;
+          const resp = await api.get(`${ENDPOINTS.PRODUTOS}?offset=${offsetPage}&limit=${produtosPorPagina}`, headerObj);
+          const dataPage = resp.data;
+          const origemPage = Array.isArray(dataPage)
+            ? dataPage
+            : Array.isArray(dataPage?.content)
+              ? dataPage.content
+              : Array.isArray(dataPage?.data)
+                ? dataPage.data
+                : (dataPage?.items ?? []);
+
+          const produtosPage = origemPage.map(p => ({
+            ...p,
+            nome: p.modelo ?? p.nome ?? "",
+            imagem:
+              Array.isArray(p.imagem) &&
+                typeof p.imagem[0] === "string" &&
+                p.imagem[0].trim() !== ""
+                ? p.imagem[0]
+                : ImgNaoDisponivel,
+            linkFabricante: p.url_fabricante,
+            categoria: normalizeCategoriaRaw(p.categoria ?? p.categoria_id ?? p.categoriaId)
+          }));
+
+          produtosPage.forEach(p => {
+            let ok = true;
+            if (filtro) ok = ok && String(p.categoria?.id) === String(filtro);
+            if (pesquisaQuery && pesquisaQuery.trim() !== '') ok = ok && (p.nome ?? '').toLowerCase().includes(pesquisaQuery.trim().toLowerCase());
+            if (ok) matches.push(p);
+          });
+
+          if (origemPage.length < produtosPorPagina) break;
+          if (matches.length >= produtosPorPagina * 3) break;
+        } catch (errPage) {
+          console.warn('fallback scan page error', errPage);
+        }
+      }
+
+      const totalFallback = matches.length;
+      const totalPaginasFallback = Math.max(1, Math.ceil(totalFallback / produtosPorPagina));
+            
+      const inicioFallback = (paginaValidaFallback - 1) * produtosPorPagina;
+      const paginaAtualFallback = matches.slice(inicioFallback, inicioFallback + produtosPorPagina);
+
+      setProdutos(paginaAtualFallback);
+      setTotalItens(Number.isFinite(totalFallback) ? totalFallback : 0);
+      setTotalPaginas(totalPaginasFallback);
+
+      if (pagina !== paginaValidaFallback) {
+        setPaginaAtual(paginaValidaFallback);
+      }
+
+      setBarraCarregamento(100);
+      return;
     } catch (err) {
       console.error("Erro ao carregar produtos:", err);
       setBarraCarregamento(100);
@@ -146,30 +270,21 @@ const Equipamentos = () => {
   };
 
   useEffect(() => {
-    carregarProdutos(paginaAtual);
-  }, [paginaAtual]);
+    carregarCategorias();
+  }, []);
 
-  const produtosFiltrados = produtos.filter(p => {
-    let cond = true;
+  useEffect(() => {
+    carregarProdutos(paginaAtual, filtroStatus, pesquisa);
+  }, [paginaAtual, filtroStatus, pesquisa]);
 
-    if (filtroStatus && filtroStatus !== '') {
-      const produtoCatId = p.categoria?.id != null ? String(p.categoria.id) : '';
-      cond = String(produtoCatId) === String(filtroStatus);
-    }
-
-    if (pesquisa && pesquisa.trim() !== '') {
-      cond = cond && p.nome?.toLowerCase().includes(pesquisa.toLowerCase());
-    }
-
-    return cond;
-  });
-
+  const produtosFiltrados = produtos;
 
   const adicionarAoCarrinho = (produto) => {
     const carrinhoAtual = JSON.parse(sessionStorage.getItem('CARRINHO')) || { produtos: [] };
     const index = carrinhoAtual.produtos.findIndex(item => item.produtoId === produto.id);
+
     if (index !== -1) {
-      carrinhoAtual.produtos[index].quantidade += 1;
+      carrinhoAtual.produtos[index].quantidade++;
     } else {
       carrinhoAtual.produtos.push({
         produtoId: produto.id,
@@ -178,8 +293,19 @@ const Equipamentos = () => {
         nome: produto.nome
       });
     }
+
     sessionStorage.setItem('CARRINHO', JSON.stringify(carrinhoAtual));
-    toast(<> <FaCartShopping /> &nbsp; Produto adicionado no carrinho! </>);
+    toast(<><FaCartShopping /> &nbsp; Produto adicionado no carrinho!</>);
+  };
+
+  const handleFiltroChange = (e) => {
+    setPaginaAtual(1);
+    setFiltroStatus(e.target.value);
+  };
+
+  const handlePesquisaChange = (e) => {
+    setPaginaAtual(1);
+    setPesquisa(e.target.value);
   };
 
   return (
@@ -194,14 +320,15 @@ const Equipamentos = () => {
                   className="input-pesquisa"
                   placeholder="Pesquisar equipamento"
                   value={pesquisa}
-                  onChange={e => setPesquisa(e.target.value)}
+                  onChange={handlePesquisaChange}
                 />
                 <span className="icone-pesquisa"><IoIosSearch size={18} /></span>
               </div>
+
               {!isAdmin(cargos) && !isFuncionario(cargos) && (
                 <div className="linha-botoes-carrinho">
                   <div className="icone-carrinho">
-                    <IoCartOutline size={40} onClick={() => { navegar(`${ROUTERS.CARRINHO}`) }} />
+                    <IoCartOutline size={40} onClick={() => navegar(`${ROUTERS.CARRINHO}`)} />
                   </div>
                 </div>
               )}
@@ -212,12 +339,12 @@ const Equipamentos = () => {
                 <select
                   className="select-filtro"
                   value={filtroStatus}
-                  onChange={(e) => setFiltroStatus(e.target.value)}
+                  onChange={handleFiltroChange}
                   onFocus={() => setFiltroStatusAberto(true)}
                   onBlur={() => setFiltroStatusAberto(false)}
                 >
                   <option value="">Categorias</option>
-                  {(Array.isArray(categorias) ? categorias : []).map(cat => (
+                  {Array.isArray(categorias) && categorias.map(cat => (
                     <option key={cat.id} value={cat.id}>{cat.nome}</option>
                   ))}
                 </select>
@@ -247,8 +374,8 @@ const Equipamentos = () => {
               <CardProdutoEquipamentos
                 key={index}
                 produto={produto}
-                adicionarNoCarrinho={() => { adicionarAoCarrinho(produto) }}
-                abrirModal={() => { abrirModal(produto) }}
+                adicionarNoCarrinho={() => adicionarAoCarrinho(produto)}
+                abrirModal={() => abrirModal(produto)}
               />
             ))
           )}
