@@ -109,7 +109,7 @@ export function RecuperarSenha() {
                     </p>
 
                     <section className="entrada-recuperar-senha">
-                        <label htmlFor="email">* E-mail:</label>
+                        <label htmlFor="email"></label>
                         <Input
                             id="email"
                             type="email"

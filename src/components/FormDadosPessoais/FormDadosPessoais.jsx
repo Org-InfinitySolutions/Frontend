@@ -78,7 +78,7 @@ function FormDadosPessoais({
                         <Input
                             id='nome'
                             name='nome'
-                            label='* Nome Completo:'
+                            label='*Nome Completo'
                             tipo='text'
                             placeholder='Nome Completo'
                             valor={dadosCpf.dadosBase.nome}
@@ -98,7 +98,7 @@ function FormDadosPessoais({
                         <Input
                             id='cpf'
                             name='cpf'
-                            label='* CPF:'
+                            label='*CPF'
                             tipo='text'
                             placeholder='Ex.: 999.999.999-99'
                             valor={dadosCpf.cpf}
@@ -116,7 +116,7 @@ function FormDadosPessoais({
                         <Input
                             id='rg'
                             name='rg'
-                            label='* RG:'
+                            label='*RG'
                             tipo='text'
                             placeholder='Ex.: 99.999.999-9'
                             valor={dadosCpf.rg}
@@ -134,7 +134,7 @@ function FormDadosPessoais({
                         <Input
                             id='celular'
                             name='celular'
-                            label='* Celular:'
+                            label='*Celular'
                             tipo='text'
                             placeholder='Ex.: (99) 99999-9999'
                             valor={dadosCpf.dadosBase.celular}
@@ -158,7 +158,7 @@ function FormDadosPessoais({
                         <Input
                             id='nome-fantasia'
                             name='nome-fantasia'
-                            label='* Nome Fantasia:'
+                            label='*Nome Fantasia'
                             tipo='text'
                             placeholder='Nome Fantasia'
                             valor={dadosCnpj.dadosBase.nome}
@@ -178,7 +178,7 @@ function FormDadosPessoais({
                         <Input
                             id='razao-social'
                             name='razao-social'
-                            label='* Razão Social:'
+                            label='*Razão Social'
                             tipo='text'
                             placeholder='Razão Social'
                             valor={dadosCnpj.razaoSocial}
@@ -195,7 +195,7 @@ function FormDadosPessoais({
                         <Input
                             id='cnpj'
                             name='cnpj'
-                            label='* CNPJ:'
+                            label='*CNPJ'
                             tipo='text'
                             placeholder='Ex.: 99.999.999/9999-99'
                             valor={dadosCnpj.cnpj}
@@ -213,7 +213,7 @@ function FormDadosPessoais({
                         <Input
                             id='celular'
                             name='celular'
-                            label='* Celular:'
+                            label='*Celular'
                             tipo='text'
                             placeholder='Ex.: (99) 99999-9999'
                             valor={dadosCnpj.dadosBase.celular}
@@ -234,7 +234,7 @@ function FormDadosPessoais({
                         <Input
                             id='telefone'
                             name='telefone'
-                            label='* Telefone:'
+                            label='*Telefone'
                             tipo='text'
                             placeholder='Ex.: (99) 9999-9999'
                             valor={dadosCnpj.telefone}
