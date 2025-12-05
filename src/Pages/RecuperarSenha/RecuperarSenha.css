@@ -1,5 +1,5 @@
 .container-recuperar-senha {
-    height: 70vh;
+    height: 100vh;
     width: 100%;
     background-color: #171717;
 
@@ -12,7 +12,7 @@
     width: 25%;
     padding: 2rem;
     background-color: white;
-    border-radius: 6px;
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -49,7 +49,7 @@ h1 {
 }
 
 .entrada-recuperar-senha {
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -67,6 +67,8 @@ h1 {
 
 .botao-voltar-recuperar,
 .botao-enviar-recuperar {
+    height: 2.375rem;
+    width: 6.375rem;
     padding: 0.45rem 1.2rem;
     font-size: 0.9rem;
     border-radius: 6px;

@@ -88,10 +88,10 @@ function Login(){
             <h1>LOGIN</h1>
             <div className='barra-divisoria-login'></div>
             <section className='caixa-entrada'>
-                <Input label='E-MAIL:' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
+                <Input label='E-mail' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
             </section>
             <section className='caixa-entrada'>
-                <Input label='SENHA:' tipo='password' placeholder='Senha' onChange={(e) => setSenha(e.target.value)}/>
+                <Input label='Senha' tipo='password' placeholder='Senha' onChange={(e) => setSenha(e.target.value)}/>
             </section>
             <button onClick={Login}>Entrar</button>
             <section className='links-navegacao'>
