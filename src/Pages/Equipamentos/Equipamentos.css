@@ -46,11 +46,11 @@ body {
   flex-wrap: wrap;
 }
 
-.barra-pesquisa-container{
+.barra-pesquisa-container {
   gap: 1em;
 }
 
-.campo-pesquisar{
+.campo-pesquisar {
   position: relative;
   display: flex;
 }
@@ -72,7 +72,7 @@ body {
   pointer-events: none;
 }
 
-.icone-carrinho  {
+.icone-carrinho {
   border: none;
   font-size: 3rem;
   cursor: pointer;
@@ -147,17 +147,16 @@ body {
 
 .grid-produtos {
   display: grid;
-  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  grid-template-columns: repeat(5, minmax(180px, 1fr));
   gap: 1.5rem 1.2rem;
   margin-top: 1.5rem;
   justify-items: center;
 }
 
-.grid-produtos > * {
+.grid-produtos>* {
   max-width: 200px;
   width: 100%;
 }
-
 
 .nenhum-pedido {
   text-align: center;
@@ -196,7 +195,7 @@ body {
 
   .linha-botoes-carrinho {
     flex-direction: column;
-    align-items: stretch; 
+    align-items: stretch;
     gap: var(--gap-pequeno);
     align-items: center;
   }
@@ -213,14 +212,14 @@ body {
     background-size: 18px;
   }
 
-  .barra-pesquisa-container{
+  .barra-pesquisa-container {
     gap: 1em;
     width: 100%;
     display: flex;
     justify-content: space-between;
   }
 
-  .campo-pesquisar{
+  .campo-pesquisar {
     width: 80%;
     display: flex;
     position: relative;
@@ -233,7 +232,7 @@ body {
     padding-right: 2rem;
   }
 
-  .icone-pesquisa{
+  .icone-pesquisa {
     position: absolute;
     right: 1em;
     top: 0.5em;

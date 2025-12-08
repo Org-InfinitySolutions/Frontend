@@ -6,7 +6,9 @@ export function ModalQuantidade({ produto, onConfirm, onClose }) {
   const [quantidade, setQuantidade] = useState(1);
 
   const aumentarQuantidade = () => {
-    setQuantidade(quantidade + 1);
+    if (quantidade < 999) {
+      setQuantidade(quantidade + 1);
+    }
   };
 
   const diminuirQuantidade = () => {
@@ -16,7 +18,10 @@ export function ModalQuantidade({ produto, onConfirm, onClose }) {
   };
 
   const handleInputChange = (e) => {
-    const valor = parseInt(e.target.value) || 1;
+    let valor = parseInt(e.target.value) || 1;
+    if (valor > 999) {
+      valor = 999;
+    }
     if (valor > 0) {
       setQuantidade(valor);
     }
