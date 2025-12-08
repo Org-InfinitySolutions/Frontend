@@ -11,6 +11,8 @@ import { ENDPOINTS } from '../../routers/endpoints';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../provider/apiInstance';
 import LoadingBar from 'react-top-loading-bar';
+import LOGO from '../../assets/nova-logo.png';
+
 
 function Cadastro(){
 
@@ -47,7 +49,6 @@ function Cadastro(){
     const [esconderBtnCpf, setEsconderBtnCpf] = useState(false)
     const [esconderBtnCnpj, setEsconderBtnCnpj] = useState(false)
 
-    // UseEffects
     useEffect(() => {
         if(etapa > 1 && tipoUsuario != 'fisica'){
             setEsconderBtnCpf(true);
@@ -62,7 +63,6 @@ function Cadastro(){
         }
     }, [etapa])
 
-    // Métodos
     const avancarEtapa = async (executarMetodo) => {
         if(etapa < 4){
             if(executarMetodo != null){
@@ -157,11 +157,13 @@ function Cadastro(){
 
     return(
         <main className='Cadastro'>
-            <LoadingBar
-                progress={barraCarregamento}
-                height={3}
-                color="#f11946"
-            />
+        
+            {etapa < 4 && (
+                <section className='container-logo-cadastro'>
+                    <img src={LOGO} alt="Logo da Nova locações" />
+                </section>
+            )}
+
             {etapa < 4 ? (
                 <form className='formulario' onSubmit={(e) => e.preventDefault()}>
                     <section className='box-titulo'>
