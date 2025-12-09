@@ -107,6 +107,10 @@
     margin-bottom: 1rem;
   }
 
+  .modal-imagem {
+    display: none;
+  }
+
   .fechar-modal {
     top: 6px;
     right: 10px;
