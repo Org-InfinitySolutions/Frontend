@@ -201,9 +201,14 @@ body {
   }
 
   .grid-produtos {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap-medio);
+    grid-template-columns: repeat(2, minmax(140px, 1fr));
+    gap: 1.5rem;
     margin-top: 1rem;
+  }
+
+  .grid-produtos > * {
+    max-width: 95%;
+    width: 100%;
   }
 
   .select-filtro {

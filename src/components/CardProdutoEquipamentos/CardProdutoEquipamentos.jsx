@@ -40,7 +40,7 @@ export function CardProdutoEquipamentos({
                 ) : (
                     <>
                         <div className="botoes-card">
-                            <button className="botao-adicionar" onClick={abrirModal}><BsThreeDots /></button>
+                            <button className="botao-informacao" onClick={abrirModal}><BsThreeDots /></button>
                             <button className="botao-carrinho" onClick={() => setMostrarModalQuantidade(true)}>
                                 <FaPlus />
                             </button>

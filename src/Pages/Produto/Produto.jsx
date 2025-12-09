@@ -1,19 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import './Produto.css';
 import IconeNotebook from '../../assets/notebook.png';
 import IconeCarrinho from '../../assets/iconeCarrinho.png';
 import { api } from '../../provider/apiInstance';
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCartShopping } from 'react-icons/fa6';
+import { FaPlus, FaMinus, FaCheck } from 'react-icons/fa';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
 
 const Produto = () => {
   const { id } = useParams();
-  const navegar = useNavigate();
   const [produto, setProduto] = useState(null);
   const [carregando, setCarregando] = useState(true);
+  const [quantidade, setQuantidade] = useState(1);
+
+  const aumentarQuantidade = () => {
+    if (quantidade < 999) {
+      setQuantidade(quantidade + 1);
+    }
+  };
+
+  const diminuirQuantidade = () => {
+    if (quantidade > 1) {
+      setQuantidade(quantidade - 1);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    let valor = parseInt(e.target.value) || 1;
+    if (valor > 999) {
+      valor = 999;
+    }
+    if (valor > 0) {
+      setQuantidade(valor);
+    }
+  };
+
+  const handleConfirm = () => {
+    adicionarCarrinho();
+  };
 
   useEffect(() => {
     setCarregando(true);
@@ -30,15 +57,15 @@ const Produto = () => {
       .catch(() => setCarregando(false));
   }, [id]);
 
-  const adicionarAoCarrinho = (produto) => {
+  const adicionarAoCarrinho = (produto, qtd) => {
     const carrinhoAtual = JSON.parse(sessionStorage.getItem('CARRINHO')) || { produtos: [] };
     const index = carrinhoAtual.produtos.findIndex(item => item.produtoId === produto.id);
     if (index !== -1) {
-      carrinhoAtual.produtos[index].quantidade += 1;
+      carrinhoAtual.produtos[index].quantidade += qtd;
     } else {
       carrinhoAtual.produtos.push({
         produtoId: produto.id,
-        quantidade: 1,
+        quantidade: qtd,
         imagem: produto.imagem,
         nome: produto.nome
       });
@@ -49,7 +76,7 @@ const Produto = () => {
 
   const adicionarCarrinho = () => {
     if (produto) {
-      adicionarAoCarrinho(produto);
+      adicionarAoCarrinho(produto, quantidade);
     }
   };
 
@@ -65,7 +92,6 @@ const Produto = () => {
     <div className="pagina-detalhes">
       <ToastContainer />
       <header className="topo-produto">
-        <button className="botao-adicionar-carrinho" onClick={adicionarCarrinho}>ADICIONAR AO CARRINHO</button>
         <div className="icone-carrinho">
           <a href={ROUTERS.CARRINHO}>
             <img src={IconeCarrinho} alt="Carrinho de compras" />
@@ -80,6 +106,28 @@ const Produto = () => {
           <div className="info-textual">
             <h2>{produto.nome}</h2>
             <h4>{produto.categoria?.nome || 'Sem categoria'}</h4>
+            <p className="texto-quantidade">Insira a quantidade que deseja adicionar:</p>
+            <div className="adicionar-carrinho">
+              <button className="btn-quantidade btn-diminuir" onClick={diminuirQuantidade}>
+                <FaMinus />
+              </button>
+
+              <input
+                type="number"
+                min="1"
+                value={quantidade}
+                onChange={handleInputChange}
+                className="input-quantidade"
+              />
+
+              <button className="btn-quantidade btn-aumentar" onClick={aumentarQuantidade}>
+                <FaPlus />
+              </button>
+
+              <button className="btn-confirmar" onClick={handleConfirm}>
+                <FaCheck /> Adicionar ao carrinho
+              </button>
+            </div>
           </div>
         </div>
 
@@ -87,7 +135,7 @@ const Produto = () => {
           <h3>DESCRIÇÃO</h3>
           <p>{produto.descricao || 'Sem descrição disponível.'}</p>
         </section>
-        
+
         <p className="info-fabricante">
           Para mais informações do equipamento. Consulte o {produto.url_fabricante ? (
             <a href={produto.url_fabricante} target="_blank" rel="noreferrer">fabricante</a>
