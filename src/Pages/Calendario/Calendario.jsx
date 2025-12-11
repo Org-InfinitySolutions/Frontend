@@ -48,32 +48,20 @@ export function Calendario() {
 
   const navegar = useNavigate();
   useEffect(() => {
-    // if(bloquearAcessoGerencia(true)){
-    //   exibirAvisoAcessoNegado(navegar);
-    // } else {
-
       api.get(ENDPOINTS.PEDIDOS)
       .then(response => {
         const pedidosRecebidos = response.data;
-  
         const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
           pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
         );
-  
         pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
-  
         const mapeados = {};
         pedidosFiltrados.forEach(pedido => {
           const data = new Date(pedido.dataEntrega);
-          const dataFormatada = data.toLocaleDateString('fr-CA'); // Formato: YYYY-MM-DD
-  
-          if (!mapeados[dataFormatada]) {
-            mapeados[dataFormatada] = [];
-          }
-  
+          const dataFormatada = data.toLocaleDateString('fr-CA');
+          if (!mapeados[dataFormatada]) mapeados[dataFormatada] = [];
           mapeados[dataFormatada].push(`Pedido #${pedido.id}`);
         });
-  
         setPedidos(mapeados);
       })
       .catch(error => {
@@ -91,82 +79,9 @@ export function Calendario() {
   };
 
   return (
-    <div className="max-w-8xl mx-auto p-4 font-sans bg-black">
-      <style>{`
-        .hoje {
-          background-color: #e0f2fe;
-          border: 2px solid #2563eb;
-        }
-        .dia-passado {
-          background-color: #f3f4f6;
-          color: #9ca3af;
-          opacity: 0.6;
-          pointer-events: none;
-        }
-      `}</style>
+    <div className="calendario-container"> <h2 className="calendario-titulo"> <span className="calendario-mes">{nomesMeses[mesAtual]}</span> <span className="calendario-ano">{ano}</span> </h2> <div className="calendario-grid"> {nomesDias.map((dia) => ( <div key={dia} className="calendario-dia-nome">{dia}</div> ))} {dias.map((data, index) => { const chave = data ? data.toLocaleDateString('fr-CA') : ""; const pedidosDoDia = pedidos[chave]; const isHoje = data && data.toDateString() === hoje.toDateString(); const isPassado = data && data < hojeLimpo; return ( <div key={index} className={`calendario-dia ${isHoje ? "calendario-dia-hoje" : ""} ${isPassado ? "calendario-dia-passado" : ""}`} > {data && ( <> <div className="calendario-dia-numero">{data.getDate()}</div> {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => ( <a key={idx} href={`${ROUTERS.DETALHARPEDIDOS}?id=${pedidoTexto.substr(pedidoTexto.indexOf('#') + 1)}`} className="calendario-pedido" title={pedidoTexto} > {pedidoTexto} </a> ))} </> )} </div> ); })} </div>
 
-      <h2 className="text-center text-2xl font-bold mb-6 text-white">
-        {nomesMeses[mesAtual]} de {ano}
-      </h2>
-
-    <div className="mx-auto w-[1100px]">
-      <div className="grid grid-cols-7 gap-px bg-gray-300 rounded overflow-hidden shadow mb-4">
-        {nomesDias.map((dia) => (
-          <div
-            key={dia}
-            className="bg-gray text-gray-900 font-bold text-sm text-center py-2"
-          >
-            {dia}
-          </div>
-        ))}
-
-        {dias.map((data, index) => {
-          const chave = data ? data.toLocaleDateString('fr-CA') : "";
-          const pedidosDoDia = pedidos[chave];
-          const isHoje = data && data.toDateString() === hoje.toDateString();
-          const isPassado = data && data < hojeLimpo;
-
-          return (
-            <div
-              key={index}
-              className={`min-h-[80px] text-sm text-gray-800 p-2 border border-gray-200 
-                ${isHoje ? "hoje" : ""} 
-                ${isPassado ? "dia-passado" : ""} 
-                bg-white`}
-            >
-              {data && (
-                <>
-                  <div className="font-semibold">{data.getDate()}</div>
-                  {pedidosDoDia && pedidosDoDia.map((pedidoTexto, idx) => (
-                    <a key={idx} href={`${ROUTERS.DETALHARPEDIDOS}?id=${pedidoTexto.substr(pedidoTexto.indexOf('#') + 1)}`} className="text-blue-600 text-xs mt-1">{pedidoTexto}</a>
-                  ))}
-                </>
-              )}
-            </div>
-          );
-        })}
-      </div>
-    </div>
-
-      <div className="paginacao">
-        <span 
-          onClick={anterior} 
-          className={`cursor-pointer ${mesAtual === 0 ? "opacity-50 pointer-events-none" : "text-white"}`}>{'<<'}
-        </span>
-        {Array.from({ length: 12 }, (_, index) => (
-          <span
-            key={index}
-            onClick={() => setMesAtual(index)}
-            className={`cursor-pointer ${mesAtual === index ? "font-bold underline text-white" : "text-white"}`}
-          >
-            {index + 1}
-          </span>
-        ))}
-          <span
-            onClick={proximo}
-            className={`cursor-pointer ${mesAtual === 11 ? "opacity-50 pointer-events-none" : "text-white"}`}>{'>>'}
-          </span>  
-      </div>
+      <div className="paginacao"> <span onClick={anterior} className={`paginacao-seta ${mesAtual === 0 ? "disabled" : ""}`}>&laquo;</span> {Array.from({ length: 12 }, (_, index) => ( <span key={index} onClick={() => setMesAtual(index)} className={`paginacao-mes ${mesAtual === index ? "pagina-ativa" : ""}`} > {index + 1} </span> ))} <span onClick={proximo} className={`paginacao-seta ${mesAtual === 11 ? "disabled" : ""}`}>&raquo;</span> </div>
     </div>
   );
 }

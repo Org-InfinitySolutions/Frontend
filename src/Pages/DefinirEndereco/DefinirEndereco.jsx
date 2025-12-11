@@ -153,7 +153,7 @@ function DefinirEndereco(){
 
     return(
     <div className="container-endereco">
-        <h1>Definir endereço de entrega e devolução dos equipamentos.</h1>
+        <h1>Definir endereço de entrega e devolução dos equipamentos</h1>
         <section className="box-endereco">
             <section className='box-informacoes'>
                 <div className='secao-entrada'>
