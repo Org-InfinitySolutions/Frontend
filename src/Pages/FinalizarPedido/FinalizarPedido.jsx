@@ -255,51 +255,51 @@ function FinalizarPedido() {
                     <section className='container-documentos'>
                         <span>Se desejar, você pode anexar um documento que nos ajude a visualizar o seu projeto de forma mais clara, agilizando nossa análise e te oferecendo uma resposta o mais breve possível.</span>
                         <div className='box-documento'>
-                            <span>DOCUMENTO DO PROJETO </span>
+                            <span>DOCUMENTO DO PROJETO (.png, .jpeg, .jpg, .pdf)</span>
                             <div className='icone-check'>
                                 <label htmlFor="inp_documentoProjeto" className="custom-file-upload">
                                     SUBIR ARQUIVO
                                 </label>
                                 <input id="inp_documentoProjeto" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => { setDocumentoAuxiliar(e.target.files[0])}} style={{ display: "none" }} />
-                                <FaCheck size={18} display={exibirDocAuxiliar ? 'flex' : 'none'}/>
+                                <FaCheck size={18} display={exibirDocAuxiliar ? 'flex' : 'none'} title='Enviado'/>
                             </div>
                         </div>
                         {!cadastroCompleto && (
                             <>
                                 <span>Forneça os documentos abaixo para agilizar a geração de contrato. Não será necessário um segundo envio após o primeiro pedido.</span>
                                 <div className='box-documento'>
-                                    <span>* COMPROVANTE DE ENDEREÇO</span>
+                                    <span>* COMPROVANTE DE ENDEREÇO (.png, .jpeg, .jpg, .pdf)</span>
                                     <div className='icone-check'>
                                         <label htmlFor="inp_documentoEndereco" className="custom-file-upload">SUBIR ARQUIVO</label>
                                         <input id="inp_documentoEndereco" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoEndereco(e.target.files[0])}} style={{ display: "none" }} />
-                                        <FaCheck size={18} display={exibirDocEndereco ? 'flex' : 'none'}/>
+                                        <FaCheck size={18} display={exibirDocEndereco ? 'flex' : 'none'} title='Enviado'/>
                                     </div>
                                 </div>
                                 {isUsuarioPf(cargo) ? (
                                     <div className='box-documento'>
-                                        <span>* CÓPIA DO RG</span>
+                                        <span>* CÓPIA DO RG (.png, .jpeg, .jpg, .pdf)</span>
                                         <div className='icone-check'>
                                             <label htmlFor="inp_documentoRg" className="custom-file-upload">SUBIR ARQUIVO</label>
                                             <input id="inp_documentoRg" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoRG(e.target.files[0])}} style={{ display: "none" }} />
-                                            <FaCheck size={18} display={exibirDocRG ? 'flex' : 'none'}/>
+                                            <FaCheck size={18} display={exibirDocRG ? 'flex' : 'none'} title='Enviado'/>
                                         </div>
                                     </div>
                                 ) : (
                                     <>
                                         <div className='box-documento'>
-                                            <span>* CÓPIA DO CARTÃO CNPJ</span>
+                                            <span>* CÓPIA DO CARTÃO CNPJ (.png, .jpeg, .jpg, .pdf)</span>
                                             <div className='icone-check'>
                                                 <label htmlFor="inp_documentoCartaoCnpj" className="custom-file-upload">SUBIR ARQUIVO</label>
                                                 <input id="inp_documentoCartaoCnpj" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoCNPJ(e.target.files[0])}} style={{ display: "none" }} />
-                                                <FaCheck size={18} display={exibirDocCNPJ ? 'flex' : 'none'}/>
+                                                <FaCheck size={18} display={exibirDocCNPJ ? 'flex' : 'none'} title='Enviado'/>
                                             </div>
                                         </div>
                                         <div className='box-documento'>
-                                            <span>* CÓPIA DO CONTRATO SOCIAL</span>
+                                            <span>* CÓPIA DO CONTRATO SOCIAL (.png, .jpeg, .jpg, .pdf)</span>
                                             <div className='icone-check'>
                                                 <label htmlFor="inp_documentoContratoSocial" className="custom-file-upload">SUBIR ARQUIVO</label>
                                                 <input id="inp_documentoContratoSocial" type="file" accept='.png, .jpeg, .jpg, .pdf' onChange={(e) => {setDocumentoContratoSocial(e.target.files[0])}} style={{ display: "none" }} />
-                                                <FaCheck size={18} display={exibirDocContratoSocial ? 'flex' : 'none'}/>
+                                                <FaCheck size={18} display={exibirDocContratoSocial ? 'flex' : 'none'} title='Enviado'/>
                                             </div>
                                         </div>
                                     </>

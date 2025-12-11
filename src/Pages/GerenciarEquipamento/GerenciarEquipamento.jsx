@@ -101,12 +101,11 @@ export function GerenciarEquipamento() {
           setBarraCarregamento(100);
           const erro = err.response.data;
 
-          if(erro.validationErrors !== null){
+          if(erro.validationErrors){
             exibirAviso(erro.validationErrors[0].message, 'error');
-          } if(err.status == 404){
+          } else if(err.status == 404){
             exibirAviso(erro.error, 'error');
-          } 
-          else {
+          } else {
             exibirAviso(erro.message, 'error');
           }
         })
@@ -164,10 +163,11 @@ export function GerenciarEquipamento() {
         }).catch((err) => {
           setBarraCarregamento(100);
           const erro = err.response.data;
-          if(erro.validationErrors.length > 0){
+          
+          if(erro.validationErrors){
             exibirAviso(erro.validationErrors[0].message, 'error');
           } else {
-            exibirAviso(erro.message, 'error');
+            exibirAviso(erro.error, 'error');
           }
         })
       }, 1000)

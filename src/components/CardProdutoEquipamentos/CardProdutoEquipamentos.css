@@ -1,7 +1,7 @@
-
 .card-produto {
-  border: 1.5px solid var(--border-color);
+  border: 1.5px solid #999999;
   border-radius: var(--border-radius);
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
   padding: 1rem;
   align-items: center;
   text-align: center;
@@ -10,7 +10,6 @@
 
 .card-produto img {
   border-radius: var(--border-radius);
-  width: 100%;
   height: 150px;
   margin-bottom: 0.5rem;
 }
@@ -20,63 +19,60 @@
   font-weight: bold;
 }
 
-.box-nome-produto{
-    min-height: 8vh;
-    height: auto;
+.box-nome-produto {
+  min-height: 8vh;
+  height: auto;
 }
 
 .nomeProduto {
-text-decoration: none;
-color: var(--color-preto);
-font-weight: bold;
-font-size: 1.2rem;
-margin-bottom: 0.5rem;
-overflow: hidden;
-text-overflow: ellipsis;
-display: block;
-white-space: nowrap;
+  text-decoration: none;
+  color: var(--color-preto);
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  white-space: nowrap;
 }
 
-.nomeProduto:hover{
-    text-decoration: underline;
+.nomeProduto:hover {
+  text-decoration: underline;
 }
 
 .botoes-card {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 5px;
   margin-top: 0.5rem;
 }
 
-.botao-adicionar,
+.botao-informacao,
 .botao-carrinho {
-width: 100%;
-font-size: 1rem;
-height: 40px;
+  width: 100%;
+  font-size: 1rem;
+  height: 40px;
 }
 
-.botao-adicionar {
-  width: 300%;
+.botao-informacao {
+  width: 35%;
   height: 50px;
   background-color: var(--color-preto);
   color: var(--color-branco);
   border: none;
-  border-radius: var(--border-radius);
   cursor: pointer;
   transition: background-color 0.3s ease;
-  display: flex;
   align-items: center;
 }
 
-.botao-adicionar:hover {
+.botao-informacao:hover {
   background-color: var(--color-branco);
   color: var(--color-preto);
   border: 2px solid var(--color-preto);
 }
 
 .botao-carrinho {
-  display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -89,8 +85,9 @@ height: 40px;
 }
 
 .botao-carrinho:hover {
-  background-color: var(--color-preto);
-  border: 2px solid var(--color-branco);
+  background-color: var(--color-branco);
+  color: var(--color-preto);
+  border: 2px solid var(--color-preto);
 }
 
 .icone-carrinho-miniatura {
@@ -98,58 +95,60 @@ height: 40px;
   height: 24px;
 }
 
-.box-dados-gerenciais{
-    margin-top: 1em;
-    gap: 0.5rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+.box-dados-gerenciais {
+  margin-top: 1em;
+  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 
-    .qtd-estoque{
-        width: 100%;
-        font-weight: 500;
-        text-align: start;
-    }
-
-    .situacao-ativo, .situacao-inativo{
-        padding: 0.3em;
-        font-weight: bolder;
-        text-align: start;
-        color: white;
-        border-radius: 6px;
-    }
-
-    .situacao-ativo{
-        background-color: green;
-    }
-    .situacao-inativo{
-        background-color: red;
-    }
-
-    .btn-editar{
-        padding: 0.5em 0px;
-        width: 100%;
-        background-color: white;
-        border: 1px solid black;
-        display: flex;
-        justify-content: center;
-    }
-
-    .btn-editar:hover{
-        transition: 0.3s;
-        background-color: black;
-        color: white;
-    }
-}
-
-@media screen and (max-width: 768px){
-
-  .card-produto {
-      padding: 0.5rem;
-      max-width: 100%;
+  .qtd-estoque {
+    width: 100%;
+    font-weight: 500;
+    text-align: start;
   }
 
-  .botao-adicionar,
+  .situacao-ativo,
+  .situacao-inativo {
+    padding: 0.3em;
+    font-weight: bolder;
+    text-align: start;
+    color: white;
+    border-radius: 6px;
+  }
+
+  .situacao-ativo {
+    background-color: green;
+  }
+
+  .situacao-inativo {
+    background-color: red;
+  }
+
+  .btn-editar {
+    padding: 0.5em 0px;
+    width: 100%;
+    background-color: white;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-editar:hover {
+    transition: 0.3s;
+    background-color: black;
+    color: white;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  .card-produto {
+    padding: 0.5rem;
+    max-width: 100%;
+  }
+
+  .botao-informacao,
   .botao-carrinho {
     width: 100%;
     font-size: 1rem;
@@ -160,9 +159,14 @@ height: 40px;
     gap: 0.5rem;
     margin-top: 0.25rem;
   }
- 
+
   .icone-carrinho img {
     width: 24px;
     height: 24px;
+  }
+
+  .card-produto img {
+    height: 120px;
+    object-fit: contain;
   }
 }

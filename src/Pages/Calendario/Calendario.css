@@ -1,59 +1,262 @@
-.paginacao {
+.calendario-container {
+  max-width: 850px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #ededed;
+  border-radius: 22px;
+  box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  width: 95vw;
+  box-sizing: border-box;
+}
+
+.calendario-titulo {
+  text-align: center;
+  color: #0f0e0e;
+  font-size: 2.1rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1.5px;
   display: flex;
   justify-content: center;
-  margin-top: 2rem;
-  gap: var(--gap-pequeno, 0.5rem);
-  font-weight: bold;
+  gap: 0.8rem;
+  flex-wrap: wrap;
 }
 
-.paginacao span {
-  cursor: pointer;
-  padding: var(--padding-pequeno, 0.4rem 0.6rem);
-  border-radius: var(--border-radius, 4px);
-  user-select: none;
+.calendario-mes {
+  color: #0f0e0e;
+  font-size: 25px;
 }
 
-.pagina-ativa {
-  background-color: var(--color-preto, #000);
-  color: var(--color-branco, #fff);
+.calendario-ano {
+  color: #242424;
+  font-weight: 400;
+  font-size: 25px;
 }
 
-.paginacao span:hover {
-  background-color: var(--color-preto, #000);
-  color: var(--color-branco, #fff);
-  transition: background-color var(--transição, 0.3s);
+.calendario-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.8px;
+  background: #e9e9e9;
+  border-radius: 14px;
+  overflow: auto;
+  margin-bottom: 2.2rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
 }
 
-.paginacao span.disabled {
-  opacity: 0.3;
+.calendario-dia-nome {
+  background: #18181B;
+  color: #BDBDBD;
+  font-weight: 600;
+  font-size: 1.03rem;
+  text-align: center;
+  padding: 0.6rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1.7px;
+  border-bottom: 1.5px solid #232323;
+  min-width: 38px;
+}
+
+.calendario-dia {
+  min-height: 80px;
+  padding: 0.7rem 0.6rem;
+  background: #fff;
+  border-radius: 9px;
+  border: 1.5px solid #ededed;
+  box-shadow: 0 1px 4px rgba(31, 41, 55, 0.04);
+  transition: box-shadow 0.23s, border 0.22s, background 0.23s;
+  position: relative;
+  font-size: 0.98rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 38px;
+}
+
+.calendario-dia:hover:not(.calendario-dia-passado) {
+  border-color: #222224;
+  background: #F5F5F5;
+  box-shadow: 0 2px 12px rgba(100, 100, 100, 0.10);
+  z-index: 1;
+}
+
+.calendario-dia-hoje {
+  border: 2.5px solid #111113;
+  background: #EDEDED;
+  box-shadow: 0 4px 18px rgba(34, 34, 34, 0.13);
+}
+
+.calendario-dia-passado {
+  background: #f2f2f2 !important;
+  color: #bbb !important;
+  opacity: 0.7;
   pointer-events: none;
 }
 
-@media (max-width: 768px) {
+.calendario-dia-numero {
+  font-size: 1.13rem;
+  font-weight: 700;
+  color: #252525;
+  margin-bottom: 0.3rem;
+}
+
+.calendario-pedido {
+  display: inline-block;
+  background: #222224;
+  color: #fff;
+  font-size: 0.79rem;
+  font-weight: 600;
+  padding: 0.20rem 0.7rem;
+  border-radius: 10px;
+  margin-top: 0.25rem;
+  margin-right: 0.15rem;
+  text-decoration: none;
+  transition: box-shadow 0.16s, background 0.16s, transform 0.16s;
+  box-shadow: 0 1px 6px rgba(34, 34, 34, 0.07);
+  cursor: pointer;
+  word-break: break-all;
+}
+
+.calendario-pedido:hover {
+  background: #36363d;
+  color: #fff;
+  box-shadow: 0 2px 10px rgba(34, 34, 34, 0.18);
+  transform: scale(1.04);
+}
+
+.paginacao {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.32rem;
+  margin-top: 2rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #000;
+  flex-wrap: wrap;
+}
+
+.paginacao-mes {
+  cursor: pointer;
+  padding: 0.37rem 0.78rem;
+  border-radius: 7px;
+  margin: 0 0.06rem;
+  background: #ffffff;
+  color: #000000;
+  transition: background 0.19s, color 0.18s;
+}
+
+.paginacao-mes:hover,
+.pagina-ativa {
+  background: #000000;
+  color: #FFF;
+}
+
+.paginacao-seta {
+  font-size: 1.3rem;
+  margin: 0 0.2rem;
+  cursor: pointer;
+  color: #000;
+  user-select: none;
+  transition: color 0.2s;
+}
+
+.paginacao-seta.disabled {
+  color: #aaa;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+
+@media (max-width: 900px) {
+  .calendario-container {
+    padding: 1rem;
+    max-width: 99vw;
+    min-width: unset;
+  }
+  .calendario-titulo {
+    font-size: 1.40rem;
+  }
   .calendario-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
+    font-size: 0.92rem;
   }
+}
 
-  .calendario-dia {
-    min-height: 60px !important;
-    font-size: 0.75rem !important;
-    padding: 0.3rem !important;
+@media (max-width: 700px) {
+  .calendario-container {
+    padding: 0.5rem;
   }
+  .calendario-grid {
+    font-size: 0.80rem;
+  }
+}
 
-  .calendario-dia-nome {
-    font-size: 0.7rem !important;
-  }
 
-  .calendario-pedido {
-    font-size: 0.65rem !important;
-  }
-
-  .paginacao {
-    gap: 0.3rem;
-  }
-
-  .paginacao span {
-    font-size: 0.85rem;
-    padding: 0.25rem 0.45rem;
-  }
+@media (max-width: 540px) {
+    .calendario-container {
+        padding: 0.2rem;
+        border-radius: 10px;
+        margin: 0.8rem auto;
+        width: 99vw;
+    }
+    .calendario-titulo {
+        font-size: 1rem;
+        gap: 0.6rem;
+    }
+    
+    /* 1. CORREÇÃO: Forçar o ajuste das 7 colunas */
+    .calendario-grid {
+        /* Usar 'repeat(7, 1fr)' garante que todas as 7 colunas
+           dividam o espaço disponível igualmente, eliminando o scroll. */
+        grid-template-columns: repeat(7, 1fr); 
+        
+        /* O overflow-x: auto não é mais necessário se o grid se ajusta */
+        overflow-x: hidden; 
+        
+        font-size: 0.7rem;
+        border-radius: 8px;
+    }
+    
+    .calendario-dia-nome,
+    .calendario-dia {
+        /* 2. CORREÇÃO: REMOVER MIN-WIDTH para permitir que a célula seja menor */
+        min-width: unset; 
+        
+        /* Ajustar o padding para ocupar menos espaço */
+        padding: 0.35rem 0.05rem; /* Reduzi o padding horizontal (0.1rem para 0.05rem) */
+        
+        /* Alinhamento para melhor leitura em células pequenas */
+        text-align: center; 
+        align-items: center; /* Centraliza verticalmente o conteúdo (o número do dia) */
+        justify-content: center; /* Se estiver usando flex */
+    }
+    
+    .calendario-dia-numero {
+        /* Para garantir que o número do dia permaneça no centro */
+        width: 100%;
+        text-align: center;
+    }
+    
+    .calendario-pedido {
+        /* O pedido é o que mais quebra o layout. 
+           Vamos forçar um tamanho de fonte menor e padding mínimo. */
+        font-size: 0.55rem !important; 
+        padding: 0.1rem 0.2rem; 
+        margin: 0.05rem; /* Ajuste o margin entre os pedidos */
+        /* Quebra de linha forçada, se o texto for muito longo */
+        word-break: break-all;
+    }
+    
+    /* Pagineção também deve ser mais compacta */
+    .paginacao {
+        gap: 0.13rem;
+        font-size: 0.85rem;
+        flex-wrap: wrap;
+    }
+    .paginacao-mes {
+        padding: 0.16rem 0.28rem;
+        font-size: 0.75rem;
+        margin: 0 0.02rem;
+    }
 }

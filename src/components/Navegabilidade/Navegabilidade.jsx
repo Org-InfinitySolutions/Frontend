@@ -7,8 +7,26 @@ function Navegabilidade(props){
 
     return(
         <section className='navegabilidade'>
-            <button className="btn-voltar" onClick={() => {navegar(props.linkVoltar)}} href={props.linkVoltar}>Voltar</button>
-            <button className="btn-prosseguir" onClick={props.funcaoAvancar || ""} disabled={props.desabilitar || false}>{props.textoAvancar || "Continuar"}</button>
+
+            {props.linkVoltar && (
+                <button 
+                    className="btn-voltar" 
+                    onClick={() => {navegar(props.linkVoltar)}} 
+                    href={props.linkVoltar}
+                >
+                    Voltar
+                </button>
+            )}
+            
+            {props.funcaoAvancar && (
+                <button 
+                    className="btn-prosseguir" 
+                    onClick={props.funcaoAvancar} 
+                    disabled={props.desabilitar || false}
+                >
+                    {props.textoAvancar || "Continuar"}
+                </button>
+            )}
         </section>
     )
 }

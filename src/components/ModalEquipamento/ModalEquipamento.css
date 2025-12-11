@@ -9,6 +9,16 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .modal-container {
@@ -19,17 +29,37 @@
   padding: 2%;
   position: relative;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  animation: bubbleAppear 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes bubbleAppear {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .fechar-modal {
+  background: none;
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  color: var(--color-preto);
+  padding: 0;
+  width: 2rem;
+  height: 2rem;
   position: absolute;
   top: 12px;
   right: 18px;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: red;
-  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.fechar-modal:hover {
+  color: var(--color-vermelho);
 }
 
 .modal-conteudo {
@@ -75,6 +105,10 @@
     width: 120px;
     max-width: 90vw;
     margin-bottom: 1rem;
+  }
+
+  .modal-imagem {
+    display: none;
   }
 
   .fechar-modal {

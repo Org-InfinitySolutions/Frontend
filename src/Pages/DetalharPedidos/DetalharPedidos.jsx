@@ -165,7 +165,7 @@ export function DetalharPedidos() {
             <div className="numero-serie-pedido">
                 <div className="informacoes-pedido">
                     <p className="numero-pedido">Pedido #{formatarIdPedido(pedido.id)}</p>
-                    <p className="data-pedido">Pedido feito em: {pedido.dataCriacao ? new Date(pedido.dataCriacao).toLocaleDateString('pt-BR') : '-'}</p>
+                    <p className="data-pedido">Feito em: {pedido.dataCriacao ? new Date(pedido.dataCriacao).toLocaleDateString('pt-BR') : '-'}</p>
                 </div>
                 <div className="condicoes-pedido">
                     <span className={`${statusClassMap[status]}`}>{exibirStatus(status)}</span>

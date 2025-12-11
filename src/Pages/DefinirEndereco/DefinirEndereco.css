@@ -1,6 +1,6 @@
 
 .container-endereco{
-    height: 90vh;
+    height: 95vh;
     width: 100%;
 
     display: flex;
@@ -14,9 +14,10 @@
     }
 
     .box-endereco{
-        height: 60%;
+        height: auto;
         width: 80%;
         border: 1px solid #ccc;
+        box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
         border-radius: 4px;
         padding: 1em 0px;
 
@@ -25,32 +26,40 @@
         flex-direction: column;
 
         .box-informacoes{
-            height: 20%;
+            height: auto;
             width: 100%;
-            margin: 1%;
+            margin: 1em;            
             
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-evenly;
         
-            .secao-entrada{
-                height: 100%;
+            .secao-entrada, .secao-entrada-data{
                 width: 30%;
+                .container-input{
+                    gap: 0.25em;
+                }
+            }
+
+            .secao-entrada{
+                max-height: 8vh;
+            }
+            .secao-entrada-data{
+                height: 9vh;
             }
 
             .tipo-evento{
-                height: 100%;
+                min-height: 4vh;
                 width: 30%;
                 display: flex;
                 flex-direction: column;
-                justify-content: space-around;
-                
                 font-family: var(--fonte-texto);
+                gap: 0.25em;
+                
                 select{
-                    width: 100%;
                     height: 5vh;
-                    padding-left: 3px;
+                    width: 100%;
 
                     border: 1px solid black;
                     box-shadow: 1px 2px 2px grey;
@@ -69,6 +78,9 @@
                 height: 100%;
                 width: 95%;
 
+                .container-input{
+                    gap: 0.25em;
+                }
                 input{
                     width: 100%;
                 }
@@ -104,18 +116,33 @@
             justify-content: space-evenly;
             
             .box-informacoes{
-                min-height: 30vh;
                 flex-direction: column;
                 justify-content: space-evenly;
+                gap: 0.25em;
+                margin: 0px;
 
-                .secao-entrada{
+                .secao-entrada, .secao-entrada-data{
                     width: 90%;
-                    height: 10vh;
+                    min-height: auto;
+                }
+                
+                .secao-entrada{
+                    margin-top: 0.75em;
+                    
+                    .container-input{
+                        gap: 0.5em;
+                    }
+                }
+                .secao-entrada-data{
+                    margin-top: 0.75em;
+                    .container-input{
+                        gap: 0.25em;
+                    }
                 }
 
                 .tipo-evento{
                     width: 90%;
-                    min-height: 7vh;
+                    min-height: auto;
                     margin-top: 0.5em;
                     gap: 0.5em;
 
@@ -129,15 +156,15 @@
             }
             .box-complemento{
                 width: 90%;
-                height: 10vh;
+
 
                 .secao-entrada{
                     width: 100%;
-                    height: 100%;
-                    
+                    min-height: auto;
+                    margin-top: 0.75em;
+
                     .container-input{
-                        width: 100%;
-                        height: 100%;
+                        gap: 0.5em;
                     }
                 }
             }

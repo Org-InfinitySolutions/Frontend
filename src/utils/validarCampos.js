@@ -1,3 +1,5 @@
+import { cnpj as numeracaoCNPJ, cpf as numeracaoCPF } from 'cpf-cnpj-validator';
+
 const campoVazio = (campo) => {
     return campo.trim().length <= 0;
 }
@@ -63,9 +65,9 @@ const validarCPF = (cpf) => {
         return { valido: false, mensagem: "Este campo é obrigatório" };
     } else if (cpf.trim().length < 14) {
         return { valido: false, mensagem: "O CPF deve estar completo" };
-    } else if(regex.test(novoCpf)){
+    } else if(regex.test(novoCpf) || !numeracaoCPF.isValid(novoCpf)){
         return { valido: false, mensagem: "O CPF é inválido" };
-    }
+    } 
     return { valido: true, mensagem: "" };
 };
 
@@ -121,7 +123,7 @@ const validarCNPJ = (cnpj) => {
         return { valido: false, mensagem: "Este campo é obrigatório" };
     } else if (cnpj.trim().length < 18) {
         return { valido: false, mensagem: "O CNPJ deve estar completo" };
-    } else if(!regex.test(novoCnpj) || !regex2.test(cnpj) || regex3.test(novoCnpj)){
+    } else if(!regex.test(novoCnpj) || !regex2.test(cnpj) || regex3.test(novoCnpj) || !numeracaoCNPJ.isValid(cnpj)){
         return { valido: false, mensagem: "O CNPJ é inválido" };
     }
     return { valido: true, mensagem: "" };

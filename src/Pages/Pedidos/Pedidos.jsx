@@ -11,6 +11,7 @@ import { exibirAvisoTokenExpirado } from '../../utils/exibirModalAviso';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
 import { retornarCargos } from '../../utils/usuario';
+import LoadingBar from 'react-top-loading-bar';
 
 const normalizarStatus = (status) => {
   if (!status) return '';
@@ -33,6 +34,7 @@ const Pedidos = () => {
   const [totalPaginas, setTotalPaginas] = useState(1);
   const tipoUsuario = retornarCargos(sessionStorage.CARGO);
 
+  const [barraCarregamento, setBarraCarregamento] = useState(0);
   const navigate = useNavigate();
   const pedidosPorPagina = 16;
 
@@ -43,6 +45,7 @@ const Pedidos = () => {
     }
 
     try {
+      setBarraCarregamento(30);
       const response = await api.get(`${ENDPOINTS.PEDIDOS}?offset=${pagina - 1}&limit=${pedidosPorPagina}`, {
         headers: { Authorization: `Bearer ${sessionStorage.TOKEN}` },
       });
@@ -57,6 +60,7 @@ const Pedidos = () => {
         valor: p.valor || 0,
       }));
 
+      setBarraCarregamento(100);
       setPedidos(pedidosApi);
 
       const totalItemsFromApi = data.totalElements ?? data.total ?? pedidosApi.length;
@@ -88,6 +92,7 @@ const Pedidos = () => {
 
   return (
     <div className="pagina-pedidos">
+      <LoadingBar progress={barraCarregamento} height={3} color="#f11946" />
       <main className="conteudo-pedidos">
         <div className="filtros">
           <div className="linha-pesquisa-filtros">

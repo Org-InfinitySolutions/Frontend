@@ -9,6 +9,7 @@ import { exibirAvisoAcessoNegado } from "../../utils/exibirModalAviso";
 import lapisEditor from "../../assets/iconeLapisBranco.png";
 import { ROUTERS } from '../../routers/routers';
 import { definirCargo } from '../../utils/usuario';
+import Paginacao from '../../components/Paginacao/Paginacao';
 
 const normalizarTexto = (texto) => {
   return texto
@@ -52,6 +53,8 @@ function GerenciarUsuarios() {
               ? res.data.data
               : [];
 
+        console.log(res.data)
+
         const lista = origem.map(u => {
           let documento = '';
           if (u.cpf) {
@@ -60,7 +63,7 @@ function GerenciarUsuarios() {
             documento = formatarCNPJ(u.cnpj);
           }
           return {
-            tipo: definirCargo(u.tipo),
+            tipo: definirCargo(u.cargo),
             id: u.id,
             nome: u.nome,
             email: u.email,
@@ -172,6 +175,14 @@ function GerenciarUsuarios() {
           </tbody>
         </table>
       </section>
+
+      <Paginacao
+        paginaAtual={paginaAtual}
+        totalPaginas={totalPaginas}
+        totalItens={usuariosFiltrados.length}
+        itensPorPagina={usuariosPorPagina}
+        onChange={setPaginaAtual}
+      />
     </section>
   );
 }

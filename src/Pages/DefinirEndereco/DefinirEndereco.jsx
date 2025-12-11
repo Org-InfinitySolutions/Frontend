@@ -93,7 +93,10 @@ function DefinirEndereco(){
         const dataEntrega = new Date(dadosAdicionais.dataEntrega);
         const dataRetirada = new Date(dadosAdicionais.dataRetirada);
 
-        if(campoNaoAtendeTamanho(formatarCEP(endereco.cep), 9) || campoVazio(endereco.numero) || campoVazio(endereco.logradouro) || campoVazio(endereco.estado) || campoVazio(endereco.cidade) || campoVazio(endereco.bairro) || campoVazio(dadosAdicionais.tipo) || dataEntrega.toString() == 'Invalid Date' || dataRetirada.toString() == 'Invalid Date'){
+        if(campoNaoAtendeTamanho(formatarCEP(endereco.cep), 9) || campoVazio(endereco.numero) || campoVazio(endereco.logradouro) || 
+           campoVazio(endereco.estado) || campoVazio(endereco.cidade) || campoVazio(endereco.bairro) || campoVazio(dadosAdicionais.tipo) || 
+           ((dataEntrega.toString() == 'Invalid Date' || dataEntrega.toString() == '') || (dataRetirada.toString() == 'Invalid Date' || dataRetirada.toString() == ''))
+        ){
             setDesativarBotao(true);
         } else {
             setDesativarBotao(false);
@@ -150,7 +153,7 @@ function DefinirEndereco(){
 
     return(
     <div className="container-endereco">
-        <h1>Definir endereço de entrega e devolução dos equipamentos.</h1>
+        <h1>Definir endereço de entrega e devolução dos equipamentos</h1>
         <section className="box-endereco">
             <section className='box-informacoes'>
                 <div className='secao-entrada'>
@@ -257,7 +260,7 @@ function DefinirEndereco(){
                 </div>
             </section>
             <section className='box-informacoes'>
-                <div className='secao-entrada'>
+                <div className='secao-entrada-data'>
                     <Input 
                         id={'inp_dtEntrega'}
                         label="* DATA E HORA ENTREGA:" 
@@ -268,7 +271,7 @@ function DefinirEndereco(){
                         }))}}
                     />
                 </div>
-                <div className='secao-entrada'>
+                <div className='secao-entrada-data'>
                     <Input 
                         id={'inp_bairro'}
                         label="* DATA E HORA DEVOLUÇÃO:" 

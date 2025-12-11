@@ -5,6 +5,7 @@ import { exibirAviso } from '../../utils/exibirModalAviso';
 import { campoVazio, emailInvalido } from '../../utils/validarCampos';
 import { ROUTERS } from '../../routers/routers';
 import { ENDPOINTS } from '../../routers/endpoints';
+import LOGO from '../../assets/nova-logo.png';
 
 import './Login.css';
 import { useNavigate } from 'react-router-dom';
@@ -69,7 +70,7 @@ function Login(){
         }
     };
 
-    // garante que o objeto carrinho seja criado, permitindo ao usuario adicionar produtos mesmo sem conta 
+    // criação do carrinho, permitindo o usuario adicionar produtos sem conta 
     useEffect(() => {
         const carrinho = sessionStorage.CARRINHO ? JSON.parse(sessionStorage.CARRINHO) : { produtos: [] };
         if(carrinho.produtos.length == 0){
@@ -79,19 +80,18 @@ function Login(){
 
     return(
     <section className='container-login'>
-        <LoadingBar
-            progress={barraCarregamento}
-            height={3}
-            color="#f11946"
-        />
+        <section className='container-logo'>
+            <img src={LOGO} alt="Logo da Nova locações" />
+        </section>
+
         <form action="#" className='container-formulario'>
             <h1>LOGIN</h1>
             <div className='barra-divisoria-login'></div>
             <section className='caixa-entrada'>
-                <Input label='E-MAIL:' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
+                <Input label='E-mail' tipo='text' placeholder='E-mail' onChange={(e) => setEmail(e.target.value)}/>
             </section>
             <section className='caixa-entrada'>
-                <Input label='SENHA:' tipo='password' placeholder='Senha' onChange={(e) => setSenha(e.target.value)}/>
+                <Input label='Senha' tipo='password' placeholder='Senha' onChange={(e) => setSenha(e.target.value)}/>
             </section>
             <button onClick={Login}>Entrar</button>
             <section className='links-navegacao'>

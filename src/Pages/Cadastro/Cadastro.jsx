@@ -11,6 +11,8 @@ import { ENDPOINTS } from '../../routers/endpoints';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../../provider/apiInstance';
 import LoadingBar from 'react-top-loading-bar';
+import LOGO from '../../assets/nova-logo.png';
+
 
 function Cadastro(){
 
@@ -18,6 +20,10 @@ function Cadastro(){
     const [barraCarregamento, setBarraCarregamento] = useState(0);
     const [etapa, setEtapa] = useState(1);
     const navegar = useNavigate();
+
+    // NOVA ALTERAÇÃO: Estados para o Modal e Checkbox
+    const [termosAceitos, setTermosAceitos] = useState(false);
+    const [modalAberto, setModalAberto] = useState(false);
 
     const [dadosBase, setDadosBase] = useState({
         nome: '',
@@ -47,7 +53,6 @@ function Cadastro(){
     const [esconderBtnCpf, setEsconderBtnCpf] = useState(false)
     const [esconderBtnCnpj, setEsconderBtnCnpj] = useState(false)
 
-    // UseEffects
     useEffect(() => {
         if(etapa > 1 && tipoUsuario != 'fisica'){
             setEsconderBtnCpf(true);
@@ -62,8 +67,13 @@ function Cadastro(){
         }
     }, [etapa])
 
-    // Métodos
     const avancarEtapa = async (executarMetodo) => {
+        // NOVA ALTERAÇÃO: Validação antes de avançar na etapa 3 (Acesso)
+        if (etapa === 3 && !termosAceitos) {
+            exibirAviso('Você precisa ler e aceitar os Termos e Condições para finalizar o cadastro.', 'error');
+            return;
+        }
+
         if(etapa < 4){
             if(executarMetodo != null){
                 const valido = await executarMetodo();
@@ -157,11 +167,13 @@ function Cadastro(){
 
     return(
         <main className='Cadastro'>
-            <LoadingBar
-                progress={barraCarregamento}
-                height={3}
-                color="#f11946"
-            />
+        
+            {etapa < 4 && (
+                <section className='container-logo-cadastro'>
+                    <img src={LOGO} alt="Logo da Nova locações" />
+                </section>
+            )}
+
             {etapa < 4 ? (
                 <form className='formulario' onSubmit={(e) => e.preventDefault()}>
                     <section className='box-titulo'>
@@ -203,6 +215,11 @@ function Cadastro(){
                                 setDadosBase={tipoUsuario == 'fisica' ? setFormularioCPF : setFormularioCNPJ}
                                 continuar={(metodo) => {avancarEtapa(metodo)}}
                                 voltar={() => {retrocederEtapa()}}
+                                
+                                // NOVA ALTERAÇÃO: Passando props para o filho controlar o checkbox
+                                termosAceitos={termosAceitos}
+                                setTermosAceitos={setTermosAceitos}
+                                abrirModal={() => setModalAberto(true)}
                             />
                         ) : (
                             <></>
@@ -213,6 +230,45 @@ function Cadastro(){
             ) : (
                 <ConfirmacaoEmail onSubmit={verificarFormCodigoEmail} />
             )} 
+
+            {/* NOVA ALTERAÇÃO: Componente Visual do Modal */}
+            {modalAberto && (
+                <div className="modal-overlay" onClick={() => setModalAberto(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>Termos e Condições de Uso</h2>
+                        
+                        <div className="modal-texto">
+                            <p>
+                                <strong>1. Privacidade e Dados:</strong> Em conformidade com a <strong>LGPD (Lei Geral de Proteção de Dados)</strong>, garantimos que seus dados pessoais (como Nome, CPF/CNPJ, Endereço) são armazenados em ambiente seguro e criptografado.
+                            </p>
+                            <p>
+                                <strong>2. Finalidade:</strong> Suas informações são utilizadas exclusivamente para a validação do cadastro, segurança da conta e processamento dos serviços contratados nesta plataforma.
+                            </p>
+                            <p>
+                                <strong>3. Direitos:</strong> Você tem total direito de solicitar a visualização, alteração ou exclusão dos seus dados a qualquer momento, entrando em contato com nosso suporte.
+                            </p>
+                            <p>
+                                Ao clicar em <strong>"Aceitar e Concordar"</strong>, você declara que leu e está ciente de como seus dados serão processados.
+                            </p>
+                        </div>
+
+                        <div className="modal-actions">
+                            <button className="btn-fechar-modal" onClick={() => setModalAberto(false)}>
+                                Cancelar
+                            </button>
+                            <button 
+                                className="btn-aceitar-modal"
+                                onClick={() => {
+                                    setTermosAceitos(true);
+                                    setModalAberto(false);
+                                }}
+                            >
+                                Aceitar e Concordar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </main>
     )
 }
