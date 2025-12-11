@@ -93,7 +93,7 @@ export function CardPedido({ pedido, tipoUsuario, onDetalhes }) {
   return (
     <section className="card-pedido">
       <h3>Pedido #{formatarIdPedido(pedido.id)}</h3>
-      <p><b>Items:</b> {pedido.itens}</p>
+      <p><b>Itens:</b> {pedido.itens}</p>
       <p><b>Pedido feito em:</b> {pedido.data}</p>
       {habilitarFuncoesGerenciais && (<p><b>Nome:</b> {pedido.cliente}</p>)}
       <div className="acoes">
