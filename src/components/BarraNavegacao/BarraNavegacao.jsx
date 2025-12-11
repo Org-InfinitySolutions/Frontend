@@ -126,7 +126,7 @@ function BarraNavegacao(){
                               `${ROUTERS.GERENCIARUSUARIOS}`
                             )}`}
                           >
-                            Usuarios
+                            Usuários
                           </a>
                         )}
                       </>
