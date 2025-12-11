@@ -1,7 +1,7 @@
 .carrinho{
     min-height: 90vh;
-    width: 100vw;
-
+    width: 100%;
+    box-sizing: border-box; 
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -21,18 +21,103 @@
         color: #000;
     }
 
+
+    .carrinho-conteudo {
+        width: 85%;
+        display: flex;
+        justify-content: space-between;
+        gap: 30px;
+        margin-bottom: 30px;
+          box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
+
+    }
+    
     .container-equipamentos{
-        height: 80%;
-        width: 75%;
+        width: 65%; 
         padding: 2%;
         border-radius: 4px;
         border: 1px solid #ccc;
- 
+        
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: space-around;
     }
+
+    .resumo-pedido {
+        width: 30%; 
+        height: fit-content;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #f7f7f7;
+        border: 1px solid #e0e0e0;
+          box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .resumo-pedido h2 {
+        font-family: var(--fonte-titulo);
+        font-size: 1.2rem;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+
+    .resumo-pedido .resumo-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-family: var(--fonte-texto);
+        color: #333;
+    }
+
+    .resumo-pedido .resumo-item strong {
+        font-weight: bold;
+    }
+
+    .resumo-pedido .total {
+        border-top: none; 
+        padding-top: 0;
+        margin-top: 10px;
+        margin-bottom: 20px;
+    }
+
+    .resumo-pedido .total strong {
+        font-size: 1.1rem;
+        color: #000;
+    }
+    
+    .resumo-pedido .nota-orcamento {
+        font-size: 0.9em;
+        color: #666;
+        margin-top: 10px;
+        padding: 10px;
+        border: 1px dashed #ccc;
+        border-radius: 4px;
+        background-color: #fff;
+        line-height: 1.4;
+    }
+
+    .resumo-pedido .btn-finalizar-pedido {
+        margin-top: 20px;
+        padding: 1rem;
+        background-color: #000;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-family: var(--fonte-texto);
+        font-weight: 600;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .resumo-pedido .btn-finalizar-pedido:hover {
+        background-color: #333;
+        transform: translateY(-1px);
+    }
+  
 
     .carrinho-vazio {
         height: auto;
@@ -42,7 +127,7 @@
         border-radius: 8px;
         border: 1px solid #e0e0e0;
         background-color: #ffffff;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+          box-shadow: 0 6px 32px rgba(0, 0, 0, 0.18);
 
         display: flex;
         flex-direction: column;
@@ -122,12 +207,32 @@
             text-align: center;
         }
     }
+
+    .navegabilidade button {
+        background-color: #000 !important; 
+        color: white !important;
+        border: none !important;
+        padding: 0.8rem 1.5rem; 
+        
+        &:hover {
+            background-color: #333 !important;
+            transform: translateY(-1px);
+        }
+    }
+
+    .navegabilidade {
+        width: 85%; 
+        margin-bottom: 30px;
+        
+        display: flex;
+        justify-content:center; 
+        align-items: center;
+    }
 }
 
 @media screen and (max-width: 768px) {
     
     .carrinho{
-        padding: 1em 0px;
         min-height: 60vh;
         
         .carrinho-header {
@@ -140,8 +245,25 @@
             font-size: 1.5rem;
         }
 
+        .carrinho-conteudo {
+            width: 90%;
+            flex-direction: column; 
+            gap: 20px;
+        }
+
+        .container-equipamentos,
+        .resumo-pedido {
+            width: 90%; 
+        }
+        
         .container-equipamentos{
-            align-items: center;
+            align-items: center; 
+            text-align: center; 
+            width: 98%; 
+        }
+
+        .navegabilidade {
+            width: 90%; 
         }
 
         .carrinho-vazio {
