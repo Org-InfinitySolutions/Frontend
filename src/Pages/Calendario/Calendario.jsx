@@ -51,7 +51,8 @@ export function Calendario() {
       api.get(ENDPOINTS.PEDIDOS)
       .then(response => {
         const pedidosRecebidos = response.data;
-        const pedidosFiltrados = pedidosRecebidos.filter(pedido =>
+        console.log(pedidosRecebidos.content)
+        const pedidosFiltrados = pedidosRecebidos.content.filter(pedido =>
           pedido.situacao === 'APROVADO' || pedido.situacao === 'EM_EVENTO'
         );
         pedidosFiltrados.sort((a, b) => new Date(a.dataEntrega) - new Date(b.dataEntrega));
